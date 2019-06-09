@@ -10,6 +10,7 @@ namespace ClassLib
     {
         public enum Key
         {
+            unknown = -1,
             the_reef,
             musselforge_fitness,
             starfish_mainstage,
@@ -35,8 +36,9 @@ namespace ClassLib
             skipper_pavilion,
             shifty_station = 9999
         }
-        private enum shortName
+        public enum ShortName
         {
+            unknown = -1,
             reef,
             fitness,
             mainstage,
@@ -64,20 +66,14 @@ namespace ClassLib
         }
 
         public int Id { get; }
-        public string Name { get; }
-        public string ShortName { get; }
 
         public Stage(Key key)
         {
             Id = (int)key;
-            Name = key.ToString();
-            ShortName = ((shortName)key).ToString();
         }
         public Stage()
         {
             Id = -1;
-            Name = "unknown";
-            ShortName = "unknown";
         }
     }
 

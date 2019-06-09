@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassLib
 {
-    class Schedule
+    public class Schedule
     {
         public DateTime EndTime { get; }
         public List<ScheduledStage> Stages { get; }
@@ -17,6 +17,12 @@ namespace ClassLib
             EndTime = endTime;
             Stages = stages;
             NextStages = nextStages;
+        }
+        public Schedule()
+        {
+            EndTime = new DateTime();
+            Stages = new List<ScheduledStage>();
+            NextStages = new List<ScheduledStage>();
         }
 
         public List<ScheduledStage> GetStages(Mode mode)

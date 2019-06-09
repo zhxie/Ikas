@@ -16,7 +16,7 @@ namespace ClassLib
             rainmaker,
             clam_blitz
         }
-        private enum shortName
+        public enum ShortName
         {
             turf,
             zones,
@@ -26,14 +26,15 @@ namespace ClassLib
         }
 
         public int Id { get; }
-        public string Name { get; }
-        public string ShortName { get; }
 
         public Rule(Key key)
         {
             Id = (int)key;
-            Name = key.ToString();
-            ShortName = ((shortName)key).ToString();
+        }
+
+        public static Rule Parse(string s)
+        {
+            return new Rule((Key)Enum.Parse(typeof(Key), s));
         }
     }
 }
