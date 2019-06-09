@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassLib
+{
+    class Schedule
+    {
+        public DateTime EndTime { get; }
+        public List<ScheduledStage> Stages { get; }
+        public List<ScheduledStage> NextStages { get; }
+
+        public Schedule(DateTime endTime, List<ScheduledStage> stages, List<ScheduledStage> nextStages)
+        {
+            EndTime = endTime;
+            Stages = stages;
+            NextStages = nextStages;
+        }
+
+        public List<ScheduledStage> GetStages(Mode mode)
+        {
+            List<ScheduledStage> stages = new List<ScheduledStage>();
+            foreach (ScheduledStage stage in Stages)
+            {
+                if (stage.Mode == mode)
+                {
+                    stages.Add(stage);
+                }
+            }
+            return stages;
+        }
+        public List<ScheduledStage> GetNextStages(Mode mode)
+        {
+            List<ScheduledStage> stages = new List<ScheduledStage>();
+            foreach (ScheduledStage stage in NextStages)
+            {
+                if (stage.Mode == mode)
+                {
+                    stages.Add(stage);
+                }
+            }
+            return stages;
+        }
+    }
+}
