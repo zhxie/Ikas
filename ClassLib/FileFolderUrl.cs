@@ -12,7 +12,7 @@ namespace ClassLib
     {
         #region File
 
-        public const string Config = "\\config.txt";
+        public const string Config = @"\config.txt";
 
         #endregion
 
@@ -22,7 +22,7 @@ namespace ClassLib
         {
             get
             {
-                return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + Assembly.GetEntryAssembly().GetName().Name;
+                return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + Assembly.GetEntryAssembly().GetName().Name;
             }
         }
 
