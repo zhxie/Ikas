@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Ikas")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Sketch")]
 [assembly: AssemblyProduct("Ikas")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]

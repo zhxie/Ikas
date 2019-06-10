@@ -49,7 +49,7 @@ namespace Ikas
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseCookies = false;
             HttpClient client = new HttpClient(handler);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.Schedule);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetScheduleApi);
             request.Headers.Add("Cookie", "iksm_session=" + "e1a7ae2de618b711fee2e7b16024dbb5766fd028");
             HttpResponseMessage response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
