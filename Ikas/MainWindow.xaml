@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ikas"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Ikas" Height="54" Width="495" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None"  Background="Transparent">
     <Grid>
-        
+        <Border CornerRadius="27">
+            <Border.Background>
+                <SolidColorBrush Color="#FF221F22"/>
+            </Border.Background>
+        </Border>
+        <Border CornerRadius="27,27,27,27">
+            <Border.Background>
+                <ImageBrush ImageSource="assets/img/strip_dark.png" Stretch="None" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
+            </Border.Background>
+        </Border>
+        <StackPanel Orientation="Horizontal">
+            <Label x:Name="lbMode" Content="ランク" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FF19D719" FontSize="26" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="25,0,0,0" Height="70" VerticalAlignment="Center"/>
+            <Label x:Name="lbLevel" Content="56" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Height="100" VerticalAlignment="Center" Width="70"/>
+            <Border x:Name="bdStage1" Width="110" Height="44" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" Margin="18,0,0,0" CornerRadius="8" Background="Black" UseLayoutRounding="False"/>
+            <Border x:Name="bdStage2" Width="110" Height="44" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" Margin="10,0,0,0" CornerRadius="8" Background="Black"/>
+        </StackPanel>
     </Grid>
 </Window>
