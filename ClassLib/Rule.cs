@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassLib
 {
-    public class Rule
+    public static class Rule
     {
         public enum Key
         {
@@ -25,16 +25,9 @@ namespace ClassLib
             clam
         }
 
-        public int Id { get; }
-
-        public Rule(Key key)
+        public static Key ParseKey(string s)
         {
-            Id = (int)key;
-        }
-
-        public static Rule Parse(string s)
-        {
-            return new Rule((Key)Enum.Parse(typeof(Key), s));
+            return (Key)Enum.Parse(typeof(Key), s);
         }
     }
 }

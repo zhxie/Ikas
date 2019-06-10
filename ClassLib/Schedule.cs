@@ -25,7 +25,7 @@ namespace ClassLib
             NextStages = new List<ScheduledStage>();
         }
 
-        public List<ScheduledStage> GetStages(Mode mode)
+        public List<ScheduledStage> GetStages(Mode.Key mode)
         {
             List<ScheduledStage> stages = new List<ScheduledStage>();
             foreach (ScheduledStage stage in Stages)
@@ -37,7 +37,7 @@ namespace ClassLib
             }
             return stages;
         }
-        public List<ScheduledStage> GetNextStages(Mode mode)
+        public List<ScheduledStage> GetNextStages(Mode.Key mode)
         {
             List<ScheduledStage> stages = new List<ScheduledStage>();
             foreach (ScheduledStage stage in NextStages)

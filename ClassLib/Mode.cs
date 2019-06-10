@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassLib
 {
-    public class Mode
+    public static class Mode
     {
         public enum Key
         {
@@ -17,30 +17,16 @@ namespace ClassLib
             splatfest
         }
 
-        public int Id { get; }
-
-        public Mode(Key key)
-        {
-            Id = (int)key;
-        }
-
-        public static Mode Parse(string s)
+        public static Key ParseKey(string s)
         {
             switch (s)
             {
                 case "regular":
-                    return new Mode(Key.regular_battle);
+                    return Key.regular_battle;
                 case "gachi":
-                    return new Mode(Key.ranked_battle);
+                    return Key.ranked_battle;
                 case "league":
-                case "league_team":
-                    return new Mode(Key.league_battle);
-                case "private":
-                    return new Mode(Key.private_battle);
-                case "fes":
-                case "fes_solo":
-                case "fes_team":
-                    return new Mode(Key.splatfest);
+                    return Key.league_battle;
                 default:
                     throw new InvalidCastException();
             }

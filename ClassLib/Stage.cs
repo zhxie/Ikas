@@ -66,28 +66,31 @@ namespace ClassLib
         }
 
         public int Id { get; }
+        public string Image { get; }
 
-        public Stage(Key key)
+        public Stage(Key key, string image)
         {
             Id = (int)key;
+            Image = image;
         }
         public Stage()
         {
             Id = -1;
+            Image = "";
         }
     }
 
     public class ScheduledStage : Stage
     {
-        public Mode Mode { get; }
-        public Rule Rule { get; }
+        public Mode.Key Mode { get; }
+        public Rule.Key Rule { get; }
 
-        public ScheduledStage(Mode mode, Rule rule, Key key) : base(key)
+        public ScheduledStage(Mode.Key mode, Rule.Key rule, Key key, string image) : base(key, image)
         {
             Mode = mode;
             Rule = rule;
         }
-        public ScheduledStage(Mode mode, Rule rule) : base()
+        public ScheduledStage(Mode.Key mode, Rule.Key rule) : base()
         {
             Mode = mode;
             Rule = rule;
