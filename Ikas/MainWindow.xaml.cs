@@ -29,16 +29,12 @@ namespace Ikas
         public MainWindow()
         {
             // Load user and system configuration
-            if (!Depot.LoadUser())
+            if (!Depot.LoadUserConfiguration())
             {
                 MessageBox.Show("Failed in loading user configuration!", "Ikas", MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(-1);
             }
-            if (!Depot.LoadConfig())
-            {
-                MessageBox.Show("Failed in loading system configuration!", "Ikas", MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(-2);
-            }
+            Depot.LoadSystemConfiguration();
             // Initialize component
             InitializeComponent();
         }

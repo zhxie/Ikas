@@ -72,7 +72,7 @@ namespace Ikas
         /// </summary>
         /// <param name="file">The file of the user, the default one is user.ini</param>
         /// <returns></returns>
-        public static bool LoadUser(string file = FileFolderUrl.UserConfiguration)
+        public static bool LoadUserConfiguration(string file = FileFolderUrl.UserConfiguration)
         {
             string newFile = file;
             if (!File.Exists(newFile))
@@ -106,7 +106,7 @@ namespace Ikas
         /// Load system configuration from config.ini.
         /// </summary>
         /// <returns></returns>
-        public static bool LoadConfig()
+        public static bool LoadSystemConfiguration()
         {
             if (!File.Exists(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration))
             {
