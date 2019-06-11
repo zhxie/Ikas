@@ -28,6 +28,9 @@ namespace Ikas
     {
         public MainWindow()
         {
+            // Load user and system configuration
+            Depot.LoadUser();
+            // Initialize component
             InitializeComponent();
         }
 
@@ -88,76 +91,79 @@ namespace Ikas
             List<ScheduledStage> scheduledStages = schedule.GetStages(Depot.CurrentMode);
             if (scheduledStages.Count > 0 || Depot.CurrentMode == Mode.Key.regular_battle)
             {
-                // Change UI
-                switch (Depot.CurrentMode)
-                {
-                    case Mode.Key.regular_battle:
-                        lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                        lbMode.Content = ((Rule.ShortName)Depot.Schedule.GetStages(Mode.Key.regular_battle)[0].Rule).ToString();
-                        lbLevel.Content = "--";
-                        break;
-                    case Mode.Key.ranked_battle:
-                        lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
-                        lbMode.Content = ((Rule.ShortName)Depot.Schedule.GetStages(Mode.Key.ranked_battle)[0].Rule).ToString();
-                        lbLevel.Content = "--";
-                        break;
-                    case Mode.Key.league_battle:
-                        lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                        lbMode.Content = ((Rule.ShortName)Depot.Schedule.GetStages(Mode.Key.league_battle)[0].Rule).ToString();
-                        lbLevel.Content = "--";
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-                // Fade in labels
-                ((Storyboard)FindResource("fade_in")).Begin(lbMode);
-                ((Storyboard)FindResource("fade_in")).Begin(lbLevel);
-                // Update Stages
                 if (scheduledStages.Count > 0)
                 {
-                    Stage stage = scheduledStages[0];
-                    string image = FileFolderUrl.ApplicationData + stage.Image;
-                    if (File.Exists(image))
+                    // Change UI
+                    switch (Depot.CurrentMode)
                     {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                        brush.Stretch = Stretch.UniformToFill;
-                        bdStage1.Background = brush;
-                        ((Storyboard)FindResource("bg_fade_in")).Begin(bdStage1);
+                        case Mode.Key.regular_battle:
+                            lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                            lbMode.Content = ((Rule.ShortName)Depot.Schedule.GetStages(Mode.Key.regular_battle)[0].Rule).ToString();
+                            lbLevel.Content = "--";
+                            break;
+                        case Mode.Key.ranked_battle:
+                            lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+                            lbMode.Content = ((Rule.ShortName)Depot.Schedule.GetStages(Mode.Key.ranked_battle)[0].Rule).ToString();
+                            lbLevel.Content = "--";
+                            break;
+                        case Mode.Key.league_battle:
+                            lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                            lbMode.Content = ((Rule.ShortName)Depot.Schedule.GetStages(Mode.Key.league_battle)[0].Rule).ToString();
+                            lbLevel.Content = "--";
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
-                    else
+                    // Fade in labels
+                    ((Storyboard)FindResource("fade_in")).Begin(lbMode);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbLevel);
+                    // Update Stages
+                    if (scheduledStages.Count > 0)
                     {
-                        // Download the image
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image);
-                        Depot.downloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        Stage stage = scheduledStages[0];
+                        string image = FileFolderUrl.ApplicationData + stage.Image;
+                        if (File.Exists(image))
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                             brush.Stretch = Stretch.UniformToFill;
                             bdStage1.Background = brush;
                             ((Storyboard)FindResource("bg_fade_in")).Begin(bdStage1);
-                        }));
+                        }
+                        else
+                        {
+                            // Download the image
+                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image);
+                            Depot.downloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                            {
+                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                                brush.Stretch = Stretch.UniformToFill;
+                                bdStage1.Background = brush;
+                                ((Storyboard)FindResource("bg_fade_in")).Begin(bdStage1);
+                            }));
+                        }
                     }
-                }
-                if (scheduledStages.Count > 1)
-                {
-                    Stage stage = scheduledStages[1];
-                    string image = FileFolderUrl.ApplicationData + stage.Image;
-                    if (File.Exists(image))
+                    if (scheduledStages.Count > 1)
                     {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                        brush.Stretch = Stretch.UniformToFill;
-                        bdStage2.Background = brush;
-                        ((Storyboard)FindResource("bg_fade_in")).Begin(bdStage2);
-                    }
-                    else
-                    {
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image);
-                        Depot.downloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        Stage stage = scheduledStages[1];
+                        string image = FileFolderUrl.ApplicationData + stage.Image;
+                        if (File.Exists(image))
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                             brush.Stretch = Stretch.UniformToFill;
                             bdStage2.Background = brush;
                             ((Storyboard)FindResource("bg_fade_in")).Begin(bdStage2);
-                        }));
+                        }
+                        else
+                        {
+                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image);
+                            Depot.downloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                            {
+                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                                brush.Stretch = Stretch.UniformToFill;
+                                bdStage2.Background = brush;
+                                ((Storyboard)FindResource("bg_fade_in")).Begin(bdStage2);
+                            }));
+                        }
                     }
                 }
             }

@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
+using IniParser;
+using IniParser.Model;
 using Newtonsoft.Json.Linq;
 
 using ClassLib;
@@ -17,6 +20,8 @@ namespace Ikas
     public delegate void CurrentModeChangedEventHandler();
     public static class Depot
     {
+        public static string Cookie { get; set; } = "";
+
         public static DownloadManager downloadManager { get; } = new DownloadManager();
 
         public static event ScheduleUpdatedEventHandler ScheduleUpdated;
@@ -47,6 +52,62 @@ namespace Ikas
         }
 
         /// <summary>
+        /// Load user configuration from a file.
+        /// </summary>
+        /// <param name="file">The file of the user, the default one is user.ini</param>
+        /// <returns></returns>
+        public static bool LoadUser(string file = FileFolderUrl.UserConfiguration)
+        {
+            string newFile = file;
+            if (!File.Exists(newFile))
+            {
+                newFile = System.Environment.CurrentDirectory + newFile;
+                if (!File.Exists(newFile))
+                {
+                    return false;
+                }
+            }
+            try
+            {
+                FileIniDataParser parser = new FileIniDataParser();
+                IniData data = parser.ReadFile(newFile);
+                Cookie = data["Ikas"]["Cookie"];
+                if (Cookie.Trim() == "")
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// Load system configuration from config.ini.
+        /// </summary>
+        /// <returns></returns>
+        public static bool LoadConfig()
+        {
+            if (!File.Exists(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration))
+            {
+                return false;
+            }
+            try
+            {
+                FileIniDataParser parser = new FileIniDataParser();
+                IniData data = parser.ReadFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        /// <summary>
         /// Get current and next Schedule in regular, ranked and league mode.
         /// </summary>
         public static async void GetSchedule()
@@ -56,7 +117,7 @@ namespace Ikas
             handler.UseCookies = false;
             HttpClient client = new HttpClient(handler);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetScheduleApi);
-            request.Headers.Add("Cookie", "iksm_session=" + "e1a7ae2de618b711fee2e7b16024dbb5766fd028");
+            request.Headers.Add("Cookie", "iksm_session=" + Cookie);
             HttpResponseMessage response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
