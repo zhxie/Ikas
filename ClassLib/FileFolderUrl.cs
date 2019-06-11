@@ -12,8 +12,8 @@ namespace ClassLib
     {
         #region File
 
-        public const string User = @"\user.txt";
-        public const string Config = @"\config.txt";
+        public const string UserConfiguration = @"\user.ini";
+        public const string SystemConfiguration = @"\config.ini";
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace ClassLib
         }
 
         /// <summary>
-        /// Get the folder of a file
+        /// Get the folder of a file.
         /// </summary>
         /// <param name="file">Full path to the file</param>
         /// <returns></returns>

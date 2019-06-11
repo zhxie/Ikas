@@ -107,6 +107,12 @@ namespace ClassLib
             DownloadersMutex.ReleaseMutex();
         }
 
+        /// <summary>
+        /// Add a Downloader to the DownloadManager and start downloading.
+        /// </summary>
+        /// <param name="downloader">The Downloader which is going to be added</param>
+        /// <param name="handler">Handler for DownloadSucceeded event</param>
+        /// <returns></returns>
         public bool AddDownloader(Downloader downloader, DownloadCompletedEventHandler handler)
         {
             DownloadersMutex.WaitOne();
@@ -132,6 +138,10 @@ namespace ClassLib
             DownloadersMutex.ReleaseMutex();
             return true;
         }
+        /// <summary>
+        /// Remove Downloaders with certain Source.
+        /// </summary>
+        /// <param name="source">The matching Source</param>
         public void RemoveDownloaders(Downloader.SourceType source)
         {
             DownloadersMutex.WaitOne();
@@ -166,6 +176,10 @@ namespace ClassLib
             DownloadersMutex.ReleaseMutex();
         }
 
+        /// <summary>
+        /// Remove a Downloader.
+        /// </summary>
+        /// <param name="downloader">The Downloader which is going to be removed</param>
         private void RemoveDownloader(Downloader downloader)
         {
             DownloadersMutex.WaitOne();
