@@ -29,7 +29,16 @@ namespace Ikas
         public MainWindow()
         {
             // Load user and system configuration
-            Depot.LoadUser();
+            if (!Depot.LoadUser())
+            {
+                MessageBox.Show("Failed in loading user configuration!", "Ikas", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(-1);
+            }
+            if (!Depot.LoadConfig())
+            {
+                MessageBox.Show("Failed in loading system configuration!", "Ikas", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(-2);
+            }
             // Initialize component
             InitializeComponent();
         }
@@ -132,8 +141,8 @@ namespace Ikas
                         else
                         {
                             // Download the image
-                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image);
-                            Depot.downloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
+                            Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                             {
                                 ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                                 brush.Stretch = Stretch.UniformToFill;
@@ -155,8 +164,8 @@ namespace Ikas
                         }
                         else
                         {
-                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image);
-                            Depot.downloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
+                            Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                             {
                                 ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                                 brush.Stretch = Stretch.UniformToFill;

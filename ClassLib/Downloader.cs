@@ -25,6 +25,7 @@ namespace ClassLib
         public string Url { get; }
         public string To { get; }
         public SourceType Source { get; }
+        public WebProxy Proxy { get; }
         private bool isActive;
         public bool IsActive
         {
@@ -52,10 +53,12 @@ namespace ClassLib
         public event DownloadCompletedEventHandler DownloadCompleted;
         public event DownloadCompletedEventHandler DownloadSucceeded;
 
-        public Downloader(string url, string to)
+        public Downloader(string url, string to, SourceType source, WebProxy proxy = null)
         {
             Url = url;
             To = to;
+            Source = source;
+            Proxy = proxy;
             isActive = false;
             isSuccess = false;
         }
@@ -69,6 +72,10 @@ namespace ClassLib
                 Directory.CreateDirectory(FileFolderUrl.GetFolder(To));
             }
             WebClient client = new WebClient();
+            if (Proxy != null)
+            {
+                client.Proxy = Proxy;
+            }
             try
             {
                 await client.DownloadFileTaskAsync(Url, To);
@@ -117,15 +124,15 @@ namespace ClassLib
         {
             DownloadersMutex.WaitOne();
             // Clean up inactive download
-            downloaders.RemoveAll(p => p.IsActive);
+            downloaders.RemoveAll(p => !p.IsActive);
             foreach (Downloader d in Downloaders)
             {
                 if (d.To == downloader.To)
                 {
                     d.DownloadSucceeded += handler;
+                    DownloadersMutex.ReleaseMutex();
+                    return false;
                 }
-                DownloadersMutex.ReleaseMutex();
-                return false;
             }
             downloader.DownloadCompleted += new DownloadCompletedEventHandler(() =>
             {
@@ -134,8 +141,8 @@ namespace ClassLib
             downloader.DownloadSucceeded += handler;
             downloaders.Add(downloader);
             // Start download
-            downloader.DownloadAsync();
             DownloadersMutex.ReleaseMutex();
+            downloader.DownloadAsync();
             return true;
         }
         /// <summary>

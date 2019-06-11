@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -20,9 +21,24 @@ namespace Ikas
     public delegate void CurrentModeChangedEventHandler();
     public static class Depot
     {
-        public static string Cookie { get; set; } = "";
+        private static string cookie = "";
+        public static string Cookie
+        {
+            get
+            {
+                return cookie;
+            }
+        }
 
-        public static DownloadManager downloadManager { get; } = new DownloadManager();
+        private static WebProxy proxy = null;
+        public static WebProxy Proxy
+        {
+            get
+            {
+                return proxy;
+            }
+        }
+        public static DownloadManager DownloadManager { get; } = new DownloadManager();
 
         public static event ScheduleUpdatedEventHandler ScheduleUpdated;
         private static Mutex ScheduleMutex = new Mutex();
@@ -45,9 +61,9 @@ namespace Ikas
                 if (CurrentMode != value)
                 {
                     currentMode = value;
-                    // Raise event
-                    CurrentModeChanged?.Invoke();
                 }
+                // Raise event
+                CurrentModeChanged?.Invoke();
             }
         }
 
@@ -71,8 +87,8 @@ namespace Ikas
             {
                 FileIniDataParser parser = new FileIniDataParser();
                 IniData data = parser.ReadFile(newFile);
-                Cookie = data["Ikas"]["Cookie"];
-                if (Cookie.Trim() == "")
+                cookie = data[FileFolderUrl.UserConfigurationUserSection][FileFolderUrl.UserConfigurationCookie].Trim();
+                if (Cookie == "")
                 {
                     return false;
                 }
@@ -100,6 +116,13 @@ namespace Ikas
             {
                 FileIniDataParser parser = new FileIniDataParser();
                 IniData data = parser.ReadFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration);
+                bool useProxy = bool.Parse(data[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxy].Trim());
+                if (useProxy)
+                {
+                    string host = data[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyHost].Trim();
+                    int port = int.Parse(data[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyPort].Trim());
+                    proxy = new WebProxy(host, port);
+                }
                 return true;
             }
             catch
@@ -112,9 +135,16 @@ namespace Ikas
         /// </summary>
         public static async void GetSchedule()
         {
+            // Remove previous Downloader's handlers
+            Depot.DownloadManager.RemoveDownloaders(Downloader.SourceType.Schedule);
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseCookies = false;
+            if (Proxy != null)
+            {
+                handler.UseProxy = true;
+                handler.Proxy = Proxy;
+            }
             HttpClient client = new HttpClient(handler);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetScheduleApi);
             request.Headers.Add("Cookie", "iksm_session=" + Cookie);
