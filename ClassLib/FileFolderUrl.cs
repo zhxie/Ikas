@@ -12,6 +12,7 @@ namespace ClassLib
     {
         #region File
 
+        public const string User = @"\user.txt";
         public const string Config = @"\config.txt";
 
         #endregion
@@ -24,6 +25,17 @@ namespace ClassLib
             {
                 return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + Assembly.GetEntryAssembly().GetName().Name;
             }
+        }
+
+        /// <summary>
+        /// Get the folder of a file
+        /// </summary>
+        /// <param name="file">Full path to the file</param>
+        /// <returns></returns>
+        public static string GetFolder(string file)
+        {
+            string newFile = file.Replace('/', '\\');
+            return newFile.Substring(0, newFile.Length - newFile.LastIndexOf(@"\") + 1);
         }
 
         #endregion
