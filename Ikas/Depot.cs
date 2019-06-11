@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System.Threading;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using Newtonsoft.Json.Linq;
 
 using ClassLib;
@@ -17,11 +17,13 @@ namespace Ikas
     public delegate void CurrentModeChangedEventHandler();
     public static class Depot
     {
-        public static event ScheduleUpdatedEventHandler ScheduleUpdatedEvent;
+        public static DownloadManager downloadManager { get; } = new DownloadManager();
+
+        public static event ScheduleUpdatedEventHandler ScheduleUpdated;
         private static Mutex ScheduleMutex = new Mutex();
         public static Schedule Schedule { get; set; } = new Schedule();
 
-        public static event CurrentModeChangedEventHandler CurrentModeChangedEvent;
+        public static event CurrentModeChangedEventHandler CurrentModeChanged;
         private static Mode.Key currentMode = Mode.Key.regular_battle;
         public static Mode.Key CurrentMode
         {
@@ -31,11 +33,15 @@ namespace Ikas
             }
             set
             {
+                if ((int)value > 2)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
                 if (CurrentMode != value)
                 {
                     currentMode = value;
                     // Raise event
-                    CurrentModeChangedEvent?.Invoke();
+                    CurrentModeChanged?.Invoke();
                 }
             }
         }
@@ -103,11 +109,13 @@ namespace Ikas
                 Schedule = schedule;
                 ScheduleMutex.ReleaseMutex();
                 // Raise event
-                ScheduleUpdatedEvent?.Invoke();
+                ScheduleUpdated?.Invoke();
                 return true;
             }
             else
             {
+                // Raise event
+                ScheduleUpdated?.Invoke();
                 return false;
             }
         }
