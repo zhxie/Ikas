@@ -28,12 +28,6 @@ namespace Ikas
         {
             // Initialize component
             InitializeComponent();
-        }
-
-        #region Control Event
-
-        private void ScheduleWindow_Loaded(object sender, RoutedEventArgs e)
-        {
             // Set properties for controls
             RenderOptions.SetBitmapScalingMode(imgMode, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdStage1, BitmapScalingMode.HighQuality);
@@ -44,6 +38,8 @@ namespace Ikas
             Depot.CurrentModeChanged += new CurrentModeChangedEventHandler(CurrentModeChanged);
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
         }
+
+        #region Control Event
 
         #endregion
 
@@ -80,15 +76,15 @@ namespace Ikas
                 switch (Depot.CurrentMode)
                 {
                     case Mode.Key.regular_battle:
-                        //imgMode.Source = new BitmapImage(new Uri("assets/img/battle-regular.png"));
+                        imgMode.Source = (BitmapImage)FindResource("image_battle_regular");
                         bdNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         break;
                     case Mode.Key.ranked_battle:
-                        //imgMode.Source = new BitmapImage(new Uri("assets/img/battle-ranked.png"));
+                        imgMode.Source = (BitmapImage)FindResource("image_battle_ranked");
                         bdNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
                         break;
                     case Mode.Key.league_battle:
-                        //imgMode.Source = new BitmapImage(new Uri("assets/img/battle-league.png"));
+                        imgMode.Source = (BitmapImage)FindResource("image_battle_league");
                         bdNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                         break;
                     default:

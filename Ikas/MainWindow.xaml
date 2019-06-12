@@ -15,6 +15,21 @@
         <Storyboard x:Key="fade_in">
             <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="2"/>
         </Storyboard>
+        <Storyboard x:Key="window_fade_out">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="4"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="window_fade_in">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
+        </Storyboard>
     </Window.Resources>
     <Grid>
         <Border CornerRadius="27">
@@ -33,10 +48,16 @@
                    Content="Ikas" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FF19D719" FontSize="26" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="25,0,0,0" Height="70" VerticalAlignment="Center" Opacity="0"/>
             <Label x:Name="lbLevel" Content="--" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,0,0,0" Height="100" VerticalAlignment="Center" Width="70" Opacity="0"/>
             <Border Width="110" Height="44" Padding="0" Margin="18,0,0,0" CornerRadius="8" Background="Black">
-                <Border x:Name="bdStage1" Width="110" Height="44" CornerRadius="8" Background="Green" Opacity="0"/>
+                <Border x:Name="bdStage1"
+                        MouseEnter="BdStage_MouseEnter"
+                        MouseLeave="BdStage_MouseLeave"
+                        Width="110" Height="44" CornerRadius="8" Background="Green" Opacity="0"/>
             </Border>
             <Border Width="110" Height="44" Padding="0" Margin="10,0,0,0" CornerRadius="8" Background="Black">
-                <Border x:Name="bdStage2" Width="110" Height="44" CornerRadius="8" Background="Green" Opacity="0"/>
+                <Border x:Name="bdStage2"
+                        MouseEnter="BdStage_MouseEnter"
+                        MouseLeave="BdStage_MouseLeave"
+                        Width="110" Height="44" CornerRadius="8" Background="Green" Opacity="0"/>
             </Border>
         </StackPanel>
     </Grid>

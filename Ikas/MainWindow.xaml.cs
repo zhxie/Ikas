@@ -25,6 +25,8 @@ namespace Ikas
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ScheduleWindow scheduleWindow;
+
         public MainWindow()
         {
             // Load user and system configuration
@@ -36,27 +38,30 @@ namespace Ikas
             Depot.LoadSystemConfiguration();
             // Initialize component
             InitializeComponent();
-        }
-
-        #region Control Event
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            // 
-            ScheduleWindow scheduleWindow = new ScheduleWindow();
-            scheduleWindow.Show();
             // Set properties for controls
             RenderOptions.SetBitmapScalingMode(bdStage1, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdStage2, BitmapScalingMode.HighQuality);
             // Add handler for global member
             Depot.CurrentModeChanged += new CurrentModeChangedEventHandler(CurrentModeChanged);
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
+            // Prepare Schedule and Battle window
+            scheduleWindow = new ScheduleWindow();
+            scheduleWindow.Opacity = 0;
+            scheduleWindow.Top = Top + Height + 10;
+            scheduleWindow.Left = Left;
+        }
+
+        #region Control Event
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
             // Update Schedule
             Depot.GetSchedule();
         }
 
         private void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
             DragMove();
         }
 
@@ -76,6 +81,18 @@ namespace Ikas
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void BdStage_MouseEnter(object sender, MouseEventArgs e)
+        {
+            scheduleWindow.Top = Top + Height + 10;
+            scheduleWindow.Left = Left;
+            ((Storyboard)FindResource("window_fade_in")).Begin(scheduleWindow);
+        }
+
+        private void BdStage_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
         }
 
         #endregion
