@@ -61,6 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ScheduleWindow.xaml.cs">
+      <DependentUpon>ScheduleWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,6 +77,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ScheduleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -114,16 +121,30 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\img\strip.png" />
+    <Resource Include="assets\img\bg-strips.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\img\strip_dark.png" />
+    <Resource Include="assets\img\bg-strips-dark.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLib\ClassLib.csproj">
       <Project>{b3fb3705-a535-4f2d-9a93-2c2e9de17604}</Project>
       <Name>ClassLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\img\battle-league.png" />
+    <Resource Include="assets\img\battle-ranked.png" />
+    <Resource Include="assets\img\battle-regular.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\img\battle-splatfest.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\img\battle-private.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\img\bg-strips-small.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
