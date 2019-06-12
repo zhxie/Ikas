@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 
 using System.IO;
 using System.Windows.Media.Animation;
-using Newtonsoft.Json.Linq;
 
 using ClassLib;
 
@@ -43,6 +42,9 @@ namespace Ikas
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            // 
+            ScheduleWindow scheduleWindow = new ScheduleWindow();
+            scheduleWindow.Show();
             // Set properties for controls
             RenderOptions.SetBitmapScalingMode(bdStage1, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdStage2, BitmapScalingMode.HighQuality);
@@ -91,7 +93,6 @@ namespace Ikas
 
         private void ScheduleUpdated()
         {
-            // TODO: brush animation
             Schedule schedule = Depot.Schedule;
             List<ScheduledStage> scheduledStages = schedule.GetStages(Depot.CurrentMode);
             if (scheduledStages.Count > 0 || Depot.CurrentMode == Mode.Key.regular_battle)
@@ -103,54 +104,47 @@ namespace Ikas
                     {
                         case Mode.Key.regular_battle:
                             lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            lbMode.Content = ((Rule.ShortName)Depot.Schedule.GetStages(Mode.Key.regular_battle)[0].Rule).ToString();
-                            lbLevel.Content = "--";
                             break;
                         case Mode.Key.ranked_battle:
                             lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
-                            lbMode.Content = ((Rule.ShortName)Depot.Schedule.GetStages(Mode.Key.ranked_battle)[0].Rule).ToString();
-                            lbLevel.Content = "--";
                             break;
                         case Mode.Key.league_battle:
                             lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            lbMode.Content = ((Rule.ShortName)Depot.Schedule.GetStages(Mode.Key.league_battle)[0].Rule).ToString();
-                            lbLevel.Content = "--";
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
+                    lbMode.Content = ((Rule.ShortName)scheduledStages[0].Rule).ToString();
+                    lbLevel.Content = "--";
                     // Fade in labels
                     ((Storyboard)FindResource("fade_in")).Begin(lbMode);
                     ((Storyboard)FindResource("fade_in")).Begin(lbLevel);
                     // Update Stages
-                    if (scheduledStages.Count > 0)
+                    Stage stage = scheduledStages[0];
+                    string image = FileFolderUrl.ApplicationData + stage.Image;
+                    if (File.Exists(image))
                     {
-                        Stage stage = scheduledStages[0];
-                        string image = FileFolderUrl.ApplicationData + stage.Image;
-                        if (File.Exists(image))
+                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                        brush.Stretch = Stretch.UniformToFill;
+                        bdStage1.Background = brush;
+                        ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
+                    }
+                    else
+                    {
+                        // Download the image
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
+                        Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                             brush.Stretch = Stretch.UniformToFill;
                             bdStage1.Background = brush;
                             ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
-                        }
-                        else
-                        {
-                            // Download the image
-                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
-                            Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                            {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                                brush.Stretch = Stretch.UniformToFill;
-                                bdStage1.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
-                            }));
-                        }
+                        }));
                     }
                     if (scheduledStages.Count > 1)
                     {
-                        Stage stage = scheduledStages[1];
-                        string image = FileFolderUrl.ApplicationData + stage.Image;
+                        stage = scheduledStages[1];
+                        image = FileFolderUrl.ApplicationData + stage.Image;
                         if (File.Exists(image))
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));

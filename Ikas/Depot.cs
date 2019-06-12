@@ -136,7 +136,7 @@ namespace Ikas
         public static async void GetSchedule()
         {
             // Remove previous Downloader's handlers
-            Depot.DownloadManager.RemoveDownloaders(Downloader.SourceType.Schedule);
+            DownloadManager.RemoveDownloaders(Downloader.SourceType.Schedule);
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseCookies = false;
