@@ -69,6 +69,11 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="assets\lang\ja-JP.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -107,15 +112,6 @@
     </EmbeddedResource>
     <Resource Include="assets\font\Splatfont.ttf" />
     <Resource Include="assets\font\Splatfont2.ttf" />
-    <None Include="assets\data\ability.json" />
-    <None Include="assets\data\brand.json" />
-    <None Include="assets\data\main.json" />
-    <None Include="assets\data\mode.json" />
-    <None Include="assets\data\rule.json" />
-    <None Include="assets\data\special.json" />
-    <None Include="assets\data\stage.json" />
-    <None Include="assets\data\sub.json" />
-    <None Include="assets\data\type.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

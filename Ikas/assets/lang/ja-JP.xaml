@@ -1,0 +1,81 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!-- Mode -->
+    <sys:String x:Key="regular_battle">レギュラーマッチ</sys:String>
+    <sys:String x:Key="ranked_battle">ガチマッチ</sys:String>
+    <sys:String x:Key="league_battle">リーグマッチ</sys:String>
+    <sys:String x:Key="private_battle">プライベートマッチ</sys:String>
+    <sys:String x:Key="splatfest">フェス</sys:String>
+    <!-- Rule -->
+    <sys:String x:Key="turf_war">ナワバリバトル</sys:String>
+    <sys:String x:Key="splat_zones">ガチエリア</sys:String>
+    <sys:String x:Key="tower_control">ガチヤグラ</sys:String>
+    <sys:String x:Key="rainmaker">ガチホコバトル</sys:String>
+    <sys:String x:Key="clam_blitz">ガチアサリ</sys:String>
+    <sys:String x:Key="turf">ナワバリ</sys:String>
+    <sys:String x:Key="zones">ガチエリア</sys:String>
+    <sys:String x:Key="tower">ガチヤグラ</sys:String>
+    <sys:String x:Key="rain">ガチホコ</sys:String>
+    <sys:String x:Key="clam">ガチアサリ</sys:String>
+    <!-- Stage -->
+    <sys:String x:Key="unknown">不明</sys:String>
+    <sys:String x:Key="the_reef">バッテラストリート</sys:String>
+    <sys:String x:Key="musselforge_fitness">フジツボスポーツクラブ</sys:String>
+    <sys:String x:Key="starfish_mainstage">ガンガゼ野外音楽堂</sys:String>
+    <sys:String x:Key="sturgeon_shipyard">チョウザメ造船</sys:String>
+    <sys:String x:Key="inkblot_art_academy">海女美術大学</sys:String>
+    <sys:String x:Key="humpback_pump_track">コンブトラック</sys:String>
+    <sys:String x:Key="manta_maria">マンタマリア号</sys:String>
+    <sys:String x:Key="port_mackerel">ホッケふ頭</sys:String>
+    <sys:String x:Key="moray_towers">タチウオパーキング</sys:String>
+    <sys:String x:Key="snapper_canal">エンガワ河川敷</sys:String>
+    <sys:String x:Key="kelp_dome">モズク農園</sys:String>
+    <sys:String x:Key="blackbelly_skatepark">Bバスパーク</sys:String>
+    <sys:String x:Key="shellendorf_institute">デボン海洋博物館</sys:String>
+    <sys:String x:Key="makomart">ザトウマーケット</sys:String>
+    <sys:String x:Key="walleye_warehouse">ハコフグ倉庫</sys:String>
+    <sys:String x:Key="arowana_mall">アロワナモール</sys:String>
+    <sys:String x:Key="camp_triggerfish">モンガラキャンプ場</sys:String>
+    <sys:String x:Key="piranha_pit">ショッツル鉱山</sys:String>
+    <sys:String x:Key="goby_arena">アジフライスタジアム</sys:String>
+    <sys:String x:Key="new_albacore_hotel">ホテルニューオートロ</sys:String>
+    <sys:String x:Key="wahoo_world">スメーシーワールド</sys:String>
+    <sys:String x:Key="anchov_games">アンチョビットゲームズ</sys:String>
+    <sys:String x:Key="skipper_pavilion">ムツゴ楼</sys:String>
+    <sys:String x:Key="shifty_station">ミステリーゾーン</sys:String>
+    <sys:String x:Key="reef">バッテラ</sys:String>
+    <sys:String x:Key="fitness">フジツボ</sys:String>
+    <sys:String x:Key="mainstage">ガンガゼ</sys:String>
+    <sys:String x:Key="shipyard">チョウザメ</sys:String>
+    <sys:String x:Key="academy">海女</sys:String>
+    <sys:String x:Key="track">コンブ</sys:String>
+    <sys:String x:Key="manta">MM号</sys:String>
+    <sys:String x:Key="port">ホッケ</sys:String>
+    <sys:String x:Key="towers">タチウオ</sys:String>
+    <sys:String x:Key="canal">エンガワ</sys:String>
+    <sys:String x:Key="dome">モズク</sys:String>
+    <sys:String x:Key="skatepark">Bバス</sys:String>
+    <sys:String x:Key="institute">デボン</sys:String>
+    <sys:String x:Key="mart">ザトウ</sys:String>
+    <sys:String x:Key="warehouse">ハコフグ</sys:String>
+    <sys:String x:Key="mall">アロワナ</sys:String>
+    <sys:String x:Key="camp">モンガラ</sys:String>
+    <sys:String x:Key="pit">ショッツル</sys:String>
+    <sys:String x:Key="arena">アジフライ</sys:String>
+    <sys:String x:Key="hotel">オートロ</sys:String>
+    <sys:String x:Key="world">スメーシー</sys:String>
+    <sys:String x:Key="games">アンチョビット</sys:String>
+    <sys:String x:Key="pavilion">ムツゴ</sys:String>
+    <sys:String x:Key="shifty">ミステリー</sys:String>
+    <!-- MainWindow -->
+    <sys:String x:Key="Failed in loading user configuration!">Failed in loading user configuration!</sys:String>
+    <sys:String x:Key="main_window-level">レベル</sys:String>
+    <sys:String x:Key="main_window-rank">ウデマエ</sys:String>
+    <sys:String x:Key="main_window---">--</sys:String>
+    <!-- ScheduleWindow -->
+    <sys:String x:Key="schedule_window-Next">つぎ</sys:String>
+    <sys:String x:Key="schedule_window-{0} - {1}">{0} - {1}</sys:String>
+    <sys:String x:Key="schedule_window-in {0} hour {1} min">{0} 時間 {1} 分後</sys:String>
+    <sys:String x:Key="schedule_window-in {0} min">{0} 分後</sys:String>
+</ResourceDictionary>

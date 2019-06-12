@@ -15,8 +15,10 @@ namespace ClassLib
         public const string UserConfiguration = @"\user.ini";
         public const string SystemConfiguration = @"\config.ini";
 
-        public const string UserConfigurationUserSection = "Ikas";
+        public const string UserConfigurationGeneralSection = "Ikas";
         public const string UserConfigurationCookie = "Cookie";
+        public const string SystemConfigurationGeneralSection = "Ikas";
+        public const string SystemConfigurationLanguage = "Language";
         public const string SystemConfigurationNetworkSection = "Network";
         public const string SystemConfigurationUseProxy = "UseProxy";
         public const string SystemConfigurationUseProxyHost = "UseProxyHost";

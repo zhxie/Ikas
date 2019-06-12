@@ -38,6 +38,14 @@ namespace Ikas
                 return proxy;
             }
         }
+        private static string language = null;
+        public static string Language
+        {
+            get
+            {
+                return language;
+            }
+        }
         public static DownloadManager DownloadManager { get; } = new DownloadManager();
 
         public static event ScheduleUpdatedEventHandler ScheduleUpdated;
@@ -87,7 +95,7 @@ namespace Ikas
             {
                 FileIniDataParser parser = new FileIniDataParser();
                 IniData data = parser.ReadFile(newFile);
-                cookie = data[FileFolderUrl.UserConfigurationUserSection][FileFolderUrl.UserConfigurationCookie].Trim();
+                cookie = data[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationCookie].Trim();
                 if (Cookie == "")
                 {
                     return false;
@@ -123,6 +131,7 @@ namespace Ikas
                     int port = int.Parse(data[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyPort].Trim());
                     proxy = new WebProxy(host, port);
                 }
+                language = data[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage].Trim();
                 return true;
             }
             catch

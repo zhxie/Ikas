@@ -26,6 +26,20 @@ namespace Ikas
     {
         public ScheduleWindow()
         {
+            // Load language
+            if (Depot.Language != null)
+            {
+                try
+                {
+                    ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + Depot.Language + ".xaml", UriKind.Relative));
+                    if (Resources.MergedDictionaries.Count > 0)
+                    {
+                        Resources.MergedDictionaries.Clear();
+                    }
+                    Resources.MergedDictionaries.Add(lang);
+                }
+                catch { }
+            }
             // Initialize component
             InitializeComponent();
             // Set properties for controls
