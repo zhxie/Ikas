@@ -154,6 +154,8 @@ namespace Ikas
                 string resultString = await response.Content.ReadAsStringAsync();
                 // Parse JSON
                 JObject jObject = JObject.Parse(resultString);
+                DateTime endTime = new DateTime();
+                List<ScheduledStage> stages = new List<ScheduledStage>(), nextStages = new List<ScheduledStage>();
                 try
                 {
                     // Regular
@@ -166,22 +168,21 @@ namespace Ikas
                     List<ScheduledStage> leagueStages = parseScheduledStages(jObject["league"][0]);
                     List<ScheduledStage> nextLeagueStages = parseScheduledStages(jObject["league"][1]);
                     // Create Schedule
-                    DateTime endTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(int.Parse(jObject["regular"][0]["end_time"].ToString()));
-                    List<ScheduledStage> stages = new List<ScheduledStage>(), nextStages = new List<ScheduledStage>();
+                    endTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(int.Parse(jObject["regular"][0]["end_time"].ToString()));
                     stages.AddRange(regularStages);
                     stages.AddRange(rankedStages);
                     stages.AddRange(leagueStages);
                     nextStages.AddRange(nextRegularStages);
                     nextStages.AddRange(nextRankedStages);
                     nextStages.AddRange(nextLeagueStages);
-                    // Update Schedule
-                    UpdateSchedule(new Schedule(endTime, stages, nextStages));
                 }
                 catch
                 {
-                    // Update Schedule
                     UpdateSchedule(new Schedule());
+                    return;
                 }
+                // Update Schedule
+                UpdateSchedule(new Schedule(endTime, stages, nextStages));
             }
             else
             {
