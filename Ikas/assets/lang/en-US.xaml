@@ -1,0 +1,81 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!-- Mode -->
+    <sys:String x:Key="regular_battle">Regular Battle</sys:String>
+    <sys:String x:Key="ranked_battle">Ranked Battle</sys:String>
+    <sys:String x:Key="league_battle">League Battle</sys:String>
+    <sys:String x:Key="private_battle">Private Battle</sys:String>
+    <sys:String x:Key="splatfest">Splatfest</sys:String>
+    <!-- Rule -->
+    <sys:String x:Key="turf_war">Turf War</sys:String>
+    <sys:String x:Key="splat_zones">Splat Zones</sys:String>
+    <sys:String x:Key="tower_control">Tower Control</sys:String>
+    <sys:String x:Key="rainmaker">Rainmaker</sys:String>
+    <sys:String x:Key="clam_blitz">Clam Blitz</sys:String>
+    <sys:String x:Key="turf">Turf</sys:String>
+    <sys:String x:Key="zones">Zones</sys:String>
+    <sys:String x:Key="tower">Tower</sys:String>
+    <sys:String x:Key="rain">Rain</sys:String>
+    <sys:String x:Key="clam">Clam</sys:String>
+    <!-- Stage -->
+    <sys:String x:Key="unknown">Unknown</sys:String>
+    <sys:String x:Key="the_reef">The Reef</sys:String>
+    <sys:String x:Key="musselforge_fitness">Musselforge Fitness</sys:String>
+    <sys:String x:Key="starfish_mainstage">Starfish Mainstage</sys:String>
+    <sys:String x:Key="sturgeon_shipyard">Sturgeon Shipyard</sys:String>
+    <sys:String x:Key="inkblot_art_academy">Inkblot Art Academy</sys:String>
+    <sys:String x:Key="humpback_pump_track">Humpback Pump Track</sys:String>
+    <sys:String x:Key="manta_maria">Manta Maria</sys:String>
+    <sys:String x:Key="port_mackerel">Port Mackerel</sys:String>
+    <sys:String x:Key="moray_towers">Moray Towers</sys:String>
+    <sys:String x:Key="snapper_canal">Snapper Canal</sys:String>
+    <sys:String x:Key="kelp_dome">Kelp Dome</sys:String>
+    <sys:String x:Key="blackbelly_skatepark">Blackbelly Skatepark</sys:String>
+    <sys:String x:Key="shellendorf_institute">Shellendorf Institute</sys:String>
+    <sys:String x:Key="makomart">Makomart</sys:String>
+    <sys:String x:Key="walleye_warehouse">Walleye Warehouse</sys:String>
+    <sys:String x:Key="arowana_mall">Arowana Mall</sys:String>
+    <sys:String x:Key="camp_triggerfish">Camp Triggerfish</sys:String>
+    <sys:String x:Key="piranha_pit">Piranha Pit</sys:String>
+    <sys:String x:Key="goby_arena">Goby Arena</sys:String>
+    <sys:String x:Key="new_albacore_hotel">New Albacore Hotel</sys:String>
+    <sys:String x:Key="wahoo_world">Wahoo World</sys:String>
+    <sys:String x:Key="anchov_games">Anchov Games</sys:String>
+    <sys:String x:Key="skipper_pavilion">Skipper Pavilion</sys:String>
+    <sys:String x:Key="shifty_station">Shifty Station</sys:String>
+    <sys:String x:Key="reef">Reef</sys:String>
+    <sys:String x:Key="fitness">Fitness</sys:String>
+    <sys:String x:Key="mainstage">Mainstage</sys:String>
+    <sys:String x:Key="shipyard">Shipyard</sys:String>
+    <sys:String x:Key="academy">Academy</sys:String>
+    <sys:String x:Key="track">Track</sys:String>
+    <sys:String x:Key="manta">Manta</sys:String>
+    <sys:String x:Key="port">Port</sys:String>
+    <sys:String x:Key="towers">Towers</sys:String>
+    <sys:String x:Key="canal">Canal</sys:String>
+    <sys:String x:Key="dome">Dome</sys:String>
+    <sys:String x:Key="skatepark">Skatepark</sys:String>
+    <sys:String x:Key="institute">Institute</sys:String>
+    <sys:String x:Key="mart">Mart</sys:String>
+    <sys:String x:Key="warehouse">Warehouse</sys:String>
+    <sys:String x:Key="mall">Mall</sys:String>
+    <sys:String x:Key="camp">Camp</sys:String>
+    <sys:String x:Key="pit">Pit</sys:String>
+    <sys:String x:Key="arena">Arena</sys:String>
+    <sys:String x:Key="hotel">Hotel</sys:String>
+    <sys:String x:Key="world">World</sys:String>
+    <sys:String x:Key="games">Games</sys:String>
+    <sys:String x:Key="pavilion">Pavilion</sys:String>
+    <sys:String x:Key="shifty">Shifty</sys:String>
+    <!-- MainWindow -->
+    <sys:String x:Key="Failed in loading user configuration!">Failed in loading user configuration!</sys:String>
+    <sys:String x:Key="main_window-level">Level</sys:String>
+    <sys:String x:Key="main_window-rank">Rank</sys:String>
+    <sys:String x:Key="main_window---">--</sys:String>
+    <!-- ScheduleWindow -->
+    <sys:String x:Key="schedule_window-Next">Next</sys:String>
+    <sys:String x:Key="schedule_window-{0} - {1}">{0} - {1}</sys:String>
+    <sys:String x:Key="schedule_window-in {0} hour {1} min">in {0} hour {1} min</sys:String>
+    <sys:String x:Key="schedule_window-in {0} min">in {0} min</sys:String>
+</ResourceDictionary>

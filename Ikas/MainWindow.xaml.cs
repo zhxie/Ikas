@@ -32,7 +32,7 @@ namespace Ikas
             // Load user and system configuration
             if (!Depot.LoadUserConfiguration())
             {
-                MessageBox.Show("Failed in loading user configuration!", "Ikas", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Translate("Failed in loading user configuration!", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(-1);
             }
             Depot.LoadSystemConfiguration();
@@ -131,8 +131,8 @@ namespace Ikas
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
-                    lbMode.Content = ((Rule.ShortName)scheduledStages[0].Rule).ToString();
-                    lbLevel.Content = "--";
+                    lbMode.Content = Translate(((Rule.ShortName)scheduledStages[0].Rule).ToString());
+                    lbLevel.Content = Translate("--", true);
                     // Fade in labels
                     ((Storyboard)FindResource("fade_in")).Begin(lbMode);
                     ((Storyboard)FindResource("fade_in")).Begin(lbLevel);
@@ -187,6 +187,25 @@ namespace Ikas
             {
                 // Current mode do not has a schedule, switch to regular battle
                 Depot.CurrentMode = Mode.Key.regular_battle;
+            }
+        }
+
+        private string Translate(string s, bool isLocal = false)
+        {
+            try
+            {
+                if (isLocal)
+                {
+                    return (string)FindResource("main_window-" + s);
+                }
+                else
+                {
+                    return (string)FindResource(s);
+                }
+            }
+            catch
+            {
+                return s;
             }
         }
     }
