@@ -1,25 +1,19 @@
-﻿<Window x:Name="wdMain" x:Class="Ikas.MainWindow"
+﻿<Window x:Class="Ikas.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ikas"
         mc:Ignorable="d"
-        Loaded="WdMain_Loaded"
-        PreviewMouseLeftButtonDown="WdMain_PreviewMouseLeftButtonDown"
+        Loaded="MainWindow_Loaded"
+        PreviewMouseLeftButtonDown="MainWindow_PreviewMouseLeftButtonDown"
         Title="Ikas" Height="54" Width="495" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None"  Background="Transparent">
     <Window.Resources>
         <Storyboard x:Key="fade_out">
-            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.5"/>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="2"/>
         </Storyboard>
         <Storyboard x:Key="fade_in">
-            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
-        </Storyboard>
-        <Storyboard x:Key="bg_fade_out">
-            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Background.Opacity" From="1" To="0" Duration="0:0:0.5"/>
-        </Storyboard>
-        <Storyboard x:Key="bg_fade_in">
-            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Background.Opacity" From="0" To="1" Duration="0:0:0.5"/>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="2"/>
         </Storyboard>
     </Window.Resources>
     <Grid>
@@ -36,13 +30,13 @@
         <StackPanel Orientation="Horizontal">
             <Label x:Name="lbMode"
                    PreviewMouseLeftButtonDown="LbMode_PreviewMouseLeftButtonDown"
-                   Content="" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FF19D719" FontSize="26" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="25,0,0,0" Height="70" VerticalAlignment="Center"/>
-            <Label x:Name="lbLevel" Content="" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Height="100" VerticalAlignment="Center" Width="70"/>
+                   Content="Ikas" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FF19D719" FontSize="26" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="25,0,0,0" Height="70" VerticalAlignment="Center" Opacity="0"/>
+            <Label x:Name="lbLevel" Content="--" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Height="100" VerticalAlignment="Center" Width="70" Opacity="0"/>
             <Border Width="110" Height="44" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" Margin="18,0,0,0" CornerRadius="8" Background="Black" UseLayoutRounding="False">
-                <Border x:Name="bdStage1" Width="110" Height="44" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" CornerRadius="8" Background="Black" UseLayoutRounding="False"/>
+                <Border x:Name="bdStage1" Width="110" Height="44" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" CornerRadius="8" Background="Green" UseLayoutRounding="False" Opacity="0"/>
             </Border>
             <Border Width="110" Height="44" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" Margin="10,0,0,0" CornerRadius="8" Background="Black">
-                <Border x:Name="bdStage2" Width="110" Height="44" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" CornerRadius="8" Background="Black"/>
+                <Border x:Name="bdStage2" Width="110" Height="44" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" CornerRadius="8" Background="Green" Opacity="0"/>
             </Border>
         </StackPanel>
     </Grid>

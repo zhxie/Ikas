@@ -41,7 +41,7 @@ namespace Ikas
 
         #region Control Event
 
-        private void WdMain_Loaded(object sender, RoutedEventArgs e)
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             // Set properties for controls
             RenderOptions.SetBitmapScalingMode(bdStage1, BitmapScalingMode.HighQuality);
@@ -53,7 +53,7 @@ namespace Ikas
             Depot.GetSchedule();
         }
 
-        private void WdMain_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
         }
@@ -83,8 +83,8 @@ namespace Ikas
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(lbMode);
             ((Storyboard)FindResource("fade_out")).Begin(lbLevel);
-            ((Storyboard)FindResource("bg_fade_out")).Begin(bdStage1);
-            ((Storyboard)FindResource("bg_fade_out")).Begin(bdStage2);
+            ((Storyboard)FindResource("fade_out")).Begin(bdStage1);
+            ((Storyboard)FindResource("fade_out")).Begin(bdStage2);
             // Update Schedule
             Depot.GetSchedule();
         }
@@ -132,7 +132,7 @@ namespace Ikas
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                             brush.Stretch = Stretch.UniformToFill;
                             bdStage1.Background = brush;
-                            ((Storyboard)FindResource("bg_fade_in")).Begin(bdStage1);
+                            ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
                         }
                         else
                         {
@@ -143,7 +143,7 @@ namespace Ikas
                                 ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                                 brush.Stretch = Stretch.UniformToFill;
                                 bdStage1.Background = brush;
-                                ((Storyboard)FindResource("bg_fade_in")).Begin(bdStage1);
+                                ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
                             }));
                         }
                     }
@@ -156,7 +156,7 @@ namespace Ikas
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                             brush.Stretch = Stretch.UniformToFill;
                             bdStage2.Background = brush;
-                            ((Storyboard)FindResource("bg_fade_in")).Begin(bdStage2);
+                            ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
                         }
                         else
                         {
@@ -166,7 +166,7 @@ namespace Ikas
                                 ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                                 brush.Stretch = Stretch.UniformToFill;
                                 bdStage2.Background = brush;
-                                ((Storyboard)FindResource("bg_fade_in")).Begin(bdStage2);
+                                ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
                             }));
                         }
                     }
