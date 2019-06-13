@@ -61,6 +61,7 @@ namespace Ikas
             // Prepare Schedule and Battle window
             scheduleWindow = new ScheduleWindow();
             scheduleWindow.Opacity = 0;
+            scheduleWindow.Visibility = Visibility.Hidden;
             scheduleWindow.Top = Top + Height + 10;
             scheduleWindow.Left = Left;
         }
