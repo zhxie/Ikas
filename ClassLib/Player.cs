@@ -40,7 +40,6 @@ namespace ClassLib
         public string Id { get; }
         public string Nickname { get; }
         public int Level { get; }
-        public Rank.Key Rank { get; }
         public HeadGear HeadGear { get; }
         public ClothesGear ClothesGear { get; }
         public ShoesGear ShoesGear { get; }
@@ -52,12 +51,11 @@ namespace ClassLib
         public int Special { get; }
         public string Image { get; }
 
-        public Player(string id, string nickName, int level, Rank.Key rank, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int die, int special, string image)
+        public Player(string id, string nickName, int level, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int die, int special, string image)
         {
             Id = id;
             Nickname = nickName;
             Level = level;
-            Rank = rank;
             HeadGear = headGear;
             ClothesGear = clothesGear;
             ShoesGear = shoesGear;
@@ -68,6 +66,17 @@ namespace ClassLib
             Die = die;
             Special = special;
             Image = image;
+        }
+    }
+
+    public class RankedPlayer : Player
+    {
+        public Rank.Key Rank { get; }
+
+        public RankedPlayer(string id, string nickName, int level, Rank.Key rank HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int die, int special, string image)
+            : base(id, nickName, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, die, special, image)
+        {
+            Rank = rank;
         }
     }
 }
