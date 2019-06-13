@@ -65,17 +65,17 @@ namespace ClassLib
             shifty = 9999
         }
 
-        public int Id { get; }
+        public Key Id { get; }
         public string Image { get; }
 
         public Stage(Key key, string image)
         {
-            Id = (int)key;
+            Id = key;
             Image = image;
         }
         public Stage()
         {
-            Id = -1;
+            Id = (Key)(-1);
             Image = "";
         }
     }

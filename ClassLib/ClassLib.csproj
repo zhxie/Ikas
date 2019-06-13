@@ -44,11 +44,14 @@
     <Compile Include="Design.cs" />
     <Compile Include="Downloader.cs" />
     <Compile Include="FileFolderUrl.cs" />
+    <Compile Include="Gear.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Rule.cs" />
     <Compile Include="Schedule.cs" />
     <Compile Include="Stage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Mode.cs" />
+    <Compile Include="Weapon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
