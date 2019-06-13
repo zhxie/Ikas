@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Battle.cs" />
     <Compile Include="Design.cs" />
     <Compile Include="Downloader.cs" />
     <Compile Include="FileFolderUrl.cs" />
