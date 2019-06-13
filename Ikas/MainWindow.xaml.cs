@@ -153,14 +153,14 @@ namespace Ikas
                     // Update Stages
                     Stage stage = scheduledStages[0];
                     string image = FileFolderUrl.ApplicationData + stage.Image;
-                    if (File.Exists(image))
+                    try
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
                         bdStage1.Background = brush;
                         ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
                     }
-                    else
+                    catch
                     {
                         // Download the image
                         Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
@@ -176,14 +176,14 @@ namespace Ikas
                     {
                         stage = scheduledStages[1];
                         image = FileFolderUrl.ApplicationData + stage.Image;
-                        if (File.Exists(image))
+                        try
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                             brush.Stretch = Stretch.UniformToFill;
                             bdStage2.Background = brush;
                             ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
                         }
-                        else
+                        catch
                         {
                             Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
                             Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
