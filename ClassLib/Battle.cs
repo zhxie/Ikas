@@ -16,6 +16,14 @@ namespace ClassLib
         public double MyScore { get; }
         public double OtherScore { get; }
 
+        public bool IsWin
+        {
+            get
+            {
+                return MyScore > OtherScore;
+            }
+        }
+
         public Battle(Mode.Key mode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, double myScore, double otherScore)
         {
             Mode = mode;
@@ -26,11 +34,33 @@ namespace ClassLib
             MyScore = myScore;
             OtherScore = otherScore;
         }
+        public Battle()
+        {
+            MyPlayers = new List<Player>();
+            OtherPlayers = new List<Player>();
+            MyScore = -1;
+            OtherScore = -1;
+        }
     }
 
     public class RankedBattle : Battle
     {
         public double EstimatedRankPower { get; }
+
+        public bool IsKo
+        {
+            get
+            {
+                return MyScore == 100;
+            }
+        }
+        public bool IsBeKoed
+        {
+            get
+            {
+                return OtherScore == 100;
+            }
+        }
 
         public RankedBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, double estimatedRankPower, double myScore, double otherScore)
             :base(mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), myScore, otherScore)
@@ -64,6 +94,21 @@ namespace ClassLib
         public double LeaguePoint { get; }
         public double MaxLeaguePoint { get; }
 
+        public bool IsKo
+        {
+            get
+            {
+                return MyScore == 100;
+            }
+        }
+        public bool IsBeKoed
+        {
+            get
+            {
+                return OtherScore == 100;
+            }
+        }
+
         public LeagueBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, double myEstimatedLeaguePoint, double otherEstimatedLeaguePoint, double leaguePoint, double maxLeaguePoint, double myScore, double otherScore)
             : base(mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), myScore, otherScore)
         {
@@ -76,6 +121,21 @@ namespace ClassLib
 
     public class PrivateBattle : Battle
     {
+        public bool IsKo
+        {
+            get
+            {
+                return MyScore == 100;
+            }
+        }
+        public bool IsBeKoed
+        {
+            get
+            {
+                return OtherScore == 100;
+            }
+        }
+
         public PrivateBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, double myScore, double otherScore)
             : base(mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), myScore, otherScore)
         {

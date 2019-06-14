@@ -39,6 +39,7 @@ namespace ClassLib
     {
         public string Id { get; }
         public string Nickname { get; }
+        public bool IsSelf { get; }
         public int Level { get; }
         public HeadGear HeadGear { get; }
         public ClothesGear ClothesGear { get; }
@@ -47,14 +48,44 @@ namespace ClassLib
         public int Paint { get; }
         public int Kill { get; }
         public int Assist { get; }
-        public int Die { get; }
+        public int Death { get; }
         public int Special { get; }
         public string Image { get; }
 
-        public Player(string id, string nickName, int level, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int die, int special, string image)
+        public int DisplayedLevel
+        {
+            get
+            {
+                return Level - Level / 100 * 100;
+            }
+        }
+        public int Star
+        {
+            get
+            {
+                return Level / 100;
+            }
+        }
+        public int KillAndAssist
+        {
+            get
+            {
+                return Kill + Assist;
+            }
+        }
+        public bool IsOffline
+        {
+            get
+            {
+                return Paint == 0;
+            }
+        }
+
+        public Player(string id, string nickName, int level, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, string image, bool isSelf = false)
         {
             Id = id;
             Nickname = nickName;
+            IsSelf = isSelf;
             Level = level;
             HeadGear = headGear;
             ClothesGear = clothesGear;
@@ -63,7 +94,7 @@ namespace ClassLib
             Paint = paint;
             Kill = kill;
             Assist = assist;
-            Die = die;
+            Death = death;
             Special = special;
             Image = image;
         }
@@ -73,8 +104,8 @@ namespace ClassLib
     {
         public Rank.Key Rank { get; }
 
-        public RankedPlayer(string id, string nickName, int level, Rank.Key rank HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int die, int special, string image)
-            : base(id, nickName, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, die, special, image)
+        public RankedPlayer(string id, string nickName, int level, Rank.Key rank, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, string image, bool isSelf = false)
+            : base(id, nickName, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, image, isSelf)
         {
             Rank = rank;
         }

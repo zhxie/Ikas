@@ -59,12 +59,12 @@
                     </Border>
                 </Grid>
                 <Grid Margin="0,20,0,0">
-                    <Border x:Name="bdNext" Width="80" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF19D719" Opacity="0">
-                        <Border x:Name="bdNextStrip">
+                    <Border x:Name="bdNext" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF19D719" Opacity="0">
+                        <Border>
                             <Border.Background>
                                 <ImageBrush ImageSource="assets/img/bg-strips-small.png" Stretch="None" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,150,150"/>
                             </Border.Background>
-                            <Label Content="{DynamicResource schedule_window-Next}" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="White" Height="60" VerticalAlignment="Center" FontSize="22" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="0,0,10,0"></Label>
+                            <Label Content="{DynamicResource schedule_window-Next}" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="White" Height="60" VerticalAlignment="Center" FontSize="22" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="20,0,10,0"></Label>
                         </Border>
                     </Border>
                     <StackPanel Orientation="Horizontal" Margin="0,0,25,0" HorizontalAlignment="Right">

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -18,6 +19,7 @@ using ClassLib;
 namespace Ikas
 {
     public delegate void ScheduleUpdatedEventHandler();
+    public delegate void BattleUpdatedEventHandler();
     public delegate void CurrentModeChangedEventHandler();
     public static class Depot
     {
@@ -51,6 +53,10 @@ namespace Ikas
         public static event ScheduleUpdatedEventHandler ScheduleUpdated;
         private static Mutex ScheduleMutex = new Mutex();
         public static Schedule Schedule { get; set; } = new Schedule();
+
+        public static event BattleUpdatedEventHandler BattleUpdated;
+        private static Mutex BattleMutex = new Mutex();
+        public static Battle Battle { get; set; } = new Battle();
 
         public static event CurrentModeChangedEventHandler CurrentModeChanged;
         private static Mode.Key currentMode = Mode.Key.regular_battle;
@@ -187,6 +193,7 @@ namespace Ikas
                 }
                 catch
                 {
+                    // Update Schedule on error
                     UpdateSchedule(new Schedule());
                     return;
                 }
@@ -195,15 +202,18 @@ namespace Ikas
             }
             else
             {
-                // Update Schedule
+                // Update Schedule on error
                 UpdateSchedule(new Schedule());
             }
         }
         /// <summary>
         /// Update Schedule.
         /// </summary>
+        /// <param name="schedule">Updated Schedule</param>
+        /// <returns></returns>
         public static bool UpdateSchedule(Schedule schedule)
         {
+            Debug.Assert(schedule != new Schedule());
             if (Schedule != schedule)
             {
                 ScheduleMutex.WaitOne();
@@ -222,9 +232,184 @@ namespace Ikas
         }
 
         /// <summary>
+        /// Get last battle result.
+        /// </summary>
+        public static async void GetLastBattle()
+        {
+            // Remove previous Downloader's handlers
+            DownloadManager.RemoveDownloaders(Downloader.SourceType.Battle);
+            // Send HTTP GET
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.UseCookies = false;
+            if (Proxy != null)
+            {
+                handler.UseProxy = true;
+                handler.Proxy = Proxy;
+            }
+            HttpClient client = new HttpClient(handler);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetBattleApi);
+            request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                string resultString = await response.Content.ReadAsStringAsync();
+                // Parse JSON
+                JObject jObject = JObject.Parse(resultString);
+                int battleId;
+                try
+                {
+                    battleId = int.Parse(jObject["results"][0]["battle_number"].ToString());
+                }
+                catch
+                {
+                    // Update Battle on error
+                    UpdateBattle(new Battle());
+                    return;
+                }
+                // Send HTTP GET
+                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetIndividualBattleApi, battleId));
+                request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+                response = await client.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    resultString = await response.Content.ReadAsStringAsync();
+                    // Parse JSON
+                    jObject = JObject.Parse(resultString);
+                    try
+                    {
+                        // TODO: parse battle
+                        Mode.Key mode = Mode.ParseKey(jObject["game_mode"]["key"].ToString());
+                        Rule.Key rule = Rule.ParseKey(jObject["rule"]["key"].ToString());
+                        Stage stage = new Stage((Stage.Key)int.Parse(jObject["stage"]["id"].ToString()), jObject["stage"]["image"].ToString());
+                        switch (mode)
+                        {
+                            case Mode.Key.regular_battle:
+                                string selfImage = await GetPlayerIcon(jObject["player_result"]["player"]["principal_id"].ToString());
+                                Player selfPlayer = parsePlayer(jObject["player_result"], selfImage, true);
+                                List<Player> myPlayers = new List<Player>();
+                                JToken myPlayersNode = jObject["my_team_members"];
+                                foreach (JToken playerNode in myPlayersNode.Children())
+                                {
+                                    string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
+                                    Player player = parsePlayer(playerNode, image);
+                                    myPlayers.Add(player);
+                                }
+                                myPlayers.Add(selfPlayer);
+                                List<Player> otherPlayers = new List<Player>();
+                                JToken otherPlayersNode = jObject["other_team_members"];
+                                foreach (JToken playerNode in otherPlayersNode.Children())
+                                {
+                                    string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
+                                    Player player = parsePlayer(playerNode, image);
+                                    otherPlayers.Add(player);
+                                }
+                                double myScore = double.Parse(jObject["my_team_percentage"].ToString());
+                                double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
+                                UpdateBattle(new Battle(mode, rule, stage, myPlayers, otherPlayers, myScore, otherScore));
+                                break;
+                            case Mode.Key.ranked_battle:
+                                break;
+                            case Mode.Key.league_battle:
+                                break;
+                            case Mode.Key.private_battle:
+                                break;
+                            case Mode.Key.splatfest:
+                                throw new ArgumentOutOfRangeException();
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                    catch
+                    {
+                        // Update Battle on error
+                        UpdateBattle(new Battle());
+                        return;
+                    }
+                }
+                else
+                {
+                    // Update Battle on error
+                    UpdateBattle(new Battle());
+                }
+            }
+            else
+            {
+                // Update Battle on error
+                UpdateBattle(new Battle());
+            }
+        }
+        /// <summary>
+        ///  Uodate Battle.
+        /// </summary>
+        /// <param name="battle">Updated Battle</param>
+        /// <returns></returns>
+        private static bool UpdateBattle(Battle battle)
+        {
+            Debug.Assert(battle != new Battle());
+            if (Battle != battle)
+            {
+                BattleMutex.WaitOne();
+                Battle = battle;
+                BattleMutex.ReleaseMutex();
+                // Raise event
+                BattleUpdated?.Invoke();
+                return true;
+            }
+            else
+            {
+                // Raise event
+                BattleUpdated?.Invoke();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Get icon of a user.
+        /// </summary>
+        /// <param name="id">Id of user</param>
+        public static async Task<string> GetPlayerIcon(string id)
+        {
+            // Remove previous Downloader's handlers
+            DownloadManager.RemoveDownloaders(Downloader.SourceType.Schedule);
+            // Send HTTP GET
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.UseCookies = false;
+            if (Proxy != null)
+            {
+                handler.UseProxy = true;
+                handler.Proxy = Proxy;
+            }
+            HttpClient client = new HttpClient(handler);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetNicknameAndIconApi, id));
+            request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                string resultString = await response.Content.ReadAsStringAsync();
+                string icon;
+                // Parse JSON
+                JObject jObject = JObject.Parse(resultString);
+                try
+                {
+                    icon = jObject["nickname_and_icons"][0]["thumbnail_url"].ToString();
+                }
+                catch
+                {
+                    return "";
+                }
+                // Update icon
+                return icon;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
         /// Parse ScheduledStages from JToken.
         /// </summary>
-        /// <param name="node">JToken of a schedule of certain mode</param>
+        /// <param name="node">JToken of a schedule</param>
         private static List<ScheduledStage> parseScheduledStages(JToken node)
         {
             List<ScheduledStage> stages = new List<ScheduledStage>();
@@ -259,6 +444,161 @@ namespace Ikas
                 return new List<ScheduledStage>();
             }
             return stages;
+        }
+        /// <summary>
+        /// Parse Player from JToken
+        /// </summary>
+        /// <param name="node">JToken of a player</param>
+        /// <param name="image">Url of the user icon</param>
+        /// <param name="isSelf">If the player is player itself</param>
+        /// <returns></returns>
+        private static Player parsePlayer(JToken node, string image, bool isSelf = false)
+        {
+            try
+            {
+                if (image == "")
+                {
+                    throw new ArgumentNullException();
+                }
+                // Parse player battle data
+                int paint = int.Parse(node["game_paint_point"].ToString());
+                int kill = int.Parse(node["kill_count"].ToString());
+                int assist = int.Parse(node["assist_count"].ToString());
+                int death = int.Parse(node["death_count"].ToString());
+                int special = int.Parse(node["special_count"].ToString());
+                // Parse player
+                JToken playerNode = node["player"];
+                string id = playerNode["principal_id"].ToString();
+                string nickname = playerNode["nickname"].ToString();
+                int level = int.Parse(playerNode["player_rank"].ToString()) + 100 * int.Parse(playerNode["star_rank"].ToString());
+                // Parse weapon
+                Weapon weapon = parseWeapon(playerNode["weapon"]);
+                // Parse gear
+                HeadGear headGear = parseGear(playerNode["head"], playerNode["head_skills"], Gear.KindType.Head) as HeadGear;
+                ClothesGear clothesGear = parseGear(playerNode["clothes"], playerNode["clothes_skills"], Gear.KindType.Clothes) as ClothesGear;
+                ShoesGear shoesGear = parseGear(playerNode["shoes"], playerNode["shoes_skills"], Gear.KindType.Shoes) as ShoesGear;
+                return new Player(id, nickname, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, image, isSelf);
+            }
+            catch
+            {
+                throw new FormatException();
+            }
+        }
+        /// <summary>
+        /// Parse Weapon from JToken
+        /// </summary>
+        /// <param name="node">JToken of a weapon</param>
+        /// <returns></returns>
+        private static Weapon parseWeapon(JToken node)
+        {
+            try
+            {
+                SubWeapon sub = parseSubWeapon(node["sub"]);
+                SpecialWeapon special = parseSpecialWeapon(node["special"]);
+                return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), sub, special, node["image"].ToString());
+            }
+            catch
+            {
+                throw new FormatException();
+            }
+        }
+        /// <summary>
+        /// Parse SubWeapon from JToken
+        /// </summary>
+        /// <param name="node">JToken of a sub weapon</param>
+        /// <returns></returns>
+        private static SubWeapon parseSubWeapon(JToken node)
+        {
+            try
+            {
+                return new SubWeapon((SubWeapon.Key)int.Parse(node["id"].ToString()), node["image_a"].ToString(), node["image_b"].ToString());
+            }
+            catch
+            {
+                throw new FormatException();
+            }
+        }
+        /// <summary>
+        /// Parse SpecialWeapon from JToken
+        /// </summary>
+        /// <param name="node">JToken of a special weapon</param>
+        /// <returns></returns>
+        private static SpecialWeapon parseSpecialWeapon(JToken node)
+        {
+            try
+            {
+                return new SpecialWeapon((SpecialWeapon.Key)int.Parse(node["id"].ToString()), node["image_a"].ToString(), node["image_b"].ToString()); ;
+            }
+            catch
+            {
+                throw new FormatException();
+            }
+        }
+        /// <summary>
+        /// Parse Gear from JToken
+        /// </summary>
+        /// <param name="gearNode">JToken of a head, clothes or shoes</param>
+        /// <param name="skillNode">JToken of a head skills, clothes skills or shoes skills</param>
+        /// <param name="kind"></param>
+        /// <returns></returns>
+        private static Gear parseGear(JToken gearNode, JToken skillNode, Gear.KindType kind)
+        {
+            try
+            {
+                Brand brand = new Brand((Brand.Key)int.Parse(gearNode["brand"]["id"].ToString()), gearNode["brand"]["image"].ToString());
+                MainSkill mainSkill = parseMainSkill(skillNode["main"]);
+                List<SubSkill> subSkills = new List<SubSkill>{ parseSubSkill(skillNode["subs"][0]), parseSubSkill(skillNode["subs"][1]), parseSubSkill(skillNode["subs"][2]) };
+                switch (kind)
+                {
+                    case Gear.KindType.Head:
+                        HeadGear headGear = new HeadGear((HeadGear.Key)int.Parse(gearNode["id"].ToString()), brand, mainSkill, subSkills, gearNode["image"].ToString());
+                        return headGear as Gear;
+                    case Gear.KindType.Clothes:
+                        ClothesGear clothesGear = new ClothesGear((ClothesGear.Key)int.Parse(gearNode["id"].ToString()), brand, mainSkill, subSkills, gearNode["image"].ToString());
+                        return clothesGear as Gear;
+                    case Gear.KindType.Shoes:
+                        ShoesGear shoesGear = new ShoesGear((ShoesGear.Key)int.Parse(gearNode["id"].ToString()), brand, mainSkill, subSkills, gearNode["image"].ToString());
+                        return shoesGear as Gear;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            catch
+            {
+                throw new FormatException();
+            }
+        }
+        /// <summary>
+        /// Parse MainSkill from JToken
+        /// </summary>
+        /// <param name="node">JToken of a main skill</param>
+        /// <returns></returns>
+        private static MainSkill parseMainSkill(JToken node)
+        {
+            try
+            {
+                return new MainSkill((MainSkill.Key)int.Parse(node["id"].ToString()), node["image"].ToString());
+            }
+            catch
+            {
+                throw new FormatException();
+            }
+        }
+        /// <summary>
+        /// Parse SubSkill from JToken
+        /// </summary>
+        /// <param name="node">JToken of a sub skill</param>
+        /// <returns></returns>
+        private static SubSkill parseSubSkill(JToken node)
+        {
+            try
+            {
+                return new SubSkill((SubSkill.Key)int.Parse(node["id"].ToString()), node["image"].ToString());
+            }
+            catch
+            {
+                throw new FormatException();
+            }
         }
     }
 }

@@ -72,6 +72,8 @@ namespace Ikas
         {
             // Update Schedule
             Depot.GetSchedule();
+            // TEST:
+            Depot.GetLastBattle();
         }
 
         private void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

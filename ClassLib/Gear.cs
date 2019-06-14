@@ -96,7 +96,6 @@ namespace ClassLib
     {
         public enum Key
         {
-            unknown = -1,
             ink_saver_main = 0,
             ink_saver_sub = 1,
             ink_recovery_up = 2,
@@ -112,7 +111,8 @@ namespace ClassLib
             bomb_defense_up = 12,
             cold_blooded = 13,
             bomb_defense_up_dx = 200,
-            main_power_up = 201
+            main_power_up = 201,
+            none = 255 // はてな
         }
 
         public SubSkill(Key id, string image) : base((int)id, image)

@@ -53,7 +53,9 @@ namespace ClassLib
 
         public const string SplatNet = @"https://app.splatoon2.nintendo.net";
         public const string SplatNetScheduleApi = @"/api/schedules";
-        public const string SplatNetBattleApi = @"/api/results/{}";
+        public const string SplatNetBattleApi = @"/api/results";
+        public const string SplatNetIndividualBattleApi = @"/api/results/{0}";
+        public const string SplatNetNicknameAndIconApi = @"/api/nickname_and_icon?id={0}";
 
         #endregion
     }

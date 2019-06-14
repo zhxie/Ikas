@@ -26,12 +26,14 @@ namespace ClassLib
         }
 
         public Key Id { get; }
-        public string Image { get; }
+        public string Image1 { get; }
+        public string Image2 { get; }
 
-        public SubWeapon(Key id, string image)
+        public SubWeapon(Key id, string image1, string image2)
         {
             Id = id;
-            Image = image;
+            Image1 = image1;
+            Image2 = image2;
         }
     }
 
@@ -57,12 +59,14 @@ namespace ClassLib
         }
 
         public Key Id { get; }
-        public string Image { get; }
+        public string Image1 { get; }
+        public string Image2 { get; }
 
-        public SpecialWeapon(Key id, string image)
+        public SpecialWeapon(Key id, string image1, string image2)
         {
             Id = id;
-            Image = image;
+            Image1 = image1;
+            Image2 = image2;
         }
     }
 
