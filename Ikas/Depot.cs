@@ -300,6 +300,7 @@ namespace Ikas
                                         }
                                     }
                                     myPlayers.Add(selfPlayer);
+                                    myPlayers = sortPlayer(myPlayers, rule);
                                     List<Player> otherPlayers = new List<Player>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
                                     foreach (JToken playerNode in otherPlayersNode.Children())
@@ -311,14 +312,61 @@ namespace Ikas
                                             otherPlayers.Add(player);
                                         }
                                     }
+                                    otherPlayers = sortPlayer(otherPlayers, rule);
+                                    int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     double myScore = double.Parse(jObject["my_team_percentage"].ToString());
                                     double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
-                                    UpdateBattle(new RegularBattle(mode, rule, stage, myPlayers, otherPlayers, myScore, otherScore) as Battle);
+                                    UpdateBattle(new RegularBattle(mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore) as Battle);
                                 }
                                 break;
                             case Mode.Key.ranked_battle:
                                 break;
                             case Mode.Key.league_battle:
+                                {
+                                    string selfImage = await GetPlayerIcon(jObject["player_result"]["player"]["principal_id"].ToString());
+                                    RankedPlayer selfPlayer = parseRankedPlayer(jObject["player_result"], selfImage, true);
+                                    List<RankedPlayer> myPlayers = new List<RankedPlayer>();
+                                    JToken myPlayersNode = jObject["my_team_members"];
+                                    foreach (JToken playerNode in myPlayersNode.Children())
+                                    {
+                                        if (playerNode.HasValues)
+                                        {
+                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
+                                            RankedPlayer player = parseRankedPlayer(playerNode, image);
+                                            myPlayers.Add(player);
+                                        }
+                                    }
+                                    myPlayers.Add(selfPlayer);
+                                    myPlayers = sortPlayer(myPlayers, rule);
+                                    List<RankedPlayer> otherPlayers = new List<RankedPlayer>();
+                                    JToken otherPlayersNode = jObject["other_team_members"];
+                                    foreach (JToken playerNode in otherPlayersNode.Children())
+                                    {
+                                        if (playerNode.HasValues)
+                                        {
+                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
+                                            RankedPlayer player = parseRankedPlayer(playerNode, image);
+                                            otherPlayers.Add(player);
+                                        }
+                                    }
+                                    otherPlayers = sortPlayer(otherPlayers, rule);
+                                    int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
+                                    int myEstimatedLeaguePower = int.Parse(jObject["my_estimate_league_point"].ToString());
+                                    int otherEstimatedLeaguePower = int.Parse(jObject["other_estimate_league_point"].ToString());
+                                    double leaguePoint;
+                                    if (jObject["league_point"].HasValues)
+                                    {
+                                        leaguePoint = double.Parse(jObject["league_point"].ToString());
+                                    }
+                                    else
+                                    {
+                                        leaguePoint = 0;
+                                    }
+                                    int myScore = int.Parse(jObject["my_team_count"].ToString());
+                                    int otherScore = int.Parse(jObject["other_team_count"].ToString());
+                                    double maxLeaguePoint = double.Parse(jObject["max_league_point"].ToString());
+                                    UpdateBattle(new LeagueBattle(mode, rule, stage, myPlayers, otherPlayers, levelAfter, myEstimatedLeaguePower, otherEstimatedLeaguePower, leaguePoint, maxLeaguePoint, myScore, otherScore));
+                                }
                                 break;
                             case Mode.Key.splatfest:
                                 {
@@ -336,6 +384,7 @@ namespace Ikas
                                         }
                                     }
                                     myPlayers.Add(selfPlayer);
+                                    myPlayers = sortPlayer(myPlayers, rule);
                                     List<Player> otherPlayers = new List<Player>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
                                     foreach (JToken playerNode in otherPlayersNode.Children())
@@ -347,8 +396,8 @@ namespace Ikas
                                             otherPlayers.Add(player);
                                         }
                                     }
-                                    double myScore = double.Parse(jObject["my_team_percentage"].ToString());
-                                    double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
+                                    otherPlayers = sortPlayer(otherPlayers, rule);
+                                    int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     SplatfestBattle.Key splatfestMode = SplatfestBattle.ParseKey(jObject["fes_mode"]["key"].ToString());
                                     int myEstimatedSplatfestPower = int.Parse(jObject["my_estimate_fes_power"].ToString());
                                     int otherEstimatedSplatfestPower = int.Parse(jObject["other_estimate_fes_power"].ToString());
@@ -356,7 +405,9 @@ namespace Ikas
                                     double maxSplatfestPower = double.Parse(jObject["max_fes_power"].ToString());
                                     int contributionPoint = int.Parse(jObject["contribution_point"].ToString());
                                     int totalContributionPoint = int.Parse(jObject["contribution_point_total"].ToString());
-                                    UpdateBattle(new SplatfestBattle(mode, splatfestMode, rule, stage, myPlayers, otherPlayers,
+                                    double myScore = double.Parse(jObject["my_team_percentage"].ToString());
+                                    double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
+                                    UpdateBattle(new SplatfestBattle(mode, splatfestMode, rule, stage, myPlayers, otherPlayers, levelAfter,
                                         myEstimatedSplatfestPower, otherEstimatedSplatfestPower, splatfestPower, maxSplatfestPower, contributionPoint, totalContributionPoint, myScore, otherScore) as Battle);
                                 }
                                 break;
@@ -452,6 +503,41 @@ namespace Ikas
         }
 
         /// <summary>
+        /// Sort Players.
+        /// Players are sorted by Paint/Sort, Kill + Assist, Special, Death, Kill and Nickname.
+        /// </summary>
+        /// <param name="players">Player list which is going to be sorted</param>
+        /// <returns></returns>
+        private static List<Player> sortPlayer(List<Player> players, Rule.Key rule)
+        {
+            if (rule == Rule.Key.turf_war)
+            {
+                return players.OrderByDescending(p => p.Paint).ThenByDescending(p => p.Kill + p.Assist).ThenByDescending(p => p.Special).ThenByDescending(p => p.Death).ThenByDescending(p => p.Kill).ThenByDescending(p => p.Nickname).ToList();
+            }
+            else
+            {
+                return players.OrderByDescending(p => p.Sort).ThenByDescending(p => p.Kill + p.Assist).ThenByDescending(p => p.Special).ThenByDescending(p => p.Death).ThenByDescending(p => p.Kill).ThenByDescending(p => p.Nickname).ToList();
+            }
+        }
+        /// <summary>
+        /// Sort RankedPlayers.
+        /// RankedPlayers are sorted by Paint/Sort, Kill + Assist, Special, Death, Kill and Nickname.
+        /// </summary>
+        /// <param name="players">Player list which is going to be sorted</param>
+        /// <returns></returns>
+        private static List<RankedPlayer> sortPlayer(List<RankedPlayer> players, Rule.Key rule)
+        {
+            if (rule == Rule.Key.turf_war)
+            {
+                return players.OrderByDescending(p => p.Paint).ThenByDescending(p => p.Kill + p.Assist).ThenByDescending(p => p.Special).ThenByDescending(p => p.Death).ThenByDescending(p => p.Kill).ThenByDescending(p => p.Nickname).ToList();
+            }
+            else
+            {
+                return players.OrderByDescending(p => p.Sort).ThenByDescending(p => p.Kill + p.Assist).ThenByDescending(p => p.Special).ThenByDescending(p => p.Death).ThenByDescending(p => p.Kill).ThenByDescending(p => p.Nickname).ToList();
+            }
+        }
+
+        /// <summary>
         /// Parse ScheduledStages from JToken.
         /// </summary>
         /// <param name="node">JToken of a schedule</param>
@@ -511,6 +597,7 @@ namespace Ikas
                 int assist = int.Parse(node["assist_count"].ToString());
                 int death = int.Parse(node["death_count"].ToString());
                 int special = int.Parse(node["special_count"].ToString());
+                int sort = int.Parse(node["sort_score"].ToString());
                 // Parse player
                 JToken playerNode = node["player"];
                 string id = playerNode["principal_id"].ToString();
@@ -522,7 +609,35 @@ namespace Ikas
                 HeadGear headGear = parseGear(playerNode["head"], playerNode["head_skills"], Gear.KindType.Head) as HeadGear;
                 ClothesGear clothesGear = parseGear(playerNode["clothes"], playerNode["clothes_skills"], Gear.KindType.Clothes) as ClothesGear;
                 ShoesGear shoesGear = parseGear(playerNode["shoes"], playerNode["shoes_skills"], Gear.KindType.Shoes) as ShoesGear;
-                return new Player(id, nickname, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, image, isSelf);
+                return new Player(id, nickname, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, sort, image, isSelf);
+            }
+            catch
+            {
+                throw new FormatException();
+            }
+        }
+        /// <summary>
+        /// Parse RankedPlayer from JToken
+        /// </summary>
+        /// <param name="node">JToken of a player</param>
+        /// <param name="image">Url of the user icon</param>
+        /// <param name="isSelf">If the player is player itself</param>
+        /// <returns></returns>
+        private static RankedPlayer parseRankedPlayer(JToken node, string image, bool isSelf = false)
+        {
+            try
+            {
+                Player player = parsePlayer(node, image, isSelf);
+                Rank.Key rank;
+                if (node["player"]["udemae"]["s_plus_number"].HasValues)
+                {
+                    rank = Rank.ParseKey(node["player"]["udemae"]["name"].ToString(), int.Parse(node["player"]["udemae"]["s_plus_number"].ToString()));
+                }
+                else
+                {
+                    rank = Rank.ParseKey(node["player"]["udemae"]["name"].ToString());
+                }
+                return new RankedPlayer(player, rank);
             }
             catch
             {

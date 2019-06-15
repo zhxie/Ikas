@@ -10,7 +10,7 @@ namespace ClassLib
     {
         public enum Key
         {
-            unknown,
+            unknown = -1,
             c_minus,
             c,
             c_plus,
@@ -33,6 +33,39 @@ namespace ClassLib
             s_plus_9,
             x
         }
+
+        public static Key ParseKey(string s, int splus = 0)
+        {
+            switch (s)
+            {
+                case "C-":
+                    return Key.c_minus;
+                case "C":
+                    return Key.c;
+                case "C+":
+                    return Key.c_plus;
+                case "B-":
+                    return Key.b_minus;
+                case "B":
+                    return Key.b;
+                case "B+":
+                    return Key.b_plus;
+                case "A-":
+                    return Key.a_minus;
+                case "A":
+                    return Key.a;
+                case "A+":
+                    return Key.a_plus;
+                case "S":
+                    return Key.s;
+                case "S+":
+                    return (Key)((int)Key.s_plus_0 + splus);
+                case "X":
+                    return Key.x;
+                default:
+                    throw new FormatException();
+            }
+        }
     }
 
     public class Player
@@ -50,6 +83,7 @@ namespace ClassLib
         public int Assist { get; }
         public int Death { get; }
         public int Special { get; }
+        public int Sort { get; }
         public string Image { get; }
 
         public int DisplayedLevel
@@ -77,11 +111,11 @@ namespace ClassLib
         {
             get
             {
-                return Paint == 0;
+                return Paint <= 0;
             }
         }
 
-        public Player(string id, string nickName, int level, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, string image, bool isSelf = false)
+        public Player(string id, string nickName, int level, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, int sort, string image, bool isSelf = false)
         {
             Id = id;
             Nickname = nickName;
@@ -96,6 +130,7 @@ namespace ClassLib
             Assist = assist;
             Death = death;
             Special = special;
+            Sort = sort;
             Image = image;
         }
     }
@@ -104,21 +139,15 @@ namespace ClassLib
     {
         public Rank.Key Rank { get; }
 
-        public RankedPlayer(string id, string nickName, int level, Rank.Key rank, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, string image, bool isSelf = false)
-            : base(id, nickName, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, image, isSelf)
+        public RankedPlayer(string id, string nickName, int level, Rank.Key rank, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, int sort, string image, bool isSelf = false)
+            : base(id, nickName, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, sort, image, isSelf)
         {
             Rank = rank;
         }
-    }
-
-    public class RankedXPlayer : RankedPlayer
-    {
-        public int XPower { get; }
-
-        public RankedXPlayer(string id, string nickName, int level, int xPower, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, string image, bool isSelf = false)
-            : base(id, nickName, level, ClassLib.Rank.Key.x, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, image, isSelf)
+        public RankedPlayer(Player player, Rank.Key rank)
+            : this(player.Id, player.Nickname, player.Level, rank, player.HeadGear, player.ClothesGear, player.ShoesGear, player.Weapon, player.Paint, player.Kill, player.Assist, player.Death, player.Special, player.Sort, player.Image, player.IsSelf)
         {
-            XPower = xPower;
+
         }
     }
 }

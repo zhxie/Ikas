@@ -42,7 +42,7 @@ namespace ClassLib
                     return Key.regular_battle;
                 case "gachi":
                     return Key.ranked_battle;
-                case "league":
+                case "league_pair":
                 case "league_team":
                     return Key.league_battle;
                 case "fes_solo":
