@@ -8,6 +8,7 @@ namespace ClassLib
 {
     public class Battle
     {
+        public Mode.Key Type { get; }
         public Mode.Key Mode { get; }
         public Rule.Key Rule { get; }
         public Stage Stage { get; }
@@ -24,8 +25,9 @@ namespace ClassLib
             }
         }
 
-        public Battle(Mode.Key mode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, double myScore, double otherScore)
+        public Battle(Mode.Key type, Mode.Key mode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, double myScore, double otherScore)
         {
+            Type = type;
             Mode = mode;
             Rule = rule;
             Stage = stage;
@@ -40,6 +42,15 @@ namespace ClassLib
             OtherPlayers = new List<Player>();
             MyScore = -1;
             OtherScore = -1;
+        }
+    }
+
+    public class RegularBattle : Battle
+    {
+        public RegularBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, double myScore, double otherScore)
+            : base(ClassLib.Mode.Key.regular_battle, mode, rule, stage, myPlayers, otherPlayers, myScore, otherScore)
+        {
+
         }
     }
 
@@ -62,8 +73,9 @@ namespace ClassLib
             }
         }
 
-        public RankedBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, double estimatedRankPower, double myScore, double otherScore)
-            :base(mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), myScore, otherScore)
+        public RankedBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers,
+            double estimatedRankPower, double myScore, double otherScore)
+            :base(ClassLib.Mode.Key.ranked_battle, mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), myScore, otherScore)
         {
             EstimatedRankPower = estimatedRankPower;
         }
@@ -78,19 +90,19 @@ namespace ClassLib
                 return EstimatedRankPower;
             }
         }
-        public double XPower { get; }
 
-        public RankedXBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, double estimatedXPower, double xPower, double myScore, double otherScore)
-            : base(mode, rule, stage, myPlayers, otherPlayers, estimatedXPower, myScore, otherScore)
+        public RankedXBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<RankedXPlayer> myPlayers, List<RankedXPlayer> otherPlayers,
+            double estimatedXPower, double xPower, double myScore, double otherScore)
+            : base(mode, rule, stage, myPlayers.Cast<RankedPlayer>().ToList(), otherPlayers.Cast<RankedPlayer>().ToList(), estimatedXPower, myScore, otherScore)
         {
-            XPower = xPower;
+            
         }
     }
 
     public class LeagueBattle : Battle
     {
-        public double MyEstimatedLeaguePoint { get; }
-        public double OtherEstimatedLeaguePoint { get; }
+        public int MyEstimatedLeaguePower { get; }
+        public int OtherEstimatedLeaguePower { get; }
         public double LeaguePoint { get; }
         public double MaxLeaguePoint { get; }
 
@@ -109,37 +121,58 @@ namespace ClassLib
             }
         }
 
-        public LeagueBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, double myEstimatedLeaguePoint, double otherEstimatedLeaguePoint, double leaguePoint, double maxLeaguePoint, double myScore, double otherScore)
-            : base(mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), myScore, otherScore)
+        public LeagueBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers,
+            int myEstimatedLeaguePower, int otherEstimatedLeaguePower, double leaguePoint, double maxLeaguePoint, double myScore, double otherScore)
+            : base(ClassLib.Mode.Key.league_battle, mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), myScore, otherScore)
         {
-            MyEstimatedLeaguePoint = myEstimatedLeaguePoint;
-            OtherEstimatedLeaguePoint = otherEstimatedLeaguePoint;
+            MyEstimatedLeaguePower = myEstimatedLeaguePower;
+            OtherEstimatedLeaguePower = otherEstimatedLeaguePower;
             LeaguePoint = leaguePoint;
             MaxLeaguePoint = maxLeaguePoint;
         }
     }
 
-    public class PrivateBattle : Battle
+    public class SplatfestBattle : Battle
     {
-        public bool IsKo
+        public enum Key
         {
-            get
-            {
-                return MyScore == 100;
-            }
+            regular,
+            challenge
         }
-        public bool IsBeKoed
+        
+        public Key SplatfestMode { get; }
+        public int MyEstimatedSplatfestPower { get; }
+        public int OtherEstimatedSplatfestPower { get; }
+        public double SplatfestPower { get; }
+        public double MaxSplatfestPower { get; }
+        public int ContributionPoint { get; }
+        public int TotalContributionPoint { get; }
+
+        public SplatfestBattle(Mode.Key mode, Key splatfestMode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers,
+            int myEstimatedSplatfestPower, int otherEstimatedSplatfestPower, double splatfestPower, double maxSplatfestPower, int contributionPoint, int totalContributionPoint, double myScore, double otherScore)
+            :base(ClassLib.Mode.Key.splatfest, mode, rule, stage, myPlayers, otherPlayers, myScore, otherScore)
         {
-            get
-            {
-                return OtherScore == 100;
-            }
+            SplatfestMode = splatfestMode;
+            MyEstimatedSplatfestPower = myEstimatedSplatfestPower;
+            OtherEstimatedSplatfestPower = otherEstimatedSplatfestPower;
+            SplatfestPower = splatfestPower;
+            MaxSplatfestPower = maxSplatfestPower;
+            ContributionPoint = contributionPoint;
+            TotalContributionPoint = totalContributionPoint;
         }
 
-        public PrivateBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, double myScore, double otherScore)
-            : base(mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), myScore, otherScore)
+        public static Key ParseKey(string s)
         {
-            
+            if (s.Contains("challenge"))
+            {
+                return Key.challenge;
+            }
+            if (s.Contains("regular"))
+            {
+                return Key.regular;
+            }
+            throw new FormatException();
         }
     }
+
 }

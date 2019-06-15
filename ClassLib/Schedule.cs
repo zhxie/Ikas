@@ -20,7 +20,7 @@ namespace ClassLib
         }
         public Schedule()
         {
-            EndTime = new DateTime();
+            EndTime = new DateTime(0);
             Stages = new List<ScheduledStage>();
             NextStages = new List<ScheduledStage>();
         }

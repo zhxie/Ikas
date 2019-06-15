@@ -213,7 +213,7 @@ namespace Ikas
         /// <returns></returns>
         public static bool UpdateSchedule(Schedule schedule)
         {
-            Debug.Assert(schedule != new Schedule());
+            Debug.Assert(schedule.EndTime != new DateTime(0));
             if (Schedule != schedule)
             {
                 ScheduleMutex.WaitOne();
@@ -278,43 +278,88 @@ namespace Ikas
                     try
                     {
                         // TODO: parse battle
-                        Mode.Key mode = Mode.ParseKey(jObject["game_mode"]["key"].ToString());
+                        Mode.Key type = Mode.ParseKey(jObject["type"].ToString());
+                        Mode.Key mode = Mode.ParseGameModeKey(jObject["game_mode"]["key"].ToString());
                         Rule.Key rule = Rule.ParseKey(jObject["rule"]["key"].ToString());
                         Stage stage = new Stage((Stage.Key)int.Parse(jObject["stage"]["id"].ToString()), jObject["stage"]["image"].ToString());
-                        switch (mode)
+                        switch (type)
                         {
                             case Mode.Key.regular_battle:
-                                string selfImage = await GetPlayerIcon(jObject["player_result"]["player"]["principal_id"].ToString());
-                                Player selfPlayer = parsePlayer(jObject["player_result"], selfImage, true);
-                                List<Player> myPlayers = new List<Player>();
-                                JToken myPlayersNode = jObject["my_team_members"];
-                                foreach (JToken playerNode in myPlayersNode.Children())
                                 {
-                                    string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
-                                    Player player = parsePlayer(playerNode, image);
-                                    myPlayers.Add(player);
+                                    string selfImage = await GetPlayerIcon(jObject["player_result"]["player"]["principal_id"].ToString());
+                                    Player selfPlayer = parsePlayer(jObject["player_result"], selfImage, true);
+                                    List<Player> myPlayers = new List<Player>();
+                                    JToken myPlayersNode = jObject["my_team_members"];
+                                    foreach (JToken playerNode in myPlayersNode.Children())
+                                    {
+                                        if (playerNode.HasValues)
+                                        {
+                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
+                                            Player player = parsePlayer(playerNode, image);
+                                            myPlayers.Add(player);
+                                        }
+                                    }
+                                    myPlayers.Add(selfPlayer);
+                                    List<Player> otherPlayers = new List<Player>();
+                                    JToken otherPlayersNode = jObject["other_team_members"];
+                                    foreach (JToken playerNode in otherPlayersNode.Children())
+                                    {
+                                        if (playerNode.HasValues)
+                                        {
+                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
+                                            Player player = parsePlayer(playerNode, image);
+                                            otherPlayers.Add(player);
+                                        }
+                                    }
+                                    double myScore = double.Parse(jObject["my_team_percentage"].ToString());
+                                    double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
+                                    UpdateBattle(new RegularBattle(mode, rule, stage, myPlayers, otherPlayers, myScore, otherScore) as Battle);
                                 }
-                                myPlayers.Add(selfPlayer);
-                                List<Player> otherPlayers = new List<Player>();
-                                JToken otherPlayersNode = jObject["other_team_members"];
-                                foreach (JToken playerNode in otherPlayersNode.Children())
-                                {
-                                    string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
-                                    Player player = parsePlayer(playerNode, image);
-                                    otherPlayers.Add(player);
-                                }
-                                double myScore = double.Parse(jObject["my_team_percentage"].ToString());
-                                double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
-                                UpdateBattle(new Battle(mode, rule, stage, myPlayers, otherPlayers, myScore, otherScore));
                                 break;
                             case Mode.Key.ranked_battle:
                                 break;
                             case Mode.Key.league_battle:
                                 break;
-                            case Mode.Key.private_battle:
-                                break;
                             case Mode.Key.splatfest:
-                                throw new ArgumentOutOfRangeException();
+                                {
+                                    string selfImage = await GetPlayerIcon(jObject["player_result"]["player"]["principal_id"].ToString());
+                                    Player selfPlayer = parsePlayer(jObject["player_result"], selfImage, true);
+                                    List<Player> myPlayers = new List<Player>();
+                                    JToken myPlayersNode = jObject["my_team_members"];
+                                    foreach (JToken playerNode in myPlayersNode.Children())
+                                    {
+                                        if (playerNode.HasValues)
+                                        {
+                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
+                                            Player player = parsePlayer(playerNode, image);
+                                            myPlayers.Add(player);
+                                        }
+                                    }
+                                    myPlayers.Add(selfPlayer);
+                                    List<Player> otherPlayers = new List<Player>();
+                                    JToken otherPlayersNode = jObject["other_team_members"];
+                                    foreach (JToken playerNode in otherPlayersNode.Children())
+                                    {
+                                        if (playerNode.HasValues)
+                                        {
+                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
+                                            Player player = parsePlayer(playerNode, image);
+                                            otherPlayers.Add(player);
+                                        }
+                                    }
+                                    double myScore = double.Parse(jObject["my_team_percentage"].ToString());
+                                    double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
+                                    SplatfestBattle.Key splatfestMode = SplatfestBattle.ParseKey(jObject["fes_mode"]["key"].ToString());
+                                    int myEstimatedSplatfestPower = int.Parse(jObject["my_estimate_fes_power"].ToString());
+                                    int otherEstimatedSplatfestPower = int.Parse(jObject["other_estimate_fes_power"].ToString());
+                                    double splatfestPower = double.Parse(jObject["fes_power"].ToString());
+                                    double maxSplatfestPower = double.Parse(jObject["max_fes_power"].ToString());
+                                    int contributionPoint = int.Parse(jObject["contribution_point"].ToString());
+                                    int totalContributionPoint = int.Parse(jObject["contribution_point_total"].ToString());
+                                    UpdateBattle(new SplatfestBattle(mode, splatfestMode, rule, stage, myPlayers, otherPlayers,
+                                        myEstimatedSplatfestPower, otherEstimatedSplatfestPower, splatfestPower, maxSplatfestPower, contributionPoint, totalContributionPoint, myScore, otherScore) as Battle);
+                                }
+                                break;
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
@@ -345,7 +390,7 @@ namespace Ikas
         /// <returns></returns>
         private static bool UpdateBattle(Battle battle)
         {
-            Debug.Assert(battle != new Battle());
+            Debug.Assert(battle.Stage != null);
             if (Battle != battle)
             {
                 BattleMutex.WaitOne();
@@ -547,7 +592,14 @@ namespace Ikas
             {
                 Brand brand = new Brand((Brand.Key)int.Parse(gearNode["brand"]["id"].ToString()), gearNode["brand"]["image"].ToString());
                 MainSkill mainSkill = parseMainSkill(skillNode["main"]);
-                List<SubSkill> subSkills = new List<SubSkill>{ parseSubSkill(skillNode["subs"][0]), parseSubSkill(skillNode["subs"][1]), parseSubSkill(skillNode["subs"][2]) };
+                List<SubSkill> subSkills = new List<SubSkill>();
+                foreach (JToken subNode in skillNode["subs"])
+                {
+                    if (subNode.HasValues)
+                    {
+                        subSkills.Add(parseSubSkill(subNode));
+                    }
+                }
                 switch (kind)
                 {
                     case Gear.KindType.Head:

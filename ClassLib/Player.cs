@@ -110,4 +110,15 @@ namespace ClassLib
             Rank = rank;
         }
     }
+
+    public class RankedXPlayer : RankedPlayer
+    {
+        public int XPower { get; }
+
+        public RankedXPlayer(string id, string nickName, int level, int xPower, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, string image, bool isSelf = false)
+            : base(id, nickName, level, ClassLib.Rank.Key.x, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, image, isSelf)
+        {
+            XPower = xPower;
+        }
+    }
 }
