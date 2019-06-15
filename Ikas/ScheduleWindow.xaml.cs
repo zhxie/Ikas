@@ -44,10 +44,10 @@ namespace Ikas
             InitializeComponent();
             // Set properties for controls
             RenderOptions.SetBitmapScalingMode(imgMode, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdStage1, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdStage2, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdNextStage1, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdNextStage2, BitmapScalingMode.HighQuality);
+            RenderOptions.SetBitmapScalingMode(stg1, BitmapScalingMode.HighQuality);
+            RenderOptions.SetBitmapScalingMode(stg2, BitmapScalingMode.HighQuality);
+            RenderOptions.SetBitmapScalingMode(stgNext1, BitmapScalingMode.HighQuality);
+            RenderOptions.SetBitmapScalingMode(stgNext2, BitmapScalingMode.HighQuality);
             // Add handler for global member
             Depot.CurrentModeChanged += new CurrentModeChangedEventHandler(CurrentModeChanged);
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
@@ -64,17 +64,13 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(lbMode);
             ((Storyboard)FindResource("fade_out")).Begin(lbRule);
             ((Storyboard)FindResource("fade_out")).Begin(lbTime);
-            ((Storyboard)FindResource("fade_out")).Begin(bdStage1);
-            ((Storyboard)FindResource("fade_out")).Begin(bdStage2);
-            ((Storyboard)FindResource("fade_out")).Begin(lbStage1Name);
-            ((Storyboard)FindResource("fade_out")).Begin(lbStage2Name);
+            ((Storyboard)FindResource("fade_out")).Begin(stg1);
+            ((Storyboard)FindResource("fade_out")).Begin(stg2);
             ((Storyboard)FindResource("fade_out")).Begin(bdNext);
             ((Storyboard)FindResource("fade_out")).Begin(lbNextRule);
             ((Storyboard)FindResource("fade_out")).Begin(lbNextTime);
-            ((Storyboard)FindResource("fade_out")).Begin(bdNextStage1);
-            ((Storyboard)FindResource("fade_out")).Begin(bdNextStage2);
-            ((Storyboard)FindResource("fade_out")).Begin(lbNextStage1Name);
-            ((Storyboard)FindResource("fade_out")).Begin(lbNextStage2Name);
+            ((Storyboard)FindResource("fade_out")).Begin(stgNext1);
+            ((Storyboard)FindResource("fade_out")).Begin(stgNext2);
             // Update Schedule
             Depot.GetSchedule();
         }
@@ -122,10 +118,10 @@ namespace Ikas
                 {
                     ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                     brush.Stretch = Stretch.UniformToFill;
-                    bdStage1.Background = brush;
-                    tbStage1Name.Text = Translate(((Stage.Key)stage.Id).ToString());
-                    ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
-                    ((Storyboard)FindResource("fade_in")).Begin(lbStage1Name);
+                    stg1.Background = brush;
+                    stg1.Content = Translate((stage.Id).ToString());
+                    ((Storyboard)FindResource("fade_in")).Begin(stg1);
+                    //((Storyboard)FindResource("fade_in")).Begin(lbStage1Name);
                 }
                 catch
                 {
@@ -135,10 +131,9 @@ namespace Ikas
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
-                        bdStage1.Background = brush;
-                        tbStage1Name.Text = Translate(((Stage.Key)stage.Id).ToString());
-                        ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
-                        ((Storyboard)FindResource("fade_in")).Begin(lbStage1Name);
+                        stg1.Background = brush;
+                        stg1.Content = Translate((stage.Id).ToString());
+                        ((Storyboard)FindResource("fade_in")).Begin(stg1);
                     }));
                 }
                 if (scheduledStages.Count > 1)
@@ -149,10 +144,9 @@ namespace Ikas
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
-                        bdStage2.Background = brush;
-                        tbStage2Name.Text = Translate(((Stage.Key)stage.Id).ToString());
-                        ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
-                        ((Storyboard)FindResource("fade_in")).Begin(lbStage2Name);
+                        stg2.Background = brush;
+                        stg2.Content = Translate((stage.Id).ToString());
+                        ((Storyboard)FindResource("fade_in")).Begin(stg2);
                     }
                     catch
                     {
@@ -161,10 +155,9 @@ namespace Ikas
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                             brush.Stretch = Stretch.UniformToFill;
-                            bdStage2.Background = brush;
-                            tbStage2Name.Text = Translate(((Stage.Key)stage.Id).ToString());
-                            ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
-                            ((Storyboard)FindResource("fade_in")).Begin(lbStage2Name);
+                            stg2.Background = brush;
+                            stg2.Content = Translate((stage.Id).ToString());
+                            ((Storyboard)FindResource("fade_in")).Begin(stg2);
                         }));
                     }
                 }
@@ -194,10 +187,9 @@ namespace Ikas
                 {
                     ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                     brush.Stretch = Stretch.UniformToFill;
-                    bdNextStage1.Background = brush;
-                    tbNextStage1Name.Text = Translate(((Stage.Key)stage.Id).ToString());
-                    ((Storyboard)FindResource("fade_in")).Begin(bdNextStage1);
-                    ((Storyboard)FindResource("fade_in")).Begin(lbNextStage1Name);
+                    stgNext1.Background = brush;
+                    stgNext1.Content = Translate((stage.Id).ToString());
+                    ((Storyboard)FindResource("fade_in")).Begin(stgNext1);
                 }
                 catch
                 {
@@ -207,10 +199,9 @@ namespace Ikas
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
-                        bdNextStage1.Background = brush;
-                        tbNextStage1Name.Text = Translate(((Stage.Key)stage.Id).ToString());
-                        ((Storyboard)FindResource("fade_in")).Begin(bdNextStage1);
-                        ((Storyboard)FindResource("fade_in")).Begin(lbNextStage1Name);
+                        stgNext1.Background = brush;
+                        stgNext1.Content = Translate((stage.Id).ToString());
+                        ((Storyboard)FindResource("fade_in")).Begin(stgNext1);
                     }));
                 }
                 if (nextScheduledStages.Count > 1)
@@ -221,10 +212,9 @@ namespace Ikas
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
-                        bdNextStage2.Background = brush;
-                        tbNextStage2Name.Text = Translate(((Stage.Key)stage.Id).ToString());
-                        ((Storyboard)FindResource("fade_in")).Begin(bdNextStage2);
-                        ((Storyboard)FindResource("fade_in")).Begin(lbNextStage2Name);
+                        stgNext2.Background = brush;
+                        stgNext2.Content = Translate((stage.Id).ToString());
+                        ((Storyboard)FindResource("fade_in")).Begin(stgNext2);
                     }
                     catch
                     {
@@ -233,10 +223,9 @@ namespace Ikas
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                             brush.Stretch = Stretch.UniformToFill;
-                            bdNextStage2.Background = brush;
-                            tbNextStage2Name.Text = Translate(((Stage.Key)stage.Id).ToString());
-                            ((Storyboard)FindResource("fade_in")).Begin(bdNextStage2);
-                            ((Storyboard)FindResource("fade_in")).Begin(lbNextStage2Name);
+                            stgNext2.Background = brush;
+                            stgNext2.Content = Translate((stage.Id).ToString());
+                            ((Storyboard)FindResource("fade_in")).Begin(stgNext2);
                         }));
                     }
                 }

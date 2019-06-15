@@ -40,22 +40,10 @@
                 </Grid>
                 <Grid Margin="25,10,25,0">
                     <Border Width="208" Height="117" HorizontalAlignment="Left" CornerRadius="8" Background="Black">
-                        <Border x:Name="bdStage1" Width="208" Height="117" CornerRadius="8" Background="Green" Opacity="0">
-                            <Border Height="25" VerticalAlignment="Bottom" Margin="5,0,5,5" CornerRadius="8" Background="#B3000000" HorizontalAlignment="Right">
-                                <Label x:Name="lbStage1Name" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" VerticalAlignment="Center" Height="40" FontSize="16" HorizontalContentAlignment="Right">
-                                    <TextBlock x:Name="tbStage1Name" TextTrimming="CharacterEllipsis">[MapName]</TextBlock>
-                                </Label>
-                            </Border>
-                        </Border>
+                        <local:StageControl x:Name="stg1" FontSize="16"/>
                     </Border>
                     <Border Width="208" Height="117" HorizontalAlignment="Right" CornerRadius="8" Background="Black">
-                        <Border x:Name="bdStage2" Width="208" Height="117" CornerRadius="8" Background="Green" Opacity="0">
-                            <Border Height="25" VerticalAlignment="Bottom" Margin="5,0,5,5" CornerRadius="8" Background="#B3000000" HorizontalAlignment="Right">
-                                <Label x:Name="lbStage2Name" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" VerticalAlignment="Center" Height="40" FontSize="16" HorizontalContentAlignment="Right">
-                                    <TextBlock x:Name="tbStage2Name" TextTrimming="CharacterEllipsis">[MapName]</TextBlock>
-                                </Label>
-                            </Border>
-                        </Border>
+                        <local:StageControl x:Name="stg2" FontSize="16"/>
                     </Border>
                 </Grid>
                 <Grid Margin="0,20,0,0">
@@ -75,22 +63,10 @@
                             </Grid>
                             <Grid Margin="0,10,0,0">
                                 <Border Width="144" Height="81" HorizontalAlignment="Left" CornerRadius="8" Background="Black">
-                                    <Border x:Name="bdNextStage1" Width="144" Height="81" CornerRadius="8" Background="Green" Opacity="0">
-                                        <Border Height="25" VerticalAlignment="Bottom" Margin="5,0,5,5" CornerRadius="8" Background="#B3000000" HorizontalAlignment="Right">
-                                            <Label x:Name="lbNextStage1Name" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" VerticalAlignment="Center" Height="40" FontSize="16" HorizontalContentAlignment="Right">
-                                                <TextBlock x:Name="tbNextStage1Name" TextTrimming="CharacterEllipsis">[MapName]</TextBlock>
-                                            </Label>
-                                        </Border>
-                                    </Border>
+                                    <local:StageControl x:Name="stgNext1" FontSize="16"/>
                                 </Border>
                                 <Border Width="144" Height="81" HorizontalAlignment="Right" CornerRadius="8" Background="Black">
-                                    <Border x:Name="bdNextStage2" Width="144" Height="81" CornerRadius="8" Background="Green" Opacity="0">
-                                        <Border Height="25" VerticalAlignment="Bottom" Margin="5,0,5,5" CornerRadius="8" Background="#B3000000" HorizontalAlignment="Right">
-                                            <Label x:Name="lbNextStage2Name" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" VerticalAlignment="Center" Height="40" FontSize="16" HorizontalContentAlignment="Right">
-                                                <TextBlock x:Name="tbNextStage2Name" TextTrimming="CharacterEllipsis">[MapName]</TextBlock>
-                                            </Label>
-                                        </Border>
-                                    </Border>
+                                    <local:StageControl x:Name="stgNext2" FontSize="16"/>
                                 </Border>
                             </Grid>
                         </StackPanel>
