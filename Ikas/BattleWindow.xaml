@@ -47,13 +47,7 @@
             </Grid>
             <Grid Margin="25,10,25,0">
                 <Border Width="208" Height="117" HorizontalAlignment="Left" CornerRadius="8" Background="Black">
-                    <Border x:Name="bdStage" Width="208" Height="117" CornerRadius="8" Background="Green" Opacity="1">
-                        <Border Height="25" VerticalAlignment="Bottom" Margin="5,0,5,5" CornerRadius="8" Background="#B3000000" HorizontalAlignment="Right">
-                            <Label x:Name="lbStageName" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" VerticalAlignment="Center" Height="40" FontSize="16" HorizontalContentAlignment="Right">
-                                <TextBlock x:Name="tbStageName" TextTrimming="CharacterEllipsis">[MapName]</TextBlock>
-                            </Label>
-                        </Border>
-                    </Border>
+                    <local:StageControl x:Name="stg" FontSize="16"/>
                 </Border>
                 <StackPanel x:Name="spLeague" Width ="222" Height="117" Orientation="Vertical" HorizontalAlignment="Right">
                     <Label FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" FontSize="24" Content="リーグパワー"/>
