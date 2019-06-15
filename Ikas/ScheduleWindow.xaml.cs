@@ -66,7 +66,7 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(lbTime);
             ((Storyboard)FindResource("fade_out")).Begin(stg1);
             ((Storyboard)FindResource("fade_out")).Begin(stg2);
-            ((Storyboard)FindResource("fade_out")).Begin(bdNext);
+            ((Storyboard)FindResource("fade_out")).Begin(tagNext);
             ((Storyboard)FindResource("fade_out")).Begin(lbNextRule);
             ((Storyboard)FindResource("fade_out")).Begin(lbNextTime);
             ((Storyboard)FindResource("fade_out")).Begin(stgNext1);
@@ -87,15 +87,15 @@ namespace Ikas
                 {
                     case Mode.Key.regular_battle:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_regular");
-                        bdNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                        tagNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         break;
                     case Mode.Key.ranked_battle:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_ranked");
-                        bdNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+                        tagNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
                         break;
                     case Mode.Key.league_battle:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_league");
-                        bdNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                        tagNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -110,7 +110,7 @@ namespace Ikas
                 ((Storyboard)FindResource("fade_in")).Begin(lbMode);
                 ((Storyboard)FindResource("fade_in")).Begin(lbRule);
                 ((Storyboard)FindResource("fade_in")).Begin(lbTime);
-                ((Storyboard)FindResource("fade_in")).Begin(bdNext);
+                ((Storyboard)FindResource("fade_in")).Begin(tagNext);
                 // Update Stages
                 Stage stage = scheduledStages[0];
                 string image = FileFolderUrl.ApplicationData + stage.Image;

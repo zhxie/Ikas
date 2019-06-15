@@ -70,6 +70,9 @@
     <Compile Include="StageControl.xaml.cs">
       <DependentUpon>StageControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TagControl.xaml.cs">
+      <DependentUpon>TagControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="assets\lang\en-US.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -102,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TagControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

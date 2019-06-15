@@ -7,9 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Border x:Name="bdStage" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Background}" Opacity="1">
+        <Border x:Name="bdStage" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Background}">
             <Border VerticalAlignment="Bottom" Margin="5,0,5,5" CornerRadius="8" Background="#B3000000" HorizontalAlignment="Right">
-                <TextBlock x:Name="tbStage" FontFamily="/Ikas;component/assets/font/#Splatfont 2" FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" Foreground="#FFDBDBDB" TextTrimming="CharacterEllipsis" Padding="5,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Content}" Margin="0,-3"/>
+                <TextBlock x:Name="tbStage" FontFamily="/Ikas;component/assets/font/#Splatfont 2" FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" Foreground="#FFDBDBDB" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-3" Padding="5,0" TextTrimming="CharacterEllipsis" Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Content}"/>
             </Border>
         </Border>
     </Grid>

@@ -16,18 +16,18 @@ using System.Windows.Shapes;
 namespace Ikas
 {
     /// <summary>
-    /// StageControl.xaml 的交互逻辑
+    /// TagControl.xaml 的交互逻辑
     /// </summary>
-    public partial class StageControl : UserControl
+    public partial class TagControl : UserControl
     {
-        
+
         public new string Content
         {
             get { return (string)GetValue(ContentProperty); }
             set { SetValue(ContentProperty, value); }
         }
         public new static readonly DependencyProperty ContentProperty =
-            DependencyProperty.Register("Content", typeof(string), typeof(StageControl), new PropertyMetadata(""));
+            DependencyProperty.Register("Content", typeof(string), typeof(TagControl), new PropertyMetadata(""));
 
         public new Brush Background
         {
@@ -35,12 +35,27 @@ namespace Ikas
             set { SetValue(BackgroundProperty, value); }
         }
         public new static readonly DependencyProperty BackgroundProperty =
-            DependencyProperty.Register("Background", typeof(Brush), typeof(StageControl), new PropertyMetadata(new SolidColorBrush(Colors.Transparent)));
+            DependencyProperty.Register("Background", typeof(Brush), typeof(TagControl), new PropertyMetadata(new SolidColorBrush(Colors.Transparent)));
 
-        public StageControl()
+        public Thickness TextBlockMargin
+        {
+            get
+            {
+                switch (HorizontalAlignment)
+                {
+                    case HorizontalAlignment.Left:
+                        return new Thickness(20, 0, 10, 0);
+                    case HorizontalAlignment.Right:
+                        return new Thickness(10, 0, 20, 0);
+                    default:
+                        return new Thickness(15, 0, 15, 0);
+                }
+            }
+        }
+
+        public TagControl()
         {
             InitializeComponent();
-            RenderOptions.SetBitmapScalingMode(bdStage, BitmapScalingMode.HighQuality);
         }
     }
 }
