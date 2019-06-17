@@ -54,6 +54,16 @@ namespace Ikas
 
         #region Control Event
 
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("window_fade_in")).Begin(this);
+        }
+
+        private void Window_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("window_fade_out")).Begin(this);
+        }
+
         #endregion
 
         private void CurrentModeChanged()
@@ -249,5 +259,6 @@ namespace Ikas
                 return s;
             }
         }
+
     }
 }

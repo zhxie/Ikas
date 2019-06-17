@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ikas"
         mc:Ignorable="d"
-        Loaded="MainWindow_Loaded"
-        PreviewMouseLeftButtonDown="MainWindow_PreviewMouseLeftButtonDown"
+        Loaded="Window_Loaded"
+        PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown"
         Title="Ikas" Height="54" Width="495" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent">
     <Window.Resources>
         <Storyboard x:Key="fade_out">

@@ -73,13 +73,13 @@ namespace Ikas
 
         #region Control Event
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Update Schedule
             Depot.GetSchedule();
         }
 
-        private void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
             ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
@@ -106,9 +106,7 @@ namespace Ikas
 
         private void BdStage_MouseEnter(object sender, MouseEventArgs e)
         {
-            scheduleWindow.Top = Top + Height + 10;
-            scheduleWindow.Left = Left;
-            ((Storyboard)FindResource("window_fade_in")).Begin(scheduleWindow);
+            ShowWindow(scheduleWindow);
         }
 
         private void BdStage_MouseLeave(object sender, MouseEventArgs e)
@@ -118,15 +116,12 @@ namespace Ikas
 
         private void LbLevel_MouseEnter(object sender, MouseEventArgs e)
         {
-            Depot.GetLastBattle();
-            battleWindow.Top = Top + Height + 10;
-            battleWindow.Left = Left;
-            ((Storyboard)FindResource("window_fade_in")).Begin(battleWindow);
+            ShowWindow(battleWindow);
         }
 
         private void LbLevel_MouseLeave(object sender, MouseEventArgs e)
         {
-            //((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
+            ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
         }
 
         #endregion
@@ -222,6 +217,21 @@ namespace Ikas
                 // Current mode do not has a schedule, switch to regular battle
                 Depot.CurrentMode = Mode.Key.regular_battle;
             }
+        }
+
+        private void ShowWindow(Window window)
+        {
+            window.Top = Top + Height + 10;
+            window.Left = Left;
+            if (window.Top < 0)
+            {
+                window.Top = 0;
+            }
+            if (window.Top + window.Height > WpfScreen.GetScreenFrom(this).DeviceBounds.Height)
+            {
+                window.Top = WpfScreen.GetScreenFrom(this).DeviceBounds.Height - window.Height;
+            }
+            ((Storyboard)FindResource("window_fade_in")).Begin(window);
         }
 
         private string Translate(string s, bool isLocal = false)
