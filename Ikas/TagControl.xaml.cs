@@ -20,6 +20,21 @@ namespace Ikas
     /// </summary>
     public partial class TagControl : UserControl
     {
+        public new int FontSize
+        {
+            get { return (int)GetValue(FontSizeProperty); }
+            set { SetValue(FontSizeProperty, value); }
+        }
+        public new static readonly DependencyProperty FontSizeProperty =
+            DependencyProperty.Register("FontSize", typeof(int), typeof(TagControl), new PropertyMetadata(22));
+
+        public int FontSize2
+        {
+            get { return (int)GetValue(FontSize2Property); }
+            set { SetValue(FontSize2Property, value); }
+        }
+        public static readonly DependencyProperty FontSize2Property =
+            DependencyProperty.Register("FontSize2", typeof(int), typeof(TagControl), new PropertyMetadata(16));
 
         public new string Content
         {
@@ -28,6 +43,14 @@ namespace Ikas
         }
         public new static readonly DependencyProperty ContentProperty =
             DependencyProperty.Register("Content", typeof(string), typeof(TagControl), new PropertyMetadata(""));
+
+        public string Content2
+        {
+            get { return (string)GetValue(Content2Property); }
+            set { SetValue(Content2Property, value); }
+        }
+        public static readonly DependencyProperty Content2Property =
+            DependencyProperty.Register("Content2", typeof(string), typeof(TagControl), new PropertyMetadata(""));
 
         public new Brush Background
         {

@@ -33,24 +33,24 @@
         <StackPanel Orientation="Vertical" Margin="0,20">
             <Grid Height="48" Margin="20,0,0,0">
                 <StackPanel Orientation="Horizontal">
-                    <Image x:Name="imgMode" Width="48" Height="48" Source="{StaticResource image_battle_regular}" Opacity="1"/>
-                    <Label x:Name="lbRule" Content="[Rule]" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="36" Height="90" VerticalContentAlignment="Center" Opacity="1"/>
+                    <Image x:Name="imgMode" Width="48" Height="48" Source="{StaticResource image_battle_regular}" Opacity="0"/>
+                    <Label x:Name="lbRule" Content="[Rule]" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="36" Height="90" VerticalContentAlignment="Center" Opacity="0"/>
                 </StackPanel>
-                <local:TagControl x:Name="tagResult" FontFamily="/Ikas;component/assets/font/#Splatfont" FontSize="22" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Background="#FF19D719" Content="Win!"/>
+                <local:TagControl x:Name="tagResult" FontFamily="/Ikas;component/assets/font/#Splatfont" FontSize="22" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Background="#FF19D719" Content="[Result]" Opacity="0"/>
             </Grid>
             <Grid Margin="25,10,25,0">
                 <Border Width="208" Height="117" HorizontalAlignment="Left" CornerRadius="8" Background="Black">
                     <local:StageControl x:Name="stg" FontSize="16"/>
                 </Border>
                 <StackPanel x:Name="spLeague" Width ="222" Height="117" Orientation="Vertical" HorizontalAlignment="Right">
-                    <Label x:Name="lbPowerName" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" FontSize="24" Content="リーグパワー"/>
-                    <Label x:Name="lbPower" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="White" FontSize="28" Content="0000.0/0000.0" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-10,0,0"/>
+                    <Label x:Name="lbPowerName" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" FontSize="24" Content="[PowerName]" Opacity="0"/>
+                    <Label x:Name="lbPower" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="White" FontSize="28" Content="[Power]" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-10,0,0" Opacity="0"/>
                 </StackPanel>
             </Grid>
-            <StackPanel Orientation="Vertical" Margin="0,20,0,0">
+            <StackPanel Orientation="Vertical" Margin="0,15,0,0">
                 <Grid Height="30">
-                    <local:TagControl x:Name="tagWin" FontFamily="/Ikas;component/assets/font/#Splatfont 2" FontSize="22" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF19D719" Content="ノックアウト"/>
-                    <Label x:Name="lbWinEstimatedPower" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" FontSize="24" Content="推定 0000" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,20,0" Padding="5,0"/>
+                    <local:TagControl x:Name="tagWin" FontFamily="/Ikas;component/assets/font/#Splatfont 2" FontSize="22" FontSize2="16" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF19D719" Content="[WinTag]" Opacity="0"/>
+                    <Label x:Name="lbWinEstimatedPower" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" FontSize="24" Content="[WinEstimated]" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,20,0" Padding="5,0" Opacity="0"/>
                 </Grid>
                 <StackPanel Orientation="Vertical" Margin="25,15,25,0">
                     <local:PlayerControl x:Name="plWin1"/>
@@ -61,8 +61,8 @@
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="0,15,0,0">
                 <Grid Height="30">
-                    <local:TagControl x:Name="tagLose" FontFamily="/Ikas;component/assets/font/#Splatfont 2" FontSize="22" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF19D719" Content="ノックアウト"/>
-                    <Label x:Name="lbLoseEstimatedPower" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" FontSize="24" Content="推定 0000" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,20,0" Padding="5,0"/>
+                    <local:TagControl x:Name="tagLose" FontFamily="/Ikas;component/assets/font/#Splatfont 2" FontSize="22" FontSize2="16" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF19D719" Content="[LoseTag]" Opacity="0"/>
+                    <Label x:Name="lbLoseEstimatedPower" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" FontSize="24" Content="[LoseEstimatetd]" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,20,0" Padding="5,0" Opacity="0"/>
                 </Grid>
                 <StackPanel Orientation="Vertical" Margin="25,15,25,0">
                     <local:PlayerControl x:Name="plLose1"/>

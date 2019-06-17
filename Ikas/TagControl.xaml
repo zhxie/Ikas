@@ -12,7 +12,9 @@
                 <Border.Background>
                     <ImageBrush ImageSource="assets/img/bg-strips-small.png" Stretch="None" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,150,150"/>
                 </Border.Background>
-                <TextBlock FontFamily="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontFamily}" Foreground="White" FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" HorizontalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=HorizontalAlignment}" VerticalAlignment="Center" Margin="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=TextBlockMargin}" Padding="5,0" Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Content}"/>
+                <TextBlock FontFamily="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontFamily}" Foreground="White" HorizontalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=HorizontalAlignment}" VerticalAlignment="Center" Margin="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=TextBlockMargin}" Padding="5,0">
+                    <Run FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Content}"></Run><Run FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize2}" Text="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Content2}"></Run>
+                </TextBlock>
             </Border>
         </Border>
     </Grid>

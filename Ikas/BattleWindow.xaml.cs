@@ -168,22 +168,27 @@ namespace Ikas
                 {
                     case Mode.Key.regular_battle:
                     case Mode.Key.splatfest:
-                        tagWin.Content = string.Format(Translate("{0} %", true), battle.MyScore.ToString());
+                        tagWin.Content = battle.MyScore.ToString();
+                        tagWin.Content2 = Translate("%", true);
                         tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                        tagLose.Content = string.Format(Translate("{0} %", true), battle.OtherScore.ToString());
+                        tagLose.Content = battle.OtherScore.ToString();
+                        tagLose.Content2 = Translate("%", true);
                         tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         break;
                     case Mode.Key.ranked_battle:
                         if ((battle as RankedBattle).IsKo)
                         {
                             tagWin.Content = Translate("knock_out", true);
+                            tagWin.Content2 = "";
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                             tagLose.Content = battle.OtherScore.ToString();
+                            tagLose.Content2 = "";
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         }
                         else
                         {
                             tagWin.Content = battle.MyScore.ToString();
+                            tagWin.Content2 = "";
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                             tagLose.Content = battle.OtherScore.ToString();
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
@@ -193,15 +198,19 @@ namespace Ikas
                         if ((battle as LeagueBattle).IsKo)
                         {
                             tagWin.Content = Translate("knock_out", true);
+                            tagWin.Content2 = "";
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                             tagLose.Content = battle.OtherScore.ToString();
+                            tagLose.Content2 = "";
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         }
                         else
                         {
                             tagWin.Content = battle.MyScore.ToString();
+                            tagWin.Content2 = "";
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                             tagLose.Content = battle.OtherScore.ToString();
+                            tagLose.Content2 = "";
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         }
                         break;

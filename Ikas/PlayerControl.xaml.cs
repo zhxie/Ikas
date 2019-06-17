@@ -26,6 +26,14 @@ namespace Ikas
     {
         public volatile Player Player;
 
+        public string OfflineColor
+        {
+            get
+            {
+                return "#7F" + Design.NeonOrange;
+            }
+        }
+
         public PlayerControl()
         {
             // Initialize component
@@ -40,38 +48,37 @@ namespace Ikas
         {
             Player = player;
             ((Storyboard)FindResource("fade_out")).Begin(gridMain);
+            ((Storyboard)FindResource("bg_to_black")).Begin(bdMain);
             if (Player != null)
             {
                 // Background change
+                bdOffline.Background = new SolidColorBrush(Colors.Transparent);
                 if (Player.IsSelf)
                 {
-                    bdMain.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#7F" + Design.NeonRed));
+                    ((Storyboard)FindResource("bg_to_white")).Begin(bdMain);
                 }
                 else if (Player.IsOffline)
                 {
-                    bdMain.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#7FFFFFFF"));
-                }
-                else
-                {
-                    bdMain.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#7F000000"));
+                    bdOffline.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#7F000000"));
                 }
                 // Level or Rank
                 if (Player is RankedPlayer)
                 {
-                    lbLevel.Content = Translate((Player as RankedPlayer).Rank.ToString());
+                    tbLevel.Text = Translate((Player as RankedPlayer).Rank.ToString());
+                    tbStar.Text = "";
                 }
                 else
                 {
                     if (Player.Level >= 100)
                     {
-                        lbLevel.Content = (Player.Level - 100 * Player.Star).ToString();
-                        lbStar.Content = Translate("★", true);
+                        tbLevel.Text = (Player.Level - 100 * Player.Star).ToString();
+                        tbStar.Text = Translate("★", true);
                     }
                     else
                     {
-                        lbLevel.Content = Player.Level.ToString();
-                        lbLevel.Foreground = new SolidColorBrush(Colors.White);
-                        lbStar.Content = "";
+                        tbLevel.Text = Player.Level.ToString();
+                        tbLevel.Foreground = new SolidColorBrush(Colors.White);
+                        tbStar.Text = "";
                     }
                 }
                 // Icon
@@ -124,19 +131,19 @@ namespace Ikas
                 }
                 // Nickname and paint
                 tbNickname.Text = Player.Nickname;
-                lbPaint.Content = Player.Paint.ToString();
+                lbPaint.Content = string.Format(Translate("{0}p", true), Player.Paint.ToString());
                 // Kill, death and special
-                lbKillAndAssist.Content = Player.KillAndAssist.ToString();
-                lbDeath.Content = player.Death.ToString();
+                tbKillAndAssist.Text = Player.KillAndAssist.ToString();
+                tbDeath.Text = player.Death.ToString();
                 if (Player.Assist > 0)
                 {
-                    lbAssist.Content = string.Format(Translate("({0})", true), Player.Assist);
+                    tbAssist.Text = string.Format(Translate("({0})", true), Player.Assist);
                 }
                 else
                 {
-                    lbAssist.Content = "";
+                    tbAssist.Text = "";
                 }
-                lbSpecial.Content = Player.Special.ToString();
+                tbSpecial.Text = Player.Special.ToString();
                 // Special image
                 if (isMy)
                 {
@@ -144,7 +151,7 @@ namespace Ikas
                     try
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                        brush.Stretch = Stretch.UniformToFill;
+                        brush.Stretch = Stretch.Uniform;
                         bdSpecial.Background = brush;
                         ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
                     }
@@ -157,7 +164,7 @@ namespace Ikas
                             if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Player.Weapon.SpecialWeapon.Image1))
                             {
                                 ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                                brush.Stretch = Stretch.UniformToFill;
+                                brush.Stretch = Stretch.Uniform;
                                 bdSpecial.Background = brush;
                                 ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
                             }
@@ -170,7 +177,7 @@ namespace Ikas
                     try
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                        brush.Stretch = Stretch.UniformToFill;
+                        brush.Stretch = Stretch.Uniform;
                         bdSpecial.Background = brush;
                         ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
                     }
@@ -183,7 +190,7 @@ namespace Ikas
                             if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Player.Weapon.SpecialWeapon.Image2))
                             {
                                 ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                                brush.Stretch = Stretch.UniformToFill;
+                                brush.Stretch = Stretch.Uniform;
                                 bdSpecial.Background = brush;
                                 ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
                             }

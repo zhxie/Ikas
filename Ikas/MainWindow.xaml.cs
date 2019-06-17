@@ -126,7 +126,7 @@ namespace Ikas
 
         private void LbLevel_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
+            //((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
         }
 
         #endregion
