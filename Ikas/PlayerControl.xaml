@@ -22,7 +22,7 @@
     </UserControl.Resources>
     <Grid>
         <Border x:Name="bdMain" Height="45" CornerRadius="8" Background="#7F000000">
-            <Grid x:Name="gridMain" Opacity="1">
+            <Grid x:Name="gridMain" Opacity="0">
                 <Grid Margin="5,0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <Grid Width="48">
@@ -87,7 +87,7 @@
                         </Border>
                     </StackPanel>
                 </Grid>
-                <Border x:Name="bdOffline" CornerRadius="8" Background="#7F000000" Opacity="0"/>
+                <Border x:Name="bdOffline" CornerRadius="8" Background="#7F000000" Opacity="1"/>
             </Grid>
         </Border>
     </Grid>
