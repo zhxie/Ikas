@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ikas"
         mc:Ignorable="d"
-        Title="Ikas - Schedule" Height="400" Width="495" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent">
+        Title="Ikas - Schedule" Width="495" SizeToContent="Height" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent">
     <Window.Resources>
         <BitmapImage x:Key="image_battle_regular" UriSource="/assets/img/battle-regular.png"/>
         <BitmapImage x:Key="image_battle_ranked" UriSource="/assets/img/battle-ranked.png"/>
@@ -28,7 +28,7 @@
                 </Border.Background>
             </Border>
         </Border>
-        <StackPanel Orientation="Vertical" Height="360">
+        <StackPanel Orientation="Vertical" Margin="0,20">
             <StackPanel Orientation="Horizontal" Height="48" Margin="20,0,20,0">
                 <Image x:Name="imgMode" Width="48" Height="48" Source="{StaticResource image_battle_regular}" Opacity="0"/>
                 <Label x:Name="lbMode" Content="[Mode]" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="36" Height="80" Margin="15,0,0,0" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>

@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-using System.IO;
 using System.Windows.Media.Animation;
 
 using ClassLib;
@@ -138,25 +137,25 @@ namespace Ikas
                 }
                 if (scheduledStages.Count > 1)
                 {
-                    stage = scheduledStages[1];
-                    image = FileFolderUrl.ApplicationData + stage.Image;
+                    Stage stage2 = scheduledStages[1];
+                    string image2 = FileFolderUrl.ApplicationData + stage2.Image;
                     try
                     {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                         brush.Stretch = Stretch.UniformToFill;
                         stg2.Background = brush;
-                        stg2.Content = Translate((stage.Id).ToString());
+                        stg2.Content = Translate((stage2.Id).ToString());
                         ((Storyboard)FindResource("fade_in")).Begin(stg2);
                     }
                     catch
                     {
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
                         Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                             brush.Stretch = Stretch.UniformToFill;
                             stg2.Background = brush;
-                            stg2.Content = Translate((stage.Id).ToString());
+                            stg2.Content = Translate((stage2.Id).ToString());
                             ((Storyboard)FindResource("fade_in")).Begin(stg2);
                         }));
                     }
@@ -206,25 +205,25 @@ namespace Ikas
                 }
                 if (nextScheduledStages.Count > 1)
                 {
-                    stage = nextScheduledStages[1];
-                    image = FileFolderUrl.ApplicationData + stage.Image;
+                    Stage stage2 = nextScheduledStages[1];
+                    string image2 = FileFolderUrl.ApplicationData + stage2.Image;
                     try
                     {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                         brush.Stretch = Stretch.UniformToFill;
                         stgNext2.Background = brush;
-                        stgNext2.Content = Translate((stage.Id).ToString());
+                        stgNext2.Content = Translate((stage2.Id).ToString());
                         ((Storyboard)FindResource("fade_in")).Begin(stgNext2);
                     }
                     catch
                     {
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
                         Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                             brush.Stretch = Stretch.UniformToFill;
                             stgNext2.Background = brush;
-                            stgNext2.Content = Translate((stage.Id).ToString());
+                            stgNext2.Content = Translate((stage2.Id).ToString());
                             ((Storyboard)FindResource("fade_in")).Begin(stgNext2);
                         }));
                     }

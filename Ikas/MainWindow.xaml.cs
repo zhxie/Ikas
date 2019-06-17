@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using System.IO;
 using System.Windows.Media.Animation;
 
 using ClassLib;
@@ -26,6 +25,7 @@ namespace Ikas
     public partial class MainWindow : Window
     {
         private ScheduleWindow scheduleWindow;
+        private BattleWindow battleWindow;
 
         public MainWindow()
         {
@@ -64,6 +64,11 @@ namespace Ikas
             scheduleWindow.Visibility = Visibility.Hidden;
             scheduleWindow.Top = Top + Height + 10;
             scheduleWindow.Left = Left;
+            battleWindow = new BattleWindow();
+            battleWindow.Opacity = 0;
+            battleWindow.Visibility = Visibility.Hidden;
+            battleWindow.Top = Top + Height + 10;
+            battleWindow.Left = Left;
         }
 
         #region Control Event
@@ -72,13 +77,12 @@ namespace Ikas
         {
             // Update Schedule
             Depot.GetSchedule();
-            // TEST:
-            Depot.GetLastBattle();
         }
 
         private void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
+            ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
             DragMove();
         }
 
@@ -110,6 +114,19 @@ namespace Ikas
         private void BdStage_MouseLeave(object sender, MouseEventArgs e)
         {
             ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
+        }
+
+        private void LbLevel_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Depot.GetLastBattle();
+            battleWindow.Top = Top + Height + 10;
+            battleWindow.Left = Left;
+            ((Storyboard)FindResource("window_fade_in")).Begin(battleWindow);
+        }
+
+        private void LbLevel_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
         }
 
         #endregion
@@ -177,21 +194,21 @@ namespace Ikas
                     }
                     if (scheduledStages.Count > 1)
                     {
-                        stage = scheduledStages[1];
-                        image = FileFolderUrl.ApplicationData + stage.Image;
+                        Stage stage2 = scheduledStages[1];
+                        string image2 = FileFolderUrl.ApplicationData + stage2.Image;
                         try
                         {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                             brush.Stretch = Stretch.UniformToFill;
                             bdStage2.Background = brush;
                             ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
                         }
                         catch
                         {
-                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
+                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
                             Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                             {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                                 brush.Stretch = Stretch.UniformToFill;
                                 bdStage2.Background = brush;
                                 ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
@@ -225,5 +242,6 @@ namespace Ikas
                 return s;
             }
         }
+
     }
 }
