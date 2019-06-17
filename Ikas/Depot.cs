@@ -20,6 +20,7 @@ namespace Ikas
 {
     public delegate void ScheduleUpdatedEventHandler();
     public delegate void BattleUpdatedEventHandler();
+    public delegate void BattleChangedEventHandler();
     public delegate void CurrentModeChangedEventHandler();
     public static class Depot
     {
@@ -54,6 +55,7 @@ namespace Ikas
         private static Mutex ScheduleMutex = new Mutex();
         public static Schedule Schedule { get; set; } = new Schedule();
 
+        public static event BattleChangedEventHandler BattleChanged;
         public static event BattleUpdatedEventHandler BattleUpdated;
         private static Mutex BattleMutex = new Mutex();
         public static Battle Battle { get; set; } = new Battle();
@@ -236,6 +238,8 @@ namespace Ikas
         /// </summary>
         public static async void GetLastBattle()
         {
+            // TODO: Raise event
+            BattleChanged?.Invoke();
             // Remove previous Downloader's handlers
             DownloadManager.RemoveDownloaders(Downloader.SourceType.Battle);
             // Send HTTP GET
