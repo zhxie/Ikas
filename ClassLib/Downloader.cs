@@ -67,9 +67,9 @@ namespace ClassLib
         {
             isActive = true;
             // Create folder of To if not exists
-            if (!Directory.Exists(FileFolderUrl.GetFolder(To)))
+            if (!Directory.Exists(Path.GetDirectoryName(To)))
             {
-                Directory.CreateDirectory(FileFolderUrl.GetFolder(To));
+                Directory.CreateDirectory(Path.GetDirectoryName(To));
             }
             WebClient client = new WebClient();
             if (Proxy != null)
