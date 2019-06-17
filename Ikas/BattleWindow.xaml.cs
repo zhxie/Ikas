@@ -226,9 +226,11 @@ namespace Ikas
                 {
                     case Mode.Key.regular_battle:
                     case Mode.Key.splatfest:
-                        tagWin.Content = string.Format(Translate("{0} %", true), battle.OtherScore.ToString());
+                        tagWin.Content = battle.OtherScore.ToString();
+                        tagWin.Content2 = Translate("%", true);
                         tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                        tagLose.Content = string.Format(Translate("{0} %", true), battle.MyScore.ToString());
+                        tagLose.Content = battle.MyScore.ToString();
+                        tagLose.Content2 = Translate("%", true);
                         tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                         break;
                     case Mode.Key.ranked_battle:
