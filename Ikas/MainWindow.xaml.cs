@@ -62,13 +62,13 @@ namespace Ikas
             scheduleWindow = new ScheduleWindow();
             scheduleWindow.Opacity = 0;
             scheduleWindow.Visibility = Visibility.Hidden;
-            scheduleWindow.Top = Top + Height + 10;
-            scheduleWindow.Left = Left;
+            //scheduleWindow.Top = Top + Height + 10;
+            //scheduleWindow.Left = Left;
             battleWindow = new BattleWindow();
             battleWindow.Opacity = 0;
             battleWindow.Visibility = Visibility.Hidden;
-            battleWindow.Top = Top + Height + 10;
-            battleWindow.Left = Left;
+            //battleWindow.Top = Top + Height + 10;
+            //battleWindow.Left = Left;
         }
 
         #region Control Event
@@ -106,7 +106,9 @@ namespace Ikas
 
         private void BdStage_MouseEnter(object sender, MouseEventArgs e)
         {
-            ShowWindow(scheduleWindow);
+            scheduleWindow.Top = Top + Height + 10;
+            scheduleWindow.Left = Left;
+            ((Storyboard)FindResource("window_fade_in")).Begin(scheduleWindow);
         }
 
         private void BdStage_MouseLeave(object sender, MouseEventArgs e)
@@ -116,7 +118,10 @@ namespace Ikas
 
         private void LbLevel_MouseEnter(object sender, MouseEventArgs e)
         {
-            ShowWindow(battleWindow);
+            Depot.GetLastBattle();
+            battleWindow.Top = Top + Height + 10;
+            battleWindow.Left = Left;
+            ((Storyboard)FindResource("window_fade_in")).Begin(battleWindow);
         }
 
         private void LbLevel_MouseLeave(object sender, MouseEventArgs e)
@@ -217,21 +222,6 @@ namespace Ikas
                 // Current mode do not has a schedule, switch to regular battle
                 Depot.CurrentMode = Mode.Key.regular_battle;
             }
-        }
-
-        private void ShowWindow(Window window)
-        {
-            window.Top = Top + Height + 10;
-            window.Left = Left;
-            if (window.Top < 0)
-            {
-                window.Top = 0;
-            }
-            if (window.Top + window.Height > WpfScreen.GetScreenFrom(this).DeviceBounds.Height)
-            {
-                window.Top = WpfScreen.GetScreenFrom(this).DeviceBounds.Height - window.Height;
-            }
-            ((Storyboard)FindResource("window_fade_in")).Begin(window);
         }
 
         private string Translate(string s, bool isLocal = false)

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ikas"
         mc:Ignorable="d"
+        LocationChanged="Window_LocationChanged"
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
         Title="Ikas - Schedule" Width="495" SizeToContent="Height" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True">
