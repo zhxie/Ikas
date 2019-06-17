@@ -39,7 +39,9 @@ namespace Ikas
 
         public StageControl()
         {
+            // Initialize component
             InitializeComponent();
+            // Set properties for controls
             RenderOptions.SetBitmapScalingMode(bdStage, BitmapScalingMode.HighQuality);
         }
     }
