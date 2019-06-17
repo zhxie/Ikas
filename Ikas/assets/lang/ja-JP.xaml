@@ -78,4 +78,20 @@
     <sys:String x:Key="schedule_window-{0} - {1}">{0} - {1}</sys:String>
     <sys:String x:Key="schedule_window-in {0} hour {1} min">{0} 時間 {1} 分後</sys:String>
     <sys:String x:Key="schedule_window-in {0} min">{0} 分後</sys:String>
+    <!-- BattleWindow -->
+    <sys:String x:Key="battle_window-Win!">Win!</sys:String>
+    <sys:String x:Key="battle_window-Lose..">Lose..</sys:String>
+    <sys:String x:Key="battle_window-league_power">リーグパワー</sys:String>
+    <sys:String x:Key="battle_window-splatfest_power">フェスパワー</sys:String>
+    <sys:String x:Key="battle_window-estimated {0}">推定 {0}</sys:String>
+    <sys:String x:Key="battle_window-calculating">計測中..</sys:String>
+    <sys:String x:Key="battle_window-{0}/{1}">{0}/{1}</sys:String>
+    <sys:String x:Key="battle_window-%">%</sys:String>
+    <sys:String x:Key="battle_window-knock_out">ノックアウト!</sys:String>
+    <!-- StageControl -->
+    <!-- TagControl -->
+    <!-- PlayerControl -->
+    <sys:String x:Key="player_control-★">★</sys:String>
+    <sys:String x:Key="schedule_window-{0}p">{0}p</sys:String>
+    <sys:String x:Key="schedule_window-({0})">({0})</sys:String>
 </ResourceDictionary>

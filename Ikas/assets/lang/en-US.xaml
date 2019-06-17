@@ -78,4 +78,20 @@
     <sys:String x:Key="schedule_window-{0} - {1}">{0} - {1}</sys:String>
     <sys:String x:Key="schedule_window-in {0} hour {1} min">in {0} hour {1} min</sys:String>
     <sys:String x:Key="schedule_window-in {0} min">in {0} min</sys:String>
+    <!-- BattleWindow -->
+    <sys:String x:Key="battle_window-Win!">Win!</sys:String>
+    <sys:String x:Key="battle_window-Lose..">Lose..</sys:String>
+    <sys:String x:Key="battle_window-league_power">League Power</sys:String>
+    <sys:String x:Key="battle_window-splatfest_power">Splatfest Power</sys:String>
+    <sys:String x:Key="battle_window-estimated {0}">Estimated {0}</sys:String>
+    <sys:String x:Key="battle_window-calculating">Calculating..</sys:String>
+    <sys:String x:Key="battle_window-{0}/{1}">{0}/{1}</sys:String>
+    <sys:String x:Key="battle_window-%">%</sys:String>
+    <sys:String x:Key="battle_window-knock_out">KO Bonus!</sys:String>
+    <!-- StageControl -->
+    <!-- TagControl -->
+    <!-- PlayerControl -->
+    <sys:String x:Key="player_control-★">★</sys:String>
+    <sys:String x:Key="schedule_window-{0}p">{0}p</sys:String>
+    <sys:String x:Key="schedule_window-({0})">({0})</sys:String>
 </ResourceDictionary>
