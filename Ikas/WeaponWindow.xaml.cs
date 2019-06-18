@@ -75,13 +75,13 @@ namespace Ikas
         public void SetWeapon(Weapon weapon)
         {
             // Fade out labels and images
-            ((Storyboard)FindResource("fade_out")).Begin(lbName);
+            ((Storyboard)FindResource("fade_out")).Begin(tbName);
             ((Storyboard)FindResource("fade_out")).Begin(bdWeapon);
             ((Storyboard)FindResource("fade_out")).Begin(bdSubWeapon);
             ((Storyboard)FindResource("fade_out")).Begin(bdSubWeapon);
             // Update weapon
-            lbName.Content = Translate(weapon.Id.ToString());
-            ((Storyboard)FindResource("fade_in")).Begin(lbName);
+            tbName.Text = Translate(weapon.Id.ToString());
+            ((Storyboard)FindResource("fade_in")).Begin(tbName);
             string image = FileFolderUrl.ApplicationData + weapon.Image;
             try
             {

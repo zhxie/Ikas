@@ -43,10 +43,12 @@
             </Border>
         </Border>
         <Grid>
-            <Border Height="60" Margin="0,10" VerticalAlignment="Top">
-                <Label x:Name="lbName" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="26" Height="100" Content="[Weapon]" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
+            <Border Height="60" Margin="20,10" VerticalAlignment="Top">
+                <Viewbox Height="52">
+                    <TextBlock x:Name="tbName" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1">[Weapon]</TextBlock>
+                </Viewbox>
             </Border>
-            <Border x:Name="bdWeapon" Background="Transparent" Width="220" Height="220" Opacity="0"/>
+            <Border x:Name="bdWeapon" Background="Transparent" Width="220" Height="220" Margin="0,5,0,0" Opacity="0"/>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,24,24">
                 <Grid>
                     <Border Background="#7F000000" Width="48" Height="48" CornerRadius="24"/>
