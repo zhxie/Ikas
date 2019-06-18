@@ -271,6 +271,5 @@ namespace Ikas
                 return s;
             }
         }
-
     }
 }
