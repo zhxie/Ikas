@@ -8,7 +8,7 @@
         LocationChanged="Window_LocationChanged"
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
-        Title="Ikas - Schedule" Width="495" SizeToContent="Height" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True">
+        Title="Ikas - Schedule" Width="495" SizeToContent="Height" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True" ShowInTaskbar="False">
     <Window.Resources>
         <BitmapImage x:Key="image_battle_regular" UriSource="/assets/img/battle-regular.png"/>
         <BitmapImage x:Key="image_battle_ranked" UriSource="/assets/img/battle-ranked.png"/>
