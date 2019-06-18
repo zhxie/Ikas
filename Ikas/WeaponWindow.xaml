@@ -45,7 +45,7 @@
         <Grid>
             <Border Height="60" Margin="20,10" VerticalAlignment="Top">
                 <Viewbox Height="52">
-                    <TextBlock x:Name="tbName" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1">[Weapon]</TextBlock>
+                    <TextBlock x:Name="tbName" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0">[Weapon]</TextBlock>
                 </Viewbox>
             </Border>
             <Border x:Name="bdWeapon" Background="Transparent" Width="220" Height="220" Margin="0,5,0,0" Opacity="0"/>
