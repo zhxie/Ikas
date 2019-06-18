@@ -81,6 +81,9 @@ namespace Ikas
         {
             Player = player;
             ((Storyboard)FindResource("fade_out")).Begin(gridMain);
+            ((Storyboard)FindResource("fade_out")).Begin(bdImage);
+            ((Storyboard)FindResource("fade_out")).Begin(bdWeapon);
+            ((Storyboard)FindResource("fade_out")).Begin(bdSpecial);
             ((Storyboard)FindResource("bg_to_black")).Begin(bdMain);
             if (Player != null)
             {
@@ -139,10 +142,10 @@ namespace Ikas
                     }));
                 }
                 // Weapon image
-                image = FileFolderUrl.ApplicationData + Player.Weapon.Image;
+                string image2 = FileFolderUrl.ApplicationData + Player.Weapon.Image;
                 try
                 {
-                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                     brush.Stretch = Stretch.UniformToFill;
                     bdWeapon.Background = brush;
                     ((Storyboard)FindResource("fade_in")).Begin(bdWeapon);
@@ -150,12 +153,12 @@ namespace Ikas
                 catch
                 {
                     // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
+                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.Image, image2, Downloader.SourceType.Battle, Depot.Proxy);
                     Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
-                        if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Player.Weapon.Image))
+                        if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Player.Weapon.Image))
                         {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                             brush.Stretch = Stretch.UniformToFill;
                             bdWeapon.Background = brush;
                             ((Storyboard)FindResource("fade_in")).Begin(bdWeapon);
@@ -180,10 +183,10 @@ namespace Ikas
                 // Special image
                 if (isMy)
                 {
-                    image = FileFolderUrl.ApplicationData + Player.Weapon.SpecialWeapon.Image1;
+                    string image3 = FileFolderUrl.ApplicationData + Player.Weapon.SpecialWeapon.Image1;
                     try
                     {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
                         brush.Stretch = Stretch.Uniform;
                         bdSpecial.Background = brush;
                         ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
@@ -191,12 +194,12 @@ namespace Ikas
                     catch
                     {
                         // Download the image
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.SpecialWeapon.Image1, image, Downloader.SourceType.Battle, Depot.Proxy);
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.SpecialWeapon.Image1, image3, Downloader.SourceType.Battle, Depot.Proxy);
                         Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Player.Weapon.SpecialWeapon.Image1))
+                            if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Player.Weapon.SpecialWeapon.Image1))
                             {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
                                 brush.Stretch = Stretch.Uniform;
                                 bdSpecial.Background = brush;
                                 ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
@@ -206,10 +209,10 @@ namespace Ikas
                 }
                 else
                 {
-                    image = FileFolderUrl.ApplicationData + Player.Weapon.SpecialWeapon.Image2;
+                    string image3 = FileFolderUrl.ApplicationData + Player.Weapon.SpecialWeapon.Image2;
                     try
                     {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
                         brush.Stretch = Stretch.Uniform;
                         bdSpecial.Background = brush;
                         ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
@@ -217,12 +220,12 @@ namespace Ikas
                     catch
                     {
                         // Download the image
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.SpecialWeapon.Image2, image, Downloader.SourceType.Battle, Depot.Proxy);
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.SpecialWeapon.Image2, image3, Downloader.SourceType.Battle, Depot.Proxy);
                         Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Player.Weapon.SpecialWeapon.Image2))
+                            if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Player.Weapon.SpecialWeapon.Image2))
                             {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
                                 brush.Stretch = Stretch.Uniform;
                                 bdSpecial.Background = brush;
                                 ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
