@@ -48,19 +48,19 @@ namespace Ikas
             // Initialize component
             InitializeComponent();
             // Set properties for controls
-            RenderOptions.SetBitmapScalingMode(bdImage, BitmapScalingMode.HighQuality);
+            RenderOptions.SetBitmapScalingMode(bdIcon, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdWeapon, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdSpecial, BitmapScalingMode.HighQuality);
         }
 
         #region Control Event
 
-        private void BdImage_MouseEnter(object sender, MouseEventArgs e)
+        private void BdIcon_MouseEnter(object sender, MouseEventArgs e)
         {
             MouseEnterIcon?.Invoke(this, e);
         }
 
-        private void BdImage_MouseLeave(object sender, MouseEventArgs e)
+        private void BdIcon_MouseLeave(object sender, MouseEventArgs e)
         {
             MouseLeaveIcon?.Invoke(this, e);
         }
@@ -81,7 +81,7 @@ namespace Ikas
         {
             Player = player;
             ((Storyboard)FindResource("fade_out")).Begin(gridMain);
-            ((Storyboard)FindResource("fade_out")).Begin(bdImage);
+            ((Storyboard)FindResource("fade_out")).Begin(bdIcon);
             ((Storyboard)FindResource("fade_out")).Begin(bdWeapon);
             ((Storyboard)FindResource("fade_out")).Begin(bdSpecial);
             ((Storyboard)FindResource("bg_to_black")).Begin(bdMain);
@@ -123,8 +123,8 @@ namespace Ikas
                 {
                     ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                     brush.Stretch = Stretch.UniformToFill;
-                    bdImage.Background = brush;
-                    ((Storyboard)FindResource("fade_in")).Begin(bdImage);
+                    bdIcon.Background = brush;
+                    ((Storyboard)FindResource("fade_in")).Begin(bdIcon);
                 }
                 catch
                 {
@@ -136,8 +136,8 @@ namespace Ikas
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                             brush.Stretch = Stretch.UniformToFill;
-                            bdImage.Background = brush;
-                            ((Storyboard)FindResource("fade_in")).Begin(bdImage);
+                            bdIcon.Background = brush;
+                            ((Storyboard)FindResource("fade_in")).Begin(bdIcon);
                         }
                     }));
                 }

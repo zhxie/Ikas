@@ -62,13 +62,9 @@ namespace Ikas
             scheduleWindow = new ScheduleWindow();
             scheduleWindow.Opacity = 0;
             scheduleWindow.Visibility = Visibility.Hidden;
-            //scheduleWindow.Top = Top + Height + 10;
-            //scheduleWindow.Left = Left;
             battleWindow = new BattleWindow();
             battleWindow.Opacity = 0;
             battleWindow.Visibility = Visibility.Hidden;
-            //battleWindow.Top = Top + Height + 10;
-            //battleWindow.Left = Left;
         }
 
         #region Control Event

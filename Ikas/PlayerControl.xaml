@@ -33,9 +33,9 @@
                             </Label>
                         </Grid>
                         <Border Height="36" Width="36" Background="#7F000000" CornerRadius="18" Margin="5,0,0,0" VerticalAlignment="Center">
-                            <Border x:Name="bdImage"
-                                MouseEnter="BdImage_MouseEnter"
-                                MouseLeave="BdImage_MouseLeave"
+                            <Border x:Name="bdIcon"
+                                MouseEnter="BdIcon_MouseEnter"
+                                MouseLeave="BdIcon_MouseLeave"
                                 Height="36" Width="36" Background="White" CornerRadius="18" Opacity="0"></Border>
                         </Border>
                         <Border x:Name="bdWeapon"

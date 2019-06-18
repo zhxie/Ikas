@@ -23,6 +23,8 @@ namespace Ikas
     /// </summary>
     public partial class BattleWindow : Window
     {
+        private WeaponWindow weaponWindow;
+
         public BattleWindow()
         {
             // Load language
@@ -47,6 +49,11 @@ namespace Ikas
             // Add handler for global member
             Depot.BattleChanged += new BattleChangedEventHandler(BattleChanged);
             Depot.BattleUpdated += new BattleUpdatedEventHandler(BattleUpdated);
+            // Prepare Icon and Weapon window
+            weaponWindow = new WeaponWindow();
+            weaponWindow.KeepAliveWindow = this;
+            weaponWindow.Opacity = 0;
+            weaponWindow.Visibility = Visibility.Hidden;
         }
 
         #region Control Event
@@ -92,13 +99,20 @@ namespace Ikas
             Player player = (sender as PlayerControl).Player;
             if (player != null)
             {
-
+                weaponWindow.Top = e.GetPosition(this).Y + Top - weaponWindow.Height / 2;
+                weaponWindow.Left = e.GetPosition(this).X + Left + 10;
+                weaponWindow.SetWeapon(player.Weapon);
+                ((Storyboard)FindResource("window_fade_in")).Begin(weaponWindow);
             }
         }
 
         private void Player_MouseLeaveWeapon(object sender, MouseEventArgs e)
         {
-
+            Player player = (sender as PlayerControl).Player;
+            if (player != null)
+            {
+                ((Storyboard)FindResource("window_fade_out")).Begin(weaponWindow);
+            }
         }
 
         #endregion
