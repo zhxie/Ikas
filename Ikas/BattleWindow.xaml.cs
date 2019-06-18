@@ -70,6 +70,7 @@ namespace Ikas
 
         private void Window_LocationChanged(object sender, EventArgs e)
         {
+            /*
             if (Top < 0)
             {
                 Top = 0;
@@ -78,6 +79,7 @@ namespace Ikas
             {
                 Top = WpfScreen.GetScreenFrom(this).DeviceBounds.Height - Height;
             }
+            */
         }
 
         private void Player_MouseEnterIcon(object sender, MouseEventArgs e)
