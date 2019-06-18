@@ -95,10 +95,10 @@ namespace ClassLib
                 return EstimatedRankPower;
             }
         }
-        public int XPowerAfter { get; }
+        public double XPowerAfter { get; }
 
         public RankedXBattle(Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, int levelAfter,
-            double estimatedXPower, int xPowerAfter, double xPower, double myScore, double otherScore)
+            double estimatedXPower, double xPowerAfter, double myScore, double otherScore)
             : base(mode, rule, stage, myPlayers.Cast<RankedPlayer>().ToList(), otherPlayers.Cast<RankedPlayer>().ToList(), levelAfter, estimatedXPower, Rank.Key.x, myScore, otherScore)
         {
             XPowerAfter = xPowerAfter;

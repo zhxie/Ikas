@@ -339,6 +339,73 @@ namespace Ikas
                                 }
                                 break;
                             case Mode.Key.ranked_battle:
+                                {
+                                    // Self
+                                    RankedPlayer selfPlayer = await parseRankedPlayer(jObject["player_result"], true);
+                                    // My team players
+                                    List<RankedPlayer> myPlayers = new List<RankedPlayer>();
+                                    JToken myPlayersNode = jObject["my_team_members"];
+                                    List<Task<RankedPlayer>> myPlayerTasks = new List<Task<RankedPlayer>>();
+                                    foreach (JToken playerNode in myPlayersNode.Children())
+                                    {
+                                        if (playerNode.HasValues)
+                                        {
+                                            Task<RankedPlayer> playerTask = parseRankedPlayer(playerNode);
+                                            myPlayerTasks.Add(playerTask);
+                                        }
+                                    }
+                                    await Task.WhenAll(myPlayerTasks);
+                                    foreach (Task<RankedPlayer> playerTask in myPlayerTasks)
+                                    {
+                                        myPlayers.Add(playerTask.Result);
+                                    }
+                                    myPlayers.Add(selfPlayer);
+                                    myPlayers = sortPlayer(myPlayers, rule);
+                                    // Other team players
+                                    List<RankedPlayer> otherPlayers = new List<RankedPlayer>();
+                                    JToken otherPlayersNode = jObject["other_team_members"];
+                                    List<Task<RankedPlayer>> otherPlayerTasks = new List<Task<RankedPlayer>>();
+                                    foreach (JToken playerNode in otherPlayersNode.Children())
+                                    {
+                                        if (playerNode.HasValues)
+                                        {
+                                            Task<RankedPlayer> playerTask = parseRankedPlayer(playerNode);
+                                            otherPlayerTasks.Add(playerTask);
+                                        }
+                                    }
+                                    await Task.WhenAll(otherPlayerTasks);
+                                    foreach (Task<RankedPlayer> playerTask in otherPlayerTasks)
+                                    {
+                                        otherPlayers.Add(playerTask.Result);
+                                    }
+                                    otherPlayers = sortPlayer(otherPlayers, rule);
+                                    // Other battle data
+                                    int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
+                                    int myScore = int.Parse(jObject["my_team_count"].ToString());
+                                    int otherScore = int.Parse(jObject["other_team_count"].ToString());
+                                    if (!jObject["x_power"].HasValues)
+                                    {
+                                        // Ranked Battle
+                                        int estimatedRankPower = int.Parse(jObject["estimate_gachi_power"].ToString());
+                                        Rank.Key rankAfter;
+                                        if (jObject["udemae"]["s_plus_number"].HasValues)
+                                        {
+                                            rankAfter = Rank.ParseKey(jObject["udemae"]["name"].ToString(), int.Parse(jObject["udemae"]["s_plus_number"].ToString()));
+                                        }
+                                        else
+                                        {
+                                            rankAfter = Rank.ParseKey(jObject["udemae"]["name"].ToString());
+                                        }
+                                        UpdateBattle(new RankedBattle(mode, rule, stage, myPlayers, otherPlayers, levelAfter, estimatedRankPower, rankAfter, myScore, otherScore));
+                                    }
+                                    else
+                                    {
+                                        // Ranked X Battle
+                                        int estimatedXPower = int.Parse(jObject["estimate_x_power"].ToString());
+                                        double xPowerAfter = double.Parse(jObject["x_power"].ToString());
+                                        UpdateBattle(new RankedXBattle(mode, rule, stage, myPlayers, otherPlayers, levelAfter, estimatedXPower, xPowerAfter, myScore, otherScore));
+                                    }
+                                }
                                 break;
                             case Mode.Key.league_battle:
                                 {
