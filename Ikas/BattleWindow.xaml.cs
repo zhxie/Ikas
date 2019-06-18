@@ -140,8 +140,6 @@ namespace Ikas
             plLose2.SetPlayer(null, false);
             plLose3.SetPlayer(null, false);
             plLose4.SetPlayer(null, false);
-            // Update Schedule
-            Depot.GetSchedule();
         }
 
         private void BattleUpdated()

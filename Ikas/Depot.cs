@@ -18,10 +18,10 @@ using ClassLib;
 
 namespace Ikas
 {
+    public delegate void ScheduleChangedEventHandler();
     public delegate void ScheduleUpdatedEventHandler();
     public delegate void BattleUpdatedEventHandler();
     public delegate void BattleChangedEventHandler();
-    public delegate void CurrentModeChangedEventHandler();
     public static class Depot
     {
         private static string cookie = "";
@@ -51,6 +51,7 @@ namespace Ikas
         }
         public static DownloadManager DownloadManager { get; } = new DownloadManager();
 
+        public static event ScheduleChangedEventHandler ScheduleChanged;
         public static event ScheduleUpdatedEventHandler ScheduleUpdated;
         private static Mutex ScheduleMutex = new Mutex();
         public static Schedule Schedule { get; set; } = new Schedule();
@@ -60,7 +61,6 @@ namespace Ikas
         private static Mutex BattleMutex = new Mutex();
         public static Battle Battle { get; set; } = new Battle();
 
-        public static event CurrentModeChangedEventHandler CurrentModeChanged;
         private static Mode.Key currentMode = Mode.Key.regular_battle;
         public static Mode.Key CurrentMode
         {
@@ -79,7 +79,9 @@ namespace Ikas
                     currentMode = value;
                 }
                 // Raise event
-                CurrentModeChanged?.Invoke();
+                ScheduleChanged?.Invoke();
+                // Update schedule
+                GetSchedule();
             }
         }
 
@@ -238,7 +240,7 @@ namespace Ikas
         /// </summary>
         public static async void GetLastBattle()
         {
-            // TODO: Raise event
+            // Raise event
             BattleChanged?.Invoke();
             // Remove previous Downloader's handlers
             DownloadManager.RemoveDownloaders(Downloader.SourceType.Battle);
@@ -439,7 +441,7 @@ namespace Ikas
             }
         }
         /// <summary>
-        ///  Uodate Battle.
+        ///  Update Battle.
         /// </summary>
         /// <param name="battle">Updated Battle</param>
         /// <returns></returns>

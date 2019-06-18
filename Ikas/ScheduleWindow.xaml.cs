@@ -48,7 +48,7 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(stgNext1, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(stgNext2, BitmapScalingMode.HighQuality);
             // Add handler for global member
-            Depot.CurrentModeChanged += new CurrentModeChangedEventHandler(CurrentModeChanged);
+            Depot.ScheduleChanged += new ScheduleChangedEventHandler(ScheduleChanged);
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
         }
 
@@ -80,7 +80,7 @@ namespace Ikas
 
         #endregion
 
-        private void CurrentModeChanged()
+        private void ScheduleChanged()
         {
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(imgMode);
@@ -94,8 +94,6 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(lbNextTime);
             ((Storyboard)FindResource("fade_out")).Begin(stgNext1);
             ((Storyboard)FindResource("fade_out")).Begin(stgNext2);
-            // Update Schedule
-            Depot.GetSchedule();
         }
 
         private void ScheduleUpdated()
