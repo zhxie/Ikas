@@ -73,6 +73,34 @@ namespace Ikas
             }
         }
 
+        private void Player_MouseEnterIcon(object sender, MouseEventArgs e)
+        {
+            Player player = (sender as PlayerControl).Player;
+            if (player != null)
+            {
+
+            }
+        }
+
+        private void Player_MouseLeaveIcon(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void Player_MouseEnterWeapon(object sender, MouseEventArgs e)
+        {
+            Player player = (sender as PlayerControl).Player;
+            if (player != null)
+            {
+
+            }
+        }
+
+        private void Player_MouseLeaveWeapon(object sender, MouseEventArgs e)
+        {
+
+        }
+
         #endregion
 
         private void BattleChanged()

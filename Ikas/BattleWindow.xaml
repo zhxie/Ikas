@@ -58,7 +58,7 @@
             </Grid>
             <Grid Margin="25,10,25,0">
                 <Border Width="208" Height="117" HorizontalAlignment="Left" CornerRadius="8" Background="Black">
-                    <local:StageControl x:Name="stg" FontSize="16"/>
+                    <local:StageControl x:Name="stg" FontSize="16" Opacity="0"/>
                 </Border>
                 <StackPanel x:Name="spLeague" Width ="222" Height="117" Orientation="Vertical" HorizontalAlignment="Right">
                     <Label x:Name="lbPowerName" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" FontSize="24" Content="[PowerName]" Opacity="0"/>
@@ -71,10 +71,30 @@
                     <Label x:Name="lbWinEstimatedPower" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" FontSize="24" Content="[WinEstimated]" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,20,0" Padding="5,0" Opacity="0"/>
                 </Grid>
                 <StackPanel Orientation="Vertical" Margin="25,15,25,0">
-                    <local:PlayerControl x:Name="plWin1"/>
-                    <local:PlayerControl x:Name="plWin2" Margin="0,10,0,0"/>
-                    <local:PlayerControl x:Name="plWin3" Margin="0,10,0,0"/>
-                    <local:PlayerControl x:Name="plWin4" Margin="0,10,0,0"/>
+                    <local:PlayerControl x:Name="plWin1"
+                                         MouseEnterIcon="Player_MouseEnterIcon"
+                                         MouseLeaveIcon="Player_MouseLeaveIcon"
+                                         MouseEnterWeapon="Player_MouseEnterWeapon"
+                                         MouseLeaveWeapon="Player_MouseLeaveWeapon"
+                                         />
+                    <local:PlayerControl x:Name="plWin2"
+                                         MouseEnterIcon="Player_MouseEnterIcon"
+                                         MouseLeaveIcon="Player_MouseLeaveIcon"
+                                         MouseEnterWeapon="Player_MouseEnterWeapon"
+                                         MouseLeaveWeapon="Player_MouseLeaveWeapon"
+                                         Margin="0,10,0,0"/>
+                    <local:PlayerControl x:Name="plWin3"
+                                         MouseEnterIcon="Player_MouseEnterIcon"
+                                         MouseLeaveIcon="Player_MouseLeaveIcon"
+                                         MouseEnterWeapon="Player_MouseEnterWeapon"
+                                         MouseLeaveWeapon="Player_MouseLeaveWeapon"
+                                         Margin="0,10,0,0"/>
+                    <local:PlayerControl x:Name="plWin4"
+                                         MouseEnterIcon="Player_MouseEnterIcon"
+                                         MouseLeaveIcon="Player_MouseLeaveIcon"
+                                         MouseEnterWeapon="Player_MouseEnterWeapon"
+                                         MouseLeaveWeapon="Player_MouseLeaveWeapon"
+                                         Margin="0,10,0,0"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="0,15,0,0">
@@ -83,10 +103,30 @@
                     <Label x:Name="lbLoseEstimatedPower" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="#FFDBDBDB" FontSize="24" Content="[LoseEstimatetd]" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,20,0" Padding="5,0" Opacity="0"/>
                 </Grid>
                 <StackPanel Orientation="Vertical" Margin="25,15,25,0">
-                    <local:PlayerControl x:Name="plLose1"/>
-                    <local:PlayerControl x:Name="plLose2" Margin="0,10,0,0"/>
-                    <local:PlayerControl x:Name="plLose3" Margin="0,10,0,0"/>
-                    <local:PlayerControl x:Name="plLose4" Margin="0,10,0,0"/>
+                    <local:PlayerControl x:Name="plLose1"
+                                         MouseEnterIcon="Player_MouseEnterIcon"
+                                         MouseLeaveIcon="Player_MouseLeaveIcon"
+                                         MouseEnterWeapon="Player_MouseEnterWeapon"
+                                         MouseLeaveWeapon="Player_MouseLeaveWeapon"
+                                         />
+                    <local:PlayerControl x:Name="plLose2"
+                                         MouseEnterIcon="Player_MouseEnterIcon"
+                                         MouseLeaveIcon="Player_MouseLeaveIcon"
+                                         MouseEnterWeapon="Player_MouseEnterWeapon"
+                                         MouseLeaveWeapon="Player_MouseLeaveWeapon"
+                                         Margin="0,10,0,0"/>
+                    <local:PlayerControl x:Name="plLose3"
+                                         MouseEnterIcon="Player_MouseEnterIcon"
+                                         MouseLeaveIcon="Player_MouseLeaveIcon"
+                                         MouseEnterWeapon="Player_MouseEnterWeapon"
+                                         MouseLeaveWeapon="Player_MouseLeaveWeapon"
+                                         Margin="0,10,0,0"/>
+                    <local:PlayerControl x:Name="plLose4"
+                                         MouseEnterIcon="Player_MouseEnterIcon"
+                                         MouseLeaveIcon="Player_MouseLeaveIcon"
+                                         MouseEnterWeapon="Player_MouseEnterWeapon"
+                                         MouseLeaveWeapon="Player_MouseLeaveWeapon"
+                                         Margin="0,10,0,0"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

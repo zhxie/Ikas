@@ -19,6 +19,10 @@ using ClassLib;
 
 namespace Ikas
 {
+    public delegate void MouseEnterIconEventHandler(object sender, MouseEventArgs e);
+    public delegate void MouseLeaveIconEventHandler(object sender, MouseEventArgs e);
+    public delegate void MouseEnterWeaponEventHandler(object sender, MouseEventArgs e);
+    public delegate void MouseLeaveWeaponEventHandler(object sender, MouseEventArgs e);
     /// <summary>
     /// PlayerControl.xaml 的交互逻辑
     /// </summary>
@@ -34,6 +38,11 @@ namespace Ikas
             }
         }
 
+        public event MouseEnterIconEventHandler MouseEnterIcon;
+        public event MouseLeaveIconEventHandler MouseLeaveIcon;
+        public event MouseEnterWeaponEventHandler MouseEnterWeapon;
+        public event MouseLeaveWeaponEventHandler MouseLeaveWeapon;
+
         public PlayerControl()
         {
             // Initialize component
@@ -43,6 +52,30 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(bdWeapon, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdSpecial, BitmapScalingMode.HighQuality);
         }
+
+        #region Control Event
+
+        private void BdImage_MouseEnter(object sender, MouseEventArgs e)
+        {
+            MouseEnterIcon?.Invoke(this, e);
+        }
+
+        private void BdImage_MouseLeave(object sender, MouseEventArgs e)
+        {
+            MouseLeaveIcon?.Invoke(this, e);
+        }
+
+        private void BdWeapon_MouseEnter(object sender, MouseEventArgs e)
+        {
+            MouseEnterWeapon?.Invoke(this, e);
+        }
+
+        private void BdWeapon_MouseLeave(object sender, MouseEventArgs e)
+        {
+            MouseLeaveWeapon?.Invoke(this, e);
+        }
+
+        #endregion
 
         public void SetPlayer(Player player, bool isMy)
         {

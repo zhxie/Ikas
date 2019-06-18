@@ -242,6 +242,5 @@ namespace Ikas
                 return s;
             }
         }
-
     }
 }
