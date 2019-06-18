@@ -292,33 +292,46 @@ namespace Ikas
                         {
                             case Mode.Key.regular_battle:
                                 {
-                                    string selfImage = await GetPlayerIcon(jObject["player_result"]["player"]["principal_id"].ToString());
-                                    Player selfPlayer = parsePlayer(jObject["player_result"], selfImage, true);
+                                    // Self
+                                    Player selfPlayer = await parsePlayer(jObject["player_result"], true);
+                                    // My team players
                                     List<Player> myPlayers = new List<Player>();
                                     JToken myPlayersNode = jObject["my_team_members"];
+                                    List<Task<Player>> myPlayerTasks = new List<Task<Player>>();
                                     foreach (JToken playerNode in myPlayersNode.Children())
                                     {
                                         if (playerNode.HasValues)
                                         {
-                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
-                                            Player player = parsePlayer(playerNode, image);
-                                            myPlayers.Add(player);
+                                            Task<Player> playerTask = parsePlayer(playerNode);
+                                            myPlayerTasks.Add(playerTask);
                                         }
+                                    }
+                                    await Task.WhenAll(myPlayerTasks);
+                                    foreach (Task<Player> playerTask in myPlayerTasks)
+                                    {
+                                        myPlayers.Add(playerTask.Result);
                                     }
                                     myPlayers.Add(selfPlayer);
                                     myPlayers = sortPlayer(myPlayers, rule);
+                                    // Other team players
                                     List<Player> otherPlayers = new List<Player>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
+                                    List<Task<Player>> otherPlayerTasks = new List<Task<Player>>();
                                     foreach (JToken playerNode in otherPlayersNode.Children())
                                     {
                                         if (playerNode.HasValues)
                                         {
-                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
-                                            Player player = parsePlayer(playerNode, image);
-                                            otherPlayers.Add(player);
+                                            Task<Player> playerTask = parsePlayer(playerNode);
+                                            otherPlayerTasks.Add(playerTask);
                                         }
                                     }
+                                    await Task.WhenAll(otherPlayerTasks);
+                                    foreach (Task<Player> playerTask in otherPlayerTasks)
+                                    {
+                                        otherPlayers.Add(playerTask.Result);
+                                    }
                                     otherPlayers = sortPlayer(otherPlayers, rule);
+                                    // Other battle data
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     double myScore = double.Parse(jObject["my_team_percentage"].ToString());
                                     double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
@@ -329,33 +342,46 @@ namespace Ikas
                                 break;
                             case Mode.Key.league_battle:
                                 {
-                                    string selfImage = await GetPlayerIcon(jObject["player_result"]["player"]["principal_id"].ToString());
-                                    RankedPlayer selfPlayer = parseRankedPlayer(jObject["player_result"], selfImage, true);
+                                    // Self
+                                    RankedPlayer selfPlayer = await parseRankedPlayer(jObject["player_result"], true);
+                                    // My team players
                                     List<RankedPlayer> myPlayers = new List<RankedPlayer>();
                                     JToken myPlayersNode = jObject["my_team_members"];
+                                    List<Task<RankedPlayer>> myPlayerTasks = new List<Task<RankedPlayer>>();
                                     foreach (JToken playerNode in myPlayersNode.Children())
                                     {
                                         if (playerNode.HasValues)
                                         {
-                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
-                                            RankedPlayer player = parseRankedPlayer(playerNode, image);
-                                            myPlayers.Add(player);
+                                            Task<RankedPlayer> playerTask = parseRankedPlayer(playerNode);
+                                            myPlayerTasks.Add(playerTask);
                                         }
+                                    }
+                                    await Task.WhenAll(myPlayerTasks);
+                                    foreach (Task<RankedPlayer> playerTask in myPlayerTasks)
+                                    {
+                                        myPlayers.Add(playerTask.Result);
                                     }
                                     myPlayers.Add(selfPlayer);
                                     myPlayers = sortPlayer(myPlayers, rule);
+                                    // Other team players
                                     List<RankedPlayer> otherPlayers = new List<RankedPlayer>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
+                                    List<Task<RankedPlayer>> otherPlayerTasks = new List<Task<RankedPlayer>>();
                                     foreach (JToken playerNode in otherPlayersNode.Children())
                                     {
                                         if (playerNode.HasValues)
                                         {
-                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
-                                            RankedPlayer player = parseRankedPlayer(playerNode, image);
-                                            otherPlayers.Add(player);
+                                            Task<RankedPlayer> playerTask = parseRankedPlayer(playerNode);
+                                            otherPlayerTasks.Add(playerTask);
                                         }
                                     }
+                                    await Task.WhenAll(otherPlayerTasks);
+                                    foreach (Task<RankedPlayer> playerTask in otherPlayerTasks)
+                                    {
+                                        otherPlayers.Add(playerTask.Result);
+                                    }
                                     otherPlayers = sortPlayer(otherPlayers, rule);
+                                    // Other battle data
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     int myEstimatedLeaguePower = int.Parse(jObject["my_estimate_league_point"].ToString());
                                     int otherEstimatedLeaguePower = int.Parse(jObject["other_estimate_league_point"].ToString());
@@ -376,33 +402,46 @@ namespace Ikas
                                 break;
                             case Mode.Key.splatfest:
                                 {
-                                    string selfImage = await GetPlayerIcon(jObject["player_result"]["player"]["principal_id"].ToString());
-                                    Player selfPlayer = parsePlayer(jObject["player_result"], selfImage, true);
+                                    // Self
+                                    Player selfPlayer = await parsePlayer(jObject["player_result"], true);
+                                    // My team players
                                     List<Player> myPlayers = new List<Player>();
                                     JToken myPlayersNode = jObject["my_team_members"];
+                                    List<Task<Player>> myPlayerTasks = new List<Task<Player>>();
                                     foreach (JToken playerNode in myPlayersNode.Children())
                                     {
                                         if (playerNode.HasValues)
                                         {
-                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
-                                            Player player = parsePlayer(playerNode, image);
-                                            myPlayers.Add(player);
+                                            Task<Player> playerTask = parsePlayer(playerNode);
+                                            myPlayerTasks.Add(playerTask);
                                         }
+                                    }
+                                    await Task.WhenAll(myPlayerTasks);
+                                    foreach (Task<Player> playerTask in myPlayerTasks)
+                                    {
+                                        myPlayers.Add(playerTask.Result);
                                     }
                                     myPlayers.Add(selfPlayer);
                                     myPlayers = sortPlayer(myPlayers, rule);
+                                    // Other team players
                                     List<Player> otherPlayers = new List<Player>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
+                                    List<Task<Player>> otherPlayerTasks = new List<Task<Player>>();
                                     foreach (JToken playerNode in otherPlayersNode.Children())
                                     {
                                         if (playerNode.HasValues)
                                         {
-                                            string image = await GetPlayerIcon(playerNode["player"]["principal_id"].ToString());
-                                            Player player = parsePlayer(playerNode, image);
-                                            otherPlayers.Add(player);
+                                            Task<Player> playerTask = parsePlayer(playerNode);
+                                            otherPlayerTasks.Add(playerTask);
                                         }
                                     }
+                                    await Task.WhenAll(otherPlayerTasks);
+                                    foreach (Task<Player> playerTask in otherPlayerTasks)
+                                    {
+                                        otherPlayers.Add(playerTask.Result);
+                                    }
                                     otherPlayers = sortPlayer(otherPlayers, rule);
+                                    // Other battle data
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     SplatfestBattle.Key splatfestMode = SplatfestBattle.ParseKey(jObject["fes_mode"]["key"].ToString());
                                     int myEstimatedSplatfestPower = int.Parse(jObject["my_estimate_fes_power"].ToString());
@@ -472,7 +511,7 @@ namespace Ikas
         public static async Task<string> GetPlayerIcon(string id)
         {
             // Remove previous Downloader's handlers
-            DownloadManager.RemoveDownloaders(Downloader.SourceType.Schedule);
+            DownloadManager.RemoveDownloaders(Downloader.SourceType.Battle);
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseCookies = false;
@@ -623,6 +662,25 @@ namespace Ikas
             }
         }
         /// <summary>
+        /// Parse Player from JToken
+        /// </summary>
+        /// <param name="node">JToken of a player</param>
+        /// <param name="isSelf">If the player is player itself</param>
+        /// <returns></returns>
+        private static async Task<Player> parsePlayer(JToken node, bool isSelf = false)
+        {
+            try
+            {
+                string image = await GetPlayerIcon(node["player"]["principal_id"].ToString());
+                Player player = parsePlayer(node, image, isSelf);
+                return player;
+            }
+            catch
+            {
+                throw new FormatException();
+            }
+        }
+        /// <summary>
         /// Parse RankedPlayer from JToken
         /// </summary>
         /// <param name="node">JToken of a player</param>
@@ -644,6 +702,25 @@ namespace Ikas
                     rank = Rank.ParseKey(node["player"]["udemae"]["name"].ToString());
                 }
                 return new RankedPlayer(player, rank);
+            }
+            catch
+            {
+                throw new FormatException();
+            }
+        }
+        /// <summary>
+        /// Parse RankedPlayer from JToken
+        /// </summary>
+        /// <param name="node">JToken of a player</param>
+        /// <param name="isSelf">If the player is player itself</param>
+        /// <returns></returns>
+        private static async Task<RankedPlayer> parseRankedPlayer(JToken node, bool isSelf = false)
+        {
+            try
+            {
+                string image = await GetPlayerIcon(node["player"]["principal_id"].ToString());
+                RankedPlayer player = parseRankedPlayer(node, image, isSelf);
+                return player;
             }
             catch
             {
