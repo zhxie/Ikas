@@ -125,6 +125,28 @@ namespace Ikas
             ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
         }
 
+        private void MenuItemSetting_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(System.IO.Path.GetFileName(FileFolderUrl.UserConfiguration));
+            System.Diagnostics.Process.Start(System.IO.Path.GetFileName(FileFolderUrl.SystemConfiguration));
+        }
+
+        private void MenuItemTopMost_Click(object sender, RoutedEventArgs e)
+        {
+            Topmost = !Topmost;
+            miTopMost.IsChecked = Topmost;
+        }
+
+        private void MenuItemClearCache_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer.exe", FileFolderUrl.ApplicationData);
+        }
+
+        private void MenuItemExit_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
         #endregion
 
         private void ScheduleChanged()
@@ -236,5 +258,6 @@ namespace Ikas
                 return s;
             }
         }
+
     }
 }

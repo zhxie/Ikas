@@ -235,6 +235,10 @@
     <sys:String x:Key="main_window-level">Level</sys:String>
     <sys:String x:Key="main_window-rank">Rank</sys:String>
     <sys:String x:Key="main_window---">--</sys:String>
+    <sys:String x:Key="main_window-setting">Setting</sys:String>
+    <sys:String x:Key="main_window-top_most">Always on top</sys:String>
+    <sys:String x:Key="main_window-clear_cache">Clear Cache</sys:String>
+    <sys:String x:Key="main_window-exit">Exit</sys:String>
     <!-- ScheduleWindow -->
     <sys:String x:Key="schedule_window-Next">Next</sys:String>
     <sys:String x:Key="schedule_window-{0} - {1}">{0} - {1}</sys:String>

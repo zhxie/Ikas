@@ -31,6 +31,15 @@
             <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
         </Storyboard>
     </Window.Resources>
+    <Window.ContextMenu>
+        <ContextMenu x:Name="cmWindow" StaysOpen="True">
+            <MenuItem x:Name="miSetting" Header="{DynamicResource main_window-setting}" Click="MenuItemSetting_Click"/>
+            <MenuItem x:Name="miTopMost" Header="{DynamicResource main_window-top_most}" IsCheckable="True" Click="MenuItemTopMost_Click"/>
+            <MenuItem x:Name="miClearCache" Header="{DynamicResource main_window-clear_cache}" Click="MenuItemClearCache_Click"/>
+            <Separator/>
+            <MenuItem x:Name="miExit" Header="{DynamicResource main_window-exit}" Click="MenuItemExit_Click"/>
+        </ContextMenu>
+    </Window.ContextMenu>
     <Grid>
         <Border CornerRadius="27">
             <Border.Background>
