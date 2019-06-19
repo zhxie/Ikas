@@ -23,6 +23,7 @@ namespace Ikas
     /// </summary>
     public partial class BattleWindow : Window
     {
+        private PlayerWindow playerWindow;
         private WeaponWindow weaponWindow;
 
         public BattleWindow()
@@ -50,6 +51,10 @@ namespace Ikas
             Depot.BattleChanged += new BattleChangedEventHandler(BattleChanged);
             Depot.BattleUpdated += new BattleUpdatedEventHandler(BattleUpdated);
             // Prepare Icon and Weapon window
+            playerWindow = new PlayerWindow();
+            playerWindow.KeepAliveWindow = this;
+            playerWindow.Opacity = 0;
+            playerWindow.Visibility = Visibility.Hidden;
             weaponWindow = new WeaponWindow();
             weaponWindow.KeepAliveWindow = this;
             weaponWindow.Opacity = 0;
@@ -87,13 +92,20 @@ namespace Ikas
             Player player = (sender as PlayerControl).Player;
             if (player != null)
             {
-
+                playerWindow.Top = e.GetPosition(this).Y + Top - playerWindow.Height / 2;
+                playerWindow.Left = e.GetPosition(this).X + Left + 10;
+                playerWindow.SetPlayer(player);
+                ((Storyboard)FindResource("window_fade_in")).Begin(playerWindow);
             }
         }
 
         private void Player_MouseLeaveIcon(object sender, MouseEventArgs e)
         {
-
+            Player player = (sender as PlayerControl).Player;
+            if (player != null)
+            {
+                ((Storyboard)FindResource("window_fade_out")).Begin(playerWindow);
+            }
         }
 
         private void Player_MouseEnterWeapon(object sender, MouseEventArgs e)

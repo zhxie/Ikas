@@ -283,7 +283,6 @@ namespace Ikas
                     jObject = JObject.Parse(resultString);
                     try
                     {
-                        // TODO: parse battle
                         Mode.Key type = Mode.ParseKey(jObject["type"].ToString());
                         Mode.Key mode = Mode.ParseGameModeKey(jObject["game_mode"]["key"].ToString());
                         Rule.Key rule = Rule.ParseKey(jObject["rule"]["key"].ToString());

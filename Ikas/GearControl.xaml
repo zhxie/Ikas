@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Ikas.GearControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ikas"
+             mc:Ignorable="d" 
+             d:DesignHeight="48" d:DesignWidth="250">
+    <UserControl.Resources>
+        <Storyboard x:Key="fade_out">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="2"/>
+        </Storyboard>
+        <Storyboard x:Key="fade_in">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="2"/>
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid>
+        <Border Background="#7F000000" CornerRadius="8">
+            <Grid Margin="5,0">
+                <Border x:Name="bdGear" Background="Transparent" Width="40" Height="40" HorizontalAlignment="Left" Opacity="1"/>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Grid Width="36" Height="36">
+                        <Border Background="#7F000000" CornerRadius="18"/>
+                        <Border x:Name="bdMain" Background="Transparent"/>
+                    </Grid>
+                    <Grid Width="30" Height="30" Margin="5,0,0,0">
+                        <Border Background="#7F000000" CornerRadius="15"/>
+                        <Border x:Name="bdSub1" Background="Transparent"/>
+                    </Grid>
+                    <Grid Width="30" Height="30" Margin="5,0,0,0">
+                        <Border Background="#7F000000" CornerRadius="15"/>
+                        <Border x:Name="bdSub2" Background="Transparent"/>
+                    </Grid>
+                    <Grid Width="30" Height="30" Margin="5,0,0,0">
+                        <Border Background="#7F000000" CornerRadius="15"/>
+                        <Border x:Name="bdSub3" Background="Transparent"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

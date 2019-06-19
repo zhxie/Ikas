@@ -170,7 +170,7 @@ namespace Ikas
                 lbPaint.Content = string.Format(Translate("{0}p", true), Player.Paint.ToString());
                 // Kill, death and special
                 tbKillAndAssist.Text = Player.KillAndAssist.ToString();
-                tbDeath.Text = player.Death.ToString();
+                tbDeath.Text = Player.Death.ToString();
                 if (Player.Assist > 0)
                 {
                     tbAssist.Text = string.Format(Translate("({0})", true), Player.Assist);
