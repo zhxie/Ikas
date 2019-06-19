@@ -70,6 +70,20 @@ namespace Ikas
             ((Storyboard)FindResource("window_fade_out")).Begin(this);
         }
 
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            /*
+            if (Top < 0)
+            {
+                Top = 0;
+            }
+            if (Top + Height > WpfScreen.GetScreenFrom(this).DeviceBounds.Height)
+            {
+                Top = WpfScreen.GetScreenFrom(this).DeviceBounds.Height - Height;
+            }
+            */
+        }
+
         #endregion
 
         public void SetWeapon(Weapon weapon)

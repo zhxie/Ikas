@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ikas"
         mc:Ignorable="d"
+        LocationChanged="Window_LocationChanged"
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
         Title="Ikas - Player" Width="300" Height="384" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True" ShowInTaskbar="False">
