@@ -44,10 +44,11 @@
             </Border>
         </Border>
         <StackPanel Orientation="Vertical" Margin="0,10,0,20">
-            <!--TODO-->
-            <Label x:Name="lbName" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="26" Height="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="20,0" Padding="5,0" Opacity="0">
-                <TextBlock x:Name="tbName" TextTrimming="CharacterEllipsis">[Name]</TextBlock>
-            </Label>
+            <Border Height="60" Margin="20,0" VerticalAlignment="Top">
+                <Viewbox Height="52">
+                    <TextBlock x:Name="tbName" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0">[Name]</TextBlock>
+                </Viewbox>
+            </Border>
             <Border Background="#7F000000" Width="100" Height="100" CornerRadius="50" Margin="0,10,0,0">
                 <Border x:Name="bdIcon" Background="Transparent" CornerRadius="50" Opacity="0"/>
             </Border>

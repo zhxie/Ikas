@@ -71,14 +71,14 @@ namespace Ikas
         {
             Player = player;
             // Fade out labels and images
-            ((Storyboard)FindResource("fade_out")).Begin(lbName);
+            ((Storyboard)FindResource("fade_out")).Begin(tbName);
             ((Storyboard)FindResource("fade_out")).Begin(bdIcon);
             gearHead.SetGear(null);
             gearClothes.SetGear(null);
             gearShoes.SetGear(null);
             // Update player
             tbName.Text = Player.Nickname;
-            ((Storyboard)FindResource("fade_in")).Begin(lbName);
+            ((Storyboard)FindResource("fade_in")).Begin(tbName);
             string image = FileFolderUrl.ApplicationData + FileFolderUrl.IconFolder + @"\" + System.IO.Path.GetFileName(Player.Image) + ".jpg";
             try
             {

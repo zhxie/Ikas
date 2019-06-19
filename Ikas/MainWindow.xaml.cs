@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 using ClassLib;
 
@@ -26,6 +27,8 @@ namespace Ikas
     {
         private ScheduleWindow scheduleWindow;
         private BattleWindow battleWindow;
+
+        private DispatcherTimer timer;
 
         public MainWindow()
         {
@@ -65,6 +68,11 @@ namespace Ikas
             battleWindow = new BattleWindow();
             battleWindow.Opacity = 0;
             battleWindow.Visibility = Visibility.Hidden;
+            // Create timer
+            timer = new DispatcherTimer();
+            timer.Tick += new EventHandler((object source, EventArgs e) => { Depot.GetSchedule(); });
+            timer.Interval = new TimeSpan(0, 0, 15);
+            timer.Start();
         }
 
         #region Control Event

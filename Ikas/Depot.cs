@@ -215,7 +215,7 @@ namespace Ikas
         /// </summary>
         /// <param name="schedule">Updated Schedule</param>
         /// <returns></returns>
-        public static bool UpdateSchedule(Schedule schedule)
+        private static bool UpdateSchedule(Schedule schedule)
         {
             Debug.Assert(schedule.EndTime != new DateTime(0));
             if (Schedule != schedule)
