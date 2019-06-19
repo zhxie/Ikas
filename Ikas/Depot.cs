@@ -261,10 +261,10 @@ namespace Ikas
                 string resultString = await response.Content.ReadAsStringAsync();
                 // Parse JSON
                 JObject jObject = JObject.Parse(resultString);
-                int battleId;
+                int battleNumber;
                 try
                 {
-                    battleId = int.Parse(jObject["results"][0]["battle_number"].ToString());
+                    battleNumber = int.Parse(jObject["results"][0]["battle_number"].ToString());
                 }
                 catch
                 {
@@ -272,8 +272,15 @@ namespace Ikas
                     UpdateBattle(new Battle());
                     return;
                 }
+                // Same battle
+                if (battleNumber == Battle.Number)
+                {
+                    // Update same Battle
+                    UpdateBattle(Battle);
+                    return;
+                }
                 // Send HTTP GET
-                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetIndividualBattleApi, battleId));
+                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetIndividualBattleApi, battleNumber));
                 request.Headers.Add("Cookie", "iksm_session=" + Cookie);
                 response = await client.SendAsync(request);
                 if (response.IsSuccessStatusCode)
@@ -334,7 +341,8 @@ namespace Ikas
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     double myScore = double.Parse(jObject["my_team_percentage"].ToString());
                                     double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
-                                    UpdateBattle(new RegularBattle(mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore) as Battle);
+                                    UpdateBattle(new RegularBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
+                                        myScore, otherScore) as Battle);
                                 }
                                 break;
                             case Mode.Key.ranked_battle:
@@ -395,14 +403,16 @@ namespace Ikas
                                         {
                                             rankAfter = Rank.ParseKey(jObject["udemae"]["name"].ToString());
                                         }
-                                        UpdateBattle(new RankedBattle(mode, rule, stage, myPlayers, otherPlayers, levelAfter, estimatedRankPower, rankAfter, myScore, otherScore));
+                                        UpdateBattle(new RankedBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
+                                            estimatedRankPower, rankAfter, myScore, otherScore) as Battle);
                                     }
                                     else
                                     {
                                         // Ranked X Battle
                                         int estimatedXPower = int.Parse(jObject["estimate_x_power"].ToString());
                                         double xPowerAfter = double.Parse(jObject["x_power"].ToString());
-                                        UpdateBattle(new RankedXBattle(mode, rule, stage, myPlayers, otherPlayers, levelAfter, estimatedXPower, xPowerAfter, myScore, otherScore));
+                                        UpdateBattle(new RankedXBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
+                                            estimatedXPower, xPowerAfter, myScore, otherScore) as Battle);
                                     }
                                 }
                                 break;
@@ -463,7 +473,8 @@ namespace Ikas
                                     int myScore = int.Parse(jObject["my_team_count"].ToString());
                                     int otherScore = int.Parse(jObject["other_team_count"].ToString());
                                     double maxLeaguePoint = double.Parse(jObject["max_league_point"].ToString());
-                                    UpdateBattle(new LeagueBattle(mode, rule, stage, myPlayers, otherPlayers, levelAfter, myEstimatedLeaguePower, otherEstimatedLeaguePower, leaguePoint, maxLeaguePoint, myScore, otherScore));
+                                    UpdateBattle(new LeagueBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
+                                        myEstimatedLeaguePower, otherEstimatedLeaguePower, leaguePoint, maxLeaguePoint, myScore, otherScore) as Battle);
                                 }
                                 break;
                             case Mode.Key.splatfest:
@@ -518,7 +529,7 @@ namespace Ikas
                                     int totalContributionPoint = int.Parse(jObject["contribution_point_total"].ToString());
                                     double myScore = double.Parse(jObject["my_team_percentage"].ToString());
                                     double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
-                                    UpdateBattle(new SplatfestBattle(mode, splatfestMode, rule, stage, myPlayers, otherPlayers, levelAfter,
+                                    UpdateBattle(new SplatfestBattle(battleNumber, mode, splatfestMode, rule, stage, myPlayers, otherPlayers, levelAfter,
                                         myEstimatedSplatfestPower, otherEstimatedSplatfestPower, splatfestPower, maxSplatfestPower, contributionPoint, totalContributionPoint, myScore, otherScore) as Battle);
                                 }
                                 break;
