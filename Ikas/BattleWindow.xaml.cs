@@ -249,16 +249,16 @@ namespace Ikas
                             tagWin.Content = Translate("knock_out", true);
                             tagWin.Content2 = "";
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            tagLose.Content = battle.OtherScore.ToString();
+                            tagLose.Content = string.Format(Translate("{0} count", true), battle.OtherScore.ToString());
                             tagLose.Content2 = "";
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         }
                         else
                         {
-                            tagWin.Content = battle.MyScore.ToString();
+                            tagWin.Content = string.Format(Translate("{0} count", true), battle.MyScore.ToString());
                             tagWin.Content2 = "";
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            tagLose.Content = battle.OtherScore.ToString();
+                            tagLose.Content = string.Format(Translate("{0} count", true), battle.OtherScore.ToString());
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         }
                         break;
@@ -268,16 +268,16 @@ namespace Ikas
                             tagWin.Content = Translate("knock_out", true);
                             tagWin.Content2 = "";
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            tagLose.Content = battle.OtherScore.ToString();
+                            tagLose.Content = string.Format(Translate("{0} count", true), battle.OtherScore.ToString());
                             tagLose.Content2 = "";
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         }
                         else
                         {
-                            tagWin.Content = battle.MyScore.ToString();
+                            tagWin.Content = string.Format(Translate("{0} count", true), battle.MyScore.ToString());
                             tagWin.Content2 = "";
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            tagLose.Content = battle.OtherScore.ToString();
+                            tagLose.Content = string.Format(Translate("{0} count", true), battle.OtherScore.ToString());
                             tagLose.Content2 = "";
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         }
@@ -306,14 +306,14 @@ namespace Ikas
                         {
                             tagWin.Content = Translate("knock_out", true);
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            tagLose.Content = battle.MyScore.ToString();
+                            tagLose.Content = string.Format(Translate("{0} count", true), battle.MyScore.ToString());
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                         }
                         else
                         {
-                            tagWin.Content = battle.OtherScore.ToString();
+                            tagWin.Content = string.Format(Translate("{0} count", true), battle.OtherScore.ToString());
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            tagLose.Content = battle.MyScore.ToString();
+                            tagLose.Content = string.Format(Translate("{0} count", true), battle.MyScore.ToString());
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         }
                         break;
@@ -322,14 +322,14 @@ namespace Ikas
                         {
                             tagWin.Content = Translate("knock_out", true);
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            tagLose.Content = battle.MyScore.ToString();
+                            tagLose.Content = string.Format(Translate("{0} count", true), battle.MyScore.ToString());
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                         }
                         else
                         {
-                            tagWin.Content = battle.OtherScore.ToString();
+                            tagWin.Content = string.Format(Translate("{0} count", true), battle.OtherScore.ToString());
                             tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            tagLose.Content = battle.MyScore.ToString();
+                            tagLose.Content = string.Format(Translate("{0} count", true), battle.MyScore.ToString());
                             tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                         }
                         break;

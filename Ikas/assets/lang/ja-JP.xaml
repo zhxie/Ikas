@@ -249,6 +249,7 @@
     <sys:String x:Key="battle_window-calculating">計測中..</sys:String>
     <sys:String x:Key="battle_window-{0}/{1}">{0}/{1}</sys:String>
     <sys:String x:Key="battle_window-%">%</sys:String>
+    <sys:String x:Key="battle_window-{0} count">{0} カウント</sys:String>
     <sys:String x:Key="battle_window-knock_out">ノックアウト!</sys:String>
     <!-- WeaponWindow -->
     <!-- StageControl -->
