@@ -18,6 +18,28 @@
     <sys:String x:Key="tower">ガチヤグラ</sys:String>
     <sys:String x:Key="rain">ガチホコ</sys:String>
     <sys:String x:Key="clam">ガチアサリ</sys:String>
+    <!-- Rank -->
+    <sys:String x:Key="c_minus">C-</sys:String>
+    <sys:String x:Key="c">C</sys:String>
+    <sys:String x:Key="c_plus">C+</sys:String>
+    <sys:String x:Key="b_minus">B-</sys:String>
+    <sys:String x:Key="b">B</sys:String>
+    <sys:String x:Key="b_plus">B+</sys:String>
+    <sys:String x:Key="a_minus">A-</sys:String>
+    <sys:String x:Key="a">A</sys:String>
+    <sys:String x:Key="a_plus">A+</sys:String>
+    <sys:String x:Key="s">S</sys:String>
+    <sys:String x:Key="s_plus_0">S+</sys:String>
+    <sys:String x:Key="s_plus_1">S+</sys:String>
+    <sys:String x:Key="s_plus_2">S+</sys:String>
+    <sys:String x:Key="s_plus_3">S+</sys:String>
+    <sys:String x:Key="s_plus_4">S+</sys:String>
+    <sys:String x:Key="s_plus_5">S+</sys:String>
+    <sys:String x:Key="s_plus_6">S+</sys:String>
+    <sys:String x:Key="s_plus_7">S+</sys:String>
+    <sys:String x:Key="s_plus_8">S+</sys:String>
+    <sys:String x:Key="s_plus_9">S+</sys:String>
+    <sys:String x:Key="x">X</sys:String>
     <!-- Stage -->
     <sys:String x:Key="unknown">不明</sys:String>
     <sys:String x:Key="the_reef">バッテラストリート</sys:String>
