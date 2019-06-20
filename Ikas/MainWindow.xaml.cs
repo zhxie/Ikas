@@ -28,7 +28,8 @@ namespace Ikas
         private ScheduleWindow scheduleWindow;
         private BattleWindow battleWindow;
 
-        private DispatcherTimer timer;
+        private DispatcherTimer tmSchedule;
+        private DispatcherTimer tmBattle;
 
         public MainWindow()
         {
@@ -69,10 +70,19 @@ namespace Ikas
             battleWindow.Opacity = 0;
             battleWindow.Visibility = Visibility.Hidden;
             // Create timer
-            timer = new DispatcherTimer();
-            timer.Tick += new EventHandler((object source, EventArgs e) => { Depot.GetSchedule(); });
-            timer.Interval = new TimeSpan(0, 0, 15);
-            timer.Start();
+            tmSchedule = new DispatcherTimer();
+            tmSchedule.Tick += new EventHandler((object source, EventArgs e) => { Depot.GetSchedule(); });
+            tmSchedule.Interval = new TimeSpan(0, 0, 15);
+            tmSchedule.Start();
+            tmBattle = new DispatcherTimer();
+            tmBattle.Tick += new EventHandler((object source, EventArgs e) => {
+                if (battleWindow.Visibility == Visibility.Hidden)
+                {
+                    Depot.GetLastBattle();
+                }
+            });
+            tmBattle.Interval = new TimeSpan(0, 0, 30);
+            tmBattle.Start();
         }
 
         #region Control Event
