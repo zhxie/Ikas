@@ -24,12 +24,62 @@ namespace Ikas
     public delegate void BattleChangedEventHandler();
     public static class Depot
     {
+        private static string userConfigurationPath = "";
+
+        private static string sessionToken = "";
+        public static string SessionToken
+        {
+            get
+            {
+                return sessionToken;
+            }
+        }
         private static string cookie = "";
         public static string Cookie
         {
             get
             {
                 return cookie;
+            }
+        }
+        private static int level = -1;
+        public static int Level
+        {
+            get
+            {
+                return level;
+            }
+        }
+        private static Rank.Key splatZonesRank = Rank.Key.rank_unknown;
+        public static Rank.Key SplatZonesRank
+        {
+            get
+            {
+                return splatZonesRank;
+            }
+        }
+        private static Rank.Key towerControlRank = Rank.Key.rank_unknown;
+        public static Rank.Key TowerControlRank
+        {
+            get
+            {
+                return towerControlRank;
+            }
+        }
+        private static Rank.Key rainmakerRank = Rank.Key.rank_unknown;
+        public static Rank.Key RainmakerRank
+        {
+            get
+            {
+                return rainmakerRank;
+            }
+        }
+        private static Rank.Key clamBlitzRank = Rank.Key.rank_unknown;
+        public static Rank.Key ClamBlitzRank
+        {
+            get
+            {
+                return clamBlitzRank;
             }
         }
 
@@ -49,6 +99,7 @@ namespace Ikas
                 return language;
             }
         }
+
         public static DownloadManager DownloadManager { get; } = new DownloadManager();
 
         public static event ScheduleChangedEventHandler ScheduleChanged;
@@ -92,11 +143,11 @@ namespace Ikas
         /// <returns></returns>
         public static bool LoadUserConfiguration(string file = FileFolderUrl.UserConfiguration)
         {
-            string newFile = file;
-            if (!File.Exists(newFile))
+            userConfigurationPath = file;
+            if (!File.Exists(userConfigurationPath))
             {
-                newFile = System.Environment.CurrentDirectory + newFile;
-                if (!File.Exists(newFile))
+                userConfigurationPath = System.Environment.CurrentDirectory + userConfigurationPath;
+                if (!File.Exists(userConfigurationPath))
                 {
                     return false;
                 }
@@ -104,16 +155,80 @@ namespace Ikas
             try
             {
                 FileIniDataParser parser = new FileIniDataParser();
-                IniData data = parser.ReadFile(newFile);
-                cookie = data[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationCookie].Trim();
-                if (Cookie == "")
+                IniData data = parser.ReadFile(userConfigurationPath);
+                bool error = false;
+                // Session Token
+                try
                 {
-                    return false;
+                    sessionToken = data[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationSessionToken].Trim();
                 }
-                else
+                catch
                 {
-                    return true;
+                    error = true;
                 }
+                // Cookie
+                try
+                {
+                    cookie = data[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationCookie].Trim();
+                }
+                catch
+                {
+                    error = true;
+                }
+                // Statistics
+                try
+                {
+                    level = int.Parse(data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel]);
+                }
+                catch
+                {
+                    error = true;
+                }
+                try
+                {
+                    splatZonesRank = (Rank.Key)int.Parse(data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSplatZonesRank]);
+                }
+                catch
+                {
+                    error = true;
+                }
+                try
+                {
+                    towerControlRank = (Rank.Key)int.Parse(data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationTowerControlRank]);
+                }
+                catch
+                {
+                    error = true;
+                }
+                try
+                {
+                    rainmakerRank = (Rank.Key)int.Parse(data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationRainmakerRank]);
+                }
+                catch
+                {
+                    error = true;
+                }
+                try
+                {
+                    clamBlitzRank = (Rank.Key)int.Parse(data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationClamBlitzRank]);
+                }
+                catch
+                {
+                    error = true;
+                }
+                if (error)
+                {
+                    IniData newUserConfiguration = new IniData();
+                    newUserConfiguration[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationSessionToken] = SessionToken;
+                    newUserConfiguration[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationCookie] = Cookie;
+                    newUserConfiguration[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = Level.ToString();
+                    newUserConfiguration[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSplatZonesRank] = ((int)SplatZonesRank).ToString();
+                    newUserConfiguration[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationTowerControlRank] = ((int)TowerControlRank).ToString();
+                    newUserConfiguration[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationRainmakerRank] = ((int)RainmakerRank).ToString();
+                    newUserConfiguration[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationClamBlitzRank] = ((int)ClamBlitzRank).ToString();
+                    parser.WriteFile(userConfigurationPath, newUserConfiguration);
+                }
+                return true;
             }
             catch
             {
@@ -339,6 +454,15 @@ namespace Ikas
                                     otherPlayers = sortPlayer(otherPlayers, rule);
                                     // Other battle data
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
+                                    if (levelAfter != Level)
+                                    {
+                                        level = levelAfter;
+                                        FileIniDataParser parser = new FileIniDataParser();
+                                        IniData data = parser.ReadFile(userConfigurationPath);
+                                        data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = Level.ToString();
+                                        parser.WriteFile(userConfigurationPath, data);
+                                        CurrentMode = currentMode;
+                                    }
                                     double myScore = double.Parse(jObject["my_team_percentage"].ToString());
                                     double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
                                     UpdateBattle(new RegularBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
@@ -388,6 +512,15 @@ namespace Ikas
                                     otherPlayers = sortPlayer(otherPlayers, rule);
                                     // Other battle data
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
+                                    if (levelAfter != Level)
+                                    {
+                                        level = levelAfter;
+                                        FileIniDataParser parser = new FileIniDataParser();
+                                        IniData data = parser.ReadFile(userConfigurationPath);
+                                        data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = Level.ToString();
+                                        parser.WriteFile(userConfigurationPath, data);
+                                        CurrentMode = currentMode;
+                                    }
                                     int myScore = int.Parse(jObject["my_team_count"].ToString());
                                     int otherScore = int.Parse(jObject["other_team_count"].ToString());
                                     if (!jObject["x_power"].HasValues)
@@ -402,6 +535,55 @@ namespace Ikas
                                         else
                                         {
                                             rankAfter = Rank.ParseKey(jObject["udemae"]["name"].ToString());
+                                        }
+                                        switch (rule)
+                                        {
+                                            case Rule.Key.splat_zones:
+                                                if (rankAfter != SplatZonesRank)
+                                                {
+                                                    splatZonesRank = rankAfter;
+                                                    FileIniDataParser parser = new FileIniDataParser();
+                                                    IniData data = parser.ReadFile(userConfigurationPath);
+                                                    data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSplatZonesRank] = ((int)SplatZonesRank).ToString();
+                                                    parser.WriteFile(userConfigurationPath, data);
+                                                    CurrentMode = currentMode;
+                                                }
+                                                break;
+                                            case Rule.Key.tower_control:
+                                                if (rankAfter != TowerControlRank)
+                                                {
+                                                    towerControlRank = rankAfter;
+                                                    FileIniDataParser parser = new FileIniDataParser();
+                                                    IniData data = parser.ReadFile(userConfigurationPath);
+                                                    data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationTowerControlRank] = ((int)TowerControlRank).ToString();
+                                                    parser.WriteFile(userConfigurationPath, data);
+                                                    CurrentMode = currentMode;
+                                                }
+                                                break;
+                                            case Rule.Key.rainmaker:
+                                                if (rankAfter != RainmakerRank)
+                                                {
+                                                    rainmakerRank = rankAfter;
+                                                    FileIniDataParser parser = new FileIniDataParser();
+                                                    IniData data = parser.ReadFile(userConfigurationPath);
+                                                    data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationRainmakerRank] = ((int)RainmakerRank).ToString();
+                                                    parser.WriteFile(userConfigurationPath, data);
+                                                    CurrentMode = currentMode;
+                                                }
+                                                break;
+                                            case Rule.Key.clam_blitz:
+                                                if (rankAfter != ClamBlitzRank)
+                                                {
+                                                    clamBlitzRank = rankAfter;
+                                                    FileIniDataParser parser = new FileIniDataParser();
+                                                    IniData data = parser.ReadFile(userConfigurationPath);
+                                                    data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationClamBlitzRank] = ((int)ClamBlitzRank).ToString();
+                                                    parser.WriteFile(userConfigurationPath, data);
+                                                    CurrentMode = currentMode;
+                                                }
+                                                break;
+                                            default:
+                                                throw new ArgumentOutOfRangeException();
                                         }
                                         UpdateBattle(new RankedBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
                                             estimatedRankPower, rankAfter, myScore, otherScore) as Battle);
@@ -459,6 +641,15 @@ namespace Ikas
                                     otherPlayers = sortPlayer(otherPlayers, rule);
                                     // Other battle data
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
+                                    if (levelAfter != Level)
+                                    {
+                                        level = levelAfter;
+                                        FileIniDataParser parser = new FileIniDataParser();
+                                        IniData data = parser.ReadFile(userConfigurationPath);
+                                        data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = Level.ToString();
+                                        parser.WriteFile(userConfigurationPath, data);
+                                        CurrentMode = currentMode;
+                                    }
                                     int myEstimatedLeaguePower = int.Parse(jObject["my_estimate_league_point"].ToString());
                                     int otherEstimatedLeaguePower = int.Parse(jObject["other_estimate_league_point"].ToString());
                                     double leaguePoint;
@@ -520,6 +711,15 @@ namespace Ikas
                                     otherPlayers = sortPlayer(otherPlayers, rule);
                                     // Other battle data
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
+                                    if (levelAfter != Level)
+                                    {
+                                        level = levelAfter;
+                                        FileIniDataParser parser = new FileIniDataParser();
+                                        IniData data = parser.ReadFile(userConfigurationPath);
+                                        data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = Level.ToString();
+                                        parser.WriteFile(userConfigurationPath, data);
+                                        CurrentMode = currentMode;
+                                    }
                                     SplatfestBattle.Key splatfestMode = SplatfestBattle.ParseKey(jObject["fes_mode"]["key"].ToString());
                                     int myEstimatedSplatfestPower = int.Parse(jObject["my_estimate_fes_power"].ToString());
                                     int otherEstimatedSplatfestPower = int.Parse(jObject["other_estimate_fes_power"].ToString());

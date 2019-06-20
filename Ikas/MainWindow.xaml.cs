@@ -200,7 +200,33 @@ namespace Ikas
                             throw new ArgumentOutOfRangeException();
                     }
                     lbMode.Content = Translate(((Rule.ShortName)scheduledStages[0].Rule).ToString());
-                    lbLevel.Content = Translate("--", true);
+                    switch (scheduledStages[0].Rule)
+                    {
+                        case Rule.Key.turf_war:
+                            if (Depot.Level > 0)
+                            {
+                                lbLevel.Content = Depot.Level.ToString();
+                            }
+                            else
+                            {
+                                lbLevel.Content = Translate("--", true);
+                            }
+                            break;
+                        case Rule.Key.splat_zones:
+                            lbLevel.Content = Translate(Depot.SplatZonesRank.ToString());
+                            break;
+                        case Rule.Key.tower_control:
+                            lbLevel.Content = Translate(Depot.TowerControlRank.ToString());
+                            break;
+                        case Rule.Key.rainmaker:
+                            lbLevel.Content = Translate(Depot.RainmakerRank.ToString());
+                            break;
+                        case Rule.Key.clam_blitz:
+                            lbLevel.Content = Translate(Depot.ClamBlitzRank.ToString());
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                     // Fade in labels
                     ((Storyboard)FindResource("fade_in")).Begin(lbMode);
                     ((Storyboard)FindResource("fade_in")).Begin(lbLevel);

@@ -16,7 +16,14 @@ namespace ClassLib
         public const string SystemConfiguration = @"\config.ini";
 
         public const string UserConfigurationGeneralSection = "Ikas";
+        public const string UserConfigurationSessionToken = "SessionToken";
         public const string UserConfigurationCookie = "Cookie";
+        public const string UserConfigurationStatisticsSection = "Statistics";
+        public const string UserConfigurationLevel = "Level";
+        public const string UserConfigurationSplatZonesRank = "SplatZonesRank";
+        public const string UserConfigurationTowerControlRank = "TowerControlRank";
+        public const string UserConfigurationRainmakerRank = "RainmakerRank";
+        public const string UserConfigurationClamBlitzRank = "ClamBlitzRank";
         public const string SystemConfigurationGeneralSection = "Ikas";
         public const string SystemConfigurationLanguage = "Language";
         public const string SystemConfigurationNetworkSection = "Network";

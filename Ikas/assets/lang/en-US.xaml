@@ -19,6 +19,7 @@
     <sys:String x:Key="rain">Rainmaker</sys:String>
     <sys:String x:Key="clam">Clam</sys:String>
     <!-- Rank -->
+    <sys:String x:Key="rank_unknown">--</sys:String>
     <sys:String x:Key="c_minus">C-</sys:String>
     <sys:String x:Key="c">C</sys:String>
     <sys:String x:Key="c_plus">C+</sys:String>

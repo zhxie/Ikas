@@ -10,7 +10,7 @@ namespace ClassLib
     {
         public enum Key
         {
-            unknown = -1,
+            rank_unknown = -1,
             c_minus,
             c,
             c_plus,
