@@ -1,4 +1,6 @@
-![Ikas-logo](source\img\Ikas-256.png)
+<p align="center">
+  <img src="/source/img/Ikas-256.png">
+</p>
 
 # Ikas
 
