@@ -26,77 +26,206 @@ namespace Ikas
     {
         private static string userConfigurationPath = "";
 
-        private static string sessionToken = "";
+        private static IniData userIniData = new IniData();
         public static string SessionToken
         {
             get
             {
-                return sessionToken;
+                try
+                {
+                    return userIniData[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationSessionToken];
+                }
+                catch
+                {
+                    return "";
+                }
             }
         }
-        private static string cookie = "";
         public static string Cookie
         {
             get
             {
-                return cookie;
+                try
+                {
+                    return userIniData[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationCookie];
+                }
+                catch
+                {
+                    return "";
+                }
             }
         }
-        private static int level = -1;
+        private static int level
+        {
+            set
+            {
+                try
+                {
+                    userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = value.ToString();
+                    FileIniDataParser parser = new FileIniDataParser();
+                    parser.WriteFile(userConfigurationPath, userIniData);
+                }
+                catch { }
+            }
+        }
         public static int Level
         {
             get
             {
-                return level;
+                try
+                {
+                    return int.Parse(userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel]);
+                }
+                catch
+                {
+                    return -1;
+                }
             }
         }
-        private static Rank.Key splatZonesRank = Rank.Key.rank_unknown;
-        public static Rank.Key SplatZonesRank
+        private static Rank.Key splatZonesRank
         {
+            set
+            {
+                try
+                {
+                    userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSplatZonesRank] = ((int)value).ToString();
+                    FileIniDataParser parser = new FileIniDataParser();
+                    parser.WriteFile(userConfigurationPath, userIniData);
+                }
+                catch { }
+            }
+        }
+        public static Rank.Key SplatZonesRank {
             get
             {
-                return splatZonesRank;
+                try
+                {
+                    return (Rank.Key)int.Parse(userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSplatZonesRank]);
+                }
+                catch
+                {
+                    return Rank.Key.rank_unknown;
+                }
             }
         }
-        private static Rank.Key towerControlRank = Rank.Key.rank_unknown;
+        private static Rank.Key towerControlRank
+        {
+            set
+            {
+                try
+                {
+                    userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationTowerControlRank] = ((int)value).ToString();
+                    FileIniDataParser parser = new FileIniDataParser();
+                    parser.WriteFile(userConfigurationPath, userIniData);
+                }
+                catch { }
+            }
+        }
         public static Rank.Key TowerControlRank
         {
             get
             {
-                return towerControlRank;
+                try
+                {
+                    return (Rank.Key)int.Parse(userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationTowerControlRank]);
+                }
+                catch
+                {
+                    return Rank.Key.rank_unknown;
+                }
             }
         }
-        private static Rank.Key rainmakerRank = Rank.Key.rank_unknown;
+        private static Rank.Key rainmakerRank
+        {
+            set
+            {
+                try
+                {
+                    userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationRainmakerRank] = ((int)value).ToString();
+                    FileIniDataParser parser = new FileIniDataParser();
+                    parser.WriteFile(userConfigurationPath, userIniData);
+                }
+                catch { }
+            }
+        }
         public static Rank.Key RainmakerRank
         {
             get
             {
-                return rainmakerRank;
+                try
+                {
+                    return (Rank.Key)int.Parse(userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationRainmakerRank]);
+                }
+                catch
+                {
+                    return Rank.Key.rank_unknown;
+                }
             }
         }
-        private static Rank.Key clamBlitzRank = Rank.Key.rank_unknown;
+        private static Rank.Key clamBlitzRank
+        {
+            set
+            {
+                try
+                {
+                    userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationClamBlitzRank] = ((int)value).ToString();
+                    FileIniDataParser parser = new FileIniDataParser();
+                    parser.WriteFile(userConfigurationPath, userIniData);
+                }
+                catch { }
+            }
+        }
         public static Rank.Key ClamBlitzRank
         {
             get
             {
-                return clamBlitzRank;
+                try
+                {
+                    return (Rank.Key)int.Parse(userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationClamBlitzRank]);
+                }
+                catch
+                {
+                    return Rank.Key.rank_unknown;
+                }
             }
         }
 
-        private static WebProxy proxy = null;
+        private static IniData systemIniData = new IniData();
         public static WebProxy Proxy
         {
             get
             {
-                return proxy;
+                try
+                {
+                    if (bool.Parse(systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxy]))
+                    {
+                        string host = systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyHost];
+                        int port = int.Parse(systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyPort].Trim());
+                        return new WebProxy(host, port);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
-        private static string language = null;
         public static string Language
         {
             get
             {
-                return language;
+                try
+                {
+                    return systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage];
+                }
+                catch
+                {
+                    return "en-US";
+                }
             }
         }
 
@@ -155,79 +284,7 @@ namespace Ikas
             try
             {
                 FileIniDataParser parser = new FileIniDataParser();
-                IniData data = parser.ReadFile(userConfigurationPath);
-                bool error = false;
-                // Session Token
-                try
-                {
-                    sessionToken = data[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationSessionToken].Trim();
-                }
-                catch
-                {
-                    error = true;
-                }
-                // Cookie
-                try
-                {
-                    cookie = data[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationCookie].Trim();
-                }
-                catch
-                {
-                    error = true;
-                }
-                // Statistics
-                try
-                {
-                    level = int.Parse(data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel]);
-                }
-                catch
-                {
-                    error = true;
-                }
-                try
-                {
-                    splatZonesRank = (Rank.Key)int.Parse(data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSplatZonesRank]);
-                }
-                catch
-                {
-                    error = true;
-                }
-                try
-                {
-                    towerControlRank = (Rank.Key)int.Parse(data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationTowerControlRank]);
-                }
-                catch
-                {
-                    error = true;
-                }
-                try
-                {
-                    rainmakerRank = (Rank.Key)int.Parse(data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationRainmakerRank]);
-                }
-                catch
-                {
-                    error = true;
-                }
-                try
-                {
-                    clamBlitzRank = (Rank.Key)int.Parse(data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationClamBlitzRank]);
-                }
-                catch
-                {
-                    error = true;
-                }
-                if (error)
-                {
-                    IniData newUserConfiguration = new IniData();
-                    newUserConfiguration[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationSessionToken] = SessionToken;
-                    newUserConfiguration[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationCookie] = Cookie;
-                    newUserConfiguration[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = Level.ToString();
-                    newUserConfiguration[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSplatZonesRank] = ((int)SplatZonesRank).ToString();
-                    newUserConfiguration[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationTowerControlRank] = ((int)TowerControlRank).ToString();
-                    newUserConfiguration[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationRainmakerRank] = ((int)RainmakerRank).ToString();
-                    newUserConfiguration[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationClamBlitzRank] = ((int)ClamBlitzRank).ToString();
-                    parser.WriteFile(userConfigurationPath, newUserConfiguration);
-                }
+                userIniData = parser.ReadFile(userConfigurationPath);
                 return true;
             }
             catch
@@ -248,15 +305,7 @@ namespace Ikas
             try
             {
                 FileIniDataParser parser = new FileIniDataParser();
-                IniData data = parser.ReadFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration);
-                bool useProxy = bool.Parse(data[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxy].Trim());
-                if (useProxy)
-                {
-                    string host = data[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyHost].Trim();
-                    int port = int.Parse(data[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyPort].Trim());
-                    proxy = new WebProxy(host, port);
-                }
-                language = data[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage].Trim();
+                systemIniData = parser.ReadFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration);
                 return true;
             }
             catch
@@ -456,12 +505,7 @@ namespace Ikas
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     if (levelAfter != Level)
                                     {
-                                        level = levelAfter;
-                                        FileIniDataParser parser = new FileIniDataParser();
-                                        IniData data = parser.ReadFile(userConfigurationPath);
-                                        data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = Level.ToString();
-                                        parser.WriteFile(userConfigurationPath, data);
-                                        CurrentMode = currentMode;
+                                        UpdateLevel(levelAfter);
                                     }
                                     double myScore = double.Parse(jObject["my_team_percentage"].ToString());
                                     double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
@@ -514,12 +558,7 @@ namespace Ikas
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     if (levelAfter != Level)
                                     {
-                                        level = levelAfter;
-                                        FileIniDataParser parser = new FileIniDataParser();
-                                        IniData data = parser.ReadFile(userConfigurationPath);
-                                        data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = Level.ToString();
-                                        parser.WriteFile(userConfigurationPath, data);
-                                        CurrentMode = currentMode;
+                                        UpdateLevel(levelAfter);
                                     }
                                     int myScore = int.Parse(jObject["my_team_count"].ToString());
                                     int otherScore = int.Parse(jObject["other_team_count"].ToString());
@@ -541,45 +580,25 @@ namespace Ikas
                                             case Rule.Key.splat_zones:
                                                 if (rankAfter != SplatZonesRank)
                                                 {
-                                                    splatZonesRank = rankAfter;
-                                                    FileIniDataParser parser = new FileIniDataParser();
-                                                    IniData data = parser.ReadFile(userConfigurationPath);
-                                                    data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSplatZonesRank] = ((int)SplatZonesRank).ToString();
-                                                    parser.WriteFile(userConfigurationPath, data);
-                                                    CurrentMode = currentMode;
+                                                    UpdateRank(Rule.Key.splat_zones, rankAfter);
                                                 }
                                                 break;
                                             case Rule.Key.tower_control:
                                                 if (rankAfter != TowerControlRank)
                                                 {
-                                                    towerControlRank = rankAfter;
-                                                    FileIniDataParser parser = new FileIniDataParser();
-                                                    IniData data = parser.ReadFile(userConfigurationPath);
-                                                    data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationTowerControlRank] = ((int)TowerControlRank).ToString();
-                                                    parser.WriteFile(userConfigurationPath, data);
-                                                    CurrentMode = currentMode;
+                                                    UpdateRank(Rule.Key.tower_control, rankAfter);
                                                 }
                                                 break;
                                             case Rule.Key.rainmaker:
                                                 if (rankAfter != RainmakerRank)
                                                 {
-                                                    rainmakerRank = rankAfter;
-                                                    FileIniDataParser parser = new FileIniDataParser();
-                                                    IniData data = parser.ReadFile(userConfigurationPath);
-                                                    data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationRainmakerRank] = ((int)RainmakerRank).ToString();
-                                                    parser.WriteFile(userConfigurationPath, data);
-                                                    CurrentMode = currentMode;
+                                                    UpdateRank(Rule.Key.rainmaker, rankAfter);
                                                 }
                                                 break;
                                             case Rule.Key.clam_blitz:
                                                 if (rankAfter != ClamBlitzRank)
                                                 {
-                                                    clamBlitzRank = rankAfter;
-                                                    FileIniDataParser parser = new FileIniDataParser();
-                                                    IniData data = parser.ReadFile(userConfigurationPath);
-                                                    data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationClamBlitzRank] = ((int)ClamBlitzRank).ToString();
-                                                    parser.WriteFile(userConfigurationPath, data);
-                                                    CurrentMode = currentMode;
+                                                    UpdateRank(Rule.Key.clam_blitz, rankAfter);
                                                 }
                                                 break;
                                             default:
@@ -643,12 +662,7 @@ namespace Ikas
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     if (levelAfter != Level)
                                     {
-                                        level = levelAfter;
-                                        FileIniDataParser parser = new FileIniDataParser();
-                                        IniData data = parser.ReadFile(userConfigurationPath);
-                                        data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = Level.ToString();
-                                        parser.WriteFile(userConfigurationPath, data);
-                                        CurrentMode = currentMode;
+                                        UpdateLevel(levelAfter);
                                     }
                                     int myEstimatedLeaguePower = int.Parse(jObject["my_estimate_league_point"].ToString());
                                     int otherEstimatedLeaguePower = int.Parse(jObject["other_estimate_league_point"].ToString());
@@ -713,12 +727,7 @@ namespace Ikas
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     if (levelAfter != Level)
                                     {
-                                        level = levelAfter;
-                                        FileIniDataParser parser = new FileIniDataParser();
-                                        IniData data = parser.ReadFile(userConfigurationPath);
-                                        data[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = Level.ToString();
-                                        parser.WriteFile(userConfigurationPath, data);
-                                        CurrentMode = currentMode;
+                                        UpdateLevel(levelAfter);
                                     }
                                     SplatfestBattle.Key splatfestMode = SplatfestBattle.ParseKey(jObject["fes_mode"]["key"].ToString());
                                     int myEstimatedSplatfestPower = int.Parse(jObject["my_estimate_fes_power"].ToString());
@@ -779,6 +788,111 @@ namespace Ikas
                 BattleUpdated?.Invoke();
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Update level.
+        /// </summary>
+        /// <param name="level">Updated level</param>
+        private static bool UpdateLevel(int level)
+        {
+            if (Level != level)
+            {
+                try
+                {
+                    Depot.level = level;
+                    CurrentMode = currentMode;
+                    return true;
+                }
+                catch
+                {
+                    CurrentMode = currentMode;
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// Update rank.
+        /// </summary>
+        /// <param name="rule">Rule of the rank</param>
+        /// <param name="rank">Updated rank</param>
+        /// <returns></returns>
+        private static bool UpdateRank(Rule.Key rule, Rank.Key rank)
+        {
+            switch (rule)
+            {
+                case Rule.Key.splat_zones:
+                    if (SplatZonesRank != rank)
+                    {
+                        try
+                        {
+                            splatZonesRank = rank;
+                            CurrentMode = currentMode;
+                            return true;
+                        }
+                        catch
+                        {
+                            CurrentMode = currentMode;
+                            return false;
+                        }
+                    }
+                    break;
+                case Rule.Key.tower_control:
+                    if (TowerControlRank != rank)
+                    {
+                        try
+                        {
+                            towerControlRank = rank;
+                            CurrentMode = currentMode;
+                            return true;
+                        }
+                        catch
+                        {
+                            CurrentMode = currentMode;
+                            return false;
+                        }
+                    }
+                    break;
+                case Rule.Key.rainmaker:
+                    if (RainmakerRank != rank)
+                    {
+                        try
+                        {
+                            rainmakerRank = rank;
+                            CurrentMode = currentMode;
+                            return true;
+                        }
+                        catch
+                        {
+                            CurrentMode = currentMode;
+                            return false;
+                        }
+                    }
+                    break;
+                case Rule.Key.clam_blitz:
+                    if (ClamBlitzRank != rank)
+                    {
+                        try
+                        {
+                            clamBlitzRank = rank;
+                            CurrentMode = currentMode;
+                            return true;
+                        }
+                        catch
+                        {
+                            CurrentMode = currentMode;
+                            return false;
+                        }
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            return false;
         }
 
         /// <summary>
