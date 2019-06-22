@@ -48,6 +48,7 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(imgMode, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(stg, BitmapScalingMode.HighQuality);
             // Add handler for global member
+            Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
             Depot.BattleChanged += new BattleChangedEventHandler(BattleChanged);
             Depot.BattleUpdated += new BattleUpdatedEventHandler(BattleUpdated);
             // Prepare Icon and Weapon window
@@ -130,6 +131,16 @@ namespace Ikas
         }
 
         #endregion
+
+        private void LanguageChanged()
+        {
+            ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + Depot.Language + ".xaml", UriKind.Relative));
+            if (Resources.MergedDictionaries.Count > 0)
+            {
+                Resources.MergedDictionaries.Clear();
+            }
+            Resources.MergedDictionaries.Add(lang);
+        }
 
         private void BattleChanged()
         {

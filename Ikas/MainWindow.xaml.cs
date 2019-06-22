@@ -27,6 +27,7 @@ namespace Ikas
     {
         private ScheduleWindow scheduleWindow;
         private BattleWindow battleWindow;
+        private SettingWindow settingWindow;
 
         private DispatcherTimer tmSchedule;
         private DispatcherTimer tmBattle;
@@ -60,15 +61,19 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(bdStage1, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdStage2, BitmapScalingMode.HighQuality);
             // Add handler for global member
+            Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
             Depot.ScheduleChanged += new ScheduleChangedEventHandler(ScheduleChanged);
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
-            // Prepare Schedule and Battle window
+            // Prepare windows
             scheduleWindow = new ScheduleWindow();
             scheduleWindow.Opacity = 0;
             scheduleWindow.Visibility = Visibility.Hidden;
             battleWindow = new BattleWindow();
             battleWindow.Opacity = 0;
             battleWindow.Visibility = Visibility.Hidden;
+            settingWindow = new SettingWindow();
+            settingWindow.Opacity = 0;
+            settingWindow.Visibility = Visibility.Hidden;
             // Create timer
             tmSchedule = new DispatcherTimer();
             tmSchedule.Tick += new EventHandler((object source, EventArgs e) => { Depot.GetSchedule(); });
@@ -145,8 +150,7 @@ namespace Ikas
 
         private void MenuItemSetting_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(System.IO.Path.GetFileName(FileFolderUrl.UserConfiguration));
-            System.Diagnostics.Process.Start(System.IO.Path.GetFileName(FileFolderUrl.SystemConfiguration));
+            ((Storyboard)FindResource("window_fade_in")).Begin(settingWindow);
         }
 
         private void MenuItemTopMost_Click(object sender, RoutedEventArgs e)
@@ -155,17 +159,22 @@ namespace Ikas
             miTopMost.IsChecked = Topmost;
         }
 
-        private void MenuItemClearCache_Click(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("explorer.exe", FileFolderUrl.ApplicationData);
-        }
-
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
         }
 
         #endregion
+
+        private void LanguageChanged()
+        {
+            ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + Depot.Language + ".xaml", UriKind.Relative));
+            if (Resources.MergedDictionaries.Count > 0)
+            {
+                Resources.MergedDictionaries.Clear();
+            }
+            Resources.MergedDictionaries.Add(lang);
+        }
 
         private void ScheduleChanged()
         {
@@ -302,6 +311,5 @@ namespace Ikas
                 return s;
             }
         }
-
     }
 }

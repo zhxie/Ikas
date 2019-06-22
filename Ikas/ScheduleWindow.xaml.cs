@@ -48,6 +48,7 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(stgNext1, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(stgNext2, BitmapScalingMode.HighQuality);
             // Add handler for global member
+            Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
             Depot.ScheduleChanged += new ScheduleChangedEventHandler(ScheduleChanged);
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
         }
@@ -79,6 +80,16 @@ namespace Ikas
         }
 
         #endregion
+
+        private void LanguageChanged()
+        {
+            ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + Depot.Language + ".xaml", UriKind.Relative));
+            if (Resources.MergedDictionaries.Count > 0)
+            {
+                Resources.MergedDictionaries.Clear();
+            }
+            Resources.MergedDictionaries.Add(lang);
+        }
 
         private void ScheduleChanged()
         {

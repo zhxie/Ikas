@@ -18,6 +18,7 @@ using ClassLib;
 
 namespace Ikas
 {
+    public delegate void LanguageChangedEventHandler();
     public delegate void ScheduleChangedEventHandler();
     public delegate void ScheduleUpdatedEventHandler();
     public delegate void BattleUpdatedEventHandler();
@@ -42,16 +43,16 @@ namespace Ikas
             }
             set
             {
-                try
+                if (value != SessionToken)
                 {
-                    if (value != SessionToken)
+                    try
                     {
                         userIniData[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationSessionToken] = value;
                         FileIniDataParser parser = new FileIniDataParser();
                         parser.WriteFile(userConfigurationPath, userIniData);
                     }
+                    catch { }
                 }
-                catch { }
             }
         }
         public static string Cookie
@@ -69,32 +70,32 @@ namespace Ikas
             }
             set
             {
-                try
+                if (value != Cookie)
                 {
-                    if (value != Cookie)
+                    try
                     {
                         userIniData[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationCookie] = value;
                         FileIniDataParser parser = new FileIniDataParser();
                         parser.WriteFile(userConfigurationPath, userIniData);
                     }
+                    catch { }
                 }
-                catch { }
             }
         }
         private static int level
         {
             set
             {
-                try
+                if (value != Level)
                 {
-                    if (value != Level)
+                    try
                     {
                         userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = value.ToString();
                         FileIniDataParser parser = new FileIniDataParser();
                         parser.WriteFile(userConfigurationPath, userIniData);
                     }
+                    catch { }
                 }
-                catch { }
             }
         }
         public static int Level
@@ -115,16 +116,16 @@ namespace Ikas
         {
             set
             {
-                try
+                if (value != SplatZonesRank)
                 {
-                    if (value != SplatZonesRank)
+                    try
                     {
                         userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSplatZonesRank] = ((int)value).ToString();
                         FileIniDataParser parser = new FileIniDataParser();
                         parser.WriteFile(userConfigurationPath, userIniData);
                     }
+                    catch { }
                 }
-                catch { }
             }
         }
         public static Rank.Key SplatZonesRank {
@@ -144,16 +145,16 @@ namespace Ikas
         {
             set
             {
-                try
+                if (value != TowerControlRank)
                 {
-                    if (value != TowerControlRank)
+                    try
                     {
                         userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationTowerControlRank] = ((int)value).ToString();
                         FileIniDataParser parser = new FileIniDataParser();
                         parser.WriteFile(userConfigurationPath, userIniData);
                     }
+                    catch { }
                 }
-                catch { }
             }
         }
         public static Rank.Key TowerControlRank
@@ -174,16 +175,16 @@ namespace Ikas
         {
             set
             {
-                try
+                if (value != RainmakerRank)
                 {
-                    if (value != RainmakerRank)
+                    try
                     {
                         userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationRainmakerRank] = ((int)value).ToString();
                         FileIniDataParser parser = new FileIniDataParser();
                         parser.WriteFile(userConfigurationPath, userIniData);
                     }
+                    catch { }
                 }
-                catch { }
             }
         }
         public static Rank.Key RainmakerRank
@@ -204,16 +205,16 @@ namespace Ikas
         {
             set
             {
-                try
+                if (value != ClamBlitzRank)
                 {
-                    if (value != ClamBlitzRank)
+                    try
                     {
                         userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationClamBlitzRank] = ((int)value).ToString();
                         FileIniDataParser parser = new FileIniDataParser();
                         parser.WriteFile(userConfigurationPath, userIniData);
                     }
+                    catch { }
                 }
-                catch { }
             }
         }
         public static Rank.Key ClamBlitzRank
@@ -247,16 +248,16 @@ namespace Ikas
             }
             set
             {
-                try
+                if (value != UseProxy)
                 {
-                    if (value != UseProxy)
+                    try
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxy] = value.ToString().ToLower();
                         FileIniDataParser parser = new FileIniDataParser();
                         parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
+                    catch { }
                 }
-                catch { }
             }
         }
         public static string ProxyHost
@@ -276,9 +277,13 @@ namespace Ikas
             {
                 if (value != ProxyHost)
                 {
-                    systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyHost] = value;
-                    FileIniDataParser parser = new FileIniDataParser();
-                    parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    try
+                    {
+                        systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyHost] = value;
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    }
+                    catch { }
                 }
             }
         }
@@ -299,9 +304,13 @@ namespace Ikas
             {
                 if (value != ProxyPort)
                 {
-                    systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyPort] = value.ToString();
-                    FileIniDataParser parser = new FileIniDataParser();
-                    parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    try
+                    {
+                        systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyPort] = value.ToString();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    }
+                    catch { }
                 }
             }
         }
@@ -333,6 +342,7 @@ namespace Ikas
                 }
             }
         }
+        public static event LanguageChangedEventHandler LanguageChanged;
         public static string Language
         {
             get
@@ -350,9 +360,17 @@ namespace Ikas
             {
                 if (value != Language)
                 {
-                    systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage] = value;
-                    FileIniDataParser parser = new FileIniDataParser();
-                    parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    try
+                    {
+                        systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage] = value;
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    }
+                    catch { }
+                    finally
+                    {
+                        LanguageChanged?.Invoke();
+                    }
                 }
             }
         }

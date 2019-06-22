@@ -77,6 +77,8 @@ namespace Ikas
             }
             // Initialize component
             InitializeComponent();
+            // Add handler for global member
+            Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
         }
 
         #region Control Event
@@ -156,6 +158,7 @@ namespace Ikas
             Depot.ProxyHost = txtProxyHost.Text;
             Depot.ProxyPort = int.Parse(txtProxyPort.Text);
             Depot.Language = language;
+            ((Storyboard)FindResource("window_fade_out")).Begin(this);
         }
 
         private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -232,6 +235,12 @@ namespace Ikas
             language = "en-US";
             ((Storyboard)FindResource("fore_to_orange")).Begin(lbLanguageEnUs);
             ((Storyboard)FindResource("fore_to_white")).Begin(lbLanguageJaJp);
+            ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + language + ".xaml", UriKind.Relative));
+            if (Resources.MergedDictionaries.Count > 0)
+            {
+                Resources.MergedDictionaries.Clear();
+            }
+            Resources.MergedDictionaries.Add(lang);
         }
 
         private void LbLanguageJaJp_MouseDown(object sender, MouseButtonEventArgs e)
@@ -239,6 +248,12 @@ namespace Ikas
             language = "ja-JP";
             ((Storyboard)FindResource("fore_to_white")).Begin(lbLanguageEnUs);
             ((Storyboard)FindResource("fore_to_orange")).Begin(lbLanguageJaJp);
+            ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + language + ".xaml", UriKind.Relative));
+            if (Resources.MergedDictionaries.Count > 0)
+            {
+                Resources.MergedDictionaries.Clear();
+            }
+            Resources.MergedDictionaries.Add(lang);
         }
 
         private void LbClearCache_MouseEnter(object sender, MouseEventArgs e)
@@ -268,6 +283,16 @@ namespace Ikas
         }
 
         #endregion
+
+        private void LanguageChanged()
+        {
+            ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + Depot.Language + ".xaml", UriKind.Relative));
+            if (Resources.MergedDictionaries.Count > 0)
+            {
+                Resources.MergedDictionaries.Clear();
+            }
+            Resources.MergedDictionaries.Add(lang);
+        }
 
         private string Translate(string s, bool isLocal = false)
         {

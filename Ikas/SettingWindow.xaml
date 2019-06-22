@@ -9,6 +9,21 @@
         PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown"
         Title="Ikas - Setting" Width="600" SizeToContent="Height" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <Storyboard x:Key="window_fade_out">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="4"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="window_fade_in">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
+        </Storyboard>
         <Storyboard x:Key="fore_to_green">
             <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=GreenForeground}" SpeedRatio="6"/>
         </Storyboard>
