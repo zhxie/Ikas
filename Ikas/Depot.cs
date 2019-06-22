@@ -40,6 +40,19 @@ namespace Ikas
                     return "";
                 }
             }
+            set
+            {
+                try
+                {
+                    if (value != SessionToken)
+                    {
+                        userIniData[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationSessionToken] = value;
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(userConfigurationPath, userIniData);
+                    }
+                }
+                catch { }
+            }
         }
         public static string Cookie
         {
@@ -54,6 +67,19 @@ namespace Ikas
                     return "";
                 }
             }
+            set
+            {
+                try
+                {
+                    if (value != Cookie)
+                    {
+                        userIniData[FileFolderUrl.UserConfigurationGeneralSection][FileFolderUrl.UserConfigurationCookie] = value;
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(userConfigurationPath, userIniData);
+                    }
+                }
+                catch { }
+            }
         }
         private static int level
         {
@@ -61,9 +87,12 @@ namespace Ikas
             {
                 try
                 {
-                    userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = value.ToString();
-                    FileIniDataParser parser = new FileIniDataParser();
-                    parser.WriteFile(userConfigurationPath, userIniData);
+                    if (value != Level)
+                    {
+                        userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationLevel] = value.ToString();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(userConfigurationPath, userIniData);
+                    }
                 }
                 catch { }
             }
@@ -88,9 +117,12 @@ namespace Ikas
             {
                 try
                 {
-                    userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSplatZonesRank] = ((int)value).ToString();
-                    FileIniDataParser parser = new FileIniDataParser();
-                    parser.WriteFile(userConfigurationPath, userIniData);
+                    if (value != SplatZonesRank)
+                    {
+                        userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSplatZonesRank] = ((int)value).ToString();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(userConfigurationPath, userIniData);
+                    }
                 }
                 catch { }
             }
@@ -114,9 +146,12 @@ namespace Ikas
             {
                 try
                 {
-                    userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationTowerControlRank] = ((int)value).ToString();
-                    FileIniDataParser parser = new FileIniDataParser();
-                    parser.WriteFile(userConfigurationPath, userIniData);
+                    if (value != TowerControlRank)
+                    {
+                        userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationTowerControlRank] = ((int)value).ToString();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(userConfigurationPath, userIniData);
+                    }
                 }
                 catch { }
             }
@@ -141,9 +176,12 @@ namespace Ikas
             {
                 try
                 {
-                    userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationRainmakerRank] = ((int)value).ToString();
-                    FileIniDataParser parser = new FileIniDataParser();
-                    parser.WriteFile(userConfigurationPath, userIniData);
+                    if (value != RainmakerRank)
+                    {
+                        userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationRainmakerRank] = ((int)value).ToString();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(userConfigurationPath, userIniData);
+                    }
                 }
                 catch { }
             }
@@ -168,9 +206,12 @@ namespace Ikas
             {
                 try
                 {
-                    userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationClamBlitzRank] = ((int)value).ToString();
-                    FileIniDataParser parser = new FileIniDataParser();
-                    parser.WriteFile(userConfigurationPath, userIniData);
+                    if (value != ClamBlitzRank)
+                    {
+                        userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationClamBlitzRank] = ((int)value).ToString();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(userConfigurationPath, userIniData);
+                    }
                 }
                 catch { }
             }
@@ -191,17 +232,95 @@ namespace Ikas
         }
 
         private static IniData systemIniData = new IniData();
+        public static bool UseProxy
+        {
+            get
+            {
+                try
+                {
+                    return bool.Parse(systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxy]);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                try
+                {
+                    if (value != UseProxy)
+                    {
+                        systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxy] = value.ToString().ToLower();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    }
+                }
+                catch { }
+            }
+        }
+        public static string ProxyHost
+        {
+            get
+            {
+                try
+                {
+                    return systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyHost];
+                }
+                catch
+                {
+                    return "";
+                }
+            }
+            set
+            {
+                if (value != ProxyHost)
+                {
+                    systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyHost] = value;
+                    FileIniDataParser parser = new FileIniDataParser();
+                    parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                }
+            }
+        }
+        public static int ProxyPort
+        {
+            get
+            {
+                try
+                {
+                    return int.Parse(systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyPort].Trim());
+                }
+                catch
+                {
+                    return -1;
+                }
+            }
+            set
+            {
+                if (value != ProxyPort)
+                {
+                    systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyPort] = value.ToString();
+                    FileIniDataParser parser = new FileIniDataParser();
+                    parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                }
+            }
+        }
         public static WebProxy Proxy
         {
             get
             {
                 try
                 {
-                    if (bool.Parse(systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxy]))
+                    if (UseProxy)
                     {
-                        string host = systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyHost];
-                        int port = int.Parse(systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyPort].Trim());
-                        return new WebProxy(host, port);
+                        if (ProxyHost != "" && ProxyPort > 0)
+                        {
+                            return new WebProxy(ProxyHost, ProxyPort);
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
                     else
                     {
@@ -225,6 +344,15 @@ namespace Ikas
                 catch
                 {
                     return "en-US";
+                }
+            }
+            set
+            {
+                if (value != Language)
+                {
+                    systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage] = value;
+                    FileIniDataParser parser = new FileIniDataParser();
+                    parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
                 }
             }
         }

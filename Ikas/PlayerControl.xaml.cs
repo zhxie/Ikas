@@ -30,14 +30,6 @@ namespace Ikas
     {
         public volatile Player Player;
 
-        public string OfflineColor
-        {
-            get
-            {
-                return "#7F" + Design.NeonOrange;
-            }
-        }
-
         public event MouseEnterIconEventHandler MouseEnterIcon;
         public event MouseLeaveIconEventHandler MouseLeaveIcon;
         public event MouseEnterWeaponEventHandler MouseEnterWeapon;

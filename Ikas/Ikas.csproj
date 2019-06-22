@@ -83,6 +83,9 @@
       <DependentUpon>ScheduleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScreenHelper.cs" />
+    <Compile Include="SettingWindow.xaml.cs">
+      <DependentUpon>SettingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StageControl.xaml.cs">
       <DependentUpon>StageControl.xaml</DependentUpon>
     </Compile>
@@ -132,6 +135,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScheduleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -209,6 +216,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Ikas.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\img\bg-splat.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

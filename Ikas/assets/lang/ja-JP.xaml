@@ -232,14 +232,13 @@
     <sys:String x:Key="spygadget_sorella">スパイガジェットソレーラ</sys:String>
     <sys:String x:Key="spygadget_becchu">スパイガジェットベッチュー</sys:String>
     <!-- MainWindow -->
-    <sys:String x:Key="Failed in loading user configuration!">Failed in loading user configuration!</sys:String>
+    <sys:String x:Key="main_window-Failed in loading user configuration!">ユーザー設定の読み込みに失敗しました！</sys:String>
     <sys:String x:Key="main_window-level">レベル</sys:String>
     <sys:String x:Key="main_window-rank">ウデマエ</sys:String>
     <sys:String x:Key="main_window---">--</sys:String>
-    <sys:String x:Key="main_window-setting">Setting</sys:String>
-    <sys:String x:Key="main_window-top_most">Always on top</sys:String>
-    <sys:String x:Key="main_window-clear_cache">Clear Cache</sys:String>
-    <sys:String x:Key="main_window-exit">Exit</sys:String>
+    <sys:String x:Key="main_window-setting">設定</sys:String>
+    <sys:String x:Key="main_window-top_most">常にトップに</sys:String>
+    <sys:String x:Key="main_window-exit">終了</sys:String>
     <!-- ScheduleWindow -->
     <sys:String x:Key="schedule_window-Next">つぎ</sys:String>
     <sys:String x:Key="schedule_window-{0} - {1}">{0} - {1}</sys:String>
@@ -257,6 +256,31 @@
     <sys:String x:Key="battle_window-{0} count">{0} カウント</sys:String>
     <sys:String x:Key="battle_window-knock_out">ノックアウト!</sys:String>
     <!-- WeaponWindow -->
+    <!-- PlayerWindow -->
+    <!-- SettingWindow -->
+    <sys:String x:Key="setting_window-setting">設定</sys:String>
+    <sys:String x:Key="setting_window-ok">OK!</sys:String>
+    <sys:String x:Key="setting_window-You may enter a valid Cookie before closing the setting window.">設定ウィンドウを閉じる前に、有効なクッキーを入力する必要があります。</sys:String>
+    <sys:String x:Key="setting_window-You may enter a valid proxy port before closing the setting window.">設定ウィンドウを閉じる前に、有効なプロキシポートを入力する必要があります。</sys:String>
+    <sys:String x:Key="setting_window-user">ユーザー</sys:String>
+    <sys:String x:Key="setting_window-session_token">セッショントークン</sys:String>
+    <sys:String x:Key="setting_window-what_is_session_token">セッショントークンとは何ですか？</sys:String>
+    <sys:String x:Key="setting_window-get_session_token">どのように私はセッショントークンを得ることができますか？</sys:String>
+    <sys:String x:Key="setting_window-cookie">クッキー</sys:String>
+    <sys:String x:Key="setting_window-what_is_cookie">クッキーとは何ですか？</sys:String>
+    <sys:String x:Key="setting_window-update_cookie">私のクッキーを更新してください！</sys:String>
+    <sys:String x:Key="setting_window-system">システム</sys:String>
+    <sys:String x:Key="setting_window-use_proxy">プロキシを使用しますか？</sys:String>
+    <sys:String x:Key="setting_window-use_proxy_true">はい</sys:String>
+    <sys:String x:Key="setting_window-use_proxy_false">いいえ</sys:String>
+    <sys:String x:Key="setting_window-host">ホスト</sys:String>
+    <sys:String x:Key="setting_window-port">ポート</sys:String>
+    <sys:String x:Key="setting_window-language">言語</sys:String>
+    <sys:String x:Key="setting_window-language_en_us">English</sys:String>
+    <sys:String x:Key="setting_window-language_ja_jp">日本語</sys:String>
+    <sys:String x:Key="setting_window-clear_cache">キャッシュをクリア</sys:String>
+    <sys:String x:Key="setting_window-Currently, we can not clear cache automatically, but we can guide you to the application data directory.">現在のところ、キャッシュを自動的にクリアすることはできませんが、アプリケーションデータディレクトリに誘導することはできます。</sys:String>
+    <sys:String x:Key="setting_window-what_is_clear_cache">キャッシュをクリアするのはいつですか？</sys:String>
     <!-- StageControl -->
     <!-- TagControl -->
     <!-- PlayerControl -->

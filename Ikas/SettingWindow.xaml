@@ -1,0 +1,176 @@
+﻿<Window x:Class="Ikas.SettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ikas"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown"
+        Title="Ikas - Setting" Width="600" SizeToContent="Height" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Storyboard x:Key="fore_to_green">
+            <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=GreenForeground}" SpeedRatio="6"/>
+        </Storyboard>
+        <Storyboard x:Key="fore_to_orange">
+            <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeForeground}" SpeedRatio="6"/>
+        </Storyboard>
+        <Storyboard x:Key="fore_to_red">
+            <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=RedForeground}" SpeedRatio="6"/>
+        </Storyboard>
+        <Storyboard x:Key="fore_to_white">
+            <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" To="White" SpeedRatio="6"/>
+        </Storyboard>
+        <Style x:Key="ButtonLabel">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard Storyboard.TargetProperty="FontSize">
+                                <DoubleAnimation To="22" SpeedRatio="6"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard Storyboard.TargetProperty="FontSize">
+                                <DoubleAnimation To="20" SpeedRatio="6"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Border CornerRadius="27">
+            <Border.Background>
+                <SolidColorBrush Color="#FF221F22"/>
+            </Border.Background>
+            <Border x:Name="bdBackgroundStrip" CornerRadius="27">
+                <Border.Background>
+                    <ImageBrush ImageSource="assets/img/bg-strips-dark.png" Stretch="None" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
+                </Border.Background>
+            </Border>
+        </Border>
+        <Border Width="220" Height="170" VerticalAlignment="Top" HorizontalAlignment="Right" CornerRadius="0,25,0,0">
+            <Border.Background>
+                <ImageBrush ImageSource="assets/img/bg-splat.png" Stretch="None" Viewbox="0,0,0.6,1.4"/>
+            </Border.Background>
+            <Label x:Name="lbOk"
+                   MouseEnter="LbOk_MouseEnter"
+                   MouseLeave="LbOk_MouseLeave"
+                   MouseDown="LbOk_MouseDown"
+                   Content="{DynamicResource setting_window-ok}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,10,0"/>
+        </Border>
+        <StackPanel Orientation="Vertical" Margin="0,20">
+            <StackPanel Orientation="Horizontal" Height="48" Margin="20,0">
+                <Label Content="{DynamicResource setting_window-setting}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="36" Height="80" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="45,10,25,0">
+                <Border Height="40">
+                    <Label Content="{DynamicResource setting_window-user}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                </Border>
+                <Grid Margin="20,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="4"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="4"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Content="{DynamicResource setting_window-session_token}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="txtSessionToken" Grid.Row="0" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="lbWhatIsSessionToken" Grid.Row="1" Grid.ColumnSpan="2"
+                           MouseEnter="LbWhatIsSessionToken_MouseEnter"
+                           MouseLeave="LbWhatIsSessionToken_MouseLeave"
+                           Content="{DynamicResource setting_window-what_is_session_token}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="16" Height="40" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="lbGetSessionToken" Grid.Row="3" Grid.ColumnSpan="2"
+                           MouseEnter="LbGetSessionToken_MouseEnter"
+                           MouseLeave="LbGetSessionToken_MouseLeave"
+                           MouseDown="LbGetSessionToken_MouseDown"
+                           Content="{DynamicResource setting_window-get_session_token}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="16" Height="40" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Grid.Row="5" Content="{DynamicResource setting_window-cookie}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="txtCookie" Grid.Row="5" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="lbWhatIsCookie" Grid.Row="6" Grid.ColumnSpan="2"
+                           MouseEnter="LbWhatIsCookie_MouseEnter"
+                           MouseLeave="LbWhatIsCookie_MouseLeave"
+                           Content="{DynamicResource setting_window-what_is_cookie}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="16" Height="40" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="lbUpdateCookie"
+                           MouseEnter="LbUpdateCookie_MouseEnter"
+                           MouseLeave="LbUpdateCookie_MouseLeave"
+                           MouseDown="LbUpdateCookie_MouseDown"
+                           Grid.Row="8" Grid.ColumnSpan="2" Content="{DynamicResource setting_window-update_cookie}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="16" Height="40" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                </Grid>
+                <Border Height="40" Margin="0,10,0,0">
+                    <Label Content="{DynamicResource setting_window-system}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                </Border>
+                <Grid Margin="20,10,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="4"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Content="{DynamicResource setting_window-use_proxy}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="lbUseProxyTrue" Grid.Column="0" Style="{DynamicResource ButtonLabel}"
+                               MouseDown="LbUseProxyTrue_MouseDown"
+                               Content="{DynamicResource setting_window-use_proxy_true}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                        <Label x:Name="lbUseProxyFalse" Grid.Column="1" Style="{DynamicResource ButtonLabel}"
+                               MouseDown="LbUseProxyFalse_MouseDown"
+                               Content="{DynamicResource setting_window-use_proxy_false}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                    </Grid>
+                    <Label Grid.Row="1" Content="{DynamicResource setting_window-host}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="26" Height="60" Margin="20,0,0,0" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="txtProxyHost" Grid.Row="1" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Grid.Row="2" Content="{DynamicResource setting_window-port}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="26" Height="60" Margin="20,0,0,0" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="txtProxyPort" Grid.Row="2" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Grid.Row="3" Content="{DynamicResource setting_window-language}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Grid Grid.Row="3" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="lbLanguageEnUs" Grid.Column="0" Style="{DynamicResource ButtonLabel}"
+                               MouseDown="LbLanguageEnUs_MouseDown"
+                               Content="{DynamicResource setting_window-language_en_us}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                        <Label x:Name="lbLanguageJaJp" Grid.Column="1" Style="{DynamicResource ButtonLabel}"
+                               MouseDown="LbLanguageJaJp_MouseDown"
+                               Content="{DynamicResource setting_window-language_ja_jp}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                    </Grid>
+                    <Label x:Name="lbClearCache" Grid.Row="4"
+                           MouseEnter="LbClearCache_MouseEnter"
+                           MouseLeave="LbClearCache_MouseLeave"
+                           MouseDown="LbClearCache_MouseDown"
+                           Content="{DynamicResource setting_window-clear_cache}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="lbWhatIsClearCache" Grid.Row="5" Grid.ColumnSpan="2"
+                           MouseEnter="LbWhatIsClearCache_MouseEnter"
+                           MouseLeave="LbWhatIsClearCache_MouseLeave"
+                           Content="{DynamicResource setting_window-what_is_clear_cache}" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="16" Height="40" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
