@@ -152,11 +152,17 @@ namespace Ikas
                 MessageBox.Show(Translate("You may enter a valid proxy port before closing the setting window.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            int port = int.Parse(txtProxyPort.Text);
+            if (port< 1 || port> 65535)
+            {
+                MessageBox.Show(Translate("You may enter a valid proxy port before closing the setting window.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             Depot.SessionToken = txtSessionToken.Text;
             Depot.Cookie = txtCookie.Text;
             Depot.UseProxy = useProxy;
             Depot.ProxyHost = txtProxyHost.Text;
-            Depot.ProxyPort = int.Parse(txtProxyPort.Text);
+            Depot.ProxyPort = port;
             Depot.Language = language;
             ((Storyboard)FindResource("window_fade_out")).Begin(this);
         }
