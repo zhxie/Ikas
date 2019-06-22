@@ -21,12 +21,13 @@ namespace Ikas
     public delegate void LanguageChangedEventHandler();
     public delegate void ScheduleChangedEventHandler();
     public delegate void ScheduleUpdatedEventHandler();
+    public delegate void ScheduleFailedEventHandler();
     public delegate void BattleUpdatedEventHandler();
     public delegate void BattleChangedEventHandler();
+    public delegate void BattleFailedEventHandler();
     public static class Depot
     {
         private static string userConfigurationPath = "";
-
         private static IniData userIniData = new IniData();
         public static string SessionToken
         {
@@ -379,11 +380,15 @@ namespace Ikas
 
         public static event ScheduleChangedEventHandler ScheduleChanged;
         public static event ScheduleUpdatedEventHandler ScheduleUpdated;
+        public static int ScheduleFailedCount { get; set; } = 0;
+        public static event ScheduleFailedEventHandler ScheduleFailed;
         private static Mutex ScheduleMutex = new Mutex();
         public static Schedule Schedule { get; set; } = new Schedule();
 
         public static event BattleChangedEventHandler BattleChanged;
         public static event BattleUpdatedEventHandler BattleUpdated;
+        public static int BattleFailedCount { get; set; } = 0;
+        public static event BattleFailedEventHandler BattleFailed;
         private static Mutex BattleMutex = new Mutex();
         public static Battle Battle { get; set; } = new Battle();
 
@@ -527,7 +532,11 @@ namespace Ikas
         /// <returns></returns>
         private static bool UpdateSchedule(Schedule schedule)
         {
-            Debug.Assert(schedule.EndTime != new DateTime(0));
+            if (schedule.EndTime == new DateTime(0))
+            {
+                ScheduleFailedCount++;
+                ScheduleFailed?.Invoke();
+            }
             if (Schedule != schedule)
             {
                 ScheduleMutex.WaitOne();
@@ -918,7 +927,11 @@ namespace Ikas
         /// <returns></returns>
         private static bool UpdateBattle(Battle battle)
         {
-            Debug.Assert(battle.Stage != null);
+            if (battle.Stage == null)
+            {
+                BattleFailedCount++;
+                BattleFailed?.Invoke();
+            }
             if (Battle != battle)
             {
                 BattleMutex.WaitOne();

@@ -83,8 +83,8 @@
       <DependentUpon>ScheduleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScreenHelper.cs" />
-    <Compile Include="SettingWindow.xaml.cs">
-      <DependentUpon>SettingWindow.xaml</DependentUpon>
+    <Compile Include="SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="StageControl.xaml.cs">
       <DependentUpon>StageControl.xaml</DependentUpon>
@@ -138,7 +138,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SettingWindow.xaml">
+    <Page Include="SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

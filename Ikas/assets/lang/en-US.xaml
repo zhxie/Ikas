@@ -239,6 +239,13 @@
     <sys:String x:Key="main_window-setting">Setting</sys:String>
     <sys:String x:Key="main_window-top_most">Always on top</sys:String>
     <sys:String x:Key="main_window-exit">Exit</sys:String>
+    <sys:String x:Key="main_window-{0} {1}\n{2}\n{3}\n{4}">{0} {1}\n{2}\n{3}\n{4}</sys:String>
+    <sys:String x:Key="main_window-Ikas can not get schdule.">Ikas can not get schdule.</sys:String>
+    <sys:String x:Key="main_window-Ikas can not get the latest battle.">Ikas can not get the latest battle.</sys:String>
+    <sys:String x:Key="main_window-Please check:">Please check:</sys:String>
+    <sys:String x:Key="main_window-1. Your network and network settings">1. Your network and network settings</sys:String>
+    <sys:String x:Key="main_window-2. Your Cookie (If you set up your Session Token, you may update cookie in settings)">2. Your Cookie (If you set up your Session Token, you may update cookie in settings)</sys:String>
+    <sys:String x:Key="main_window-After you solve the problems above, if this error message continues to occur, please consider submitting the issue.">After you solve the problems above, if this error message continues to occur, please consider submitting the issue.</sys:String>
     <!-- ScheduleWindow -->
     <sys:String x:Key="schedule_window-Next">Next</sys:String>
     <sys:String x:Key="schedule_window-{0} - {1}">{0} - {1}</sys:String>
@@ -257,30 +264,30 @@
     <sys:String x:Key="battle_window-knock_out">KO BONUS!</sys:String>
     <!-- WeaponWindow -->
     <!-- PlayerWindow -->
-    <!-- SettingWindow -->
-    <sys:String x:Key="setting_window-setting">Setting</sys:String>
-    <sys:String x:Key="setting_window-ok">OK!</sys:String>
-    <sys:String x:Key="setting_window-You may enter a valid Cookie before closing the setting window.">You may enter a valid Cookie before closing the setting window.</sys:String>
-    <sys:String x:Key="setting_window-You may enter a valid proxy port before closing the setting window.">You may enter a valid proxy port before closing the setting window.</sys:String>
-    <sys:String x:Key="setting_window-user">User</sys:String>
-    <sys:String x:Key="setting_window-session_token">Session Token</sys:String>
-    <sys:String x:Key="setting_window-what_is_session_token">What is Session Token?</sys:String>
-    <sys:String x:Key="setting_window-get_session_token">How can I get a Session Token?</sys:String>
-    <sys:String x:Key="setting_window-cookie">Cookie</sys:String>
-    <sys:String x:Key="setting_window-what_is_cookie">What is Cookie?</sys:String>
-    <sys:String x:Key="setting_window-update_cookie">Update my Cookie, please!</sys:String>
-    <sys:String x:Key="setting_window-system">System</sys:String>
-    <sys:String x:Key="setting_window-use_proxy">Use Proxy?</sys:String>
-    <sys:String x:Key="setting_window-use_proxy_true">Yes</sys:String>
-    <sys:String x:Key="setting_window-use_proxy_false">No</sys:String>
-    <sys:String x:Key="setting_window-host">Host</sys:String>
-    <sys:String x:Key="setting_window-port">Port</sys:String>
-    <sys:String x:Key="setting_window-language">Language</sys:String>
-    <sys:String x:Key="setting_window-language_en_us">English</sys:String>
-    <sys:String x:Key="setting_window-language_ja_jp">日本語</sys:String>
-    <sys:String x:Key="setting_window-clear_cache">Clear Cache</sys:String>
-    <sys:String x:Key="setting_window-Currently, we can not clear cache automatically, but we can guide you to the application data directory.">Currently, we can not clear cache automatically, but we can guide you to the application data directory.</sys:String>
-    <sys:String x:Key="setting_window-what_is_clear_cache">When should I clear cache?</sys:String>
+    <!-- SettingsWindow -->
+    <sys:String x:Key="settings_window-settings">Settings</sys:String>
+    <sys:String x:Key="settings_window-ok">OK!</sys:String>
+    <sys:String x:Key="settings_window-You may enter a valid Cookie before closing the settings.">You may enter a valid Cookie before closing the settings.</sys:String>
+    <sys:String x:Key="settings_window-You may enter a valid proxy port before closing the settings.">You may enter a valid proxy port before closing the settings.</sys:String>
+    <sys:String x:Key="settings_window-user">User</sys:String>
+    <sys:String x:Key="settings_window-session_token">Session Token</sys:String>
+    <sys:String x:Key="settings_window-what_is_session_token">What is Session Token?</sys:String>
+    <sys:String x:Key="settings_window-get_session_token">How can I get a Session Token?</sys:String>
+    <sys:String x:Key="settings_window-cookie">Cookie</sys:String>
+    <sys:String x:Key="settings_window-what_is_cookie">What is Cookie?</sys:String>
+    <sys:String x:Key="settings_window-update_cookie">Update my Cookie, please!</sys:String>
+    <sys:String x:Key="settings_window-system">System</sys:String>
+    <sys:String x:Key="settings_window-use_proxy">Use Proxy?</sys:String>
+    <sys:String x:Key="settings_window-use_proxy_true">Yes</sys:String>
+    <sys:String x:Key="settings_window-use_proxy_false">No</sys:String>
+    <sys:String x:Key="settings_window-host">Host</sys:String>
+    <sys:String x:Key="settings_window-port">Port</sys:String>
+    <sys:String x:Key="settings_window-language">Language</sys:String>
+    <sys:String x:Key="settings_window-language_en_us">English</sys:String>
+    <sys:String x:Key="settings_window-language_ja_jp">日本語</sys:String>
+    <sys:String x:Key="settings_window-clear_cache">Clear Cache</sys:String>
+    <sys:String x:Key="settings_window-Currently, we can not clear cache automatically, but we can guide you to the application data directory.">Currently, we can not clear cache automatically, but we can guide you to the application data directory.</sys:String>
+    <sys:String x:Key="settings_window-what_is_clear_cache">When should I clear cache?</sys:String>
     <!-- StageControl -->
     <!-- TagControl -->
     <!-- PlayerControl -->

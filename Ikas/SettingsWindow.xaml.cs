@@ -20,9 +20,9 @@ using ClassLib;
 namespace Ikas
 {
     /// <summary>
-    /// SettingWindow.xaml 的交互逻辑
+    /// SettingsWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class SettingWindow : Window
+    public partial class SettingsWindow : Window
     {
         public string SelectionForeground
         {
@@ -59,7 +59,7 @@ namespace Ikas
         private bool useProxy = false;
         private string language = "en-US";
 
-        public SettingWindow()
+        public SettingsWindow()
         {
             // Load language
             if (Depot.Language != null)
@@ -144,18 +144,18 @@ namespace Ikas
         {
             if (txtCookie.Text.Trim() == "")
             {
-                MessageBox.Show(Translate("You may enter a valid Cookie before closing the setting window.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Translate("You may enter a valid Cookie before closing the settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             if (!int.TryParse(txtProxyPort.Text, out _))
             {
-                MessageBox.Show(Translate("You may enter a valid proxy port before closing the setting window.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Translate("You may enter a valid proxy port before closing the settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             int port = int.Parse(txtProxyPort.Text);
             if (port< 1 || port> 65535)
             {
-                MessageBox.Show(Translate("You may enter a valid proxy port before closing the setting window.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Translate("You may enter a valid proxy port before closing the settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             Depot.SessionToken = txtSessionToken.Text;
@@ -164,6 +164,9 @@ namespace Ikas
             Depot.ProxyHost = txtProxyHost.Text;
             Depot.ProxyPort = port;
             Depot.Language = language;
+            // Clear failed counter
+            Depot.ScheduleFailedCount = 0;
+            Depot.BattleFailedCount = 0;
             ((Storyboard)FindResource("window_fade_out")).Begin(this);
         }
 
@@ -306,7 +309,7 @@ namespace Ikas
             {
                 if (isLocal)
                 {
-                    return (string)FindResource("setting_window-" + s);
+                    return (string)FindResource("settings_window-" + s);
                 }
                 else
                 {

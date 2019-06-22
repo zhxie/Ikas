@@ -27,7 +27,7 @@ namespace Ikas
     {
         private ScheduleWindow scheduleWindow;
         private BattleWindow battleWindow;
-        private SettingWindow settingWindow;
+        private SettingsWindow settingsWindow;
 
         private DispatcherTimer tmSchedule;
         private DispatcherTimer tmBattle;
@@ -64,6 +64,8 @@ namespace Ikas
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
             Depot.ScheduleChanged += new ScheduleChangedEventHandler(ScheduleChanged);
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
+            Depot.ScheduleFailed += new ScheduleFailedEventHandler(ScheduleFailed);
+            Depot.BattleFailed += new BattleFailedEventHandler(BattleFailed);
             // Prepare windows
             scheduleWindow = new ScheduleWindow();
             scheduleWindow.Opacity = 0;
@@ -71,9 +73,9 @@ namespace Ikas
             battleWindow = new BattleWindow();
             battleWindow.Opacity = 0;
             battleWindow.Visibility = Visibility.Hidden;
-            settingWindow = new SettingWindow();
-            settingWindow.Opacity = 0;
-            settingWindow.Visibility = Visibility.Hidden;
+            settingsWindow = new SettingsWindow();
+            settingsWindow.Opacity = 0;
+            settingsWindow.Visibility = Visibility.Hidden;
             // Create timer
             tmSchedule = new DispatcherTimer();
             tmSchedule.Tick += new EventHandler((object source, EventArgs e) => { Depot.GetSchedule(); });
@@ -150,7 +152,7 @@ namespace Ikas
 
         private void MenuItemSetting_Click(object sender, RoutedEventArgs e)
         {
-            ((Storyboard)FindResource("window_fade_in")).Begin(settingWindow);
+            ((Storyboard)FindResource("window_fade_in")).Begin(settingsWindow);
         }
 
         private void MenuItemTopMost_Click(object sender, RoutedEventArgs e)
@@ -290,6 +292,34 @@ namespace Ikas
             {
                 // Current mode do not has a schedule, switch to regular battle
                 Depot.CurrentMode = Mode.Key.regular_battle;
+            }
+        }
+
+        private void ScheduleFailed()
+        {
+            if (Depot.ScheduleFailedCount <= 1)
+            {
+                MessageBox.Show(string.Format(Translate("{0} {1}\n{2}\n{3}\n{4}", true),
+                    Translate("Ikas can not get schdule.", true),
+                    Translate("Please check:", true),
+                    Translate("1. Your network and network settings", true),
+                    Translate("2. Your Cookie (If you set up your Session Token, you may update cookie in settings)", true),
+                    Translate("After you solve the problems above, if this error message continues to occur, please consider submitting the issue.", true)
+                    ),"Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void BattleFailed()
+        {
+            if (Depot.BattleFailedCount <= 1)
+            {
+                MessageBox.Show(string.Format(Translate("{0} {1}\n{2}\n{3}\n{4}", true),
+                    Translate("Ikas can not get the latest battle.", true),
+                    Translate("Please check:", true),
+                    Translate("1. Your network and network settings", true),
+                    Translate("2. Your Cookie (If you set up your Session Token, you may update cookie in settings)", true),
+                    Translate("After you solve the problems above, if this error message continues to occur, please consider submitting the issue.", true)
+                    ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
