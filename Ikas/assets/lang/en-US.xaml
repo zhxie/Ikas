@@ -16,7 +16,7 @@
     <sys:String x:Key="turf">Turf</sys:String>
     <sys:String x:Key="zones">Zones</sys:String>
     <sys:String x:Key="tower">Tower</sys:String>
-    <sys:String x:Key="rain">Rainmaker</sys:String>
+    <sys:String x:Key="rain">Rain</sys:String>
     <sys:String x:Key="clam">Clam</sys:String>
     <!-- Rank -->
     <sys:String x:Key="rank_unknown">--</sys:String>
