@@ -288,6 +288,20 @@
     <sys:String x:Key="settings_window-clear_cache">Clear Cache</sys:String>
     <sys:String x:Key="settings_window-Currently, we can not clear cache automatically, but we can guide you to the application data directory.">Currently, we can not clear cache automatically, but we can guide you to the application data directory.</sys:String>
     <sys:String x:Key="settings_window-what_is_clear_cache">When should I clear cache?</sys:String>
+
+    <sys:String x:Key="settings_window-Session Token is..">Session Token is..</sys:String>
+    <sys:String x:Key="settings_window-{0}\n{1}">{0}\n{1}</sys:String>
+    <sys:String x:Key="settings_window-A Session Token is a small piece of data used for automatic cookie generation.">A Session Token is a small piece of data used for automatic cookie generation.</sys:String>
+    <sys:String x:Key="settings_window-Automatic cookie generation sends minimal data including the Session Token to Nintendo servers, and get cookie back for accessing SplatNet.">Automatic cookie generation sends minimal data including the Session Token to Nintendo servers, and get cookie back for accessing SplatNet.</sys:String>
+    <sys:String x:Key="settings_window-Cookie is..">Cookie is..</sys:String>
+    <sys:String x:Key="settings_window-{0}\n{1}\n{2}">{0}\n{1}\n{2}</sys:String>
+    <sys:String x:Key="settings_window-A Cookie is a small piece of data sent from a website and stored on the user's computer.">A Cookie is a small piece of data sent from a website and stored on the user's computer.</sys:String>
+    <sys:String x:Key="settings_window-Ikas uses cookies to access SplatNet and get schedule and battle data.">Ikas uses cookies to access SplatNet and get schedule and battle data.</sys:String>
+    <sys:String x:Key="settings_window-If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.">If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.</sys:String>
+    <sys:String x:Key="settings_window-Clear Cache is..">Clear Cache is..</sys:String>
+    <sys:String x:Key="settings_window-When Ikas gets schedule and battle data, it will cache images including user icons, stages, weapons and gears.">When Ikas gets schedule and battle data, it will cache images including user icons, stages, weapons and gears.</sys:String>
+    <sys:String x:Key="settings_window-Sometimes, due to network or other reasons, Ikas may not get images properly, which may cause wrong cached images.">Sometimes, due to network or other reasons, Ikas may not get images properly, which may cause wrong cached images.</sys:String>
+    <sys:String x:Key="settings_window-You can help Ikas get back to normal operation by clearing the cached data.">You can help Ikas get back to normal operation by clearing the cached data.</sys:String>
     <!-- StageControl -->
     <!-- TagControl -->
     <!-- PlayerControl -->
