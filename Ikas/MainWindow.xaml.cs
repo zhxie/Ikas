@@ -304,7 +304,7 @@ namespace Ikas
                     Translate("Please check:", true),
                     Translate("1. Your network and network settings", true),
                     Translate("2. Your Cookie (If you set up your Session Token, you may update cookie in settings)", true),
-                    Translate("After you solve the problems above, if this error message continues to occur, please consider submitting the issue.", true)
+                    Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.", true)
                     ),"Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
@@ -318,7 +318,7 @@ namespace Ikas
                     Translate("Please check:", true),
                     Translate("1. Your network and network settings", true),
                     Translate("2. Your Cookie (If you set up your Session Token, you may update cookie in settings)", true),
-                    Translate("After you solve the problems above, if this error message continues to occur, please consider submitting the issue.", true)
+                    Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.", true)
                     ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
