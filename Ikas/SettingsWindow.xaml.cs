@@ -207,7 +207,33 @@ namespace Ikas
 
         private void LbGetSessionToken_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            if (!txtSessionToken.Text.Contains("session_token_code="))
+            {
+                MessageBox.Show(Translate("You will be led to a Nintendo website. Log in, right click on Select this Person, copy the link address, and paste it to Session Token textbox, and click this label again.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Authorize
+                string url = Depot.LogIn();
+                System.Diagnostics.Process.Start(url);
+            }
+            else
+            {
+                string regex = Regex.Match(txtSessionToken.Text, @"de=(.*)&").Value;
+                string sessionToken = Depot.GetSessionTokenAsync(regex.Substring(3, regex.Length - 4)).Result;
+                if (sessionToken == "")
+                {
+                    MessageBox.Show(string.Format(Translate("{0} {1}\n{2}\n{3}\n{4}", true),
+                        Translate("Ikas can not get Session Token.", true),
+                        Translate("Please check:", true),
+                        Translate("1. Your network and network settings", true),
+                        Translate("2. Your input", true),
+                        Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.", true)
+                        ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    MessageBox.Show(Translate("Get Session Token successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                    txtSessionToken.Text = sessionToken;
+                }
+            }
         }
 
         private void LbWhatIsCookie_MouseEnter(object sender, MouseEventArgs e)
@@ -237,7 +263,8 @@ namespace Ikas
 
         private void LbUpdateCookie_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            // TODO: Automatic Cookie Generation
+            
         }
 
         private void LbUseProxyTrue_MouseDown(object sender, MouseButtonEventArgs e)

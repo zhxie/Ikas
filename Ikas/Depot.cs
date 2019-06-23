@@ -9,6 +9,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Threading;
 using IniParser;
 using IniParser.Model;
@@ -375,6 +376,10 @@ namespace Ikas
                 }
             }
         }
+
+        private static string authState = "";
+        private static string authCodeChallenge = "";
+        private static string authCodeVerifier = "";
 
         public static DownloadManager DownloadManager { get; } = new DownloadManager();
 
@@ -1098,6 +1103,70 @@ namespace Ikas
         }
 
         /// <summary>
+        /// Log in to Nintendo
+        /// </summary>
+        /// <returns></returns>
+        public static string LogIn()
+        {
+            // Auth state
+            byte[] authStateBytesRaw = new byte[36];
+            (new RNGCryptoServiceProvider()).GetBytes(authStateBytesRaw);
+            string authState = ToUrlSafeBase64String(authStateBytesRaw);
+            // Auth code verifier
+            byte[] authCodeVerifierBytesRaw = new byte[32];
+            (new RNGCryptoServiceProvider()).GetBytes(authCodeVerifierBytesRaw);
+            string authCodeVerifierRare = ToUrlSafeBase64String(authCodeVerifierBytesRaw);
+            byte[] authCodeVerifier = SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(authCodeVerifierRare.Replace("=", "")));
+            string authCodeChallenge = ToUrlSafeBase64String(authCodeVerifier).Replace("=", "");
+            Depot.authState = authState;
+            Depot.authCodeChallenge = authCodeChallenge;
+            Depot.authCodeVerifier = authCodeVerifierRare.Replace("=", "");
+            return string.Format(FileFolderUrl.NintendoAuthorize, authState, authCodeChallenge);
+        }
+        /// <summary>
+        /// Get Session Token from Nintendo
+        /// </summary>
+        /// <param name="sessionTokenCode">Session Token code</param>
+        /// <returns></returns>
+        public static async Task<string> GetSessionTokenAsync(string sessionTokenCode)
+        {
+            // Send HTTP GET
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.UseCookies = false;
+            if (Proxy != null)
+            {
+                handler.UseProxy = true;
+                handler.Proxy = Proxy;
+            }
+            HttpClient client = new HttpClient(handler);
+            HttpRequestMessage requestAuthorize = new HttpRequestMessage(HttpMethod.Get, string.Format(FileFolderUrl.NintendoAuthorize, authState, authCodeChallenge));
+            await client.SendAsync(requestAuthorize).ConfigureAwait(false);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoSessionToken);
+            request.Content = new StringContent("{\"client_id\":\"71b963c1b7b6d119\",\"session_token_code\":\"" + sessionTokenCode + "\",\"session_token_code_verifier\":\"" + authCodeVerifier + "\"}", Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                string resultString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                // Parse JSON
+                JObject jObject = JObject.Parse(resultString);
+                string sessionToken;
+                try
+                {
+                    sessionToken = jObject["session_token"].ToString();
+                }
+                catch
+                {
+                    return "";
+                }
+                return sessionToken;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
         /// Sort Players.
         /// Players are sorted by Paint/Sort, Kill + Assist, Special, Death, Kill and Nickname.
         /// </summary>
@@ -1399,6 +1468,16 @@ namespace Ikas
             {
                 throw new FormatException();
             }
+        }
+
+        /// <summary>
+        /// Encode to URL safe Base64 string
+        /// </summary>
+        /// <param name="s">Bytes which is going to be encoded</param>
+        /// <returns></returns>
+        private static string ToUrlSafeBase64String(byte[] s)
+        {
+            return Convert.ToBase64String(s).TrimEnd('=').Replace('+', '-').Replace('/', '_');
         }
     }
 }

@@ -54,6 +54,9 @@ namespace ClassLib
         public const string SplatNetIndividualBattleApi = @"/api/results/{0}";
         public const string SplatNetNicknameAndIconApi = @"/api/nickname_and_icon?id={0}";
 
+        public const string NintendoAuthorize = @"https://accounts.nintendo.com/connect/1.0.0/authorize?state={0}&redirect_uri=npf71b963c1b7b6d119%3A%2F%2Fauth&client_id=71b963c1b7b6d119&scope=openid+user+user.birthday+user.mii+user.screenName&response_type=session_token_code&session_token_code_challenge={1}&session_token_code_challenge_method=S256&theme=login_form";
+        public const string NintendoSessionToken = @"https://accounts.nintendo.com/connect/1.0.0/api/session_token";
+
         #endregion
     }
 }
