@@ -288,7 +288,6 @@
     <sys:String x:Key="settings_window-clear_cache">キャッシュをクリア</sys:String>
     <sys:String x:Key="settings_window-Currently, we can not clear cache automatically, but we can guide you to the application data directory.">現在のところ、キャッシュを自動的にクリアすることはできませんが、アプリケーションデータディレクトリに誘導することはできます。</sys:String>
     <sys:String x:Key="settings_window-what_is_clear_cache">キャッシュをクリアするのはいつですか？</sys:String>
-
     <sys:String x:Key="settings_window-Session Token is..">セッショントークンとは..</sys:String>
     <sys:String x:Key="settings_window-{0}\n{1}">{0}\n{1}</sys:String>
     <sys:String x:Key="settings_window-A Session Token is a small piece of data used for automatic cookie generation.">セッショントークンは、自動クッキー生成に使用される小さなデータです。</sys:String>

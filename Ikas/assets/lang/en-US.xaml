@@ -288,7 +288,6 @@
     <sys:String x:Key="settings_window-clear_cache">Clear Cache</sys:String>
     <sys:String x:Key="settings_window-Currently, we can not clear cache automatically, but we can guide you to the application data directory.">Currently, we can not clear cache automatically, but we can guide you to the application data directory.</sys:String>
     <sys:String x:Key="settings_window-what_is_clear_cache">When should I clear cache?</sys:String>
-
     <sys:String x:Key="settings_window-Session Token is..">Session Token is..</sys:String>
     <sys:String x:Key="settings_window-{0}\n{1}">{0}\n{1}</sys:String>
     <sys:String x:Key="settings_window-A Session Token is a small piece of data used for automatic cookie generation.">A Session Token is a small piece of data used for automatic cookie generation.</sys:String>
