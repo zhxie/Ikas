@@ -1078,10 +1078,10 @@ namespace Ikas
             HttpClient client = new HttpClient(handler);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetNicknameAndIconApi, id));
             request.Headers.Add("Cookie", "iksm_session=" + Cookie);
-            HttpResponseMessage response = await client.SendAsync(request);
+            HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
-                string resultString = await response.Content.ReadAsStringAsync();
+                string resultString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 string icon;
                 // Parse JSON
                 JObject jObject = JObject.Parse(resultString);
@@ -1290,7 +1290,7 @@ namespace Ikas
         {
             try
             {
-                string image = await GetPlayerIcon(node["player"]["principal_id"].ToString());
+                string image = await GetPlayerIcon(node["player"]["principal_id"].ToString()).ConfigureAwait(false);
                 Player player = parsePlayer(node, image, isSelf);
                 return player;
             }
@@ -1337,7 +1337,7 @@ namespace Ikas
         {
             try
             {
-                string image = await GetPlayerIcon(node["player"]["principal_id"].ToString());
+                string image = await GetPlayerIcon(node["player"]["principal_id"].ToString()).ConfigureAwait(false);
                 RankedPlayer player = parseRankedPlayer(node, image, isSelf);
                 return player;
             }
