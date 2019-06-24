@@ -164,23 +164,29 @@ namespace Ikas
                 MessageBox.Show(Translate("You may enter a valid Cookie before closing the settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            if (!int.TryParse(txtProxyPort.Text, out _))
+            if (txtProxyPort.Text != "")
             {
-                MessageBox.Show(Translate("You may enter a valid proxy port before closing the settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            int port = int.Parse(txtProxyPort.Text);
-            if (port< 1 || port> 65535)
-            {
-                MessageBox.Show(Translate("You may enter a valid proxy port before closing the settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                if (!int.TryParse(txtProxyPort.Text, out _))
+                {
+                    MessageBox.Show(Translate("You may enter a valid proxy port before closing the settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                int port = int.Parse(txtProxyPort.Text);
+                if (port < 1 || port > 65535)
+                {
+                    MessageBox.Show(Translate("You may enter a valid proxy port before closing the settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
             }
             Depot.SessionToken = txtSessionToken.Text;
             Depot.Cookie = txtCookie.Text;
             Depot.AlwaysOnTop = alwaysOnTop;
             Depot.UseProxy = useProxy;
             Depot.ProxyHost = txtProxyHost.Text;
-            Depot.ProxyPort = port;
+            if (txtProxyPort.Text != "")
+            {
+                Depot.ProxyPort = int.Parse(txtProxyPort.Text);
+            }
             Depot.Language = language;
             // Clear failed counter
             Depot.ScheduleFailedCount = 0;

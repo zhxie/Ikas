@@ -35,12 +35,8 @@ namespace Ikas
         public MainWindow()
         {
             // Load user and system configuration
-            if (!Depot.LoadUserConfiguration())
-            {
-                MessageBox.Show(Translate("Failed in loading user configuration!", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(-1);
-            }
             Depot.LoadSystemConfiguration();
+            Depot.LoadUserConfiguration();
             // Load language
             if (Depot.Language != null)
             {
@@ -78,11 +74,10 @@ namespace Ikas
             settingsWindow = new SettingsWindow();
             settingsWindow.Opacity = 0;
             settingsWindow.Visibility = Visibility.Hidden;
-            // Create timer
+            // Create timers
             tmSchedule = new DispatcherTimer();
             tmSchedule.Tick += new EventHandler((object source, EventArgs e) => { Depot.GetSchedule(); });
             tmSchedule.Interval = new TimeSpan(0, 0, 15);
-            tmSchedule.Start();
             tmBattle = new DispatcherTimer();
             tmBattle.Tick += new EventHandler((object source, EventArgs e) => {
                 if (battleWindow.Visibility == Visibility.Hidden)
@@ -91,15 +86,23 @@ namespace Ikas
                 }
             });
             tmBattle.Interval = new TimeSpan(0, 0, 30);
-            tmBattle.Start();
         }
 
         #region Control Event
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Check cookie
+            if (Depot.Cookie == "" || Depot.Cookie == null)
+            {
+                MessageBox.Show(Translate("Welcome to Ikas! To use Ikas, you may set up your Cookie first.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                MenuItemSetting_Click(null, null);
+            }
             // Update Schedule
             Depot.GetSchedule();
+            // Start timers
+            tmSchedule.Start();
+            tmBattle.Start();
         }
 
         private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -155,6 +158,7 @@ namespace Ikas
         private void MenuItemSetting_Click(object sender, RoutedEventArgs e)
         {
             ((Storyboard)FindResource("window_fade_in")).Begin(settingsWindow);
+            settingsWindow.ShowDialog();
         }
 
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
