@@ -237,7 +237,6 @@
     <sys:String x:Key="main_window-rank">ウデマエ</sys:String>
     <sys:String x:Key="main_window---">--</sys:String>
     <sys:String x:Key="main_window-setting">設定</sys:String>
-    <sys:String x:Key="main_window-top_most">常にトップに</sys:String>
     <sys:String x:Key="main_window-exit">終了</sys:String>
     <sys:String x:Key="main_window-{0} {1}\n{2}\n{3}\n{4}">{0}{1}\n{2}\n{3}\n{4}</sys:String>
     <sys:String x:Key="main_window-Ikas can not get schdule.">Ikas はスケジュールを取得できませんでした。</sys:String>
@@ -293,6 +292,7 @@
     <sys:String x:Key="settings_window-If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.">クッキーの取得方法がわからない場合は、セッショントークンに記入すると、システムが自動的に取得します。</sys:String>
     <sys:String x:Key="settings_window-update_cookie">私のクッキーを更新してください！</sys:String>
     <sys:String x:Key="settings_window-system">システム</sys:String>
+    <sys:String x:Key="settings_window-always_on_top">常にトップに</sys:String>
     <sys:String x:Key="settings_window-use_proxy">プロキシを使用しますか？</sys:String>
     <sys:String x:Key="settings_window-use_proxy_true">はい</sys:String>
     <sys:String x:Key="settings_window-use_proxy_false">いいえ</sys:String>

@@ -64,12 +64,12 @@ namespace Ikas
             {
                 ((Storyboard)FindResource("window_fade_in")).Begin(KeepAliveWindow);
             }
-            ((Storyboard)FindResource("window_fade_in")).Begin(this);
+            // ((Storyboard)FindResource("window_fade_in")).Begin(this);
         }
 
         private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((Storyboard)FindResource("window_fade_out")).Begin(this);
+            // ((Storyboard)FindResource("window_fade_out")).Begin(this);
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)

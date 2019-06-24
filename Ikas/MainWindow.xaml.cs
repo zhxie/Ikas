@@ -58,9 +58,11 @@ namespace Ikas
             // Initialize component
             InitializeComponent();
             // Set properties for controls
+            Topmost = Depot.AlwaysOnTop;
             RenderOptions.SetBitmapScalingMode(bdStage1, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdStage2, BitmapScalingMode.HighQuality);
             // Add handler for global member
+            Depot.AlwaysOnTopChanged += new AlwaysOnTopChangedEventHandler(AlwaysOnTopChanged);
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
             Depot.ScheduleChanged += new ScheduleChangedEventHandler(ScheduleChanged);
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
@@ -155,18 +157,17 @@ namespace Ikas
             ((Storyboard)FindResource("window_fade_in")).Begin(settingsWindow);
         }
 
-        private void MenuItemTopMost_Click(object sender, RoutedEventArgs e)
-        {
-            Topmost = !Topmost;
-            miTopMost.IsChecked = Topmost;
-        }
-
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
         }
 
         #endregion
+
+        private void AlwaysOnTopChanged()
+        {
+            Topmost = Depot.AlwaysOnTop;
+        }
 
         private void LanguageChanged()
         {

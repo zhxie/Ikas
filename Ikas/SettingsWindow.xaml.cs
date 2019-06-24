@@ -58,6 +58,7 @@ namespace Ikas
             }
         }
 
+        private bool alwaysOnTop = false;
         private bool useProxy = false;
         private string language = "en-US";
 
@@ -99,10 +100,20 @@ namespace Ikas
             // Load configuration
             txtSessionToken.Text = Depot.SessionToken;
             txtCookie.Text = Depot.Cookie;
+            if (Depot.AlwaysOnTop)
+            {
+                LbAlwaysOnTopTrue_MouseDown(null, null);
+                // Animation in former method may not be activated, maybe WPF bug
+                lbAlwaysOnTopTrue.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+            }
+            else
+            {
+                LbAlwaysOnTopFalse_MouseDown(null, null);
+                lbAlwaysOnTopFalse.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+            }
             if (Depot.UseProxy)
             {
                 LbUseProxyTrue_MouseDown(null, null);
-                // Animation in former method may not be activated, maybe WPF bug
                 lbUseProxyTrue.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
             }
             else
@@ -166,6 +177,7 @@ namespace Ikas
             }
             Depot.SessionToken = txtSessionToken.Text;
             Depot.Cookie = txtCookie.Text;
+            Depot.AlwaysOnTop = alwaysOnTop;
             Depot.UseProxy = useProxy;
             Depot.ProxyHost = txtProxyHost.Text;
             Depot.ProxyPort = port;
@@ -265,6 +277,20 @@ namespace Ikas
         {
             // TODO: Automatic Cookie Generation
             
+        }
+
+        private void LbAlwaysOnTopTrue_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            alwaysOnTop = true;
+            ((Storyboard)FindResource("fore_to_orange")).Begin(lbAlwaysOnTopTrue);
+            ((Storyboard)FindResource("fore_to_white")).Begin(lbAlwaysOnTopFalse);
+        }
+
+        private void LbAlwaysOnTopFalse_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            alwaysOnTop = false;
+            ((Storyboard)FindResource("fore_to_white")).Begin(lbAlwaysOnTopTrue);
+            ((Storyboard)FindResource("fore_to_orange")).Begin(lbAlwaysOnTopFalse);
         }
 
         private void LbUseProxyTrue_MouseDown(object sender, MouseButtonEventArgs e)

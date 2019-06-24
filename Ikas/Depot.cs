@@ -19,6 +19,7 @@ using ClassLib;
 
 namespace Ikas
 {
+    public delegate void AlwaysOnTopChangedEventHandler();
     public delegate void LanguageChangedEventHandler();
     public delegate void ScheduleChangedEventHandler();
     public delegate void ScheduleUpdatedEventHandler();
@@ -235,6 +236,38 @@ namespace Ikas
         }
 
         private static IniData systemIniData = new IniData();
+        public static event AlwaysOnTopChangedEventHandler AlwaysOnTopChanged;
+        public static bool AlwaysOnTop
+        {
+            get
+            {
+                try
+                {
+                    return bool.Parse(systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationAlwaysOnTop]);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                if (value != AlwaysOnTop)
+                {
+                    try
+                    {
+                        systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationAlwaysOnTop] = value.ToString().ToLower();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    }
+                    catch { }
+                    finally
+                    {
+                        AlwaysOnTopChanged?.Invoke();
+                    }
+                }
+            }
+        }
         public static bool UseProxy
         {
             get

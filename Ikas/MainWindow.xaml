@@ -34,7 +34,6 @@
     <Window.ContextMenu>
         <ContextMenu x:Name="cmWindow" StaysOpen="True">
             <MenuItem x:Name="miSetting" Header="{DynamicResource main_window-setting}" Click="MenuItemSetting_Click"/>
-            <MenuItem x:Name="miTopMost" Header="{DynamicResource main_window-top_most}" IsCheckable="True" Click="MenuItemTopMost_Click"/>
             <Separator/>
             <MenuItem x:Name="miExit" Header="{DynamicResource main_window-exit}" Click="MenuItemExit_Click"/>
         </ContextMenu>

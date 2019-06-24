@@ -237,7 +237,6 @@
     <sys:String x:Key="main_window-rank">Rank</sys:String>
     <sys:String x:Key="main_window---">--</sys:String>
     <sys:String x:Key="main_window-setting">Setting</sys:String>
-    <sys:String x:Key="main_window-top_most">Always on top</sys:String>
     <sys:String x:Key="main_window-exit">Exit</sys:String>
     <sys:String x:Key="main_window-{0} {1}\n{2}\n{3}\n{4}">{0} {1}\n{2}\n{3}\n{4}</sys:String>
     <sys:String x:Key="main_window-Ikas can not get schdule.">Ikas can not get schdule.</sys:String>
@@ -293,6 +292,7 @@
     <sys:String x:Key="settings_window-If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.">If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.</sys:String>
     <sys:String x:Key="settings_window-update_cookie">Update my Cookie, please!</sys:String>
     <sys:String x:Key="settings_window-system">System</sys:String>
+    <sys:String x:Key="settings_window-always_on_top">Always on top</sys:String>
     <sys:String x:Key="settings_window-use_proxy">Use Proxy?</sys:String>
     <sys:String x:Key="settings_window-use_proxy_true">Yes</sys:String>
     <sys:String x:Key="settings_window-use_proxy_false">No</sys:String>
