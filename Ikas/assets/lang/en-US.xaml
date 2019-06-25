@@ -289,7 +289,7 @@
     <sys:String x:Key="settings_window-Cookie is..">Cookie is..</sys:String>
     <sys:String x:Key="settings_window-{0}\n{1}\n{2}">{0}\n{1}\n{2}</sys:String>
     <sys:String x:Key="settings_window-A Cookie is a small piece of data sent from a website and stored on the user's computer.">A Cookie is a small piece of data sent from a website and stored on the user's computer.</sys:String>
-    <sys:String x:Key="settings_window-Ikas uses cookies to access SplatNet and get schedule and battle data.">Ikas uses cookies to access SplatNet and get schedule and battle data.</sys:String>
+    <sys:String x:Key="settings_window-Ikas uses cookies to access SplatNet, get schedule and battle data.">Ikas uses cookies to access SplatNet, get schedule and battle data.</sys:String>
     <sys:String x:Key="settings_window-If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.">If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.</sys:String>
     <sys:String x:Key="settings_window-update_cookie">Update my Cookie, please!</sys:String>
     <sys:String x:Key="settings_window-Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.">Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.</sys:String>

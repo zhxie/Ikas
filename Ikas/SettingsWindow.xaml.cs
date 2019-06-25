@@ -259,7 +259,7 @@ namespace Ikas
             ShowMessage(Translate("Cookie is..", true),
                 string.Format(Translate("{0}\n{1}\n{2}", true),
                 Translate("A Cookie is a small piece of data sent from a website and stored on the user's computer.", true),
-                Translate("Ikas uses cookies to access SplatNet and get schedule and battle data.", true),
+                Translate("Ikas uses cookies to access SplatNet, get schedule and battle data.", true),
                 Translate("If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.", true)),
                 e.GetPosition(this));
         }
