@@ -1136,7 +1136,7 @@ namespace Ikas
         }
 
         /// <summary>
-        /// Log in to Nintendo
+        /// Log in to Nintendo.
         /// </summary>
         /// <returns></returns>
         public static string LogIn()
@@ -1157,7 +1157,7 @@ namespace Ikas
             return string.Format(FileFolderUrl.NintendoAuthorize, authState, authCodeChallenge);
         }
         /// <summary>
-        /// Get Session Token from Nintendo
+        /// Get Session Token from Nintendo.
         /// </summary>
         /// <param name="sessionTokenCode">Session Token code</param>
         /// <returns></returns>
@@ -1174,6 +1174,7 @@ namespace Ikas
             HttpClient client = new HttpClient(handler);
             HttpRequestMessage requestAuthorize = new HttpRequestMessage(HttpMethod.Get, string.Format(FileFolderUrl.NintendoAuthorize, authState, authCodeChallenge));
             await client.SendAsync(requestAuthorize).ConfigureAwait(false);
+            // Send HTTP POST
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoSessionToken);
             request.Content = new StringContent("{\"client_id\":\"71b963c1b7b6d119\",\"session_token_code\":\"" + sessionTokenCode + "\",\"session_token_code_verifier\":\"" + authCodeVerifier + "\"}", Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
@@ -1192,6 +1193,250 @@ namespace Ikas
                     return "";
                 }
                 return sessionToken;
+            }
+            else
+            {
+                return "";
+            }
+        }
+        /// <summary>
+        /// Get Cookie from Nintendo (3rd Party services was used).
+        /// </summary>
+        /// <param name="sessionToken">Session Token of Nintendo (3rd Party services was used)</param>
+        /// <returns></returns>
+        public static async Task<string> GetCookie(string sessionToken)
+        {
+            // THIS METHOD USES 3RD PARTY SERVICES, WHICH MAY EXPOSE USERS TO HARM.
+            // API DOCS HERE https://github.com/frozenpandaman/splatnet2statink/wiki/api-docs
+            // Send HTTP POST
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.UseCookies = false;
+            if (Proxy != null)
+            {
+                handler.UseProxy = true;
+                handler.Proxy = Proxy;
+            }
+            HttpClient client = new HttpClient(handler);
+            HttpRequestMessage requestToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoToken);
+            requestToken.Content = new StringContent("{\"client_id\":\"71b963c1b7b6d119\",\"session_token\":\"" + sessionToken + "\",\"grant_type\":\"urn:ietf:params:oauth:grant-type:jwt-bearer-session-token\"}", Encoding.UTF8, "application/json");
+            HttpResponseMessage responseToken = await client.SendAsync(requestToken).ConfigureAwait(false);
+            if (responseToken.IsSuccessStatusCode)
+            {
+                string resultTokenString = await responseToken.Content.ReadAsStringAsync().ConfigureAwait(false);
+                // Parse JSON
+                JObject jObject = JObject.Parse(resultTokenString);
+                string token;
+                string idToken;
+                try
+                {
+                    token = jObject["access_token"].ToString();
+                    idToken = jObject["id_token"].ToString();
+                }
+                catch
+                {
+                    return "";
+                }
+                // Send HTTP GET
+                HttpRequestMessage requestUserInfo = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.NintendoUserInfo);
+                requestUserInfo.Headers.Add("Authorization", string.Format("Bearer {0}", token));
+                HttpResponseMessage responseUserInfo = await client.SendAsync(requestUserInfo).ConfigureAwait(false);
+                if (responseUserInfo.IsSuccessStatusCode)
+                {
+                    string resultUserInfoString = await responseUserInfo.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    // Parse JSON
+                    jObject = JObject.Parse(resultUserInfoString);
+                    string country, birthday, language;
+                    try
+                    {
+                        JToken userInfo = jObject;
+                        country = userInfo["country"].ToString();
+                        birthday = userInfo["birthday"].ToString();
+                        language = userInfo["language"].ToString();
+                    }
+                    catch
+                    {
+                        return "";
+                    }
+                    // Send 3rd Party HTTP POST
+                    long timestamp = (long)(DateTime.Now - TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1))).TotalSeconds;
+                    HttpRequestMessage requestHash = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.eliFesslerApi);
+                    // TODO: THIS USER-AGENT IS FOR TEST ONLY.
+                    requestHash.Headers.Add("User-Agent", "splatnet2statink/1.5.0");
+                    List<KeyValuePair<string, string>> requestHashContent = new List<KeyValuePair<string, string>>();
+                    requestHashContent.Add(new KeyValuePair<string, string>("naIdToken", idToken));
+                    requestHashContent.Add(new KeyValuePair<string, string>("timestamp", timestamp.ToString()));
+                    requestHash.Content = new FormUrlEncodedContent(requestHashContent);
+                    HttpResponseMessage responseHash = await client.SendAsync(requestHash).ConfigureAwait(false);
+                    if (responseHash.IsSuccessStatusCode)
+                    {
+                        string resultHashString = await responseHash.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        // Parse JSON
+                        jObject = JObject.Parse(resultHashString);
+                        string hash;
+                        try
+                        {
+                            hash = jObject["hash"].ToString();
+                        }
+                        catch
+                        {
+                            return "";
+                        }
+                        // Send 3rd Party HTTP GET
+                        string guid = Guid.NewGuid().ToString();
+                        byte[] iisRaw = new byte[8];
+                        (new RNGCryptoServiceProvider()).GetNonZeroBytes(iisRaw);
+                        char[] iisChar = new char[8];
+                        for (int i = 0; i < 8; ++i)
+                        {
+                            double doubleN = (double)iisRaw[i] / 256.0 * 62.0;
+                            int intN = (int)Math.Ceiling(doubleN);
+                            if (intN >= 1 && intN <= 10)
+                            {
+                                iisChar[i] = (char)(47 + intN);
+                            }
+                            else if (intN >= 11 && intN <= 36)
+                            {
+                                iisChar[i] = (char)(54 + intN);
+                            }
+                            else if (intN >= 37 && intN <= 62)
+                            {
+                                iisChar[i] = (char)(60 + intN);
+                            }
+                            else
+                            {
+                                Debug.Assert(false);
+                                iisChar[i] = (char)48;
+                            }
+                        }
+                        string iid = new string(iisChar);
+                        HttpRequestMessage request3rd = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.FlapgApi);
+                        request3rd.Headers.Add("x-token", idToken);
+                        request3rd.Headers.Add("x-time", timestamp.ToString());
+                        request3rd.Headers.Add("x-guid", guid);
+                        request3rd.Headers.Add("x-hash", hash);
+                        request3rd.Headers.Add("x-ver", "2");
+                        request3rd.Headers.Add("x-iid", iid);
+                        HttpResponseMessage response3rd = await client.SendAsync(request3rd).ConfigureAwait(false);
+                        if (response3rd.IsSuccessStatusCode)
+                        {
+                            string result3rdString = await response3rd.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            // Parse JSON
+                            jObject = JObject.Parse(result3rdString);
+                            string loginNsoF, loginNsoP1, loginNsoP2, loginNsoP3, loginAppF, loginAppP1, loginAppP2, loginAppP3;
+                            try
+                            {
+                                JToken loginNso = jObject["login_nso"];
+                                loginNsoF = loginNso["f"].ToString();
+                                loginNsoP1 = loginNso["p1"].ToString();
+                                loginNsoP2 = loginNso["p2"].ToString();
+                                loginNsoP3 = loginNso["p3"].ToString();
+                                JToken loginApp = jObject["login_app"];
+                                loginAppF = loginApp["f"].ToString();
+                                loginAppP1 = loginApp["p1"].ToString();
+                                loginAppP2 = loginApp["p2"].ToString();
+                                loginAppP3 = loginApp["p3"].ToString();
+                            }
+                            catch
+                            {
+                                return "";
+                            }
+                            // Send HTTP POST
+                            HttpRequestMessage requestAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoAccessToken);
+                            requestAccessToken.Headers.Add("Authorization", "Bearer");
+                            requestAccessToken.Headers.Add("X-ProductVersion", "1.5.0");
+                            requestAccessToken.Headers.Add("X-Platform", "Android");
+                            requestAccessToken.Content = new StringContent("{\"parameter\":{\"f\":\"" + loginNsoF +
+                                "\",\"naIdToken\":\"" + loginNsoP1 +
+                                "\",\"timestamp\":\"" + loginNsoP2 +
+                                "\",\"requestId\":\"" + loginNsoP3 +
+                                "\",\"naCountry\":\"" + country +
+                                "\",\"naBirthday\":\"" + birthday +
+                                "\",\"language\":\"" + language + "\"}}", Encoding.UTF8, "application/json");
+                            HttpResponseMessage responseAccessToken = await client.SendAsync(requestAccessToken).ConfigureAwait(false);
+                            if (responseAccessToken.IsSuccessStatusCode)
+                            {
+                                string resultAccessTokenString = await responseAccessToken.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                // Parse JSON
+                                jObject = JObject.Parse(resultAccessTokenString);
+                                string accessToken;
+                                try
+                                {
+                                    accessToken = jObject["result"]["webApiServerCredential"]["accessToken"].ToString();
+                                }
+                                catch
+                                {
+                                    return "";
+                                }
+                                // Send HTTP POST
+                                HttpRequestMessage requestSplatoonAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoSplatoonAccessToken);
+                                requestSplatoonAccessToken.Headers.Add("Authorization", string.Format("Bearer {0}", accessToken));
+                                requestSplatoonAccessToken.Content = new StringContent("{\"parameter\":{\"id\":\"5741031244955648" +
+                                "\",\"f\":\"" + loginAppF +
+                                "\",\"registrationToken\":\"" + loginAppP1 +
+                                "\",\"timestamp\":\"" + loginAppP2 +
+                                "\",\"requestId\":\"" + loginAppP3 + "\"}}", Encoding.UTF8, "application/json");
+                                HttpResponseMessage responseSplatoonAccessToken = await client.SendAsync(requestSplatoonAccessToken).ConfigureAwait(false);
+                                if (responseSplatoonAccessToken.IsSuccessStatusCode)
+                                {
+                                    string resultSplatoonAccessTokenString = await responseSplatoonAccessToken.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                    // Parse JSON
+                                    jObject = JObject.Parse(resultSplatoonAccessTokenString);
+                                    string splatoonAccessToken;
+                                    try
+                                    {
+                                        splatoonAccessToken = jObject["result"]["accessToken"].ToString();
+                                    }
+                                    catch
+                                    {
+                                        return "";
+                                    }
+                                    // Send HTTP GET
+                                    CookieContainer cookieContainer = new CookieContainer();
+                                    HttpClientHandler handlerCookie = new HttpClientHandler();
+                                    handlerCookie.CookieContainer = cookieContainer;
+                                    if (Proxy != null)
+                                    {
+                                        handlerCookie.UseProxy = true;
+                                        handlerCookie.Proxy = Proxy;
+                                    }
+                                    HttpClient clientCookie = new HttpClient(handlerCookie);
+                                    HttpRequestMessage requestCookie = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet);
+                                    requestCookie.Headers.Add("X-GameWebToken", splatoonAccessToken);
+                                    HttpResponseMessage responseCookie = await clientCookie.SendAsync(requestCookie).ConfigureAwait(false);
+                                    if (responseCookie.IsSuccessStatusCode)
+                                    {
+                                        List<Cookie> cookies = cookieContainer.GetCookies(new Uri(FileFolderUrl.SplatNet)).Cast<Cookie>().ToList();
+                                        return cookies[0].Value;
+                                    }
+                                    else
+                                    {
+                                        return "";
+                                    }
+                                }
+                                else
+                                {
+                                    return "";
+                                }
+                            }
+                            else
+                            {
+                                return "";
+                            }
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+                else
+                {
+                    return "";
+                }
             }
             else
             {

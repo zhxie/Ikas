@@ -274,7 +274,7 @@
     <sys:String x:Key="settings_window-Session Token is..">Session Token is..</sys:String>
     <sys:String x:Key="settings_window-{0}\n{1}">{0}\n{1}</sys:String>
     <sys:String x:Key="settings_window-A Session Token is a small piece of data used for automatic cookie generation.">A Session Token is a small piece of data used for automatic cookie generation.</sys:String>
-    <sys:String x:Key="settings_window-Automatic cookie generation sends minimal data including the Session Token to Nintendo servers, and get cookie back for accessing SplatNet.">Automatic cookie generation sends minimal data including the Session Token to Nintendo servers, and get cookie back for accessing SplatNet.</sys:String>
+    <sys:String x:Key="settings_window-Automatic cookie generation sends minimal data including the Session Token to Nintendo and non-Nintendo servers, and get cookie back for accessing SplatNet.">Automatic cookie generation sends minimal data including the Session Token to Nintendo and non-Nintendo servers, and get cookie back for accessing SplatNet.</sys:String>
     <sys:String x:Key="settings_window-get_session_token">How can I get a Session Token?</sys:String>
     <sys:String x:Key="settings_window-You will be led to a Nintendo website. Log in, right click on Select this Person, copy the link address, and paste it to Session Token textbox, and click this label again.">You will be led to a Nintendo website. Log in, right click on Select this Person, copy the link address, and paste it to Session Token textbox, and click this label again.</sys:String>
     <sys:String x:Key="settings_window-{0} {1}\n{2}\n{3}\n{4}">{0} {1}\n{2}\n{3}\n{4}</sys:String>
@@ -283,6 +283,7 @@
     <sys:String x:Key="settings_window-1. Your network and network settings">1. Your network and network settings</sys:String>
     <sys:String x:Key="settings_window-2. Your input">2. Your input</sys:String>
     <sys:String x:Key="settings_window-After you solve the problems above, if this error message continues to appear, please consider submitting the issue.">After you solve the problems above, if this error message continues to appear, please consider submitting the issue.</sys:String>
+    <sys:String x:Key="settings_window-Get Session Token successfully.">Get Session Token successfully.</sys:String>
     <sys:String x:Key="settings_window-cookie">Cookie</sys:String>
     <sys:String x:Key="settings_window-what_is_cookie">What is Cookie?</sys:String>
     <sys:String x:Key="settings_window-Cookie is..">Cookie is..</sys:String>
@@ -291,6 +292,11 @@
     <sys:String x:Key="settings_window-Ikas uses cookies to access SplatNet and get schedule and battle data.">Ikas uses cookies to access SplatNet and get schedule and battle data.</sys:String>
     <sys:String x:Key="settings_window-If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.">If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.</sys:String>
     <sys:String x:Key="settings_window-update_cookie">Update my Cookie, please!</sys:String>
+    <sys:String x:Key="settings_window-Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.">Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.</sys:String>
+    <sys:String x:Key="settings_window-Ikas can not update Cookie.">Ikas can not update Cookie.</sys:String>
+    <sys:String x:Key="settings_window-2. Your Session Token">2. Your Session Token</sys:String>
+    <sys:String x:Key="settings_window-Update Cookie successfully.">Update Cookie successfully.</sys:String>
+    <sys:String x:Key="settings_window-You may enter a valid Session Token before update Cookie.">You may enter a valid Session Token before update Cookie.</sys:String>
     <sys:String x:Key="settings_window-system">System</sys:String>
     <sys:String x:Key="settings_window-always_on_top">Always on top</sys:String>
     <sys:String x:Key="settings_window-use_proxy">Use Proxy?</sys:String>

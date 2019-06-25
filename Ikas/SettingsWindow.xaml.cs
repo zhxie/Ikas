@@ -204,7 +204,7 @@ namespace Ikas
             ShowMessage(Translate("Session Token is..", true),
                 string.Format(Translate("{0}\n{1}", true),
                 Translate("A Session Token is a small piece of data used for automatic cookie generation.", true),
-                Translate("Automatic cookie generation sends minimal data including the Session Token to Nintendo servers, and get cookie back for accessing SplatNet.", true)),
+                Translate("Automatic cookie generation sends minimal data including the Session Token to Nintendo and non-Nintendo servers, and get cookie back for accessing SplatNet.", true)),
                 e.GetPosition(this));
         }
 
@@ -281,8 +281,39 @@ namespace Ikas
 
         private void LbUpdateCookie_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            // TODO: Automatic Cookie Generation
-            
+            if (txtSessionToken.Text != "")
+            {
+                // DISCLAIMER
+                if (MessageBox.Show(Translate("Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.", true), "Ikas", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    // Automatic Cookie Generation
+                    string cookie = Depot.GetCookie(txtSessionToken.Text).Result;
+                    if (cookie == "")
+                    {
+                        MessageBox.Show(string.Format(Translate("{0} {1}\n{2}\n{3}\n{4}", true),
+                            Translate("Ikas can not update Cookie.", true),
+                            Translate("Please check:", true),
+                            Translate("1. Your network and network settings", true),
+                            Translate("2. Your Session Token", true),
+                            Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.", true)
+                            ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        MessageBox.Show(Translate("Update Cookie successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                        txtCookie.Text = cookie;
+                    }
+                }
+                else
+                {
+                    // Browse MitM way to get Cookie
+                    System.Diagnostics.Process.Start(FileFolderUrl.MitmInstruction);
+                }
+            }
+            else
+            {
+                MessageBox.Show(Translate("You may enter a valid Session Token before update Cookie.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void LbAlwaysOnTopTrue_MouseDown(object sender, MouseButtonEventArgs e)

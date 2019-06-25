@@ -274,7 +274,7 @@
     <sys:String x:Key="settings_window-Session Token is..">セッショントークンとは..</sys:String>
     <sys:String x:Key="settings_window-{0}\n{1}">{0}\n{1}</sys:String>
     <sys:String x:Key="settings_window-A Session Token is a small piece of data used for automatic cookie generation.">セッショントークンは、自動クッキー生成に使用される小さなデータです。</sys:String>
-    <sys:String x:Key="settings_window-Automatic cookie generation sends minimal data including the Session Token to Nintendo servers, and get cookie back for accessing SplatNet.">自動クッキー生成は、セッショントークンを含む最小限のデータをニンテンドーサーバーに送信し、SplatNet にアクセスするためのクッキーを取得します。</sys:String>
+    <sys:String x:Key="settings_window-Automatic cookie generation sends minimal data including the Session Token to Nintendo and non-Nintendo servers, and get cookie back for accessing SplatNet.">自動クッキー生成は、セッショントークンを含む最小限のデータをニンテンドーおよび非ニンテンドーサーバーに送信し、SplatNet にアクセスするためのクッキーを取得します。</sys:String>
     <sys:String x:Key="settings_window-get_session_token">どのように私はセッショントークンを得ることができますか？</sys:String>
     <sys:String x:Key="settings_window-You will be led to a Nintendo website. Log in, right click on Select this Person, copy the link address, and paste it to Session Token textbox, and click this label again.">あなたはニンテンドーウェブサイトに導かれるでしょう。 ログインしてこの人を選択を右クリックし、リンクアドレスをコピーしてセッショントークンテキストボックスに貼り付けて、もう一度このラベルをクリックします。</sys:String>
     <sys:String x:Key="settings_window-{0} {1}\n{2}\n{3}\n{4}">{0}{1}\n{2}\n{3}\n{4}</sys:String>
@@ -283,6 +283,7 @@
     <sys:String x:Key="settings_window-1. Your network and network settings">1、あなたのネットワークとネットワーク設定</sys:String>
     <sys:String x:Key="settings_window-2. Your input">2、あなたの入力内容</sys:String>
     <sys:String x:Key="settings_window-After you solve the problems above, if this error message continues to appear, please consider submitting the issue.">上記の問題を解決した後、このエラーメッセージが引き続き表示される場合は、問題の送信を検討してください。</sys:String>
+    <sys:String x:Key="settings_window-Get Session Token successfully.">セッショントークンを取得しました。</sys:String>
     <sys:String x:Key="settings_window-cookie">クッキー</sys:String>
     <sys:String x:Key="settings_window-what_is_cookie">クッキーとは何ですか？</sys:String>
     <sys:String x:Key="settings_window-Cookie is..">クッキーとは..</sys:String>
@@ -291,6 +292,11 @@
     <sys:String x:Key="settings_window-Ikas uses cookies to access SplatNet and get schedule and battle data.">Ikas は、スケジュールと戦闘データを取得するためにクッキーを使って SplatNet にアクセスします。</sys:String>
     <sys:String x:Key="settings_window-If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.">クッキーの取得方法がわからない場合は、セッショントークンに記入すると、システムが自動的に取得します。</sys:String>
     <sys:String x:Key="settings_window-update_cookie">私のクッキーを更新してください！</sys:String>
+    <sys:String x:Key="settings_window-Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.">自動クッキー生成はあなたのセッショントークンをニンテンドーおよび非ニンテンドーサーバーに送ります。READMEの指示をよく読んでください。 続行するにははいをクリックし、他の方法を表示するにはいいえをクリックします。</sys:String>
+    <sys:String x:Key="settings_window-Ikas can not update Cookie.">Ikas はクッキーを更新できません。</sys:String>
+    <sys:String x:Key="settings_window-2. Your Session Token">2、あなたのセッショントークン</sys:String>
+    <sys:String x:Key="settings_window-Update Cookie successfully.">クッキーを更新しました。</sys:String>
+    <sys:String x:Key="settings_window-You may enter a valid Session Token before update Cookie.">クッキーを更新する前に、有効なセッショントークンを入力する必要があります。</sys:String>
     <sys:String x:Key="settings_window-system">システム</sys:String>
     <sys:String x:Key="settings_window-always_on_top">常にトップに</sys:String>
     <sys:String x:Key="settings_window-use_proxy">プロキシを使用しますか？</sys:String>

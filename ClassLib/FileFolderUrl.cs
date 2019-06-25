@@ -57,6 +57,14 @@ namespace ClassLib
 
         public const string NintendoAuthorize = @"https://accounts.nintendo.com/connect/1.0.0/authorize?state={0}&redirect_uri=npf71b963c1b7b6d119%3A%2F%2Fauth&client_id=71b963c1b7b6d119&scope=openid+user+user.birthday+user.mii+user.screenName&response_type=session_token_code&session_token_code_challenge={1}&session_token_code_challenge_method=S256&theme=login_form";
         public const string NintendoSessionToken = @"https://accounts.nintendo.com/connect/1.0.0/api/session_token";
+        public const string NintendoToken = @"https://accounts.nintendo.com/connect/1.0.0/api/token";
+        public const string NintendoUserInfo = @"https://api.accounts.nintendo.com/2.0.0/users/me";
+        public const string eliFesslerApi = @"https://elifessler.com/s2s/api/gen2";
+        public const string FlapgApi = @"https://flapg.com/ika2/api/login";
+        public const string NintendoAccessToken = @"https://api-lp1.znc.srv.nintendo.net/v1/Account/Login";
+        public const string NintendoSplatoonAccessToken = @"https://api-lp1.znc.srv.nintendo.net/v2/Game/GetWebServiceToken";
+
+        public const string MitmInstruction = @"https://github.com/frozenpandaman/splatnet2statink/wiki/mitmproxy-instructions";
 
         #endregion
     }
