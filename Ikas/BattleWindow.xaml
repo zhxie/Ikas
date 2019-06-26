@@ -58,7 +58,7 @@
             </Grid>
             <Grid Margin="25,10,25,0">
                 <Border Width="208" Height="117" HorizontalAlignment="Left" CornerRadius="8" Background="Black">
-                    <local:StageControl x:Name="stg" FontSize="16" Opacity="0"/>
+                    <local:StageControl x:Name="stg" FontFamily="{StaticResource splatfont_2}" FontSize="16" Opacity="0"/>
                 </Border>
                 <StackPanel x:Name="spLeague" Width ="222" Height="117" Orientation="Vertical" HorizontalAlignment="Right">
                     <Label x:Name="lbPowerName" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="24" Content="[PowerName]" Opacity="0"/>
