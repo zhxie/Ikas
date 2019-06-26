@@ -41,7 +41,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return "";
+                    return null;
                 }
             }
             set
@@ -68,7 +68,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return "";
+                    return null;
                 }
             }
             set
@@ -305,7 +305,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return "";
+                    return null;
                 }
             }
             set
@@ -357,7 +357,7 @@ namespace Ikas
                 {
                     if (UseProxy)
                     {
-                        if (ProxyHost != "" && ProxyPort > 0)
+                        if (ProxyHost != null && ProxyHost != "" && ProxyPort > 0)
                         {
                             return new WebProxy(ProxyHost, ProxyPort);
                         }
@@ -384,7 +384,14 @@ namespace Ikas
             {
                 try
                 {
-                    return systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage];
+                    if (systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage] != null)
+                    {
+                        return systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage];
+                    }
+                    else
+                    {
+                        return "en-US";
+                    }
                 }
                 catch
                 {
@@ -519,7 +526,16 @@ namespace Ikas
             }
             HttpClient client = new HttpClient(handler);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetScheduleApi);
-            request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+            try
+            {
+                request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+            }
+            catch
+            {
+                // Update Schedule on error
+                UpdateSchedule(new Schedule());
+                return;
+            }
             HttpResponseMessage response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
@@ -611,14 +627,23 @@ namespace Ikas
             }
             HttpClient client = new HttpClient(handler);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetBattleApi);
-            request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+            try
+            {
+                request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+            }
+            catch
+            {
+                // Update Battle on error
+                UpdateBattle(new Battle());
+                return;
+            }
             HttpResponseMessage response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 string resultString = await response.Content.ReadAsStringAsync();
                 // Parse JSON
                 JObject jObject = JObject.Parse(resultString);
-                int battleNumber;
+                int battleNumber = -1;
                 try
                 {
                     battleNumber = int.Parse(jObject["results"][0]["battle_number"].ToString());
@@ -638,7 +663,16 @@ namespace Ikas
                 }
                 // Send HTTP GET
                 request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetIndividualBattleApi, battleNumber));
-                request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+                try
+                {
+                    request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+                }
+                catch
+                {
+                    // Update Battle on error
+                    UpdateBattle(new Battle());
+                    return;
+                }
                 response = await client.SendAsync(request);
                 if (response.IsSuccessStatusCode)
                 {
@@ -1110,12 +1144,19 @@ namespace Ikas
             }
             HttpClient client = new HttpClient(handler);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetNicknameAndIconApi, id));
-            request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+            try
+            {
+                request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+            }
+            catch
+            {
+                return "";
+            }
             HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
                 string resultString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                string icon;
+                string icon = "";
                 // Parse JSON
                 JObject jObject = JObject.Parse(resultString);
                 try
@@ -1183,7 +1224,7 @@ namespace Ikas
                 string resultString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 // Parse JSON
                 JObject jObject = JObject.Parse(resultString);
-                string sessionToken;
+                string sessionToken = "";
                 try
                 {
                     sessionToken = jObject["session_token"].ToString();
@@ -1225,8 +1266,8 @@ namespace Ikas
                 string resultTokenString = await responseToken.Content.ReadAsStringAsync().ConfigureAwait(false);
                 // Parse JSON
                 JObject jObject = JObject.Parse(resultTokenString);
-                string token;
-                string idToken;
+                string token = "";
+                string idToken = "";
                 try
                 {
                     token = jObject["access_token"].ToString();
@@ -1245,7 +1286,9 @@ namespace Ikas
                     string resultUserInfoString = await responseUserInfo.Content.ReadAsStringAsync().ConfigureAwait(false);
                     // Parse JSON
                     jObject = JObject.Parse(resultUserInfoString);
-                    string country, birthday, language;
+                    string country = "";
+                    string birthday = "";
+                    string language = "";
                     try
                     {
                         JToken userInfo = jObject;
@@ -1272,7 +1315,7 @@ namespace Ikas
                         string resultHashString = await responseHash.Content.ReadAsStringAsync().ConfigureAwait(false);
                         // Parse JSON
                         jObject = JObject.Parse(resultHashString);
-                        string hash;
+                        string hash = "";
                         try
                         {
                             hash = jObject["hash"].ToString();
@@ -1322,7 +1365,14 @@ namespace Ikas
                             string result3rdString = await response3rd.Content.ReadAsStringAsync().ConfigureAwait(false);
                             // Parse JSON
                             jObject = JObject.Parse(result3rdString);
-                            string loginNsoF, loginNsoP1, loginNsoP2, loginNsoP3, loginAppF, loginAppP1, loginAppP2, loginAppP3;
+                            string loginNsoF = "";
+                            string loginNsoP1 = "";
+                            string loginNsoP2 = "";
+                            string loginNsoP3 = "";
+                            string loginAppF = "";
+                            string loginAppP1 = "";
+                            string loginAppP2 = "";
+                            string loginAppP3 = "";
                             try
                             {
                                 JToken loginNso = jObject["login_nso"];
@@ -1358,7 +1408,7 @@ namespace Ikas
                                 string resultAccessTokenString = await responseAccessToken.Content.ReadAsStringAsync().ConfigureAwait(false);
                                 // Parse JSON
                                 jObject = JObject.Parse(resultAccessTokenString);
-                                string accessToken;
+                                string accessToken = "";
                                 try
                                 {
                                     accessToken = jObject["result"]["webApiServerCredential"]["accessToken"].ToString();
@@ -1381,7 +1431,7 @@ namespace Ikas
                                     string resultSplatoonAccessTokenString = await responseSplatoonAccessToken.Content.ReadAsStringAsync().ConfigureAwait(false);
                                     // Parse JSON
                                     jObject = JObject.Parse(resultSplatoonAccessTokenString);
-                                    string splatoonAccessToken;
+                                    string splatoonAccessToken = "";
                                     try
                                     {
                                         splatoonAccessToken = jObject["result"]["accessToken"].ToString();

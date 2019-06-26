@@ -38,7 +38,7 @@ namespace Ikas
             Depot.LoadSystemConfiguration();
             Depot.LoadUserConfiguration();
             // Load language
-            if (Depot.Language != "")
+            if (Depot.Language != null && Depot.Language != "")
             {
                 try
                 {
@@ -93,7 +93,7 @@ namespace Ikas
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Check cookie
-            if (Depot.Cookie == "")
+            if (Depot.Cookie == null || Depot.Cookie == "")
             {
                 MessageBox.Show(Translate("Welcome to Ikas! To use Ikas, you may set up your Cookie first.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 MenuItemSetting_Click(null, null);

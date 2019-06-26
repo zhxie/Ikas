@@ -65,7 +65,7 @@ namespace Ikas
         public SettingsWindow()
         {
             // Load language
-            if (Depot.Language != "")
+            if (Depot.Language != null && Depot.Language != "")
             {
                 try
                 {
@@ -405,7 +405,7 @@ namespace Ikas
 
         private void LanguageChanged()
         {
-            if (Depot.Language != "")
+            if (Depot.Language != null && Depot.Language != "")
             {
                 ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + Depot.Language + ".xaml", UriKind.Relative));
                 if (Resources.MergedDictionaries.Count > 0)

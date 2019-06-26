@@ -26,7 +26,7 @@ namespace Ikas
         public ScheduleWindow()
         {
             // Load language
-            if (Depot.Language != "")
+            if (Depot.Language != null && Depot.Language != "")
             {
                 try
                 {
