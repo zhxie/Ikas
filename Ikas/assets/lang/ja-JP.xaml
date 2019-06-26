@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!-- Font -->
+    <FontFamily x:Key="splatfont">/Ikas;component/assets/font/#Splatfont</FontFamily>
+    <FontFamily x:Key="splatfont_2">/Ikas;component/assets/font/#Splatfont 2</FontFamily>
     <!-- Mode -->
     <sys:String x:Key="regular_battle">レギュラーマッチ</sys:String>
     <sys:String x:Key="ranked_battle">ガチマッチ</sys:String>

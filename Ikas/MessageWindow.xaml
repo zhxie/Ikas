@@ -40,11 +40,11 @@
         <StackPanel Orientation="Vertical" Margin="0,20">
             <Border Height="48" Margin="20,0">
                 <Viewbox Height="72" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <TextBlock x:Name="tbTitle" FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White"/>
+                    <TextBlock x:Name="tbTitle" FontFamily="{StaticResource splatfont}" Foreground="White"/>
                 </Viewbox>
             </Border>
             <StackPanel Orientation="Vertical" Margin="25,10,25,0">
-                <Label FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" FontSize="20">
+                <Label FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20">
                     <AccessText x:Name="atContent" TextWrapping="WrapWithOverflow" LineStackingStrategy="BlockLineHeight" LineHeight="30"/>
                 </Label>
             </StackPanel>

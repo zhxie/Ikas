@@ -26,7 +26,7 @@
                 <Grid Margin="5,0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <Grid Width="48">
-                            <Label FontFamily="/Ikas;component/assets/font/#Splatfont" Foreground="White" Height="60" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" HorizontalAlignment="Center">
+                            <Label FontFamily="{StaticResource splatfont}" Foreground="White" Height="60" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" HorizontalAlignment="Center">
                                 <TextBlock>
                                         <Run x:Name="tbLevel" FontSize="26">[Lv]</Run><Run x:Name="tbStar" FontSize="12">[Star]</Run>
                                 </TextBlock>
@@ -43,10 +43,10 @@
                                 MouseLeave="BdWeapon_MouseLeave"
                                 Height="36" Width="36" Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" Opacity="0"></Border>
                         <StackPanel Orientation="Vertical" Margin="5,0,0,0" VerticalAlignment="Center">
-                            <Label FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="White" FontSize="16" Height="30" Width="150" VerticalContentAlignment="Center" Margin="0,-3,0,0" Padding="5,0">
+                            <Label FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="16" Height="30" Width="150" VerticalContentAlignment="Center" Margin="0,-3,0,0" Padding="5,0">
                                 <TextBlock x:Name="tbNickname" TextTrimming="CharacterEllipsis" Padding="0">[Name]</TextBlock>
                             </Label>
-                            <Label x:Name="lbPaint" FontFamily="/Ikas;component/assets/font/#Splatfont 2" Foreground="White" FontSize="12" Content="[Paint]" Margin="0,-9,0,0" Padding="5,0"/>
+                            <Label x:Name="lbPaint" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" Content="[Paint]" Margin="0,-9,0,0" Padding="5,0"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -57,7 +57,7 @@
                                     <Image Height="20" VerticalAlignment="Center" Source="assets/img/result-kill.png"/>
                                 </Border>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                                    <Label FontFamily="/Ikas;component/assets/font/#Splatfont 2" VerticalContentAlignment="Bottom" Padding="0" Margin="0,0,0,-2">
+                                    <Label FontFamily="{StaticResource splatfont_2}" VerticalContentAlignment="Bottom" Padding="0" Margin="0,0,0,-2">
                                         <TextBlock>
                                             <Run Foreground="#FFDBDBDB" FontSize="10">x</Run><Run x:Name="tbKillAndAssist" Foreground="White" FontSize="12">[K]</Run><Run x:Name="tbAssist" Foreground="White" FontSize="10">[A]</Run>
                                         </TextBlock>
@@ -72,7 +72,7 @@
                                     <Image Height="20" VerticalAlignment="Center" Source="assets/img/result-death.png"/>
                                 </Border>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                                    <Label FontFamily="/Ikas;component/assets/font/#Splatfont 2" VerticalContentAlignment="Bottom" Padding="0" Margin="0,0,0,-2">
+                                    <Label FontFamily="{StaticResource splatfont_2}" VerticalContentAlignment="Bottom" Padding="0" Margin="0,0,0,-2">
                                         <TextBlock>
                                             <Run Foreground="#FFDBDBDB" FontSize="10">x</Run><Run x:Name="tbDeath" Foreground="White" FontSize="12">[D]</Run>
                                         </TextBlock>
@@ -85,7 +85,7 @@
                                 <Border Height="36" Width="36" Background="#7F000000" CornerRadius="18" Margin="5,0"/>
                                 <Border x:Name="bdSpecial" Height="26" VerticalAlignment="Top" Background="Transparent" Margin="0,3,0,0" Opacity="0"/>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                                    <Label FontFamily="/Ikas;component/assets/font/#Splatfont 2" VerticalContentAlignment="Bottom" Padding="0" Margin="0,0,0,-2">
+                                    <Label FontFamily="{StaticResource splatfont_2}" VerticalContentAlignment="Bottom" Padding="0" Margin="0,0,0,-2">
                                         <TextBlock>
                                             <Run Foreground="#FFDBDBDB" FontSize="10">x</Run><Run x:Name="tbSpecial" Foreground="White" FontSize="12">[S]</Run>
                                         </TextBlock>
