@@ -221,24 +221,38 @@ namespace Ikas
                         case Rule.Key.turf_war:
                             if (Depot.Level > 0)
                             {
-                                lbLevel.Content = Depot.Level.ToString();
+                                if (Depot.Level > 100)
+                                {
+                                    tbLevel.Text = (Depot.Level - Depot.Level / 100 * 100).ToString();
+                                    tbStar.Text = Translate("★", true);
+                                }
+                                else
+                                {
+                                    tbLevel.Text = Depot.Level.ToString();
+                                    tbStar.Text = "";
+                                }
                             }
                             else
                             {
-                                lbLevel.Content = Translate("--", true);
+                                tbLevel.Text = Translate("--", true);
+                                tbStar.Text = "";
                             }
                             break;
                         case Rule.Key.splat_zones:
-                            lbLevel.Content = Translate(Depot.SplatZonesRank.ToString());
+                            tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
+                            tbStar.Text = "";
                             break;
                         case Rule.Key.tower_control:
-                            lbLevel.Content = Translate(Depot.TowerControlRank.ToString());
+                            tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
+                            tbStar.Text = "";
                             break;
                         case Rule.Key.rainmaker:
-                            lbLevel.Content = Translate(Depot.RainmakerRank.ToString());
+                            tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
+                            tbStar.Text = "";
                             break;
                         case Rule.Key.clam_blitz:
-                            lbLevel.Content = Translate(Depot.ClamBlitzRank.ToString());
+                            tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
+                            tbStar.Text = "";
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();

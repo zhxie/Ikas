@@ -236,6 +236,7 @@
     <sys:String x:Key="main_window-level">Level</sys:String>
     <sys:String x:Key="main_window-rank">Rank</sys:String>
     <sys:String x:Key="main_window---">--</sys:String>
+    <sys:String x:Key="main_window-★">★</sys:String>
     <sys:String x:Key="main_window-setting">Setting</sys:String>
     <sys:String x:Key="main_window-exit">Exit</sys:String>
     <sys:String x:Key="main_window-{0} {1}\n{2}\n{3}\n{4}">{0} {1}\n{2}\n{3}\n{4}</sys:String>
@@ -318,6 +319,6 @@
     <!-- TagControl -->
     <!-- PlayerControl -->
     <sys:String x:Key="player_control-★">★</sys:String>
-    <sys:String x:Key="schedule_window-{0}p">{0}p</sys:String>
-    <sys:String x:Key="schedule_window-({0})">({0})</sys:String>
+    <sys:String x:Key="player_control-{0}p">{0}p</sys:String>
+    <sys:String x:Key="player_control-({0})">({0})</sys:String>
 </ResourceDictionary>
