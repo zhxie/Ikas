@@ -28,7 +28,7 @@ namespace Ikas
         public WeaponWindow()
         {
             // Load language
-            if (Depot.Language != null)
+            if (Depot.Language != "")
             {
                 try
                 {

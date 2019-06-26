@@ -29,7 +29,7 @@ namespace Ikas
         public BattleWindow()
         {
             // Load language
-            if (Depot.Language != null)
+            if (Depot.Language != "")
             {
                 try
                 {

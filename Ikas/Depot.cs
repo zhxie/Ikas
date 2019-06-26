@@ -41,7 +41,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return null;
+                    return "";
                 }
             }
             set
@@ -68,7 +68,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return null;
+                    return "";
                 }
             }
             set
@@ -305,7 +305,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return null;
+                    return "";
                 }
             }
             set
@@ -388,7 +388,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return null;
+                    return "en-US";
                 }
             }
             set

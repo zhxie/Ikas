@@ -65,7 +65,7 @@ namespace Ikas
         public SettingsWindow()
         {
             // Load language
-            if (Depot.Language != null)
+            if (Depot.Language != "")
             {
                 try
                 {
@@ -405,12 +405,15 @@ namespace Ikas
 
         private void LanguageChanged()
         {
-            ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + Depot.Language + ".xaml", UriKind.Relative));
-            if (Resources.MergedDictionaries.Count > 0)
+            if (Depot.Language != "")
             {
-                Resources.MergedDictionaries.Clear();
+                ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + Depot.Language + ".xaml", UriKind.Relative));
+                if (Resources.MergedDictionaries.Count > 0)
+                {
+                    Resources.MergedDictionaries.Clear();
+                }
+                Resources.MergedDictionaries.Add(lang);
             }
-            Resources.MergedDictionaries.Add(lang);
         }
 
         private void ShowMessage(string title, string content, Point point)
