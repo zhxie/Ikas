@@ -233,6 +233,7 @@
     <sys:String x:Key="spygadget_becchu">スパイガジェットベッチュー</sys:String>
     <!-- MainWindow -->
     <sys:String x:Key="main_window-Failed in loading user configuration!">ユーザー設定の読み込みに失敗しました！</sys:String>
+    <sys:String x:Key="main_window-Welcome to Ikas! To use Ikas, you may set up your Cookie first.">Ikas へようこそ！ Ikas を使用するには、最初にクッキーを設定してください。</sys:String>
     <sys:String x:Key="main_window-level">レベル</sys:String>
     <sys:String x:Key="main_window-rank">ウデマエ</sys:String>
     <sys:String x:Key="main_window---">--</sys:String>

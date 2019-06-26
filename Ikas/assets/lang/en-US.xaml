@@ -233,6 +233,7 @@
     <sys:String x:Key="spygadget_becchu">Kensa Undercover Brella</sys:String>
     <!-- MainWindow -->
     <sys:String x:Key="main_window-Failed in loading user configuration!">Failed in loading user configuration!</sys:String>
+    <sys:String x:Key="main_window-Welcome to Ikas! To use Ikas, you may set up your Cookie first.">Welcome to Ikas! To use Ikas, you may set up your Cookie first.</sys:String>
     <sys:String x:Key="main_window-level">Level</sys:String>
     <sys:String x:Key="main_window-rank">Rank</sys:String>
     <sys:String x:Key="main_window---">--</sys:String>
