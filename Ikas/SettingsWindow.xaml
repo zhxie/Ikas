@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Ikas"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
+        Closing="Window_Closing"
         PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown"
-        Title="Ikas - Setting" Width="600" SizeToContent="Height" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterScreen">
+        Title="Ikas - Setting" Width="600" SizeToContent="Height" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Storyboard x:Key="window_fade_out">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">

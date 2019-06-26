@@ -147,6 +147,17 @@ namespace Ikas
             }
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            LbOk_MouseDown(null, null);
+        }
+
+        private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // DragMove();
+        }
+
         private void LbOk_MouseEnter(object sender, MouseEventArgs e)
         {
             ((Storyboard)FindResource("fore_to_green")).Begin(lbOk);
@@ -192,11 +203,6 @@ namespace Ikas
             Depot.ScheduleFailedCount = 0;
             Depot.BattleFailedCount = 0;
             ((Storyboard)FindResource("window_fade_out")).Begin(this);
-        }
-
-        private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            // DragMove();
         }
 
         private void LbWhatIsSessionToken_MouseEnter(object sender, MouseEventArgs e)
