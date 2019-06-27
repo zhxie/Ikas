@@ -293,7 +293,7 @@
     <!-- SettingsWindow -->
     <sys:String x:Key="settings_window-settings">Settings</sys:String>
     <sys:String x:Key="settings_window-ok">OK!</sys:String>
-    <sys:String x:Key="settings_window-You may enter a valid Cookie before closing the settings.">You may enter a valid Cookie before closing the settings.</sys:String>
+    <sys:String x:Key="settings_window-If you do not enter a valid cookie, Ikas may not work properly. Click Yes to close the settings, or click No to cancel.">If you do not enter a valid cookie, Ikas may not work properly. Click Yes to close the settings, or click No to cancel.</sys:String>
     <sys:String x:Key="settings_window-You may enter a valid proxy port before closing the settings.">You may enter a valid proxy port before closing the settings.</sys:String>
     <sys:String x:Key="settings_window-user">User</sys:String>
     <sys:String x:Key="settings_window-session_token">Session Token</sys:String>

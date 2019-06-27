@@ -172,8 +172,10 @@ namespace Ikas
         {
             if (txtCookie.Text.Trim() == "")
             {
-                MessageBox.Show(Translate("You may enter a valid Cookie before closing the settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                if (MessageBox.Show(Translate("If you do not enter a valid cookie, Ikas may not work properly. Click Yes to close the settings, or click No to cancel.", true), "Ikas", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                {
+                    return;
+                }
             }
             if (txtProxyPort.Text != "")
             {
