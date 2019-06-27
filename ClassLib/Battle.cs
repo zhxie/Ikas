@@ -40,9 +40,9 @@ namespace ClassLib
             MyScore = myScore;
             OtherScore = otherScore;
         }
-        public Battle()
+        public Battle(int error)
         {
-            Number = -1;
+            Number = error;
             MyPlayers = new List<Player>();
             OtherPlayers = new List<Player>();
             LevelAfter = -1;

@@ -199,9 +199,6 @@ namespace Ikas
                 Depot.ProxyPort = int.Parse(txtProxyPort.Text);
             }
             Depot.Language = language;
-            // Clear failed counter
-            Depot.ScheduleFailedCount = 0;
-            Depot.BattleFailedCount = 0;
             ((Storyboard)FindResource("window_fade_out")).Begin(this);
         }
 
@@ -240,17 +237,27 @@ namespace Ikas
             }
             else
             {
+                MessageBox.Show(Translate("Ikas will try to get Session Token, which will take seconds to minutes to finish. During the process, Ikas may freeze.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 string regex = Regex.Match(txtSessionToken.Text, @"de=(.*)&").Value;
                 string sessionToken = Depot.GetSessionTokenAsync(regex.Substring(3, regex.Length - 4)).Result;
-                if (sessionToken == "")
+                if (sessionToken == null || sessionToken == "")
                 {
-                    MessageBox.Show(string.Format(Translate("{0} {1}\n{2}\n{3}\n{4}", true),
-                        Translate("Ikas can not get Session Token.", true),
-                        Translate("Please check:", true),
-                        Translate("1. Your network and network settings", true),
-                        Translate("2. Your input", true),
-                        Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.", true)
+                    MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
+                        Translate("Ikas cannot get Session Token"),
+                        Translate("unknown error"),
+                        Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
                         ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    txtSessionToken.Text = "";
+                }
+                else if (sessionToken.StartsWith("!"))
+                {
+                    string reason = sessionToken.TrimStart('!');
+                    MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
+                        Translate("Ikas cannot get Session Token"),
+                        Translate(reason),
+                        Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                        ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    txtSessionToken.Text = "";
                 }
                 else
                 {
@@ -289,19 +296,27 @@ namespace Ikas
         {
             if (txtSessionToken.Text != "")
             {
+                MessageBox.Show(Translate("Ikas will try to get Cookie, which will take seconds to minutes to finish. During the process, Ikas may freeze.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 // DISCLAIMER
                 if (MessageBox.Show(Translate("Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.", true), "Ikas", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     // Automatic Cookie Generation
                     string cookie = Depot.GetCookie(txtSessionToken.Text).Result;
-                    if (cookie == "")
+                    if (cookie == null || cookie == "")
                     {
-                        MessageBox.Show(string.Format(Translate("{0} {1}\n{2}\n{3}\n{4}", true),
-                            Translate("Ikas can not update Cookie.", true),
-                            Translate("Please check:", true),
-                            Translate("1. Your network and network settings", true),
-                            Translate("2. Your Session Token", true),
-                            Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.", true)
+                        MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
+                            Translate("Ikas cannot update Cookie"),
+                            Translate("unknown error"),
+                            Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                            ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else if (cookie.StartsWith("!"))
+                    {
+                        string reason = cookie.TrimStart('!');
+                        MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
+                            Translate("Ikas cannot update Cookie"),
+                            Translate(reason),
+                            Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
                             ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                     else

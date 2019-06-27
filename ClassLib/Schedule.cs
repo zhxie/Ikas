@@ -18,9 +18,9 @@ namespace ClassLib
             Stages = stages;
             NextStages = nextStages;
         }
-        public Schedule()
+        public Schedule(int error)
         {
-            EndTime = new DateTime(0);
+            EndTime = new DateTime(error);
             Stages = new List<ScheduledStage>();
             NextStages = new List<ScheduledStage>();
         }

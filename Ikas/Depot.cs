@@ -23,10 +23,10 @@ namespace Ikas
     public delegate void LanguageChangedEventHandler();
     public delegate void ScheduleChangedEventHandler();
     public delegate void ScheduleUpdatedEventHandler();
-    public delegate void ScheduleFailedEventHandler();
+    public delegate void ScheduleFailedEventHandler(string reason);
     public delegate void BattleUpdatedEventHandler();
     public delegate void BattleChangedEventHandler();
-    public delegate void BattleFailedEventHandler();
+    public delegate void BattleFailedEventHandler(string reason);
     public static class Depot
     {
         private static string userConfigurationPath = "";
@@ -425,17 +425,15 @@ namespace Ikas
 
         public static event ScheduleChangedEventHandler ScheduleChanged;
         public static event ScheduleUpdatedEventHandler ScheduleUpdated;
-        public static int ScheduleFailedCount { get; set; } = 0;
         public static event ScheduleFailedEventHandler ScheduleFailed;
         private static Mutex ScheduleMutex = new Mutex();
-        public static Schedule Schedule { get; set; } = new Schedule();
+        public static Schedule Schedule { get; set; } = new Schedule(0);
 
         public static event BattleChangedEventHandler BattleChanged;
         public static event BattleUpdatedEventHandler BattleUpdated;
-        public static int BattleFailedCount { get; set; } = 0;
         public static event BattleFailedEventHandler BattleFailed;
         private static Mutex BattleMutex = new Mutex();
-        public static Battle Battle { get; set; } = new Battle();
+        public static Battle Battle { get; set; } = new Battle(0);
 
         private static Mode.Key currentMode = Mode.Key.regular_battle;
         public static Mode.Key CurrentMode
@@ -533,7 +531,7 @@ namespace Ikas
             catch
             {
                 // Update Schedule on error
-                UpdateSchedule(new Schedule());
+                UpdateSchedule(new Schedule(2));
                 return;
             }
             HttpResponseMessage response = await client.SendAsync(request);
@@ -567,7 +565,7 @@ namespace Ikas
                 catch
                 {
                     // Update Schedule on error
-                    UpdateSchedule(new Schedule());
+                    UpdateSchedule(new Schedule(3));
                     return;
                 }
                 // Update Schedule
@@ -576,7 +574,7 @@ namespace Ikas
             else
             {
                 // Update Schedule on error
-                UpdateSchedule(new Schedule());
+                UpdateSchedule(new Schedule(1));
             }
         }
         /// <summary>
@@ -586,10 +584,25 @@ namespace Ikas
         /// <returns></returns>
         private static bool UpdateSchedule(Schedule schedule)
         {
-            if (schedule.EndTime == new DateTime(0))
+            if (schedule.EndTime.Ticks <= 10)
             {
-                ScheduleFailedCount++;
-                ScheduleFailed?.Invoke();
+                switch (schedule.EndTime.Ticks)
+                {
+                    case 0:
+                        ScheduleFailed?.Invoke("schedule is not ready");
+                        break;
+                    case 1:
+                        ScheduleFailed?.Invoke("network cannot be reached, or Cookie is invalid or expired");
+                        break;
+                    case 2:
+                        ScheduleFailed?.Invoke("Cookie is empty");
+                        break;
+                    case 3:
+                        ScheduleFailed?.Invoke("schedule cannot be resolved");
+                        break;
+                    default:
+                        break;
+                }
             }
             if (Schedule != schedule)
             {
@@ -634,7 +647,7 @@ namespace Ikas
             catch
             {
                 // Update Battle on error
-                UpdateBattle(new Battle());
+                UpdateBattle(new Battle(-2));
                 return;
             }
             HttpResponseMessage response = await client.SendAsync(request);
@@ -651,7 +664,7 @@ namespace Ikas
                 catch
                 {
                     // Update Battle on error
-                    UpdateBattle(new Battle());
+                    UpdateBattle(new Battle(-3));
                     return;
                 }
                 // Same battle
@@ -670,7 +683,7 @@ namespace Ikas
                 catch
                 {
                     // Update Battle on error
-                    UpdateBattle(new Battle());
+                    UpdateBattle(new Battle(-2));
                     return;
                 }
                 response = await client.SendAsync(request);
@@ -973,23 +986,39 @@ namespace Ikas
                                 throw new ArgumentOutOfRangeException();
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // Update Battle on error
-                        UpdateBattle(new Battle());
-                        return;
+                        switch (ex.Message)
+                        {
+                            case "-5":
+                                // Update Battle on error
+                                UpdateBattle(new Battle(-5));
+                                break;
+                            case "-6":
+                                // Update Battle on error
+                                UpdateBattle(new Battle(-6));
+                                break;
+                            case "-7":
+                                // Update Battle on error
+                                UpdateBattle(new Battle(-7));
+                                break;
+                            default:
+                                // Update Battle on error
+                                UpdateBattle(new Battle(-4));
+                                break;
+                        }
                     }
                 }
                 else
                 {
                     // Update Battle on error
-                    UpdateBattle(new Battle());
+                    UpdateBattle(new Battle(-1));
                 }
             }
             else
             {
                 // Update Battle on error
-                UpdateBattle(new Battle());
+                UpdateBattle(new Battle(-1));
             }
         }
         /// <summary>
@@ -999,10 +1028,37 @@ namespace Ikas
         /// <returns></returns>
         private static bool UpdateBattle(Battle battle)
         {
-            if (battle.Stage == null)
+            if (battle.Number <= 0)
             {
-                BattleFailedCount++;
-                BattleFailed?.Invoke();
+                switch (battle.Number)
+                {
+                    case 0:
+                        BattleFailed?.Invoke("battle is not ready");
+                        break;
+                    case -1:
+                        BattleFailed?.Invoke("network cannot be reached, or Cookie is invalid or expired");
+                        break;
+                    case -2:
+                        BattleFailed?.Invoke("Cookie is empty");
+                        break;
+                    case -3:
+                        BattleFailed?.Invoke("battles cannot be resolved");
+                        break;
+                    case -4:
+                        BattleFailed?.Invoke("battle cannot be resolved");
+                        break;
+                    case -5:
+                        BattleFailed?.Invoke("player cannot be resolved");
+                        break;
+                    case -6:
+                        BattleFailed?.Invoke("weapon cannot be resolved");
+                        break;
+                    case -7:
+                        BattleFailed?.Invoke("gear cannot be resolved");
+                        break;
+                    default:
+                        break;
+                }
             }
             if (Battle != battle)
             {
@@ -1231,13 +1287,13 @@ namespace Ikas
                 }
                 catch
                 {
-                    return "";
+                    return "!Session Token cannot be resolved";
                 }
                 return sessionToken;
             }
             else
             {
-                return "";
+                return "!network cannot be reached, or Session Token link is invalid or expired";
             }
         }
         /// <summary>
@@ -1275,7 +1331,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return "";
+                    return "!Cookie cannot be resolved[1/7]";
                 }
                 // Send HTTP GET
                 HttpRequestMessage requestUserInfo = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.NintendoUserInfo);
@@ -1298,7 +1354,7 @@ namespace Ikas
                     }
                     catch
                     {
-                        return "";
+                        return "!Cookie cannot be resolved[2/7]";
                     }
                     // Send 3rd Party HTTP POST
                     long timestamp = (long)(DateTime.Now - TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1))).TotalSeconds;
@@ -1322,7 +1378,7 @@ namespace Ikas
                         }
                         catch
                         {
-                            return "";
+                            return "!Cookie cannot be resolved[3/7]";
                         }
                         // Send 3rd Party HTTP GET
                         string guid = Guid.NewGuid().ToString();
@@ -1388,7 +1444,7 @@ namespace Ikas
                             }
                             catch
                             {
-                                return "";
+                                return "!Cookie cannot be resolved[4/7]";
                             }
                             // Send HTTP POST
                             HttpRequestMessage requestAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoAccessToken);
@@ -1415,7 +1471,7 @@ namespace Ikas
                                 }
                                 catch
                                 {
-                                    return "";
+                                    return "!Cookie cannot be resolved[5/7]";
                                 }
                                 // Send HTTP POST
                                 HttpRequestMessage requestSplatoonAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoSplatoonAccessToken);
@@ -1438,7 +1494,7 @@ namespace Ikas
                                     }
                                     catch
                                     {
-                                        return "";
+                                        return "!Cookie cannot be resolved[6/7]";
                                     }
                                     // Send HTTP GET
                                     CookieContainer cookieContainer = new CookieContainer();
@@ -1456,41 +1512,50 @@ namespace Ikas
                                     if (responseCookie.IsSuccessStatusCode)
                                     {
                                         List<Cookie> cookies = cookieContainer.GetCookies(new Uri(FileFolderUrl.SplatNet)).Cast<Cookie>().ToList();
-                                        return cookies[0].Value;
+                                        string cookie = "";
+                                        try
+                                        {
+                                            cookie = cookies[0].Value;
+                                        }
+                                        catch
+                                        {
+                                            return "!Cookie cannot be resolved";
+                                        }
+                                        return cookie;
                                     }
                                     else
                                     {
-                                        return "";
+                                        return "!network cannot be reached, or Session Token is invalid or expired";
                                     }
                                 }
                                 else
                                 {
-                                    return "";
+                                    return "!network cannot be reached, or Session Token is invalid or expired";
                                 }
                             }
                             else
                             {
-                                return "";
+                                return "!network cannot be reached, or Session Token is invalid or expired";
                             }
                         }
                         else
                         {
-                            return "";
+                            return "!network cannot be reached, or Session Token is invalid or expired";
                         }
                     }
                     else
                     {
-                        return "";
+                        return "!network cannot be reached, or Session Token is invalid or expired";
                     }
                 }
                 else
                 {
-                    return "";
+                    return "!network cannot be reached, or Session Token is invalid or expired";
                 }
             }
             else
             {
-                return "";
+                return "!network cannot be reached, or Session Token is invalid or expired";
             }
         }
 
@@ -1622,9 +1687,17 @@ namespace Ikas
                 Player player = parsePlayer(node, image, isSelf);
                 return player;
             }
-            catch
+            catch (Exception ex)
             {
-                throw new FormatException();
+                switch (ex.Message)
+                {
+                    case "-6":
+                        throw new FormatException("-6");
+                    case "-7":
+                        throw new FormatException("-7");
+                    default:
+                        throw new FormatException("-5");
+                }
             }
         }
         /// <summary>
@@ -1669,9 +1742,17 @@ namespace Ikas
                 RankedPlayer player = parseRankedPlayer(node, image, isSelf);
                 return player;
             }
-            catch
+            catch (Exception ex)
             {
-                throw new FormatException();
+                switch (ex.Message)
+                {
+                    case "-6":
+                        throw new FormatException("-6");
+                    case "-7":
+                        throw new FormatException("-7");
+                    default:
+                        throw new FormatException("-5");
+                }
             }
         }
         /// <summary>
@@ -1689,7 +1770,7 @@ namespace Ikas
             }
             catch
             {
-                throw new FormatException();
+                throw new FormatException("-6");
             }
         }
         /// <summary>
@@ -1757,12 +1838,12 @@ namespace Ikas
                         ShoesGear shoesGear = new ShoesGear((ShoesGear.Key)int.Parse(gearNode["id"].ToString()), brand, mainSkill, subSkills, gearNode["image"].ToString());
                         return shoesGear as Gear;
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentOutOfRangeException("-7");
                 }
             }
             catch
             {
-                throw new FormatException();
+                throw new FormatException("-7");
             }
         }
         /// <summary>

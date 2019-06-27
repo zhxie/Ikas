@@ -234,6 +234,34 @@
     <sys:String x:Key="spygadget">Undercover Brella</sys:String>
     <sys:String x:Key="spygadget_sorella">Undercover Sorella Brella</sys:String>
     <sys:String x:Key="spygadget_becchu">Kensa Undercover Brella</sys:String>
+    <!-- Errors -->
+    <sys:String x:Key="Ikas cannot get schdule">Ikas can not get schdule</sys:String>
+    <sys:String x:Key="Ikas cannot get the latest battle">Ikas can not get the latest battle</sys:String>
+    <sys:String x:Key="settings_window-Ikas cannot get Session Token">Ikas cannot get Session Token</sys:String>
+    <sys:String x:Key="settings_window-Ikas cannot update Cookie">Ikas cannot update Cookie</sys:String>
+    <sys:String x:Key="After you solve the problems above, if this error message continues to appear, please consider submitting the issue.">After you solve the problems above, if this error message continues to appear, please consider submitting the issue.</sys:String>
+    <!-- Problem -->
+    <sys:String x:Key="unknown error">unknown error</sys:String>
+    <sys:String x:Key="schedule is not ready">schedule is not ready</sys:String>
+    <sys:String x:Key="network cannot be reached, or Cookie is invalid or expired">network can not be reached, or Cookie is invalid or expired</sys:String>
+    <sys:String x:Key="Cookie is empty">Cookie is empty</sys:String>
+    <sys:String x:Key="schedule cannot be resolved">schedule can not be resolved</sys:String>
+    <sys:String x:Key="battle is not ready">battle is not ready</sys:String>
+    <sys:String x:Key="battles cannot be resolved">battles can not be resolved</sys:String>
+    <sys:String x:Key="battle cannot be resolved">battle can not be resolved</sys:String>
+    <sys:String x:Key="player cannot be resolved">player can not be resolved</sys:String>
+    <sys:String x:Key="weapon cannot be resolved">weapon can not be resolved</sys:String>
+    <sys:String x:Key="gear cannot be resolved">gear can not be resolved</sys:String>
+    <sys:String x:Key="network cannot be reached, or Session Token link is invalid or expired">network cannot be reached, or Session Token link is invalid or expired</sys:String>
+    <sys:String x:Key="network cannot be reached, or Session Token is invalid or expired">network cannot be reached, or Session Token is invalid or expired</sys:String>
+    <sys:String x:Key="Session Token cannot be resolved">Session Token cannot be resolved</sys:String>
+    <sys:String x:Key="Cookie cannot be resolved[1/7]">Cookie cannot be resolved[1/7]</sys:String>
+    <sys:String x:Key="Cookie cannot be resolved[2/7]">Cookie cannot be resolved[2/7]</sys:String>
+    <sys:String x:Key="Cookie cannot be resolved[3/7]">Cookie cannot be resolved[3/7]</sys:String>
+    <sys:String x:Key="Cookie cannot be resolved[4/7]">Cookie cannot be resolved[4/7]</sys:String>
+    <sys:String x:Key="Cookie cannot be resolved[5/7]">Cookie cannot be resolved[5/7]</sys:String>
+    <sys:String x:Key="Cookie cannot be resolved[6/7]">Cookie cannot be resolved[6/7]</sys:String>
+    <sys:String x:Key="Cookie cannot be resolved">Cookie cannot be resolved</sys:String>
     <!-- MainWindow -->
     <sys:String x:Key="main_window-Failed in loading user configuration!">Failed in loading user configuration!</sys:String>
     <sys:String x:Key="main_window-Welcome to Ikas! To use Ikas, you may set up your Cookie first.">Welcome to Ikas! To use Ikas, you may set up your Cookie first.</sys:String>
@@ -243,13 +271,7 @@
     <sys:String x:Key="main_window-★">★</sys:String>
     <sys:String x:Key="main_window-setting">Setting</sys:String>
     <sys:String x:Key="main_window-exit">Exit</sys:String>
-    <sys:String x:Key="main_window-{0} {1}\n{2}\n{3}\n{4}">{0} {1}\n{2}\n{3}\n{4}</sys:String>
-    <sys:String x:Key="main_window-Ikas can not get schdule.">Ikas can not get schdule.</sys:String>
-    <sys:String x:Key="main_window-Ikas can not get the latest battle.">Ikas can not get the latest battle.</sys:String>
-    <sys:String x:Key="main_window-Please check:">Please check:</sys:String>
-    <sys:String x:Key="main_window-1. Your network and network settings">1. Your network and network settings</sys:String>
-    <sys:String x:Key="main_window-2. Your Cookie (If you set up your Session Token, you may update cookie in settings)">2. Your Cookie (If you set up your Session Token, you may update cookie in settings)</sys:String>
-    <sys:String x:Key="main_window-After you solve the problems above, if this error message continues to appear, please consider submitting the issue.">After you solve the problems above, if this error message continues to appear, please consider submitting the issue.</sys:String>
+    <sys:String x:Key="main_window-{0}, because {1}. {2}">{0}, because {1}. {2}</sys:String>
     <!-- ScheduleWindow -->
     <sys:String x:Key="schedule_window-Next">Next</sys:String>
     <sys:String x:Key="schedule_window-{0} - {1}">{0} - {1}</sys:String>
@@ -282,12 +304,8 @@
     <sys:String x:Key="settings_window-Automatic cookie generation sends minimal data including the Session Token to Nintendo and non-Nintendo servers, and get cookie back for accessing SplatNet.">Automatic cookie generation sends minimal data including the Session Token to Nintendo and non-Nintendo servers, and get cookie back for accessing SplatNet.</sys:String>
     <sys:String x:Key="settings_window-get_session_token">How can I get a Session Token?</sys:String>
     <sys:String x:Key="settings_window-You will be led to a Nintendo website. Log in, right click on Select this Person, copy the link address, and paste it to Session Token textbox, and click this label again.">You will be led to a Nintendo website. Log in, right click on Select this Person, copy the link address, and paste it to Session Token textbox, and click this label again.</sys:String>
-    <sys:String x:Key="settings_window-{0} {1}\n{2}\n{3}\n{4}">{0} {1}\n{2}\n{3}\n{4}</sys:String>
-    <sys:String x:Key="settings_window-Ikas can not get Session Token.">Ikas can not get Session Token.</sys:String>
-    <sys:String x:Key="settings_window-Please check:">Please check:</sys:String>
-    <sys:String x:Key="settings_window-1. Your network and network settings">1. Your network and network settings</sys:String>
-    <sys:String x:Key="settings_window-2. Your input">2. Your input</sys:String>
-    <sys:String x:Key="settings_window-After you solve the problems above, if this error message continues to appear, please consider submitting the issue.">After you solve the problems above, if this error message continues to appear, please consider submitting the issue.</sys:String>
+    <sys:String x:Key="settings_window-Ikas will try to get Session Token, which will take seconds to minutes to finish. During the process, Ikas may freeze.">Ikas will try to get Session Token, which will take seconds to minutes to finish. During the process, Ikas may freeze.</sys:String>
+    <sys:String x:Key="settings_window-{0}, because {1}. {2}">{0}, because {1}. {2}</sys:String>
     <sys:String x:Key="settings_window-Get Session Token successfully.">Get Session Token successfully.</sys:String>
     <sys:String x:Key="settings_window-cookie">Cookie</sys:String>
     <sys:String x:Key="settings_window-what_is_cookie">What is Cookie?</sys:String>
@@ -297,9 +315,8 @@
     <sys:String x:Key="settings_window-Ikas uses cookies to access SplatNet, get schedule and battle data.">Ikas uses cookies to access SplatNet, get schedule and battle data.</sys:String>
     <sys:String x:Key="settings_window-If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.">If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.</sys:String>
     <sys:String x:Key="settings_window-update_cookie">Update my Cookie, please!</sys:String>
+    <sys:String x:Key="settings_window-Ikas will try to get Cookie, which will take seconds to minutes to finish. During the process, Ikas may freeze.">Ikas will try to get Cookie, which will take seconds to minutes to finish. During the process, Ikas may freeze.</sys:String>
     <sys:String x:Key="settings_window-Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.">Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.</sys:String>
-    <sys:String x:Key="settings_window-Ikas can not update Cookie.">Ikas can not update Cookie.</sys:String>
-    <sys:String x:Key="settings_window-2. Your Session Token">2. Your Session Token</sys:String>
     <sys:String x:Key="settings_window-Update Cookie successfully.">Update Cookie successfully.</sys:String>
     <sys:String x:Key="settings_window-You may enter a valid Session Token before update Cookie.">You may enter a valid Session Token before update Cookie.</sys:String>
     <sys:String x:Key="settings_window-system">System</sys:String>

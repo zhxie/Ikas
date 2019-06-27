@@ -100,7 +100,7 @@ namespace Ikas
             }
             // Update Schedule
             Depot.GetSchedule();
-            // Start timers
+            // Automatica Schedule and Battle update
             tmSchedule.Start();
             tmBattle.Start();
         }
@@ -128,6 +128,8 @@ namespace Ikas
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            // Automatica Schedule update
+            tmSchedule.Start();
         }
 
         private void BdStage_MouseEnter(object sender, MouseEventArgs e)
@@ -148,6 +150,8 @@ namespace Ikas
             battleWindow.Top = Top + Height + 10;
             battleWindow.Left = Left;
             ((Storyboard)FindResource("window_fade_in")).Begin(battleWindow);
+            // Automatica Battle update
+            tmBattle.Start();
         }
 
         private void LbLevel_MouseLeave(object sender, MouseEventArgs e)
@@ -314,32 +318,24 @@ namespace Ikas
             }
         }
 
-        private void ScheduleFailed()
+        private void ScheduleFailed(string reason)
         {
-            if (Depot.ScheduleFailedCount <= 1)
-            {
-                MessageBox.Show(string.Format(Translate("{0} {1}\n{2}\n{3}\n{4}", true),
-                    Translate("Ikas can not get schdule.", true),
-                    Translate("Please check:", true),
-                    Translate("1. Your network and network settings", true),
-                    Translate("2. Your Cookie (If you set up your Session Token, you may update cookie in settings)", true),
-                    Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.", true)
-                    ),"Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
+                Translate("Ikas cannot get schdule"),
+                Translate(reason),
+                Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                ),"Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+            tmSchedule.Stop();
         }
 
-        private void BattleFailed()
+        private void BattleFailed(string reason)
         {
-            if (Depot.BattleFailedCount <= 1)
-            {
-                MessageBox.Show(string.Format(Translate("{0} {1}\n{2}\n{3}\n{4}", true),
-                    Translate("Ikas can not get the latest battle.", true),
-                    Translate("Please check:", true),
-                    Translate("1. Your network and network settings", true),
-                    Translate("2. Your Cookie (If you set up your Session Token, you may update cookie in settings)", true),
-                    Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.", true)
-                    ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
+                Translate("Ikas cannot get the latest battle"),
+                Translate(reason),
+                Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+            tmBattle.Stop();
         }
 
         private string Translate(string s, bool isLocal = false)
