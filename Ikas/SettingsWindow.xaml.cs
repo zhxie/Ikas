@@ -300,7 +300,7 @@ namespace Ikas
             {
                 MessageBox.Show(Translate("Ikas will try to get Cookie, which will take seconds to minutes to finish. During the process, Ikas may freeze.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 // DISCLAIMER
-                if (MessageBox.Show(Translate("Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.", true), "Ikas", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show(Translate("Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.", true), "Ikas", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     // Automatic Cookie Generation
                     string cookie = Depot.GetCookie(txtSessionToken.Text).Result;
