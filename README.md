@@ -22,3 +22,10 @@ Automatic Cookie Generation involves making a secure request to **two non-Ninten
 
 If you do not want to use Automatic Cookie Generation for obtaining cookie, you may also retrieve one by intercepting into the device's traffic with SplatNet, which is also called MitM. You may follow the [splatnet2statink/mitmproxy instructions](https://github.com/frozenpandaman/splatnet2statink/wiki/mitmproxy-instructions) to get one, and fill in the app's Cookie textbox.
 
+# License
+
+Ikas is licensed under [the MIT License](/LICENSE).
+
+Ikas uses [Json.NET](https://github.com/JamesNK/Newtonsoft.Json) from Newtonsoft licensed under [the MIT License](/LICENSE.Newtonsoft.Json.md), and [ini-parser](https://github.com/rickyah/ini-parser) from rickyah licensed under [the MIT License](/LICENSE.ini-parser.md).
+
+Ikas also uses API from [splatnet2statink](https://github.com/frozenpandaman/splatnet2statink).
