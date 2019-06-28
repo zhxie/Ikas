@@ -24,8 +24,9 @@ namespace Ikas
     public delegate void ScheduleChangedEventHandler();
     public delegate void ScheduleUpdatedEventHandler();
     public delegate void ScheduleFailedEventHandler(string reason);
-    public delegate void BattleUpdatedEventHandler();
     public delegate void BattleChangedEventHandler();
+    public delegate void BattleFoundEventHandler();
+    public delegate void BattleUpdatedEventHandler();
     public delegate void BattleFailedEventHandler(string reason);
     public static class Depot
     {
@@ -511,6 +512,7 @@ namespace Ikas
         public static Schedule Schedule { get; set; } = new Schedule(0);
 
         public static event BattleChangedEventHandler BattleChanged;
+        public static event BattleFoundEventHandler BattleFound;
         public static event BattleUpdatedEventHandler BattleUpdated;
         public static event BattleFailedEventHandler BattleFailed;
         private static Mutex BattleMutex = new Mutex();
@@ -754,6 +756,11 @@ namespace Ikas
                     // Update same Battle
                     UpdateBattle(Battle);
                     return;
+                }
+                else
+                {
+                    // Raise event
+                    BattleFound?.Invoke();
                 }
                 // Send HTTP GET
                 request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetIndividualBattleApi, battleNumber));

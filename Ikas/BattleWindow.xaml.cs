@@ -54,6 +54,7 @@ namespace Ikas
             // Add handler for global member
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
             Depot.BattleChanged += new BattleChangedEventHandler(BattleChanged);
+            Depot.BattleFound += new BattleFoundEventHandler(BattleFound);
             Depot.BattleUpdated += new BattleUpdatedEventHandler(BattleUpdated);
             // Prepare Icon and Weapon window
             playerWindow = new PlayerWindow();
@@ -172,6 +173,10 @@ namespace Ikas
         {
             // Fade in loading
             ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
+        }
+
+        private void BattleFound()
+        {
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(imgMode);
             ((Storyboard)FindResource("fade_out")).Begin(lbRule);
