@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 using ClassLib;
 
@@ -25,6 +26,9 @@ namespace Ikas
     {
         private PlayerWindow playerWindow;
         private WeaponWindow weaponWindow;
+
+        private DispatcherTimer tmLoading;
+        private int loadingRotationAngle;
 
         public BattleWindow()
         {
@@ -60,9 +64,31 @@ namespace Ikas
             weaponWindow.KeepAliveWindow = this;
             weaponWindow.Opacity = 0;
             weaponWindow.Visibility = Visibility.Hidden;
+            // Create timers
+            loadingRotationAngle = 0;
+            tmLoading = new DispatcherTimer();
+            tmLoading.Tick += new EventHandler((object source, EventArgs e) =>
+            {
+                imgLoading.RenderTransform = new RotateTransform(loadingRotationAngle, imgLoading.Source.Width / 2, imgLoading.Source.Height / 2);
+                if (loadingRotationAngle >= 359)
+                {
+                    loadingRotationAngle = 0;
+                }
+                else
+                {
+                    loadingRotationAngle++;
+                }
+            });
+            tmLoading.Interval = new TimeSpan(0, 0, 0, 0, 10);
         }
 
         #region Control Event
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Start timers
+            tmLoading.Start();
+        }
 
         private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -144,6 +170,8 @@ namespace Ikas
 
         private void BattleChanged()
         {
+            // Fade in loading
+            ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(imgMode);
             ((Storyboard)FindResource("fade_out")).Begin(lbRule);
@@ -467,6 +495,8 @@ namespace Ikas
                     }
                 }
             }
+            // Fade out loading
+            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
         }
 
         private string Translate(string s, bool isLocal = false)

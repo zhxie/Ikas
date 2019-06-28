@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 using ClassLib;
 
@@ -23,6 +24,9 @@ namespace Ikas
     /// </summary>
     public partial class ScheduleWindow : Window
     {
+        private DispatcherTimer tmLoading;
+        private int loadingRotationAngle;
+
         public ScheduleWindow()
         {
             // Load language
@@ -51,6 +55,28 @@ namespace Ikas
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
             Depot.ScheduleChanged += new ScheduleChangedEventHandler(ScheduleChanged);
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
+            // Create timers
+            loadingRotationAngle = 0;
+            tmLoading = new DispatcherTimer();
+            tmLoading.Tick += new EventHandler((object source, EventArgs e) =>
+            {
+                imgLoading.RenderTransform = new RotateTransform(loadingRotationAngle, imgLoading.Source.Width / 2, imgLoading.Source.Height / 2);
+                if (loadingRotationAngle >= 359)
+                {
+                    loadingRotationAngle = 0;
+                }
+                else
+                {
+                    loadingRotationAngle++;
+                }
+            });
+            tmLoading.Interval = new TimeSpan(0, 0, 0, 0, 10);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Start timers
+            tmLoading.Start();
         }
 
         #region Control Event
@@ -93,6 +119,8 @@ namespace Ikas
 
         private void ScheduleChanged()
         {
+            // Fade in loading
+            ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(imgMode);
             ((Storyboard)FindResource("fade_out")).Begin(lbMode);
@@ -262,6 +290,8 @@ namespace Ikas
                     }
                 }
             }
+            // Fade out loading
+            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
         }
 
         private string Translate(string s, bool isLocal = false)

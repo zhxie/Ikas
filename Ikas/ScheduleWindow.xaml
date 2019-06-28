@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ikas"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
         LocationChanged="Window_LocationChanged"
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
@@ -85,5 +86,11 @@
                 </Grid>
             </StackPanel>
         </StackPanel>
+        <Border x:Name="bdLoading" CornerRadius="27" IsHitTestVisible="False" Opacity="0">
+            <Border.Background>
+                <SolidColorBrush Color="#7F000000"/>
+            </Border.Background>
+            <Image x:Name="imgLoading" Source="assets/img/bg-respawn-2x.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
     </Grid>
 </Window>

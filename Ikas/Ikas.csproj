@@ -227,5 +227,8 @@
   <ItemGroup>
     <Resource Include="assets\img\bg-splat.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\img\bg-respawn-2x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
