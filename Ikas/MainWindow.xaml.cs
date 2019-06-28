@@ -78,7 +78,8 @@ namespace Ikas
             tmSchedule.Tick += new EventHandler((object source, EventArgs e) => { Depot.GetSchedule(); });
             tmSchedule.Interval = new TimeSpan(0, 0, 15);
             tmBattle = new DispatcherTimer();
-            tmBattle.Tick += new EventHandler((object source, EventArgs e) => {
+            tmBattle.Tick += new EventHandler((object source, EventArgs e) =>
+            {
                 if (battleWindow.Visibility == Visibility.Hidden)
                 {
                     Depot.GetLastBattle();
@@ -109,7 +110,7 @@ namespace Ikas
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            if (Depot.StartX >= 0 && Depot.StartY >= 0)
+            if (Depot.StartX != double.MinValue && Depot.StartY != double.MinValue)
             {
                 Left = Depot.StartX;
                 Top = Depot.StartY;

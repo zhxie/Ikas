@@ -305,7 +305,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return -1;
+                    return double.MinValue;
                 }
             }
             set
@@ -332,7 +332,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return -1;
+                    return double.MinValue;
                 }
             }
             set
