@@ -215,12 +215,15 @@ namespace Ikas
                     {
                         case Mode.Key.regular_battle:
                             lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                            tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                             break;
                         case Mode.Key.ranked_battle:
                             lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+                            tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
                             break;
                         case Mode.Key.league_battle:
                             lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                            tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -249,20 +252,52 @@ namespace Ikas
                             }
                             break;
                         case Rule.Key.splat_zones:
-                            tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
-                            tbStar.Text = "";
+                            if (Depot.SplatZonesRank > Rank.Key.s && Depot.SplatZonesRank < Rank.Key.x)
+                            {
+                                tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
+                                tbStar.Text = (Depot.SplatZonesRank - Rank.Key.s).ToString();
+                            }
+                            else
+                            {
+                                tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
+                                tbStar.Text = "";
+                            }
                             break;
                         case Rule.Key.tower_control:
-                            tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
-                            tbStar.Text = "";
+                            if (Depot.TowerControlRank > Rank.Key.s && Depot.TowerControlRank < Rank.Key.x)
+                            {
+                                tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
+                                tbStar.Text = (Depot.TowerControlRank - Rank.Key.s).ToString();
+                            }
+                            else
+                            {
+                                tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
+                                tbStar.Text = "";
+                            }
                             break;
                         case Rule.Key.rainmaker:
-                            tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
-                            tbStar.Text = "";
+                            if (Depot.RainmakerRank > Rank.Key.s && Depot.RainmakerRank < Rank.Key.x)
+                            {
+                                tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
+                                tbStar.Text = (Depot.RainmakerRank - Rank.Key.s).ToString();
+                            }
+                            else
+                            {
+                                tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
+                                tbStar.Text = "";
+                            }
                             break;
                         case Rule.Key.clam_blitz:
-                            tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
-                            tbStar.Text = "";
+                            if (Depot.TowerControlRank > Rank.Key.s && Depot.TowerControlRank < Rank.Key.x)
+                            {
+                                tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
+                                tbStar.Text = (Depot.ClamBlitzRank - Rank.Key.s).ToString();
+                            }
+                            else
+                            {
+                                tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
+                                tbStar.Text = "";
+                            }
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
