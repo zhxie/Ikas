@@ -165,7 +165,7 @@ namespace Ikas
                             {
                                 if (System.IO.Path.GetFileName(image5) == System.IO.Path.GetFileName(Gear.SubSkills[2].Image))
                                 {
-                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
+                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image5)));
                                     brush.Stretch = Stretch.Uniform;
                                     bdSub3.Background = brush;
                                     ((Storyboard)FindResource("fade_in")).Begin(bdSub3);
