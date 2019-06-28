@@ -243,7 +243,7 @@ namespace Ikas
             {
                 try
                 {
-                    return bool.Parse(systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationAlwaysOnTop]);
+                    return bool.Parse(systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationAlwaysOnTop]);
                 }
                 catch
                 {
@@ -256,7 +256,7 @@ namespace Ikas
                 {
                     try
                     {
-                        systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationAlwaysOnTop] = value.ToString().ToLower();
+                        systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationAlwaysOnTop] = value.ToString().ToLower();
                         FileIniDataParser parser = new FileIniDataParser();
                         parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
@@ -265,6 +265,87 @@ namespace Ikas
                     {
                         AlwaysOnTopChanged?.Invoke();
                     }
+                }
+            }
+        }
+        public static Mode.Key StartMode
+        {
+            get
+            {
+                try
+                {
+                    return (Mode.Key)int.Parse(systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationStartMode]);
+                }
+                catch
+                {
+                    return Mode.Key.regular_battle;
+                }
+            }
+            set
+            {
+                if (value != StartMode)
+                {
+                    try
+                    {
+                        systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationStartMode] = ((int)value).ToString();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    }
+                    catch { }
+                }
+            }
+        }
+        public static double StartX
+        {
+            get
+            {
+                try
+                {
+                    return double.Parse(systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationStartX]);
+                }
+                catch
+                {
+                    return -1;
+                }
+            }
+            set
+            {
+                if (value != StartX)
+                {
+                    try
+                    {
+                        systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationStartX] = value.ToString();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    }
+                    catch { }
+                }
+            }
+        }
+        public static double StartY
+        {
+            get
+            {
+                try
+                {
+                    return double.Parse(systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationStartY]);
+                }
+                catch
+                {
+                    return -1;
+                }
+            }
+            set
+            {
+                if (value != StartY)
+                {
+                    try
+                    {
+                        systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationStartY] = value.ToString();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    }
+                    catch { }
                 }
             }
         }

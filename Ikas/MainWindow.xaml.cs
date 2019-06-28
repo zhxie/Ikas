@@ -54,7 +54,6 @@ namespace Ikas
             // Initialize component
             InitializeComponent();
             // Set properties for controls
-            Topmost = Depot.AlwaysOnTop;
             RenderOptions.SetBitmapScalingMode(bdStage1, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdStage2, BitmapScalingMode.HighQuality);
             // Add handler for global member
@@ -92,6 +91,29 @@ namespace Ikas
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Set properties for controls
+            Topmost = Depot.AlwaysOnTop;
+            switch (Depot.StartMode)
+            {
+                case Mode.Key.ranked_battle:
+                    Depot.CurrentMode = Mode.Key.ranked_battle;
+                    break;
+                case Mode.Key.league_battle:
+                    Depot.CurrentMode = Mode.Key.league_battle;
+                    break;
+                case Mode.Key.regular_battle:
+                case Mode.Key.private_battle:
+                case Mode.Key.splatfest:
+                    Depot.CurrentMode = Mode.Key.regular_battle;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            if (Depot.StartX >= 0 && Depot.StartY >= 0)
+            {
+                Left = Depot.StartX;
+                Top = Depot.StartY;
+            }
             // Check cookie
             if (Depot.Cookie == null || Depot.Cookie == "")
             {
@@ -99,16 +121,10 @@ namespace Ikas
                 MenuItemSetting_Click(null, null);
             }
             // Update Schedule
-            Depot.GetSchedule();
+            // Depot.GetSchedule();
             // Automatica Schedule and Battle update
             tmSchedule.Start();
             tmBattle.Start();
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            // TODO: Save position
-            // TODO: Save mode
         }
 
         private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -173,6 +189,12 @@ namespace Ikas
 
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
         {
+            // Save mode on close
+            Depot.StartMode = Depot.CurrentMode;
+            // Save position on close
+            Depot.StartX = Left;
+            Depot.StartY = Top;
+            // Exit
             Environment.Exit(0);
         }
 
