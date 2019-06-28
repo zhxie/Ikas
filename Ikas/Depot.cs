@@ -917,12 +917,14 @@ namespace Ikas
                                     }
                                     int myScore = int.Parse(jObject["my_team_count"].ToString());
                                     int otherScore = int.Parse(jObject["other_team_count"].ToString());
-                                    if (!jObject["x_power"].HasValues)
+                                    bool isXPower = int.TryParse(jObject["x_power"].ToString(), out _);
+                                    if (!isXPower)
                                     {
                                         // Ranked Battle
                                         int estimatedRankPower = int.Parse(jObject["estimate_gachi_power"].ToString());
                                         Rank.Key rankAfter;
-                                        if (jObject["udemae"]["s_plus_number"].HasValues)
+                                        bool isSPlus = int.TryParse(jObject["udemae"]["s_plus_number"].ToString(), out _);
+                                        if (isSPlus)
                                         {
                                             rankAfter = Rank.ParseKey(jObject["udemae"]["name"].ToString(), int.Parse(jObject["udemae"]["s_plus_number"].ToString()));
                                         }
@@ -1022,7 +1024,8 @@ namespace Ikas
                                     int myEstimatedLeaguePower = int.Parse(jObject["my_estimate_league_point"].ToString());
                                     int otherEstimatedLeaguePower = int.Parse(jObject["other_estimate_league_point"].ToString());
                                     double leaguePoint;
-                                    if (jObject["league_point"].HasValues)
+                                    bool isLeaguePoint = int.TryParse(jObject["league_point"].ToString(), out _);
+                                    if (isLeaguePoint)
                                     {
                                         leaguePoint = double.Parse(jObject["league_point"].ToString());
                                     }
@@ -1827,7 +1830,8 @@ namespace Ikas
             {
                 Player player = parsePlayer(node, image, isSelf);
                 Rank.Key rank;
-                if (node["player"]["udemae"]["s_plus_number"].HasValues)
+                bool isSPlus = int.TryParse(node["player"]["udemae"]["s_plus_number"].ToString(), out _);
+                if (isSPlus)
                 {
                     rank = Rank.ParseKey(node["player"]["udemae"]["name"].ToString(), int.Parse(node["player"]["udemae"]["s_plus_number"].ToString()));
                 }

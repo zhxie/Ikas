@@ -25,6 +25,14 @@ namespace Ikas
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string YellowForeground
+        {
+            get
+            {
+                return "#FF" + Design.NeonYellow;
+            }
+        }
+
         private ScheduleWindow scheduleWindow;
         private BattleWindow battleWindow;
         private SettingsWindow settingsWindow;
@@ -292,7 +300,7 @@ namespace Ikas
                             if (Depot.SplatZonesRank > Rank.Key.s && Depot.SplatZonesRank < Rank.Key.x)
                             {
                                 tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
-                                tbStar.Text = (Depot.SplatZonesRank - Rank.Key.s).ToString();
+                                tbStar.Text = (Depot.SplatZonesRank - Rank.Key.s_plus_0).ToString();
                             }
                             else
                             {
@@ -304,7 +312,7 @@ namespace Ikas
                             if (Depot.TowerControlRank > Rank.Key.s && Depot.TowerControlRank < Rank.Key.x)
                             {
                                 tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
-                                tbStar.Text = (Depot.TowerControlRank - Rank.Key.s).ToString();
+                                tbStar.Text = (Depot.TowerControlRank - Rank.Key.s_plus_0).ToString();
                             }
                             else
                             {
@@ -316,7 +324,7 @@ namespace Ikas
                             if (Depot.RainmakerRank > Rank.Key.s && Depot.RainmakerRank < Rank.Key.x)
                             {
                                 tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
-                                tbStar.Text = (Depot.RainmakerRank - Rank.Key.s).ToString();
+                                tbStar.Text = (Depot.RainmakerRank - Rank.Key.s_plus_0).ToString();
                             }
                             else
                             {
@@ -325,10 +333,10 @@ namespace Ikas
                             }
                             break;
                         case Rule.Key.clam_blitz:
-                            if (Depot.TowerControlRank > Rank.Key.s && Depot.TowerControlRank < Rank.Key.x)
+                            if (Depot.ClamBlitzRank > Rank.Key.s && Depot.ClamBlitzRank < Rank.Key.x)
                             {
                                 tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
-                                tbStar.Text = (Depot.ClamBlitzRank - Rank.Key.s).ToString();
+                                tbStar.Text = (Depot.ClamBlitzRank - Rank.Key.s_plus_0).ToString();
                             }
                             else
                             {
