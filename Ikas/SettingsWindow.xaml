@@ -79,7 +79,7 @@
                    MouseEnter="LbOk_MouseEnter"
                    MouseLeave="LbOk_MouseLeave"
                    MouseDown="LbOk_MouseDown"
-                   Content="{DynamicResource settings_window-ok}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,10,0"/>
+                   Content="{DynamicResource settings_window-ok}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,10,0" Cursor="Hand"/>
         </Border>
         <StackPanel Orientation="Vertical" Margin="0,20">
             <StackPanel Orientation="Horizontal" Height="48" Margin="20,0">
@@ -115,7 +115,7 @@
                            MouseEnter="LbGetSessionToken_MouseEnter"
                            MouseLeave="LbGetSessionToken_MouseLeave"
                            MouseDown="LbGetSessionToken_MouseDown"
-                           Content="{DynamicResource settings_window-get_session_token}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="16" Height="40" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                           Content="{DynamicResource settings_window-get_session_token}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="16" Height="40" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Cursor="Hand"/>
                     <Label Grid.Row="5" Content="{DynamicResource settings_window-cookie}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     <TextBox x:Name="txtCookie" Grid.Row="5" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <Label x:Name="lbWhatIsCookie" Grid.Row="6" Grid.ColumnSpan="2"
@@ -126,7 +126,7 @@
                            MouseEnter="LbUpdateCookie_MouseEnter"
                            MouseLeave="LbUpdateCookie_MouseLeave"
                            MouseDown="LbUpdateCookie_MouseDown"
-                           Grid.Row="8" Grid.ColumnSpan="2" Content="{DynamicResource settings_window-update_cookie}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="16" Height="40" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                           Grid.Row="8" Grid.ColumnSpan="2" Content="{DynamicResource settings_window-update_cookie}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="16" Height="40" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
                 </Grid>
                 <Border Height="40" Margin="0,10,0,0">
                     <Label Content="{DynamicResource settings_window-system}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
@@ -154,10 +154,10 @@
                         </Grid.ColumnDefinitions>
                         <Label x:Name="lbAlwaysOnTopTrue" Grid.Column="0" Style="{DynamicResource ButtonLabel}"
                                MouseDown="LbAlwaysOnTopTrue_MouseDown"
-                               Content="{DynamicResource settings_window-use_proxy_true}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                               Content="{DynamicResource settings_window-use_proxy_true}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
                         <Label x:Name="lbAlwaysOnTopFalse" Grid.Column="1" Style="{DynamicResource ButtonLabel}"
                                MouseDown="LbAlwaysOnTopFalse_MouseDown"
-                               Content="{DynamicResource settings_window-use_proxy_false}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                               Content="{DynamicResource settings_window-use_proxy_false}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
                     </Grid>
                     <Label Grid.Row="1" Content="{DynamicResource settings_window-use_proxy}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     <Grid Grid.Row="1" Grid.Column="1">
@@ -167,10 +167,10 @@
                         </Grid.ColumnDefinitions>
                         <Label x:Name="lbUseProxyTrue" Grid.Column="0" Style="{DynamicResource ButtonLabel}"
                                MouseDown="LbUseProxyTrue_MouseDown"
-                               Content="{DynamicResource settings_window-use_proxy_true}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                               Content="{DynamicResource settings_window-use_proxy_true}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
                         <Label x:Name="lbUseProxyFalse" Grid.Column="1" Style="{DynamicResource ButtonLabel}"
                                MouseDown="LbUseProxyFalse_MouseDown"
-                               Content="{DynamicResource settings_window-use_proxy_false}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                               Content="{DynamicResource settings_window-use_proxy_false}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
                     </Grid>
                     <Label Grid.Row="2" Content="{DynamicResource settings_window-host}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Margin="20,0,0,0" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     <TextBox x:Name="txtProxyHost" Grid.Row="2" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -184,16 +184,16 @@
                         </Grid.ColumnDefinitions>
                         <Label x:Name="lbLanguageEnUs" Grid.Column="0" Style="{DynamicResource ButtonLabel}"
                                MouseDown="LbLanguageEnUs_MouseDown"
-                               Content="{DynamicResource settings_window-language_en_us}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                               Content="{DynamicResource settings_window-language_en_us}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
                         <Label x:Name="lbLanguageJaJp" Grid.Column="1" Style="{DynamicResource ButtonLabel}"
                                MouseDown="LbLanguageJaJp_MouseDown"
-                               Content="{DynamicResource settings_window-language_ja_jp}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True"/>
+                               Content="{DynamicResource settings_window-language_ja_jp}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
                     </Grid>
                     <Label x:Name="lbClearCache" Grid.Row="5"
                            MouseEnter="LbClearCache_MouseEnter"
                            MouseLeave="LbClearCache_MouseLeave"
                            MouseDown="LbClearCache_MouseDown"
-                           Content="{DynamicResource settings_window-clear_cache}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                           Content="{DynamicResource settings_window-clear_cache}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Cursor="Hand"/>
                     <Label x:Name="lbWhatIsClearCache" Grid.Row="6" Grid.ColumnSpan="2"
                            MouseEnter="LbWhatIsClearCache_MouseEnter"
                            MouseLeave="LbWhatIsClearCache_MouseLeave"

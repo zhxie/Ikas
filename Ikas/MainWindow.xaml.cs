@@ -105,6 +105,12 @@ namespace Ikas
             tmBattle.Start();
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // TODO: Save position
+            // TODO: Save mode
+        }
+
         private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);

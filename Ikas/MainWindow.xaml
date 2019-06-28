@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Ikas"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
+        Closing="Window_Closing"
         PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown"
         Title="Ikas" Height="54" Width="495" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" ShowInTaskbar="False">
     <Window.Resources>
@@ -52,7 +53,7 @@
         <StackPanel Orientation="Horizontal">
             <Label x:Name="lbMode"
                    PreviewMouseLeftButtonDown="LbMode_PreviewMouseLeftButtonDown"
-                   Content="Ikas" FontFamily="{StaticResource splatfont_2}" Foreground="#FF19D719" FontSize="26" Width="100" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="25,0,0,0" Padding="5,0" Opacity="0"/>
+                   Content="Ikas" FontFamily="{StaticResource splatfont_2}" Foreground="#FF19D719" FontSize="26" Width="100" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="25,0,0,0" Padding="5,0" Cursor="Hand" Opacity="0"/>
             <Label x:Name="lbLevel"
                    MouseEnter="LbLevel_MouseEnter"
                    MouseLeave="LbLevel_MouseLeave"
