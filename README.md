@@ -2,7 +2,7 @@
   <img src="/source/img/Ikas-256.png">
 </p>
 
-# Ikas
+# Ikas [![Build status](https://ci.appveyor.com/api/projects/status/hlj5mrc6vh4rl8bu?svg=true)](https://ci.appveyor.com/project/XieZhihao/ikas)
 
 A schedule and battle statistic client of Splatoon 2 for Windows.
 
