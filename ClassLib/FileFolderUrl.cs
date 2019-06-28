@@ -26,6 +26,7 @@ namespace ClassLib
         public const string UserConfigurationClamBlitzRank = "ClamBlitzRank";
         public const string SystemConfigurationGeneralSection = "Ikas";
         public const string SystemConfigurationLanguage = "Language";
+        public const string SystemConfigurationInUse = "InUse";
         public const string SystemConfigurationAppearanceSection = "Appearance";
         public const string SystemConfigurationAlwaysOnTop = "AlwaysOnTop";
         public const string SystemConfigurationStartMode = "StartMode";

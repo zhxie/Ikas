@@ -110,11 +110,23 @@ namespace Ikas
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            if (Depot.StartX != double.MinValue && Depot.StartY != double.MinValue)
+            if (!Depot.InUse)
             {
-                Left = Depot.StartX;
-                Top = Depot.StartY;
+                if (Depot.StartX != double.MinValue && Depot.StartY != double.MinValue)
+                {
+                    Left = Depot.StartX;
+                    Top = Depot.StartY;
+                }
             }
+            // In use
+            if (Depot.InUse)
+            {
+                MessageBox.Show(string.Format(Translate("{0}. {1}", true),
+                    Translate("Ikas has started, or Ikas failed to exit normally"),
+                    Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                    ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            Depot.InUse = true;
             // Check cookie
             if (Depot.Cookie == null || Depot.Cookie == "")
             {
@@ -195,6 +207,8 @@ namespace Ikas
             // Save position on close
             Depot.StartX = Left;
             Depot.StartY = Top;
+            // In use
+            Depot.InUse = false;
             // Exit
             Environment.Exit(0);
         }

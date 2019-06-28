@@ -498,6 +498,33 @@ namespace Ikas
                 }
             }
         }
+        public static bool InUse
+        {
+            get
+            {
+                try
+                {
+                    return bool.Parse(systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationInUse]);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                if (value != InUse)
+                {
+                    try
+                    {
+                        systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationInUse] = value.ToString().ToLower();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    }
+                    catch { }
+                }
+            }
+        }
 
         private static string authState = "";
         private static string authCodeChallenge = "";
