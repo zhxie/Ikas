@@ -28,4 +28,4 @@ Ikas is licensed under [the MIT License](/LICENSE).
 
 Ikas uses [Json.NET](https://github.com/JamesNK/Newtonsoft.Json) from Newtonsoft licensed under [the MIT License](/LICENSE.Newtonsoft.Json.md), and [ini-parser](https://github.com/rickyah/ini-parser) from rickyah licensed under [the MIT License](/LICENSE.ini-parser.md).
 
-Ikas also uses API from [splatnet2statink](https://github.com/frozenpandaman/splatnet2statink).
+Ikas also uses API of [splatnet2statink](https://github.com/frozenpandaman/splatnet2statink) from [eli fessler](https://github.com/frozenpandaman) and flapg API from [NexusMine](https://twitter.com/NexusMine).
