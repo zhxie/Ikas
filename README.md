@@ -2,19 +2,21 @@
   <img src="/source/img/Ikas-256.png">
 </p>
 
-# Ikas [![Build status](https://ci.appveyor.com/api/projects/status/hlj5mrc6vh4rl8bu?svg=true)](https://ci.appveyor.com/project/XieZhihao/ikas)
+# Ikas
 
-A schedule and battle statistic client of Splatoon 2 for Windows.
+[![Build status](https://ci.appveyor.com/api/projects/status/hlj5mrc6vh4rl8bu?svg=true)](https://ci.appveyor.com/project/XieZhihao/ikas) [![GitHub release](https://img.shields.io/github/release/zhxie/Ikas.svg)](https://github.com/zhxie/Ikas/releases/latest)
 
-# Configuration
+**Ikas** is a schedule and battle statistic client of Splatoon 2 for Windows.
+
+## Configuration
 
 Ikas reads and parses configuration from both user.ini for user information, and config.ini for system configuration in working directory.
 
 When first started, Ikas will ask for configuration.
 
-# Security and Privacy
+## Security and Privacy
 
-## Automatic Cookie Generation
+### Automatic Cookie Generation
 
 Ikas uses cookies to access SplatNet,  get schedule and battle data. This cookie may be obtained automatically using Automatic Cookie Generation which is also instructed in [splatnet2statink/Cookie Generation](https://github.com/frozenpandaman/splatnet2statink#cookie-generation). Please read the following paragraph CAREFULLY before you use Automatic Cookie Generation.
 
@@ -22,7 +24,7 @@ Automatic Cookie Generation involves making a secure request to **two non-Ninten
 
 If you do not want to use Automatic Cookie Generation for obtaining cookie, you may also retrieve one by intercepting into the device's traffic with SplatNet, which is also called MitM. You may follow the [splatnet2statink/mitmproxy instructions](https://github.com/frozenpandaman/splatnet2statink/wiki/mitmproxy-instructions) to get one, and fill in the app's Cookie textbox.
 
-# License
+## License
 
 Ikas is licensed under [the MIT License](/LICENSE).
 
