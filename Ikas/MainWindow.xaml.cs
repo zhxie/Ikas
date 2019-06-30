@@ -406,22 +406,22 @@ namespace Ikas
 
         private void ScheduleFailed(string reason)
         {
+            tmSchedule.Stop();
             MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
                 Translate("Ikas cannot get schdule"),
                 Translate(reason),
                 Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
                 ),"Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-            tmSchedule.Stop();
         }
 
         private void BattleFailed(string reason)
         {
+            tmBattle.Stop();
             MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
                 Translate("Ikas cannot get the latest battle"),
                 Translate(reason),
                 Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-            tmBattle.Stop();
         }
 
         private string Translate(string s, bool isLocal = false)
