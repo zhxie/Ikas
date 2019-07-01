@@ -644,7 +644,17 @@ namespace Ikas
                 UpdateSchedule(new Schedule(2));
                 return;
             }
-            HttpResponseMessage response = await client.SendAsync(request);
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.SendAsync(request);
+            }
+            catch
+            {
+                // Update Schedule on error
+                UpdateSchedule(new Schedule(4));
+                return;
+            }
             if (response.IsSuccessStatusCode)
             {
                 string resultString = await response.Content.ReadAsStringAsync();
@@ -710,6 +720,9 @@ namespace Ikas
                     case 3:
                         ScheduleFailed?.Invoke("schedule cannot be resolved");
                         break;
+                    case 4:
+                        ScheduleFailed?.Invoke("network cannot be reached");
+                        break;
                     default:
                         break;
                 }
@@ -760,7 +773,17 @@ namespace Ikas
                 UpdateBattle(new Battle(-2));
                 return;
             }
-            HttpResponseMessage response = await client.SendAsync(request);
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.SendAsync(request);
+            }
+            catch
+            {
+                // Update Battle on error
+                UpdateBattle(new Battle(-8));
+                return;
+            }
             if (response.IsSuccessStatusCode)
             {
                 string resultString = await response.Content.ReadAsStringAsync();
@@ -801,7 +824,16 @@ namespace Ikas
                     UpdateBattle(new Battle(-2));
                     return;
                 }
-                response = await client.SendAsync(request);
+                try
+                {
+                    response = await client.SendAsync(request);
+                }
+                catch
+                {
+                    // Update Battle on error
+                    UpdateBattle(new Battle(-8));
+                    return;
+                }
                 if (response.IsSuccessStatusCode)
                 {
                     resultString = await response.Content.ReadAsStringAsync();
@@ -1174,6 +1206,9 @@ namespace Ikas
                     case -7:
                         BattleFailed?.Invoke("gear cannot be resolved");
                         break;
+                    case -8:
+                        BattleFailed?.Invoke("network cannot be reached");
+                        break;
                     default:
                         break;
                 }
@@ -1326,7 +1361,15 @@ namespace Ikas
             {
                 return "";
             }
-            HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.SendAsync(request).ConfigureAwait(false);
+            }
+            catch
+            {
+                return "";
+            }
             if (response.IsSuccessStatusCode)
             {
                 string resultString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1388,11 +1431,26 @@ namespace Ikas
             }
             HttpClient client = new HttpClient(handler);
             HttpRequestMessage requestAuthorize = new HttpRequestMessage(HttpMethod.Get, string.Format(FileFolderUrl.NintendoAuthorize, authState, authCodeChallenge));
-            await client.SendAsync(requestAuthorize).ConfigureAwait(false);
+            try
+            {
+                await client.SendAsync(requestAuthorize).ConfigureAwait(false);
+            }
+            catch
+            {
+                return "!network cannot be reached";
+            }
             // Send HTTP POST
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoSessionToken);
             request.Content = new StringContent("{\"client_id\":\"71b963c1b7b6d119\",\"session_token_code\":\"" + sessionTokenCode + "\",\"session_token_code_verifier\":\"" + authCodeVerifier + "\"}", Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.SendAsync(request).ConfigureAwait(false);
+            }
+            catch
+            {
+                return "!network cannot be reached";
+            }
             if (response.IsSuccessStatusCode)
             {
                 string resultString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1434,7 +1492,15 @@ namespace Ikas
             HttpClient client = new HttpClient(handler);
             HttpRequestMessage requestToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoToken);
             requestToken.Content = new StringContent("{\"client_id\":\"71b963c1b7b6d119\",\"session_token\":\"" + sessionToken + "\",\"grant_type\":\"urn:ietf:params:oauth:grant-type:jwt-bearer-session-token\"}", Encoding.UTF8, "application/json");
-            HttpResponseMessage responseToken = await client.SendAsync(requestToken).ConfigureAwait(false);
+            HttpResponseMessage responseToken;
+            try
+            {
+                responseToken = await client.SendAsync(requestToken).ConfigureAwait(false);
+            }
+            catch
+            {
+                return "!network cannot be reached";
+            }
             if (responseToken.IsSuccessStatusCode)
             {
                 string resultTokenString = await responseToken.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1454,7 +1520,15 @@ namespace Ikas
                 // Send HTTP GET
                 HttpRequestMessage requestUserInfo = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.NintendoUserInfo);
                 requestUserInfo.Headers.Add("Authorization", string.Format("Bearer {0}", token));
-                HttpResponseMessage responseUserInfo = await client.SendAsync(requestUserInfo).ConfigureAwait(false);
+                HttpResponseMessage responseUserInfo;
+                try
+                {
+                    responseUserInfo = await client.SendAsync(requestUserInfo).ConfigureAwait(false);
+                }
+                catch
+                {
+                    return "!network cannot be reached";
+                }
                 if (responseUserInfo.IsSuccessStatusCode)
                 {
                     string resultUserInfoString = await responseUserInfo.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1482,7 +1556,15 @@ namespace Ikas
                     requestHashContent.Add(new KeyValuePair<string, string>("naIdToken", idToken));
                     requestHashContent.Add(new KeyValuePair<string, string>("timestamp", timestamp.ToString()));
                     requestHash.Content = new FormUrlEncodedContent(requestHashContent);
-                    HttpResponseMessage responseHash = await client.SendAsync(requestHash).ConfigureAwait(false);
+                    HttpResponseMessage responseHash;
+                    try
+                    {
+                        responseHash = await client.SendAsync(requestHash).ConfigureAwait(false);
+                    }
+                    catch
+                    {
+                        return "!network cannot be reached";
+                    }
                     if (responseHash.IsSuccessStatusCode)
                     {
                         string resultHashString = await responseHash.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1532,7 +1614,15 @@ namespace Ikas
                         request3rd.Headers.Add("x-hash", hash);
                         request3rd.Headers.Add("x-ver", "2");
                         request3rd.Headers.Add("x-iid", iid);
-                        HttpResponseMessage response3rd = await client.SendAsync(request3rd).ConfigureAwait(false);
+                        HttpResponseMessage response3rd;
+                        try
+                        {
+                            response3rd = await client.SendAsync(request3rd).ConfigureAwait(false);
+                        }
+                        catch
+                        {
+                            return "!network cannot be reached";
+                        }
                         if (response3rd.IsSuccessStatusCode)
                         {
                             string result3rdString = await response3rd.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1575,7 +1665,15 @@ namespace Ikas
                                 "\",\"naCountry\":\"" + country +
                                 "\",\"naBirthday\":\"" + birthday +
                                 "\",\"language\":\"" + language + "\"}}", Encoding.UTF8, "application/json");
-                            HttpResponseMessage responseAccessToken = await client.SendAsync(requestAccessToken).ConfigureAwait(false);
+                            HttpResponseMessage responseAccessToken;
+                            try
+                            {
+                                responseAccessToken = await client.SendAsync(requestAccessToken).ConfigureAwait(false);
+                            }
+                            catch
+                            {
+                                return "!network cannot be reached";
+                            }
                             if (responseAccessToken.IsSuccessStatusCode)
                             {
                                 string resultAccessTokenString = await responseAccessToken.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1598,7 +1696,15 @@ namespace Ikas
                                 "\",\"registrationToken\":\"" + loginAppP1 +
                                 "\",\"timestamp\":\"" + loginAppP2 +
                                 "\",\"requestId\":\"" + loginAppP3 + "\"}}", Encoding.UTF8, "application/json");
-                                HttpResponseMessage responseSplatoonAccessToken = await client.SendAsync(requestSplatoonAccessToken).ConfigureAwait(false);
+                                HttpResponseMessage responseSplatoonAccessToken;
+                                try
+                                {
+                                    responseSplatoonAccessToken = await client.SendAsync(requestSplatoonAccessToken).ConfigureAwait(false);
+                                }
+                                catch
+                                {
+                                    return "!network cannot be reached";
+                                }
                                 if (responseSplatoonAccessToken.IsSuccessStatusCode)
                                 {
                                     string resultSplatoonAccessTokenString = await responseSplatoonAccessToken.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1625,7 +1731,15 @@ namespace Ikas
                                     HttpClient clientCookie = new HttpClient(handlerCookie);
                                     HttpRequestMessage requestCookie = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet);
                                     requestCookie.Headers.Add("X-GameWebToken", splatoonAccessToken);
-                                    HttpResponseMessage responseCookie = await clientCookie.SendAsync(requestCookie).ConfigureAwait(false);
+                                    HttpResponseMessage responseCookie;
+                                    try
+                                    {
+                                        responseCookie = await clientCookie.SendAsync(requestCookie).ConfigureAwait(false);
+                                    }
+                                    catch
+                                    {
+                                        return "!network cannot be reached";
+                                    }
                                     if (responseCookie.IsSuccessStatusCode)
                                     {
                                         List<Cookie> cookies = cookieContainer.GetCookies(new Uri(FileFolderUrl.SplatNet)).Cast<Cookie>().ToList();

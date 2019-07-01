@@ -244,6 +244,7 @@
     <!-- Problem -->
     <sys:String x:Key="unknown error">unknown error</sys:String>
     <sys:String x:Key="schedule is not ready">schedule is not ready</sys:String>
+    <sys:String x:Key="network cannot be reached">network cannot be reached</sys:String>
     <sys:String x:Key="network cannot be reached, or Cookie is invalid or expired">network can not be reached, or Cookie is invalid or expired</sys:String>
     <sys:String x:Key="Cookie is empty">Cookie is empty</sys:String>
     <sys:String x:Key="schedule cannot be resolved">schedule can not be resolved</sys:String>

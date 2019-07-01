@@ -244,6 +244,7 @@
     <!-- Problem -->
     <sys:String x:Key="unknown error">未知のエラーの</sys:String>
     <sys:String x:Key="schedule is not ready">スケジュールの準備ができていない</sys:String>
+    <sys:String x:Key="network cannot be reached">ネットワークにアクセスできない</sys:String>
     <sys:String x:Key="network cannot be reached, or Cookie is invalid or expired">ネットワークにアクセスできない、またはクッキーが無効か期限切れの</sys:String>
     <sys:String x:Key="Cookie is empty">クッキーが空です</sys:String>
     <sys:String x:Key="schedule cannot be resolved">スケジュールは解決できない</sys:String>
