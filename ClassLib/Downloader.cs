@@ -19,6 +19,7 @@ namespace ClassLib
             Schedule,
             Battle,
             Player,
+            Gear,
             Weapon
         }
 

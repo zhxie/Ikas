@@ -100,6 +100,8 @@ namespace Ikas
 
         public void SetWeapon(Weapon weapon)
         {
+            // Remove previous Downloader's handlers (Believe every weapon has its sub weapon and special weapon, stop checking)
+            //Depot.DownloadManager.RemoveDownloaders(Downloader.SourceType.Weapon);
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(tbName);
             ((Storyboard)FindResource("fade_out")).Begin(bdWeapon);

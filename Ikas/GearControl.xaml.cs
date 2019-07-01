@@ -40,7 +40,10 @@ namespace Ikas
 
         public void SetGear(Gear gear)
         {
+            // Remove previous Downloader's handlers, let lambda decide
+            //Depot.DownloadManager.RemoveDownloaders(Downloader.SourceType.Gear);
             Gear = gear;
+            // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(bdGear);
             ((Storyboard)FindResource("fade_out")).Begin(bdMain);
             ((Storyboard)FindResource("fade_out")).Begin(bdSub1);
@@ -60,7 +63,7 @@ namespace Ikas
                 catch
                 {
                     // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.Image, image, Downloader.SourceType.Player, Depot.Proxy);
+                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.Image, image, Downloader.SourceType.Gear, Depot.Proxy);
                     Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
                         if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Gear.Image))
@@ -84,7 +87,7 @@ namespace Ikas
                 catch
                 {
                     // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.MainSkill.Image, image2, Downloader.SourceType.Player, Depot.Proxy);
+                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.MainSkill.Image, image2, Downloader.SourceType.Gear, Depot.Proxy);
                     Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
                         if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Gear.MainSkill.Image))
@@ -108,7 +111,7 @@ namespace Ikas
                 catch
                 {
                     // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[0].Image, image3, Downloader.SourceType.Player, Depot.Proxy);
+                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[0].Image, image3, Downloader.SourceType.Gear, Depot.Proxy);
                     Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
                         if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Gear.SubSkills[0].Image))
@@ -134,15 +137,18 @@ namespace Ikas
                     catch
                     {
                         // Download the image
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[1].Image, image4, Downloader.SourceType.Player, Depot.Proxy);
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[1].Image, image4, Downloader.SourceType.Gear, Depot.Proxy);
                         Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            if (System.IO.Path.GetFileName(image4) == System.IO.Path.GetFileName(Gear.SubSkills[1].Image))
+                            if (Gear.SubSkills.Count > 1)
                             {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image4)));
-                                brush.Stretch = Stretch.Uniform;
-                                bdSub2.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(bdSub2);
+                                if (System.IO.Path.GetFileName(image4) == System.IO.Path.GetFileName(Gear.SubSkills[1].Image))
+                                {
+                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image4)));
+                                    brush.Stretch = Stretch.Uniform;
+                                    bdSub2.Background = brush;
+                                    ((Storyboard)FindResource("fade_in")).Begin(bdSub2);
+                                }
                             }
                         }));
                     }
@@ -160,15 +166,18 @@ namespace Ikas
                         catch
                         {
                             // Download the image
-                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[2].Image, image5, Downloader.SourceType.Player, Depot.Proxy);
+                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[2].Image, image5, Downloader.SourceType.Gear, Depot.Proxy);
                             Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                             {
-                                if (System.IO.Path.GetFileName(image5) == System.IO.Path.GetFileName(Gear.SubSkills[2].Image))
+                                if (Gear.SubSkills.Count > 2)
                                 {
-                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image5)));
-                                    brush.Stretch = Stretch.Uniform;
-                                    bdSub3.Background = brush;
-                                    ((Storyboard)FindResource("fade_in")).Begin(bdSub3);
+                                    if (System.IO.Path.GetFileName(image5) == System.IO.Path.GetFileName(Gear.SubSkills[2].Image))
+                                    {
+                                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image5)));
+                                        brush.Stretch = Stretch.Uniform;
+                                        bdSub3.Background = brush;
+                                        ((Storyboard)FindResource("fade_in")).Begin(bdSub3);
+                                    }
                                 }
                             }));
                         }

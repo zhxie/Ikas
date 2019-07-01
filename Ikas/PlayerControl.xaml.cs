@@ -124,12 +124,15 @@ namespace Ikas
                     Downloader downloader = new Downloader(Player.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
                     Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
-                        if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Player.Image) + ".jpg")
+                        if (Player != null)
                         {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                            brush.Stretch = Stretch.UniformToFill;
-                            bdIcon.Background = brush;
-                            ((Storyboard)FindResource("fade_in")).Begin(bdIcon);
+                            if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Player.Image) + ".jpg")
+                            {
+                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                                brush.Stretch = Stretch.UniformToFill;
+                                bdIcon.Background = brush;
+                                ((Storyboard)FindResource("fade_in")).Begin(bdIcon);
+                            }
                         }
                     }));
                 }
@@ -148,12 +151,15 @@ namespace Ikas
                     Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.Image, image2, Downloader.SourceType.Battle, Depot.Proxy);
                     Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
-                        if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Player.Weapon.Image))
+                        if (Player != null)
                         {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
-                            brush.Stretch = Stretch.UniformToFill;
-                            bdWeapon.Background = brush;
-                            ((Storyboard)FindResource("fade_in")).Begin(bdWeapon);
+                            if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Player.Weapon.Image))
+                            {
+                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
+                                brush.Stretch = Stretch.UniformToFill;
+                                bdWeapon.Background = brush;
+                                ((Storyboard)FindResource("fade_in")).Begin(bdWeapon);
+                            }
                         }
                     }));
                 }
@@ -189,12 +195,15 @@ namespace Ikas
                         Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.SpecialWeapon.Image1, image3, Downloader.SourceType.Battle, Depot.Proxy);
                         Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Player.Weapon.SpecialWeapon.Image1))
+                            if (Player != null)
                             {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
-                                brush.Stretch = Stretch.Uniform;
-                                bdSpecial.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
+                                if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Player.Weapon.SpecialWeapon.Image1))
+                                {
+                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
+                                    brush.Stretch = Stretch.Uniform;
+                                    bdSpecial.Background = brush;
+                                    ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
+                                }
                             }
                         }));
                     }
@@ -215,12 +224,15 @@ namespace Ikas
                         Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.SpecialWeapon.Image2, image3, Downloader.SourceType.Battle, Depot.Proxy);
                         Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Player.Weapon.SpecialWeapon.Image2))
+                            if (Player != null)
                             {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
-                                brush.Stretch = Stretch.Uniform;
-                                bdSpecial.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
+                                if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Player.Weapon.SpecialWeapon.Image2))
+                                {
+                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
+                                    brush.Stretch = Stretch.Uniform;
+                                    bdSpecial.Background = brush;
+                                    ((Storyboard)FindResource("fade_in")).Begin(bdSpecial);
+                                }
                             }
                         }));
                     }
