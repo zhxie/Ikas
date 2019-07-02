@@ -235,11 +235,13 @@
     <sys:String x:Key="spygadget_sorella">Undercover Sorella Brella</sys:String>
     <sys:String x:Key="spygadget_becchu">Kensa Undercover Brella</sys:String>
     <!-- Errors -->
+    <sys:String x:Key="Ikas meets an unhandled exception">Ikas meet an unhandled exception</sys:String>
     <sys:String x:Key="Ikas has started, or Ikas failed to exit normally">Ikas has started, or Ikas failed to exit normally</sys:String>
     <sys:String x:Key="Ikas cannot get schdule">Ikas can not get schdule</sys:String>
     <sys:String x:Key="Ikas cannot get the latest battle">Ikas can not get the latest battle</sys:String>
     <sys:String x:Key="Ikas cannot get Session Token">Ikas cannot get Session Token</sys:String>
     <sys:String x:Key="Ikas cannot update Cookie">Ikas cannot update Cookie</sys:String>
+    <sys:String x:Key="This is a bug, please consider submitting the issue.">This is a bug, please consider submitting the issue.</sys:String>
     <sys:String x:Key="After you solve the problems above, if this error message continues to appear, please consider submitting the issue.">After you solve the problems above, if this error message continues to appear, please consider submitting the issue.</sys:String>
     <!-- Problem -->
     <sys:String x:Key="unknown error">unknown error</sys:String>
@@ -275,6 +277,7 @@
     <sys:String x:Key="main_window-setting">Setting</sys:String>
     <sys:String x:Key="main_window-exit">Exit</sys:String>
     <sys:String x:Key="main_window-{0}, because {1}. {2}">{0}, because {1}. {2}</sys:String>
+    <sys:String x:Key="main_window-{0}. {1}\n\n{2}">{0}. {1}\n\n{2}</sys:String>
     <!-- ScheduleWindow -->
     <sys:String x:Key="schedule_window-Next">Next</sys:String>
     <sys:String x:Key="schedule_window-{0} - {1}">{0} - {1}</sys:String>

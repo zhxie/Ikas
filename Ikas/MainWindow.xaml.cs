@@ -42,6 +42,8 @@ namespace Ikas
 
         public MainWindow()
         {
+            // Add handler for unhandled exception
+            AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;
             // Load user and system configuration
             Depot.LoadSystemConfiguration();
             Depot.LoadUserConfiguration();
@@ -94,6 +96,7 @@ namespace Ikas
                 }
             });
             tmBattle.Interval = new TimeSpan(0, 0, 30);
+            throw new ArgumentOutOfRangeException();
         }
 
         #region Control Event
@@ -222,6 +225,15 @@ namespace Ikas
         }
 
         #endregion
+
+        private void AppDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(string.Format(Translate("{0}. {1}\n\n{2}", true),
+                Translate("Ikas meets an unhandled exception"),
+                Translate("This is a bug, please consider submitting the issue."),
+                e.ExceptionObject.ToString()
+                ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
 
         private void AlwaysOnTopChanged()
         {
