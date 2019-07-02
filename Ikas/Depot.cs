@@ -793,6 +793,61 @@ namespace Ikas
                 try
                 {
                     battleNumber = int.Parse(jObject["results"][0]["battle_number"].ToString());
+                    try
+                    {
+                        foreach (JToken battle in jObject["results"])
+                        {
+                            int thisBattleNumber = int.Parse(battle["battle_number"].ToString());
+                            if (thisBattleNumber > Battle.Number)
+                            {
+                                Mode.Key type = Mode.ParseKey(battle["type"].ToString());
+                                if (type == Mode.Key.ranked_battle || type == Mode.Key.league_battle)
+                                {
+                                    Rule.Key rule = Rule.ParseKey(battle["rule"]["key"].ToString());
+                                    Rank.Key rankAfter;
+                                    bool isSPlus = int.TryParse(battle["udemae"]["s_plus_number"].ToString(), out _);
+                                    if (isSPlus)
+                                    {
+                                        rankAfter = Rank.ParseKey(battle["udemae"]["name"].ToString(), int.Parse(battle["udemae"]["s_plus_number"].ToString()));
+                                    }
+                                    else
+                                    {
+                                        rankAfter = Rank.ParseKey(battle["udemae"]["name"].ToString());
+                                    }
+                                    switch (rule)
+                                    {
+                                        case Rule.Key.splat_zones:
+                                            if (rankAfter != SplatZonesRank)
+                                            {
+                                                UpdateRank(Rule.Key.splat_zones, rankAfter);
+                                            }
+                                            break;
+                                        case Rule.Key.tower_control:
+                                            if (rankAfter != TowerControlRank)
+                                            {
+                                                UpdateRank(Rule.Key.tower_control, rankAfter);
+                                            }
+                                            break;
+                                        case Rule.Key.rainmaker:
+                                            if (rankAfter != RainmakerRank)
+                                            {
+                                                UpdateRank(Rule.Key.rainmaker, rankAfter);
+                                            }
+                                            break;
+                                        case Rule.Key.clam_blitz:
+                                            if (rankAfter != ClamBlitzRank)
+                                            {
+                                                UpdateRank(Rule.Key.clam_blitz, rankAfter);
+                                            }
+                                            break;
+                                        default:
+                                            throw new ArgumentOutOfRangeException();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch { }
                 }
                 catch
                 {
@@ -1001,6 +1056,35 @@ namespace Ikas
                                         // Ranked X Battle
                                         int estimatedXPower = int.Parse(jObject["estimate_x_power"].ToString());
                                         double xPowerAfter = double.Parse(jObject["x_power"].ToString());
+                                        switch (rule)
+                                        {
+                                            case Rule.Key.splat_zones:
+                                                if (SplatZonesRank != Rank.Key.x)
+                                                {
+                                                    UpdateRank(Rule.Key.splat_zones, Rank.Key.x);
+                                                }
+                                                break;
+                                            case Rule.Key.tower_control:
+                                                if (TowerControlRank != Rank.Key.x)
+                                                {
+                                                    UpdateRank(Rule.Key.tower_control, Rank.Key.x);
+                                                }
+                                                break;
+                                            case Rule.Key.rainmaker:
+                                                if (RainmakerRank != Rank.Key.x)
+                                                {
+                                                    UpdateRank(Rule.Key.rainmaker, Rank.Key.x);
+                                                }
+                                                break;
+                                            case Rule.Key.clam_blitz:
+                                                if (ClamBlitzRank != Rank.Key.x)
+                                                {
+                                                    UpdateRank(Rule.Key.clam_blitz, Rank.Key.x);
+                                                }
+                                                break;
+                                            default:
+                                                throw new ArgumentOutOfRangeException();
+                                        }
                                         UpdateBattle(new RankedXBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
                                             estimatedXPower, xPowerAfter, myScore, otherScore) as Battle);
                                     }
@@ -1068,6 +1152,45 @@ namespace Ikas
                                     int myScore = int.Parse(jObject["my_team_count"].ToString());
                                     int otherScore = int.Parse(jObject["other_team_count"].ToString());
                                     double maxLeaguePoint = double.Parse(jObject["max_league_point"].ToString());
+                                    Rank.Key rankAfter;
+                                    bool isSPlus = int.TryParse(jObject["udemae"]["s_plus_number"].ToString(), out _);
+                                    if (isSPlus)
+                                    {
+                                        rankAfter = Rank.ParseKey(jObject["udemae"]["name"].ToString(), int.Parse(jObject["udemae"]["s_plus_number"].ToString()));
+                                    }
+                                    else
+                                    {
+                                        rankAfter = Rank.ParseKey(jObject["udemae"]["name"].ToString());
+                                    }
+                                    switch (rule)
+                                    {
+                                        case Rule.Key.splat_zones:
+                                            if (rankAfter != SplatZonesRank)
+                                            {
+                                                UpdateRank(Rule.Key.splat_zones, rankAfter);
+                                            }
+                                            break;
+                                        case Rule.Key.tower_control:
+                                            if (rankAfter != TowerControlRank)
+                                            {
+                                                UpdateRank(Rule.Key.tower_control, rankAfter);
+                                            }
+                                            break;
+                                        case Rule.Key.rainmaker:
+                                            if (rankAfter != RainmakerRank)
+                                            {
+                                                UpdateRank(Rule.Key.rainmaker, rankAfter);
+                                            }
+                                            break;
+                                        case Rule.Key.clam_blitz:
+                                            if (rankAfter != ClamBlitzRank)
+                                            {
+                                                UpdateRank(Rule.Key.clam_blitz, rankAfter);
+                                            }
+                                            break;
+                                        default:
+                                            throw new ArgumentOutOfRangeException();
+                                    }
                                     UpdateBattle(new LeagueBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
                                         myEstimatedLeaguePower, otherEstimatedLeaguePower, leaguePoint, maxLeaguePoint, myScore, otherScore) as Battle);
                                 }
