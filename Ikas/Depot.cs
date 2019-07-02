@@ -795,6 +795,10 @@ namespace Ikas
                     battleNumber = int.Parse(jObject["results"][0]["battle_number"].ToString());
                     try
                     {
+                        bool isSplatZonesUpdated = false;
+                        bool isTowerControlUpdated = false;
+                        bool isRainmakerUpdated = false;
+                        bool isClamBlitzUpdated = false;
                         foreach (JToken battle in jObject["results"])
                         {
                             int thisBattleNumber = int.Parse(battle["battle_number"].ToString());
@@ -817,28 +821,32 @@ namespace Ikas
                                     switch (rule)
                                     {
                                         case Rule.Key.splat_zones:
-                                            if (rankAfter != SplatZonesRank)
+                                            if (rankAfter != SplatZonesRank && !isSplatZonesUpdated)
                                             {
                                                 UpdateRank(Rule.Key.splat_zones, rankAfter);
                                             }
+                                            isSplatZonesUpdated = true;
                                             break;
                                         case Rule.Key.tower_control:
-                                            if (rankAfter != TowerControlRank)
+                                            if (rankAfter != TowerControlRank && !isTowerControlUpdated)
                                             {
                                                 UpdateRank(Rule.Key.tower_control, rankAfter);
                                             }
+                                            isTowerControlUpdated = true;
                                             break;
                                         case Rule.Key.rainmaker:
-                                            if (rankAfter != RainmakerRank)
+                                            if (rankAfter != RainmakerRank && !isRainmakerUpdated)
                                             {
                                                 UpdateRank(Rule.Key.rainmaker, rankAfter);
                                             }
+                                            isRainmakerUpdated = true;
                                             break;
                                         case Rule.Key.clam_blitz:
-                                            if (rankAfter != ClamBlitzRank)
+                                            if (rankAfter != ClamBlitzRank && !isClamBlitzUpdated)
                                             {
                                                 UpdateRank(Rule.Key.clam_blitz, rankAfter);
                                             }
+                                            isClamBlitzUpdated = true;
                                             break;
                                         default:
                                             throw new ArgumentOutOfRangeException();
