@@ -96,7 +96,6 @@ namespace Ikas
                 }
             });
             tmBattle.Interval = new TimeSpan(0, 0, 30);
-            throw new ArgumentOutOfRangeException();
         }
 
         #region Control Event
