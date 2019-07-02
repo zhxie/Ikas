@@ -122,6 +122,23 @@ namespace Ikas
             {
                 playerWindow.Top = e.GetPosition(this).Y + Top - playerWindow.Height / 2;
                 playerWindow.Left = e.GetPosition(this).X + Left + 10;
+                // Restrict in this window
+                if (Top - playerWindow.Top > 20)
+                {
+                    playerWindow.Top = Top - 20;
+                }
+                if (Left - playerWindow.Left > 20)
+                {
+                    playerWindow.Left = Left - 20;
+                }
+                if (playerWindow.Top + playerWindow.Height - (Top + Height) > 20)
+                {
+                    playerWindow.Top = Top + Height - playerWindow.Height + 20;
+                }
+                if (playerWindow.Left + playerWindow.Width - (Left + Width) > 20)
+                {
+                    playerWindow.Left = Left + Width - playerWindow.Width + 20;
+                }
                 playerWindow.SetPlayer(player);
                 ((Storyboard)FindResource("window_fade_in")).Begin(playerWindow);
             }
@@ -143,6 +160,23 @@ namespace Ikas
             {
                 weaponWindow.Top = e.GetPosition(this).Y + Top - weaponWindow.Height / 2;
                 weaponWindow.Left = e.GetPosition(this).X + Left + 10;
+                // Restrict in this window
+                if (Top - weaponWindow.Top > 20)
+                {
+                    weaponWindow.Top = Top - 20;
+                }
+                if (Left - weaponWindow.Left > 20)
+                {
+                    weaponWindow.Left = Left - 20;
+                }
+                if (weaponWindow.Top + weaponWindow.Height - (Top + Height) > 20)
+                {
+                    weaponWindow.Top = Top + Height - weaponWindow.Height + 20;
+                }
+                if (weaponWindow.Left + weaponWindow.Width - (Left + Width) > 20)
+                {
+                    weaponWindow.Left = Left + Width - weaponWindow.Width + 20;
+                }
                 weaponWindow.SetWeapon(player.Weapon);
                 ((Storyboard)FindResource("window_fade_in")).Begin(weaponWindow);
             }
