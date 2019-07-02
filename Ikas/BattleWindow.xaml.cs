@@ -123,21 +123,21 @@ namespace Ikas
                 playerWindow.Top = e.GetPosition(this).Y + Top - playerWindow.Height / 2;
                 playerWindow.Left = e.GetPosition(this).X + Left + 10;
                 // Restrict in this window
-                if (Top - playerWindow.Top > 20)
+                if (Top - playerWindow.Top > 30)
                 {
-                    playerWindow.Top = Top - 20;
+                    playerWindow.Top = Top - 30;
                 }
-                if (Left - playerWindow.Left > 20)
+                if (Left - playerWindow.Left > 30)
                 {
-                    playerWindow.Left = Left - 20;
+                    playerWindow.Left = Left - 30;
                 }
-                if (playerWindow.Top + playerWindow.Height - (Top + Height) > 20)
+                if (playerWindow.Top + playerWindow.Height - (Top + Height) > 30)
                 {
-                    playerWindow.Top = Top + Height - playerWindow.Height + 20;
+                    playerWindow.Top = Top + Height - playerWindow.Height + 30;
                 }
-                if (playerWindow.Left + playerWindow.Width - (Left + Width) > 20)
+                if (playerWindow.Left + playerWindow.Width - (Left + Width) > 30)
                 {
-                    playerWindow.Left = Left + Width - playerWindow.Width + 20;
+                    playerWindow.Left = Left + Width - playerWindow.Width + 30;
                 }
                 playerWindow.SetPlayer(player);
                 ((Storyboard)FindResource("window_fade_in")).Begin(playerWindow);
@@ -161,21 +161,21 @@ namespace Ikas
                 weaponWindow.Top = e.GetPosition(this).Y + Top - weaponWindow.Height / 2;
                 weaponWindow.Left = e.GetPosition(this).X + Left + 10;
                 // Restrict in this window
-                if (Top - weaponWindow.Top > 20)
+                if (Top - weaponWindow.Top > 30)
                 {
-                    weaponWindow.Top = Top - 20;
+                    weaponWindow.Top = Top - 30;
                 }
-                if (Left - weaponWindow.Left > 20)
+                if (Left - weaponWindow.Left > 30)
                 {
-                    weaponWindow.Left = Left - 20;
+                    weaponWindow.Left = Left - 30;
                 }
-                if (weaponWindow.Top + weaponWindow.Height - (Top + Height) > 20)
+                if (weaponWindow.Top + weaponWindow.Height - (Top + Height) > 30)
                 {
-                    weaponWindow.Top = Top + Height - weaponWindow.Height + 20;
+                    weaponWindow.Top = Top + Height - weaponWindow.Height + 30;
                 }
-                if (weaponWindow.Left + weaponWindow.Width - (Left + Width) > 20)
+                if (weaponWindow.Left + weaponWindow.Width - (Left + Width) > 30)
                 {
-                    weaponWindow.Left = Left + Width - weaponWindow.Width + 20;
+                    weaponWindow.Left = Left + Width - weaponWindow.Width + 30;
                 }
                 weaponWindow.SetWeapon(player.Weapon);
                 ((Storyboard)FindResource("window_fade_in")).Begin(weaponWindow);

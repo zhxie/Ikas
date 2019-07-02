@@ -32,8 +32,11 @@
             <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
         </Storyboard>
     </Window.Resources>
-    <Grid>
+    <Grid Margin="10">
         <Border CornerRadius="27">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" Opacity="0.5" ShadowDepth="0" />
+            </Border.Effect>
             <Border.Background>
                 <SolidColorBrush Color="#FF221F22"/>
             </Border.Background>
