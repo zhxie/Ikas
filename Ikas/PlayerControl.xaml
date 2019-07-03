@@ -19,10 +19,14 @@
         <Storyboard x:Key="bg_to_white">
             <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#7FFFFFFF" SpeedRatio="2"/>
         </Storyboard>
+        <Storyboard x:Key="resize_width">
+            <DoubleAnimation  BeginTime="0:0:0.0" Storyboard.TargetProperty="Width" SpeedRatio="0.75" To="0" AccelerationRatio="0.25" DecelerationRatio="0.5"/>
+        </Storyboard>
     </UserControl.Resources>
     <Grid>
         <Border x:Name="bdMain" Height="45" CornerRadius="8" Background="#7F000000">
             <Grid x:Name="gridMain" Opacity="0">
+                <Border x:Name="bdKillDeathRatio" Width="0" CornerRadius="8" Background="Transparent" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                 <Grid Margin="5,0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <Grid Width="48">

@@ -72,13 +72,13 @@ namespace ClassLib
     {
         public enum SpeciesType
         {
-            Inklings,
-            Octolings
+            inklings,
+            octolings
         }
         public enum StyleType
         {
-            Girl,
-            Boy
+            girl,
+            boy
         }
 
         public string Id { get; }
@@ -127,6 +127,20 @@ namespace ClassLib
                 return Paint <= 0;
             }
         }
+        public double KillDeathRatio
+        {
+            get
+            {
+                if (Death == 0)
+                {
+                    return 99.99;
+                }
+                else
+                {
+                    return Math.Min(Kill * 1.0 / Death, 99.99);
+                }
+            }
+        }
 
         public Player(string id, string nickname, SpeciesType species, StyleType style, int level, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, int sort, string image, bool isSelf = false)
         {
@@ -154,9 +168,9 @@ namespace ClassLib
             switch (s)
             {
                 case "inklings":
-                    return SpeciesType.Inklings;
+                    return SpeciesType.inklings;
                 case "octolings":
-                    return SpeciesType.Octolings;
+                    return SpeciesType.octolings;
                 default:
                     throw new FormatException();
             }
@@ -166,9 +180,9 @@ namespace ClassLib
             switch (s)
             {
                 case "girl":
-                    return StyleType.Girl;
+                    return StyleType.girl;
                 case "boy":
-                    return StyleType.Boy;
+                    return StyleType.boy;
                 default:
                     throw new FormatException();
             }

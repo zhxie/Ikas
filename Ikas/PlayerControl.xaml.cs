@@ -169,13 +169,13 @@ namespace Ikas
                 // Kill, death and special
                 switch (player.Species)
                 {
-                    case Player.SpeciesType.Inklings:
+                    case Player.SpeciesType.inklings:
                         ((Storyboard)FindResource("fade_in")).Begin(imgInklingsKill);
                         ((Storyboard)FindResource("fade_in")).Begin(imgInklingsDeath);
                         ((Storyboard)FindResource("fade_out")).Begin(imgOctolingsKill);
                         ((Storyboard)FindResource("fade_out")).Begin(imgOctolingsDeath);
                         break;
-                    case Player.SpeciesType.Octolings:
+                    case Player.SpeciesType.octolings:
                         ((Storyboard)FindResource("fade_in")).Begin(imgOctolingsKill);
                         ((Storyboard)FindResource("fade_in")).Begin(imgOctolingsDeath);
                         ((Storyboard)FindResource("fade_out")).Begin(imgInklingsKill);
@@ -254,6 +254,38 @@ namespace Ikas
                         }));
                     }
                 }
+                // Kill death ratio
+                if (isMy)
+                {
+                    bdKillDeathRatio.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2F" + Design.NeonRed));
+                }
+                else
+                {
+                    bdKillDeathRatio.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2F" + Design.NeonGreen));
+                }
+                Storyboard sb = (Storyboard)FindResource("resize_width");
+                double to;
+                if (player.IsOffline)
+                {
+                    to = 0;
+                }
+                else
+                {
+                    if (player.KillDeathRatio <= 2)
+                    {
+                        to = bdMain.ActualWidth * (0.05 + 0.35 * player.KillDeathRatio);
+                    }
+                    else if (player.KillDeathRatio <= 8)
+                    {
+                        to = bdMain.ActualWidth * (0.75 + 0.25 * (Math.Log(player.KillDeathRatio) / Math.Log(2)) / 3);
+                    }
+                    else
+                    {
+                        to = bdMain.ActualWidth;
+                    }
+                }
+                (sb.Children[0] as DoubleAnimation).To = to;
+                sb.Begin(bdKillDeathRatio);
                 // Show all
                 ((Storyboard)FindResource("fade_in")).Begin(gridMain);
             }
