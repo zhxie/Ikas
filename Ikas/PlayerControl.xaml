@@ -17,7 +17,7 @@
             <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#7F000000" SpeedRatio="2"/>
         </Storyboard>
         <Storyboard x:Key="bg_to_white">
-            <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#7FFFFFFF" SpeedRatio="2"/>
+            <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#7F7F7F7F" SpeedRatio="2"/>
         </Storyboard>
         <Storyboard x:Key="resize_width">
             <DoubleAnimation  BeginTime="0:0:0.0" Storyboard.TargetProperty="Width" SpeedRatio="0.75" To="0" AccelerationRatio="0.25" DecelerationRatio="0.5"/>
