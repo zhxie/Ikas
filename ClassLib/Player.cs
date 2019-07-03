@@ -70,8 +70,21 @@ namespace ClassLib
 
     public class Player
     {
+        public enum SpeciesType
+        {
+            Inklings,
+            Octolings
+        }
+        public enum StyleType
+        {
+            Girl,
+            Boy
+        }
+
         public string Id { get; }
         public string Nickname { get; }
+        public SpeciesType Species { get; }
+        public StyleType Style { get; }
         public bool IsSelf { get; }
         public int Level { get; }
         public HeadGear HeadGear { get; }
@@ -115,10 +128,12 @@ namespace ClassLib
             }
         }
 
-        public Player(string id, string nickName, int level, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, int sort, string image, bool isSelf = false)
+        public Player(string id, string nickname, SpeciesType species, StyleType style, int level, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, int sort, string image, bool isSelf = false)
         {
             Id = id;
-            Nickname = nickName;
+            Nickname = nickname;
+            Species = species;
+            Style = style;
             IsSelf = isSelf;
             Level = level;
             HeadGear = headGear;
@@ -133,19 +148,44 @@ namespace ClassLib
             Sort = sort;
             Image = image;
         }
+
+        public static SpeciesType ParseSpecies(string s)
+        {
+            switch (s)
+            {
+                case "inklings":
+                    return SpeciesType.Inklings;
+                case "octolings":
+                    return SpeciesType.Octolings;
+                default:
+                    throw new FormatException();
+            }
+        }
+        public static StyleType ParseStyle(string s)
+        {
+            switch (s)
+            {
+                case "girl":
+                    return StyleType.Girl;
+                case "boy":
+                    return StyleType.Boy;
+                default:
+                    throw new FormatException();
+            }
+        }
     }
 
     public class RankedPlayer : Player
     {
         public Rank.Key Rank { get; }
 
-        public RankedPlayer(string id, string nickName, int level, Rank.Key rank, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, int sort, string image, bool isSelf = false)
-            : base(id, nickName, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, sort, image, isSelf)
+        public RankedPlayer(string id, string nickname, SpeciesType species, StyleType style, int level, Rank.Key rank, HeadGear headGear, ClothesGear clothesGear, ShoesGear shoesGear, Weapon weapon, int paint, int kill, int assist, int death, int special, int sort, string image, bool isSelf = false)
+            : base(id, nickname, species, style, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, sort, image, isSelf)
         {
             Rank = rank;
         }
         public RankedPlayer(Player player, Rank.Key rank)
-            : this(player.Id, player.Nickname, player.Level, rank, player.HeadGear, player.ClothesGear, player.ShoesGear, player.Weapon, player.Paint, player.Kill, player.Assist, player.Death, player.Special, player.Sort, player.Image, player.IsSelf)
+            : this(player.Id, player.Nickname, player.Species, player.Style, player.Level, rank, player.HeadGear, player.ClothesGear, player.ShoesGear, player.Weapon, player.Paint, player.Kill, player.Assist, player.Death, player.Special, player.Sort, player.Image, player.IsSelf)
         {
 
         }

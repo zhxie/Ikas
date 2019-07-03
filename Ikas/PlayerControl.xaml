@@ -54,7 +54,10 @@
                             <Grid>
                                 <Border Height="36" Width="36" Background="#7F000000" CornerRadius="18" Margin="5,0"/>
                                 <Border Height="30" VerticalAlignment="Top">
-                                    <Image Height="20" VerticalAlignment="Center" Source="assets/img/result-kill.png"/>
+                                    <Grid>
+                                        <Image x:Name="imgInklingsKill" Height="20" VerticalAlignment="Center" Source="assets/img/inklings-kill.png"/>
+                                        <Image x:Name="imgOctolingsKill" Height="20" VerticalAlignment="Center" Source="assets/img/octolings-kill.png"/>
+                                    </Grid>
                                 </Border>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                                     <Label FontFamily="{StaticResource splatfont_2}" VerticalContentAlignment="Bottom" Padding="0" Margin="0,0,0,-2">
@@ -69,7 +72,10 @@
                             <Grid>
                                 <Border Height="36" Width="36" Background="#7F000000" CornerRadius="18" Margin="5,0"/>
                                 <Border Height="30" VerticalAlignment="Top">
-                                    <Image Height="20" VerticalAlignment="Center" Source="assets/img/result-death.png"/>
+                                    <Grid>
+                                        <Image x:Name="imgInklingsDeath" Height="20" VerticalAlignment="Center" Source="assets/img/inklings-death.png"/>
+                                        <Image x:Name="imgOctolingsDeath" Height="20" VerticalAlignment="Center" Source="assets/img/octolings-death.png"/>
+                                    </Grid>
                                 </Border>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                                     <Label FontFamily="{StaticResource splatfont_2}" VerticalContentAlignment="Bottom" Padding="0" Margin="0,0,0,-2">

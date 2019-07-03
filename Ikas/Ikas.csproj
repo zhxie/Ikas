@@ -237,8 +237,8 @@
     <Resource Include="assets\img\bg-strips-small.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\img\result-death.png" />
-    <Resource Include="assets\img\result-kill.png" />
+    <Resource Include="assets\img\inklings-death.png" />
+    <Resource Include="assets\img\inklings-kill.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Ikas.ico" />
@@ -260,6 +260,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\img\octolings-death.png" />
+    <Resource Include="assets\img\octolings-kill.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

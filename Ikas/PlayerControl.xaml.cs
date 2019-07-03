@@ -167,6 +167,23 @@ namespace Ikas
                 tbNickname.Text = Player.Nickname;
                 lbPaint.Content = string.Format(Translate("{0}p", true), Player.Paint.ToString());
                 // Kill, death and special
+                switch (player.Species)
+                {
+                    case Player.SpeciesType.Inklings:
+                        ((Storyboard)FindResource("fade_in")).Begin(imgInklingsKill);
+                        ((Storyboard)FindResource("fade_in")).Begin(imgInklingsDeath);
+                        ((Storyboard)FindResource("fade_out")).Begin(imgOctolingsKill);
+                        ((Storyboard)FindResource("fade_out")).Begin(imgOctolingsDeath);
+                        break;
+                    case Player.SpeciesType.Octolings:
+                        ((Storyboard)FindResource("fade_in")).Begin(imgOctolingsKill);
+                        ((Storyboard)FindResource("fade_in")).Begin(imgOctolingsDeath);
+                        ((Storyboard)FindResource("fade_out")).Begin(imgInklingsKill);
+                        ((Storyboard)FindResource("fade_out")).Begin(imgInklingsDeath);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
                 tbKillAndAssist.Text = Player.KillAndAssist.ToString();
                 tbDeath.Text = Player.Death.ToString();
                 if (Player.Assist > 0)

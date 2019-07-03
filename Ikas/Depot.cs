@@ -2021,6 +2021,9 @@ namespace Ikas
                 JToken playerNode = node["player"];
                 string id = playerNode["principal_id"].ToString();
                 string nickname = playerNode["nickname"].ToString();
+                JToken playerTypeNode = playerNode["player_type"];
+                Player.SpeciesType species = Player.ParseSpecies(playerTypeNode["species"].ToString());
+                Player.StyleType style = Player.ParseStyle(playerTypeNode["style"].ToString());
                 int level = int.Parse(playerNode["player_rank"].ToString()) + 100 * int.Parse(playerNode["star_rank"].ToString());
                 // Parse weapon
                 Weapon weapon = parseWeapon(playerNode["weapon"]);
@@ -2028,7 +2031,7 @@ namespace Ikas
                 HeadGear headGear = parseGear(playerNode["head"], playerNode["head_skills"], Gear.KindType.Head) as HeadGear;
                 ClothesGear clothesGear = parseGear(playerNode["clothes"], playerNode["clothes_skills"], Gear.KindType.Clothes) as ClothesGear;
                 ShoesGear shoesGear = parseGear(playerNode["shoes"], playerNode["shoes_skills"], Gear.KindType.Shoes) as ShoesGear;
-                return new Player(id, nickname, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, sort, image, isSelf);
+                return new Player(id, nickname, species, style, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, sort, image, isSelf);
             }
             catch
             {
