@@ -904,6 +904,7 @@ namespace Ikas
                     jObject = JObject.Parse(resultString);
                     try
                     {
+                        DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)).AddSeconds(long.Parse(jObject["start_time"].ToString()));
                         Mode.Key type = Mode.ParseKey(jObject["type"].ToString());
                         Mode.Key mode = Mode.ParseGameModeKey(jObject["game_mode"]["key"].ToString());
                         Rule.Key rule = Rule.ParseKey(jObject["rule"]["key"].ToString());
@@ -959,7 +960,7 @@ namespace Ikas
                                     }
                                     double myScore = double.Parse(jObject["my_team_percentage"].ToString());
                                     double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
-                                    UpdateBattle(new RegularBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
+                                    UpdateBattle(new RegularBattle(battleNumber, startTime, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
                                         myScore, otherScore) as Battle);
                                 }
                                 break;
@@ -1056,7 +1057,7 @@ namespace Ikas
                                             default:
                                                 throw new ArgumentOutOfRangeException();
                                         }
-                                        UpdateBattle(new RankedBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
+                                        UpdateBattle(new RankedBattle(battleNumber, startTime, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
                                             estimatedRankPower, rankAfter, myScore, otherScore) as Battle);
                                     }
                                     else
@@ -1093,7 +1094,7 @@ namespace Ikas
                                             default:
                                                 throw new ArgumentOutOfRangeException();
                                         }
-                                        UpdateBattle(new RankedXBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
+                                        UpdateBattle(new RankedXBattle(battleNumber, startTime, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
                                             estimatedXPower, xPowerAfter, myScore, otherScore) as Battle);
                                     }
                                 }
@@ -1199,7 +1200,7 @@ namespace Ikas
                                         default:
                                             throw new ArgumentOutOfRangeException();
                                     }
-                                    UpdateBattle(new LeagueBattle(battleNumber, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
+                                    UpdateBattle(new LeagueBattle(battleNumber, startTime, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
                                         myEstimatedLeaguePower, otherEstimatedLeaguePower, leaguePoint, maxLeaguePoint, myScore, otherScore) as Battle);
                                 }
                                 break;
@@ -1259,7 +1260,7 @@ namespace Ikas
                                     int totalContributionPoint = int.Parse(jObject["contribution_point_total"].ToString());
                                     double myScore = double.Parse(jObject["my_team_percentage"].ToString());
                                     double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
-                                    UpdateBattle(new SplatfestBattle(battleNumber, mode, splatfestMode, rule, stage, myPlayers, otherPlayers, levelAfter,
+                                    UpdateBattle(new SplatfestBattle(battleNumber, startTime, mode, splatfestMode, rule, stage, myPlayers, otherPlayers, levelAfter,
                                         myEstimatedSplatfestPower, otherEstimatedSplatfestPower, splatfestPower, maxSplatfestPower, contributionPoint, totalContributionPoint, myScore, otherScore) as Battle);
                                 }
                                 break;
