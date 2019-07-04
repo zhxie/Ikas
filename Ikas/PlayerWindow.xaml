@@ -8,7 +8,7 @@
         LocationChanged="Window_LocationChanged"
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
-        Title="Ikas - Player" Width="300" Height="384" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True" ShowInTaskbar="False">
+        Title="Ikas - Player" Width="320" Height="404" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True" ShowInTaskbar="False">
     <Window.Resources>
         <Storyboard x:Key="fade_out">
             <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="2"/>
