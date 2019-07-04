@@ -108,6 +108,7 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(bdIcon);
             ((Storyboard)FindResource("fade_out")).Begin(bdWeapon);
             ((Storyboard)FindResource("fade_out")).Begin(bdSpecial);
+            ((Storyboard)FindResource("fade_out")).Begin(bdKillDeathRatio);
             ((Storyboard)FindResource("bg_to_black")).Begin(bdMain);
             if (Player != null)
             {
@@ -319,6 +320,8 @@ namespace Ikas
                     }
                 }
                 (sb.Children[0] as DoubleAnimation).To = to;
+                bdKillDeathRatio.Width = 0;
+                ((Storyboard)FindResource("fade_in")).Begin(bdKillDeathRatio);
                 sb.Begin(bdKillDeathRatio);
                 // Show all
                 ((Storyboard)FindResource("fade_in")).Begin(gridMain);
