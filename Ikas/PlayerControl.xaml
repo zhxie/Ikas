@@ -67,7 +67,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Border>
-                            <Grid>
+                            <Grid x:Name="gridKill">
                                 <Border Height="36" Width="36" Background="#7F000000" CornerRadius="18" Margin="5,0"/>
                                 <Border Height="30" VerticalAlignment="Top">
                                     <Grid>
@@ -86,24 +86,41 @@
                         </Border>
                         <Border>
                             <Grid>
-                                <Border Height="36" Width="36" Background="#7F000000" CornerRadius="18" Margin="5,0"/>
-                                <Border Height="30" VerticalAlignment="Top">
-                                    <Grid>
-                                        <Image x:Name="imgInklingsDeath" Height="20" VerticalAlignment="Center" Source="assets/img/inklings-death.png"/>
-                                        <Image x:Name="imgOctolingsDeath" Height="20" VerticalAlignment="Center" Source="assets/img/octolings-death.png"/>
-                                    </Grid>
-                                </Border>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                                    <Label FontFamily="{StaticResource splatfont_2}" VerticalContentAlignment="Bottom" Padding="0" Margin="0,0,0,-2">
-                                        <TextBlock>
-                                            <Run Foreground="#FFDBDBDB" FontSize="10">x</Run><Run x:Name="tbDeath" Foreground="White" FontSize="12">[D]</Run>
-                                        </TextBlock>
-                                    </Label>
-                                </StackPanel>
+                                <Grid x:Name="gridDeath">
+                                    <Border Height="36" Width="36" Background="#7F000000" CornerRadius="18" Margin="5,0"/>
+                                    <Border Height="30" VerticalAlignment="Top">
+                                        <Grid>
+                                            <Image x:Name="imgInklingsDeath" Height="20" VerticalAlignment="Center" Source="assets/img/inklings-death.png"/>
+                                            <Image x:Name="imgOctolingsDeath" Height="20" VerticalAlignment="Center" Source="assets/img/octolings-death.png"/>
+                                        </Grid>
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                        <Label FontFamily="{StaticResource splatfont_2}" VerticalContentAlignment="Bottom" Padding="0" Margin="0,0,0,-2">
+                                            <TextBlock>
+                                                <Run Foreground="#FFDBDBDB" FontSize="10">x</Run><Run x:Name="tbDeath" Foreground="White" FontSize="12">[D]</Run>
+                                            </TextBlock>
+                                        </Label>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid x:Name="gridKD" Opacity="0">
+                                    <Border Height="36" Width="36" Background="#7F000000" CornerRadius="18" Margin="5,0"/>
+                                    <Border Height="30" VerticalAlignment="Top">
+                                        <Grid>
+                                            <Image Height="20" VerticalAlignment="Center" Source="assets/img/kd.png"/>
+                                        </Grid>
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                        <Label FontFamily="{StaticResource splatfont_2}" VerticalContentAlignment="Bottom" Padding="0" Margin="0,0,0,-2">
+                                            <TextBlock>
+                                                <Run x:Name="tbKD" Foreground="White" FontSize="12">[KD]</Run><Run Foreground="#FFDBDBDB" FontSize="10">x</Run>
+                                            </TextBlock>
+                                        </Label>
+                                    </StackPanel>
+                                </Grid>
                             </Grid>
                         </Border>
                         <Border>
-                            <Grid>
+                            <Grid x:Name="gridSpecial">
                                 <Border Height="36" Width="36" Background="#7F000000" CornerRadius="18" Margin="5,0"/>
                                 <Border x:Name="bdSpecial" Height="26" VerticalAlignment="Top" Background="Transparent" Margin="0,3,0,0" Opacity="0"/>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">

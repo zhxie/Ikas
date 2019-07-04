@@ -265,6 +265,9 @@
     <Resource Include="assets\img\octolings-death.png" />
     <Resource Include="assets\img\octolings-kill.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\img\kd.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(SolutionDir)README.md" "$(ProjectDir)$(OutDir)"

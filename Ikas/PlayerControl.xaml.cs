@@ -61,6 +61,9 @@ namespace Ikas
             {
                 ((Storyboard)FindResource("quick_fade_in")).Begin(lbLevel);
                 ((Storyboard)FindResource("quick_fade_out")).Begin(lbRank);
+                ((Storyboard)FindResource("quick_fade_in")).Begin(gridKD);
+                ((Storyboard)FindResource("quick_fade_out")).Begin(gridKill);
+                ((Storyboard)FindResource("quick_fade_out")).Begin(gridDeath);
             }
         }
 
@@ -70,6 +73,9 @@ namespace Ikas
             {
                 ((Storyboard)FindResource("quick_fade_in")).Begin(lbRank);
                 ((Storyboard)FindResource("quick_fade_out")).Begin(lbLevel);
+                ((Storyboard)FindResource("quick_fade_in")).Begin(gridKill);
+                ((Storyboard)FindResource("quick_fade_in")).Begin(gridDeath);
+                ((Storyboard)FindResource("quick_fade_out")).Begin(gridKD);
             }
         }
 
@@ -213,6 +219,7 @@ namespace Ikas
                 }
                 tbKillAndAssist.Text = Player.KillAndAssist.ToString();
                 tbDeath.Text = Player.Death.ToString();
+                tbKD.Text = string.Format("{0:f2}", Player.KillDeathRatio);
                 if (Player.Assist > 0)
                 {
                     tbAssist.Text = string.Format(Translate("({0})", true), Player.Assist);
