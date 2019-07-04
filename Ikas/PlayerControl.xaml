@@ -13,6 +13,12 @@
         <Storyboard x:Key="fade_in">
             <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="2"/>
         </Storyboard>
+        <Storyboard x:Key="quick_fade_out">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="4"/>
+        </Storyboard>
+        <Storyboard x:Key="quick_fade_in">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
+        </Storyboard>
         <Storyboard x:Key="bg_to_black">
             <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#7F000000" SpeedRatio="2"/>
         </Storyboard>
@@ -24,16 +30,22 @@
         </Storyboard>
     </UserControl.Resources>
     <Grid>
-        <Border x:Name="bdMain" Height="45" CornerRadius="8" Background="#7F000000">
+        <Border x:Name="bdMain"
+                MouseEnter="BdMain_MouseEnter"
+                MouseLeave="BdMain_MouseLeave"
+                Height="45" CornerRadius="8" Background="#7F000000">
             <Grid x:Name="gridMain" Opacity="0">
                 <Border x:Name="bdKillDeathRatio" Width="0" CornerRadius="8" Background="Transparent" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                 <Grid Margin="5,0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <Grid Width="48">
-                            <Label FontFamily="{StaticResource splatfont}" Foreground="White" Height="60" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" HorizontalAlignment="Center">
+                            <Label x:Name="lbLevel" FontFamily="{StaticResource splatfont}" Foreground="White" Height="60" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" HorizontalAlignment="Center">
                                 <TextBlock>
-                                        <Run x:Name="tbLevel" FontSize="26">[Lv]</Run><Run x:Name="tbStar" FontSize="12">[Star]</Run>
+                                        <Run x:Name="tbLevel" FontSize="26">[Lv]</Run><Run x:Name="tbStar" FontSize="12" Foreground="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=YellowForeground}">[Star]</Run>
                                 </TextBlock>
+                            </Label>
+                            <Label x:Name="lbRank" FontFamily="{StaticResource splatfont}" FontSize="26" Foreground="White" Height="60" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" HorizontalAlignment="Center">
+                                <TextBlock x:Name="tbRank">[R]</TextBlock>
                             </Label>
                         </Grid>
                         <Border Height="36" Width="36" Background="#7F000000" CornerRadius="18" Margin="5,0,0,0" VerticalAlignment="Center">

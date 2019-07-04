@@ -28,6 +28,14 @@ namespace Ikas
     /// </summary>
     public partial class PlayerControl : UserControl
     {
+        public string YellowForeground
+        {
+            get
+            {
+                return "#FF" + Design.NeonYellow;
+            }
+        }
+
         public volatile Player Player;
 
         public event MouseEnterIconEventHandler MouseEnterIcon;
@@ -46,6 +54,24 @@ namespace Ikas
         }
 
         #region Control Event
+
+        private void BdMain_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (Player is RankedPlayer)
+            {
+                ((Storyboard)FindResource("quick_fade_in")).Begin(lbLevel);
+                ((Storyboard)FindResource("quick_fade_out")).Begin(lbRank);
+            }
+        }
+
+        private void BdMain_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (Player is RankedPlayer)
+            {
+                ((Storyboard)FindResource("quick_fade_in")).Begin(lbRank);
+                ((Storyboard)FindResource("quick_fade_out")).Begin(lbLevel);
+            }
+        }
 
         private void BdIcon_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -90,24 +116,25 @@ namespace Ikas
                     bdOffline.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#7F000000"));
                 }
                 // Level or Rank
-                if (Player is RankedPlayer)
+                if (Player.Level >= 100)
                 {
-                    tbLevel.Text = Translate((Player as RankedPlayer).Rank.ToString());
-                    tbStar.Text = "";
+                    tbLevel.Text = (Player.Level - 100 * Player.Star).ToString();
+                    tbStar.Text = Translate("★", true);
+                    tbRank.Text = "";
                 }
                 else
                 {
-                    if (Player.Level >= 100)
-                    {
-                        tbLevel.Text = (Player.Level - 100 * Player.Star).ToString();
-                        tbStar.Text = Translate("★", true);
-                    }
-                    else
-                    {
-                        tbLevel.Text = Player.Level.ToString();
-                        tbLevel.Foreground = new SolidColorBrush(Colors.White);
-                        tbStar.Text = "";
-                    }
+                    tbLevel.Text = Player.Level.ToString();
+                    tbStar.Text = "";
+                    tbRank.Text = "";
+                }
+                ((Storyboard)FindResource("fade_in")).Begin(lbLevel);
+                ((Storyboard)FindResource("fade_out")).Begin(lbRank);
+                if (Player is RankedPlayer)
+                {
+                    tbRank.Text = Translate((Player as RankedPlayer).Rank.ToString());
+                    ((Storyboard)FindResource("fade_in")).Begin(lbRank);
+                    ((Storyboard)FindResource("fade_out")).Begin(lbLevel);
                 }
                 // Icon
                 string image = FileFolderUrl.ApplicationData + FileFolderUrl.IconFolder + @"\" + System.IO.Path.GetFileName(Player.Image) + ".jpg";
@@ -309,5 +336,6 @@ namespace Ikas
                 return s;
             }
         }
+
     }
 }
