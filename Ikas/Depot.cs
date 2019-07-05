@@ -905,10 +905,24 @@ namespace Ikas
                     try
                     {
                         DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)).AddSeconds(long.Parse(jObject["start_time"].ToString()));
-                        double elapsedTime = double.Parse(jObject["elapsed_time"].ToString());
+                        double elapsedTime;
                         Mode.Key type = Mode.ParseKey(jObject["type"].ToString());
                         Mode.Key mode = Mode.ParseGameModeKey(jObject["game_mode"]["key"].ToString());
                         Rule.Key rule = Rule.ParseKey(jObject["rule"]["key"].ToString());
+                        switch (rule)
+                        {
+                            case Rule.Key.turf_war:
+                                elapsedTime = 180;
+                                break;
+                            case Rule.Key.splat_zones:
+                            case Rule.Key.tower_control:
+                            case Rule.Key.rainmaker:
+                            case Rule.Key.clam_blitz:
+                                elapsedTime = double.Parse(jObject["elapsed_time"].ToString());
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
                         Stage stage = new Stage((Stage.Key)int.Parse(jObject["stage"]["id"].ToString()), jObject["stage"]["image"].ToString());
                         switch (type)
                         {
