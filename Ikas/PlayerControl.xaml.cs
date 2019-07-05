@@ -61,10 +61,10 @@ namespace Ikas
             {
                 ((Storyboard)FindResource("quick_fade_in")).Begin(lbLevel);
                 ((Storyboard)FindResource("quick_fade_out")).Begin(lbRank);
-                ((Storyboard)FindResource("quick_fade_in")).Begin(gridKD);
-                ((Storyboard)FindResource("quick_fade_out")).Begin(gridKill);
-                ((Storyboard)FindResource("quick_fade_out")).Begin(gridDeath);
             }
+            ((Storyboard)FindResource("quick_fade_in")).Begin(gridKD);
+            ((Storyboard)FindResource("quick_fade_out")).Begin(gridKill);
+            ((Storyboard)FindResource("quick_fade_out")).Begin(gridDeath);
         }
 
         private void BdMain_MouseLeave(object sender, MouseEventArgs e)
@@ -73,10 +73,10 @@ namespace Ikas
             {
                 ((Storyboard)FindResource("quick_fade_in")).Begin(lbRank);
                 ((Storyboard)FindResource("quick_fade_out")).Begin(lbLevel);
-                ((Storyboard)FindResource("quick_fade_in")).Begin(gridKill);
-                ((Storyboard)FindResource("quick_fade_in")).Begin(gridDeath);
-                ((Storyboard)FindResource("quick_fade_out")).Begin(gridKD);
             }
+            ((Storyboard)FindResource("quick_fade_in")).Begin(gridKill);
+            ((Storyboard)FindResource("quick_fade_in")).Begin(gridDeath);
+            ((Storyboard)FindResource("quick_fade_out")).Begin(gridKD);
         }
 
         private void BdIcon_MouseEnter(object sender, MouseEventArgs e)
