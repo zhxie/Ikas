@@ -8,11 +8,23 @@
 
 **Ikas** is a schedule and battle statistic client of Splatoon 2 for Windows.
 
+## Features
+
+- Automatic cookie generation of SplatNet
+- Update current and coming schedules and display in a *fancy* way
+- Get the latest battle including details of players' gears and weapons and display in a *fancy* way
+- Japanese and English (North America)
+
 ## Configuration
 
-Ikas reads and parses configuration from both user.ini for user information, and config.ini for system configuration in working directory.
+Ikas reads and parses configuration from both user.ini, for user information, and config.ini, for system configuration, in the working directory.
 
-When first started, Ikas will ask for configuration.
+### Setup
+
+When Ikas starts at the first time, it will ask for configuration. You can fill your SplatNet cookie in the cookie textbox directly, or obtain one by  Automatic Cookie Generation.
+
+1. Obtain a session token. Press "How can I get a Session Token", log in into the Nintendo website, right click on "Select this Person", copy the link address, paste it back to session token textbox and press "How can I get a Session token" again.
+2. Obtain the SplatNet cookie. Press "Update my Cookie, please!", Ikas will handle everything that follows. **Please read "Security and Privacy" section below carefully before you start.**
 
 ## Security and Privacy
 
