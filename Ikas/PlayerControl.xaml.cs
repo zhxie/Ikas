@@ -108,6 +108,9 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(bdIcon);
             ((Storyboard)FindResource("fade_out")).Begin(bdWeapon);
             ((Storyboard)FindResource("fade_out")).Begin(bdSpecial);
+            Storyboard sb = (Storyboard)FindResource("resize_width");
+            (sb.Children[0] as DoubleAnimation).To = 0;
+            sb.Begin(bdKillDeathRatio);
             ((Storyboard)FindResource("fade_out")).Begin(bdKillDeathRatio);
             ((Storyboard)FindResource("bg_to_black")).Begin(bdMain);
             if (Player != null)
@@ -298,7 +301,6 @@ namespace Ikas
                 {
                     bdKillDeathRatio.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2F" + Design.NeonGreen));
                 }
-                Storyboard sb = (Storyboard)FindResource("resize_width");
                 double to;
                 if (player.IsOffline)
                 {
@@ -320,9 +322,8 @@ namespace Ikas
                     }
                 }
                 (sb.Children[0] as DoubleAnimation).To = to;
-                bdKillDeathRatio.Width = 0;
-                ((Storyboard)FindResource("fade_in")).Begin(bdKillDeathRatio);
                 sb.Begin(bdKillDeathRatio);
+                ((Storyboard)FindResource("fade_in")).Begin(bdKillDeathRatio);
                 // Show all
                 ((Storyboard)FindResource("fade_in")).Begin(gridMain);
             }

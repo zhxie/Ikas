@@ -133,7 +133,14 @@ namespace ClassLib
             {
                 if (Death == 0)
                 {
-                    return 99.99;
+                    if (Kill == 0)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return 99.99;
+                    }
                 }
                 else
                 {
