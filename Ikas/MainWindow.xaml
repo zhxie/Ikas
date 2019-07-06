@@ -33,7 +33,7 @@
     </Window.Resources>
     <Window.ContextMenu>
         <ContextMenu x:Name="cmWindow" StaysOpen="True">
-            <MenuItem x:Name="miSetting" Header="{DynamicResource main_window-setting}" Click="MenuItemSetting_Click"/>
+            <MenuItem x:Name="miSettings" Header="{DynamicResource main_window-settings}" Click="MenuItemSettings_Click"/>
             <Separator/>
             <MenuItem x:Name="miExit" Header="{DynamicResource main_window-exit}" Click="MenuItemExit_Click"/>
         </ContextMenu>

@@ -141,7 +141,7 @@ namespace Ikas
             if (Depot.Cookie == null || Depot.Cookie == "")
             {
                 MessageBox.Show(Translate("Welcome to Ikas! To use Ikas, you may set up your Cookie first.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
-                MenuItemSetting_Click(null, null);
+                MenuItemSettings_Click(null, null);
             }
             // Update Schedule
             // Depot.GetSchedule();
@@ -204,7 +204,7 @@ namespace Ikas
             ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
         }
 
-        private void MenuItemSetting_Click(object sender, RoutedEventArgs e)
+        private void MenuItemSettings_Click(object sender, RoutedEventArgs e)
         {
             ((Storyboard)FindResource("window_fade_in")).Begin(settingsWindow);
             settingsWindow.ShowDialog();

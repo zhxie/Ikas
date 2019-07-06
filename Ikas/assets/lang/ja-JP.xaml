@@ -274,7 +274,7 @@
     <sys:String x:Key="main_window-rank">ウデマエ</sys:String>
     <sys:String x:Key="main_window---">--</sys:String>
     <sys:String x:Key="main_window-★">★</sys:String>
-    <sys:String x:Key="main_window-setting">設定</sys:String>
+    <sys:String x:Key="main_window-settings">設定</sys:String>
     <sys:String x:Key="main_window-exit">終了</sys:String>
     <sys:String x:Key="main_window-{0}, because {1}. {2}">{1}ため、{0}。{2}</sys:String>
     <sys:String x:Key="main_window-{0}. {1}\n\n{2}">{0}。{1}\n\n{2}</sys:String>

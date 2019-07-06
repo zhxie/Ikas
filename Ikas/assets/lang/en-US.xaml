@@ -274,7 +274,7 @@
     <sys:String x:Key="main_window-rank">Rank</sys:String>
     <sys:String x:Key="main_window---">--</sys:String>
     <sys:String x:Key="main_window-★">★</sys:String>
-    <sys:String x:Key="main_window-setting">Setting</sys:String>
+    <sys:String x:Key="main_window-settings">Settings</sys:String>
     <sys:String x:Key="main_window-exit">Exit</sys:String>
     <sys:String x:Key="main_window-{0}, because {1}. {2}">{0}, because {1}. {2}</sys:String>
     <sys:String x:Key="main_window-{0}. {1}\n\n{2}">{0}. {1}\n\n{2}</sys:String>
