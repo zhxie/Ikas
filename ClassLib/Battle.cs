@@ -203,5 +203,4 @@ namespace ClassLib
             throw new FormatException();
         }
     }
-
 }
