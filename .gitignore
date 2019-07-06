@@ -341,3 +341,6 @@ healthchecksdb
 
 # Local Design
 /Design
+
+# Obsolete Projects
+/ClassLib

@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
 
-using ClassLib;
+using IkasLib;
 
 namespace Ikas
 {
