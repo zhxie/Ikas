@@ -64,7 +64,11 @@ namespace Ikas
             isSuccess = false;
         }
 
-        public async void DownloadAsync()
+        /// <summary>
+        /// Download asynchronously.
+        /// </summary>
+        /// <param name="isSafeDownload">Download to temporary directory instead of assigned directory before download completed</param>
+        public async void DownloadAsync(bool isSafeDownload = true)
         {
             isActive = true;
             // Create folder of To if not exists
@@ -79,7 +83,16 @@ namespace Ikas
             }
             try
             {
-                await client.DownloadFileTaskAsync(Url, To);
+                if (isSafeDownload)
+                {
+                    string tempTo = Path.GetTempFileName();
+                    await client.DownloadFileTaskAsync(Url, tempTo);
+                    File.Move(tempTo, To);
+                }
+                else
+                {
+                    await client.DownloadFileTaskAsync(Url, To);
+                }
             }
             catch
             {
@@ -98,14 +111,7 @@ namespace Ikas
     public static class DownloadHelper
     {
         private static Mutex DownloadersMutex = new Mutex();
-        private static List<Downloader> downloaders = new List<Downloader>();
-        public static List<Downloader> Downloaders
-        {
-            get
-            {
-                return downloaders;
-            }
-        }
+        public static List<Downloader> Downloaders { get; } = new List<Downloader>();
 
         /// <summary>
         /// Add a Downloader to the DownloadHelper and start downloading.
@@ -117,7 +123,7 @@ namespace Ikas
         {
             DownloadersMutex.WaitOne();
             // Clean up inactive download
-            downloaders.RemoveAll(p => !p.IsActive);
+            Downloaders.RemoveAll(p => !p.IsActive);
             foreach (Downloader d in Downloaders)
             {
                 if (d.To == downloader.To)
@@ -132,7 +138,7 @@ namespace Ikas
                 RemoveDownloader(downloader);
             });
             downloader.DownloadSucceeded += handler;
-            downloaders.Add(downloader);
+            Downloaders.Add(downloader);
             // Start download
             DownloadersMutex.ReleaseMutex();
             downloader.DownloadAsync();
@@ -146,7 +152,7 @@ namespace Ikas
         {
             DownloadersMutex.WaitOne();
             // Remove all handlers of DownloadCompleted event before removing
-            foreach (Downloader d in downloaders.FindAll(p => p.Source == source))
+            foreach (Downloader d in Downloaders.FindAll(p => p.Source == source))
             {
                 FieldInfo fi = null;
                 Type type = d.GetType();
@@ -172,7 +178,7 @@ namespace Ikas
                 }
             }
             // Remove inactive downloaders
-            downloaders.RemoveAll(p => p.Source == source && !p.IsActive);
+            Downloaders.RemoveAll(p => p.Source == source && !p.IsActive);
             DownloadersMutex.ReleaseMutex();
         }
 
@@ -209,7 +215,7 @@ namespace Ikas
             // Remove downloader if inactive
             if (!downloader.IsActive)
             {
-                downloaders.Remove(downloader);
+                Downloaders.Remove(downloader);
             }
             DownloadersMutex.ReleaseMutex();
         }
