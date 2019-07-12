@@ -129,6 +129,9 @@ namespace Ikas
                 }
             }
             // In use
+#if DEBUG
+            // Do not popup in use message in Debug
+#else
             if (Depot.InUse)
             {
                 MessageBox.Show(string.Format(Translate("{0}. {1}", true),
@@ -136,6 +139,7 @@ namespace Ikas
                     Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
                     ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+#endif
             Depot.InUse = true;
             // Check cookie
             if (Depot.Cookie == null || Depot.Cookie == "")
