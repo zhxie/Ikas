@@ -20,6 +20,197 @@ namespace IkasLib
         public double MyScore { get; }
         public double OtherScore { get; }
 
+        public double MyAveragePaint
+        {
+            get
+            {
+                if (MyPlayers.Count == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double average = 0;
+                    foreach (Player player in MyPlayers)
+                    {
+                        average = average + player.Paint;
+                    }
+                    return average / MyPlayers.Count;
+                }
+            }
+        }
+        public double MyAverageKillAndAssist
+        {
+            get
+            {
+                if (MyPlayers.Count == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double average = 0;
+                    foreach (Player player in MyPlayers)
+                    {
+                        average = average + player.KillAndAssist;
+                    }
+                    return average / MyPlayers.Count;
+                }
+            }
+        }
+        public double MyAverageAssist
+        {
+            get
+            {
+                if (MyPlayers.Count == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double average = 0;
+                    foreach (Player player in MyPlayers)
+                    {
+                        average = average + player.Assist;
+                    }
+                    return average / MyPlayers.Count;
+                }
+            }
+        }
+        public double MyAverageDeath
+        {
+            get
+            {
+                if (MyPlayers.Count == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double average = 0;
+                    foreach (Player player in MyPlayers)
+                    {
+                        average = average + player.Death;
+                    }
+                    return average / MyPlayers.Count;
+                }
+            }
+        }
+        public double MyAverageSpecial
+        {
+            get
+            {
+                if (MyPlayers.Count == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double average = 0;
+                    foreach (Player player in MyPlayers)
+                    {
+                        average = average + player.Special;
+                    }
+                    return average / MyPlayers.Count;
+                }
+            }
+        }
+        public double OtherAveragePaint
+        {
+            get
+            {
+                if (OtherPlayers.Count == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double average = 0;
+                    foreach (Player player in OtherPlayers)
+                    {
+                        average = average + player.Paint;
+                    }
+                    return average / OtherPlayers.Count;
+                }
+            }
+        }
+        public double OtherAverageKillAndAssist
+        {
+            get
+            {
+                if (OtherPlayers.Count == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double average = 0;
+                    foreach (Player player in OtherPlayers)
+                    {
+                        average = average + player.KillAndAssist;
+                    }
+                    return average / OtherPlayers.Count;
+                }
+            }
+        }
+        public double OtherAverageAssist
+        {
+            get
+            {
+                if (OtherPlayers.Count == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double average = 0;
+                    foreach (Player player in OtherPlayers)
+                    {
+                        average = average + player.Assist;
+                    }
+                    return average / OtherPlayers.Count;
+                }
+            }
+        }
+        public double OtherAverageDeath
+        {
+            get
+            {
+                if (OtherPlayers.Count == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double average = 0;
+                    foreach (Player player in OtherPlayers)
+                    {
+                        average = average + player.Death;
+                    }
+                    return average / OtherPlayers.Count;
+                }
+            }
+        }
+        public double OtherAverageSpecial
+        {
+            get
+            {
+                if (OtherPlayers.Count == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double average = 0;
+                    foreach (Player player in OtherPlayers)
+                    {
+                        average = average + player.Special;
+                    }
+                    return average / OtherPlayers.Count;
+                }
+            }
+        }
+
         public bool IsWin
         {
             get
