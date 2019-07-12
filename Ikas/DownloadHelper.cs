@@ -27,12 +27,20 @@ namespace Ikas
         public string To { get; }
         public SourceType Source { get; }
         public WebProxy Proxy { get; }
-        private bool isActive;
-        public bool IsActive
+        public bool IsActive { get; private set; }
+        private bool isFinished;
+        public bool IsFinished
         {
             get
             {
-                return isActive;
+                if (IsActive)
+                {
+                    return false;
+                }
+                else
+                {
+                    return isFinished;
+                }
             }
         }
         private bool isSuccess;
@@ -40,7 +48,7 @@ namespace Ikas
         {
             get
             {
-                if (IsActive)
+                if (!IsFinished)
                 {
                     return false;
                 }
@@ -60,7 +68,8 @@ namespace Ikas
             To = to;
             Source = source;
             Proxy = proxy;
-            isActive = false;
+            IsActive = false;
+            isFinished = false;
             isSuccess = false;
         }
 
@@ -70,51 +79,58 @@ namespace Ikas
         /// <param name="isSafeDownload">Download to temporary directory instead of assigned directory before download completed</param>
         public async void DownloadAsync(bool isSafeDownload = true)
         {
-            isActive = true;
-            // Create folder of To if not exists
-            if (!Directory.Exists(Path.GetDirectoryName(To)))
+            if (!IsActive)
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(To));
-            }
-            WebClient client = new WebClient();
-            if (Proxy != null)
-            {
-                client.Proxy = Proxy;
-            }
-            try
-            {
-                if (isSafeDownload)
+                IsActive = true;
+                // Create folder of To if not exists
+                if (!Directory.Exists(Path.GetDirectoryName(To)))
                 {
-                    string tempTo = Path.GetTempFileName();
-                    await client.DownloadFileTaskAsync(Url, tempTo);
-                    File.Move(tempTo, To);
+                    Directory.CreateDirectory(Path.GetDirectoryName(To));
                 }
-                else
+                WebClient client = new WebClient();
+                if (Proxy != null)
                 {
-                    await client.DownloadFileTaskAsync(Url, To);
+                    client.Proxy = Proxy;
                 }
-            }
-            catch
-            {
-                isActive = false;
-                isSuccess = false;
+                try
+                {
+                    if (isSafeDownload)
+                    {
+                        string tempTo = Path.GetTempFileName();
+                        await client.DownloadFileTaskAsync(Url, tempTo);
+                        File.Move(tempTo, To);
+                    }
+                    else
+                    {
+                        await client.DownloadFileTaskAsync(Url, To);
+                    }
+                }
+                catch
+                {
+                    IsActive = false;
+                    isFinished = true;
+                    isSuccess = false;
+                    DownloadCompleted?.Invoke();
+                    return;
+                }
+                IsActive = false;
+                isFinished = true;
+                isSuccess = true;
+                DownloadSucceeded?.Invoke();
                 DownloadCompleted?.Invoke();
-                return;
             }
-            isActive = false;
-            isSuccess = true;
-            DownloadSucceeded?.Invoke();
-            DownloadCompleted?.Invoke();
         }
     }
 
     public static class DownloadHelper
     {
+        public static int MaxDownload { get; set; } = 0;
+
         private static Mutex DownloadersMutex = new Mutex();
         public static List<Downloader> Downloaders { get; } = new List<Downloader>();
 
         /// <summary>
-        /// Add a Downloader to the DownloadHelper and start downloading.
+        /// Add a Downloader to Downloaders.
         /// </summary>
         /// <param name="downloader">The Downloader which is going to be added</param>
         /// <param name="handler">Handler for DownloadSucceeded event</param>
@@ -122,8 +138,9 @@ namespace Ikas
         public static bool AddDownloader(Downloader downloader, DownloadCompletedEventHandler handler)
         {
             DownloadersMutex.WaitOne();
-            // Clean up inactive download
-            Downloaders.RemoveAll(p => !p.IsActive);
+            // Clean up finished downloader
+            int removedCount = Downloaders.RemoveAll(p => p.IsFinished);
+            // Add downloader
             foreach (Downloader d in Downloaders)
             {
                 if (d.To == downloader.To)
@@ -138,10 +155,16 @@ namespace Ikas
                 RemoveDownloader(downloader);
             });
             downloader.DownloadSucceeded += handler;
+            // Add to downloaders
             Downloaders.Add(downloader);
-            // Start download
             DownloadersMutex.ReleaseMutex();
-            downloader.DownloadAsync();
+            // Start downloading if no limit
+            if (MaxDownload == 0)
+            {
+                downloader.DownloadAsync();
+            }
+            // Check downloaders
+            CheckDownloaders();
             return true;
         }
         /// <summary>
@@ -151,6 +174,7 @@ namespace Ikas
         public static void RemoveDownloaders(Downloader.SourceType source)
         {
             DownloadersMutex.WaitOne();
+            bool isFind = false;
             // Remove all handlers of DownloadCompleted event before removing
             foreach (Downloader d in Downloaders.FindAll(p => p.Source == source))
             {
@@ -176,10 +200,16 @@ namespace Ikas
                 {
                     fi.SetValue(d, null);
                 }
+                isFind = true;
             }
             // Remove inactive downloaders
             Downloaders.RemoveAll(p => p.Source == source && !p.IsActive);
             DownloadersMutex.ReleaseMutex();
+            // Check downloaders
+            if (isFind)
+            {
+                CheckDownloaders();
+            }
         }
 
         /// <summary>
@@ -218,6 +248,36 @@ namespace Ikas
                 Downloaders.Remove(downloader);
             }
             DownloadersMutex.ReleaseMutex();
+            // Check downloaders
+            CheckDownloaders();
+        }
+        /// <summary>
+        /// Check Downloaders and start downloading.
+        /// </summary>
+        private static void CheckDownloaders()
+        {
+            // No limit
+            if (MaxDownload == 0)
+            {
+                return;
+            }
+            DownloadersMutex.WaitOne();
+            // Check downloaders
+            List<Downloader> startingDownloaders = new List<Downloader>();
+            for (int i = 0; i < Math.Min(Downloaders.Count, MaxDownload); ++i)
+            {
+                Downloader downloader = Downloaders[i];
+                if (!downloader.IsActive && !downloader.IsFinished)
+                {
+                    startingDownloaders.Add(downloader);
+                }
+            }
+            DownloadersMutex.ReleaseMutex();
+            // Start downloading
+            foreach (Downloader downloader in startingDownloaders)
+            {
+                downloader.DownloadAsync();
+            }
         }
     }
 }
