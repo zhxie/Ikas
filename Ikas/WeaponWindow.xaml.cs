@@ -101,7 +101,7 @@ namespace Ikas
         public void SetWeapon(Weapon weapon)
         {
             // Remove previous Downloader's handlers (Believe every weapon has its sub weapon and special weapon, stop checking)
-            //Depot.DownloadManager.RemoveDownloaders(Downloader.SourceType.Weapon);
+            //DownloadHelper.RemoveDownloaders(Downloader.SourceType.Weapon);
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(tbName);
             ((Storyboard)FindResource("fade_out")).Begin(bdWeapon);
@@ -122,7 +122,7 @@ namespace Ikas
             {
                 // Download the image
                 Downloader downloader = new Downloader(FileFolderUrl.SplatNet + weapon.Image, image, Downloader.SourceType.Weapon, Depot.Proxy);
-                Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                 {
                     if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(weapon.Image))
                     {
@@ -145,7 +145,7 @@ namespace Ikas
             {
                 // Download the image
                 Downloader downloader = new Downloader(FileFolderUrl.SplatNet + weapon.SubWeapon.Image1, image2, Downloader.SourceType.Weapon, Depot.Proxy);
-                Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                 {
                     if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(weapon.SubWeapon.Image1))
                     {
@@ -168,7 +168,7 @@ namespace Ikas
             {
                 // Download the image
                 Downloader downloader = new Downloader(FileFolderUrl.SplatNet + weapon.SpecialWeapon.Image1, image3, Downloader.SourceType.Weapon, Depot.Proxy);
-                Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                 {
                     if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(weapon.SpecialWeapon.Image1))
                     {

@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Threading;
 
-namespace IkasLib
+namespace Ikas
 {
     public delegate void DownloadCompletedEventHandler();
     public class Downloader
@@ -93,11 +95,11 @@ namespace IkasLib
         }
     }
 
-    public class DownloadManager
+    public static class DownloadHelper
     {
-        private Mutex DownloadersMutex;
-        private List<Downloader> downloaders;
-        public List<Downloader> Downloaders
+        private static Mutex DownloadersMutex = new Mutex();
+        private static List<Downloader> downloaders = new List<Downloader>();
+        public static List<Downloader> Downloaders
         {
             get
             {
@@ -105,21 +107,13 @@ namespace IkasLib
             }
         }
 
-        public DownloadManager()
-        {
-            DownloadersMutex = new Mutex();
-            DownloadersMutex.WaitOne();
-            downloaders = new List<Downloader>();
-            DownloadersMutex.ReleaseMutex();
-        }
-
         /// <summary>
-        /// Add a Downloader to the DownloadManager and start downloading.
+        /// Add a Downloader to the DownloadHelper and start downloading.
         /// </summary>
         /// <param name="downloader">The Downloader which is going to be added</param>
         /// <param name="handler">Handler for DownloadSucceeded event</param>
         /// <returns></returns>
-        public bool AddDownloader(Downloader downloader, DownloadCompletedEventHandler handler)
+        public static bool AddDownloader(Downloader downloader, DownloadCompletedEventHandler handler)
         {
             DownloadersMutex.WaitOne();
             // Clean up inactive download
@@ -148,7 +142,7 @@ namespace IkasLib
         /// Remove Downloaders with certain Source.
         /// </summary>
         /// <param name="source">The matching Source</param>
-        public void RemoveDownloaders(Downloader.SourceType source)
+        public static void RemoveDownloaders(Downloader.SourceType source)
         {
             DownloadersMutex.WaitOne();
             // Remove all handlers of DownloadCompleted event before removing
@@ -186,7 +180,7 @@ namespace IkasLib
         /// Remove a Downloader.
         /// </summary>
         /// <param name="downloader">The Downloader which is going to be removed</param>
-        private void RemoveDownloader(Downloader downloader)
+        private static void RemoveDownloader(Downloader downloader)
         {
             DownloadersMutex.WaitOne();
             // Remove all handlers of DownloaCompleted event before removing

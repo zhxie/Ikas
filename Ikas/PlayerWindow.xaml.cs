@@ -91,7 +91,7 @@ namespace Ikas
             {
                 // Download the image
                 Downloader downloader = new Downloader(Player.Image, image, Downloader.SourceType.Player, Depot.Proxy);
-                Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                 {
                     if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Player.Image) + ".jpg")
                     {

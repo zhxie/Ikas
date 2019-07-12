@@ -89,6 +89,7 @@
     <Compile Include="BattleWindow.xaml.cs">
       <DependentUpon>BattleWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DownloadHelper.cs" />
     <Compile Include="GearControl.xaml.cs">
       <DependentUpon>GearControl.xaml</DependentUpon>
     </Compile>

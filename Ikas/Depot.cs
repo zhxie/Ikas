@@ -530,8 +530,6 @@ namespace Ikas
         private static string authCodeChallenge = "";
         private static string authCodeVerifier = "";
 
-        public static DownloadManager DownloadManager { get; } = new DownloadManager();
-
         public static event ScheduleChangedEventHandler ScheduleChanged;
         public static event ScheduleUpdatedEventHandler ScheduleUpdated;
         public static event ScheduleFailedEventHandler ScheduleFailed;
@@ -623,7 +621,7 @@ namespace Ikas
         public static async void GetSchedule()
         {
             // Remove previous Downloader's handlers
-            DownloadManager.RemoveDownloaders(Downloader.SourceType.Schedule);
+            DownloadHelper.RemoveDownloaders(Downloader.SourceType.Schedule);
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseCookies = false;
@@ -752,7 +750,7 @@ namespace Ikas
             // Raise event
             BattleChanged?.Invoke();
             // Remove previous Downloader's handlers
-            DownloadManager.RemoveDownloaders(Downloader.SourceType.Battle);
+            DownloadHelper.RemoveDownloaders(Downloader.SourceType.Battle);
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseCookies = false;
@@ -1489,7 +1487,7 @@ namespace Ikas
         public static async Task<string> GetPlayerIcon(string id)
         {
             // Remove previous Downloader's handlers
-            DownloadManager.RemoveDownloaders(Downloader.SourceType.Battle);
+            DownloadHelper.RemoveDownloaders(Downloader.SourceType.Battle);
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseCookies = false;

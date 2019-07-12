@@ -375,7 +375,7 @@ namespace Ikas
                     {
                         // Download the image
                         Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
-                        Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                             brush.Stretch = Stretch.UniformToFill;
@@ -397,7 +397,7 @@ namespace Ikas
                         catch
                         {
                             Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
-                            Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                            DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                             {
                                 ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                                 brush.Stretch = Stretch.UniformToFill;

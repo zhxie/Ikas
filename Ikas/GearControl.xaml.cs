@@ -41,7 +41,7 @@ namespace Ikas
         public void SetGear(Gear gear)
         {
             // Remove previous Downloader's handlers, let lambda decide
-            //Depot.DownloadManager.RemoveDownloaders(Downloader.SourceType.Gear);
+            //DownloadHelper.RemoveDownloaders(Downloader.SourceType.Gear);
             Gear = gear;
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(bdGear);
@@ -64,7 +64,7 @@ namespace Ikas
                 {
                     // Download the image
                     Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.Image, image, Downloader.SourceType.Gear, Depot.Proxy);
-                    Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
                         if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Gear.Image))
                         {
@@ -88,7 +88,7 @@ namespace Ikas
                 {
                     // Download the image
                     Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.MainSkill.Image, image2, Downloader.SourceType.Gear, Depot.Proxy);
-                    Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
                         if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Gear.MainSkill.Image))
                         {
@@ -112,7 +112,7 @@ namespace Ikas
                 {
                     // Download the image
                     Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[0].Image, image3, Downloader.SourceType.Gear, Depot.Proxy);
-                    Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
                         if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Gear.SubSkills[0].Image))
                         {
@@ -138,7 +138,7 @@ namespace Ikas
                     {
                         // Download the image
                         Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[1].Image, image4, Downloader.SourceType.Gear, Depot.Proxy);
-                        Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
                             if (Gear.SubSkills.Count > 1)
                             {
@@ -167,7 +167,7 @@ namespace Ikas
                         {
                             // Download the image
                             Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[2].Image, image5, Downloader.SourceType.Gear, Depot.Proxy);
-                            Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                            DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                             {
                                 if (Gear.SubSkills.Count > 2)
                                 {

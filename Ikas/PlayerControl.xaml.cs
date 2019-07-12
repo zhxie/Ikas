@@ -159,7 +159,7 @@ namespace Ikas
                 {
                     // Download the image
                     Downloader downloader = new Downloader(Player.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
-                    Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
                         if (Player != null)
                         {
@@ -186,7 +186,7 @@ namespace Ikas
                 {
                     // Download the image
                     Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.Image, image2, Downloader.SourceType.Battle, Depot.Proxy);
-                    Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
                         if (Player != null)
                         {
@@ -248,7 +248,7 @@ namespace Ikas
                     {
                         // Download the image
                         Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.SpecialWeapon.Image1, image3, Downloader.SourceType.Battle, Depot.Proxy);
-                        Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
                             if (Player != null)
                             {
@@ -277,7 +277,7 @@ namespace Ikas
                     {
                         // Download the image
                         Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Player.Weapon.SpecialWeapon.Image2, image3, Downloader.SourceType.Battle, Depot.Proxy);
-                        Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
                             if (Player != null)
                             {

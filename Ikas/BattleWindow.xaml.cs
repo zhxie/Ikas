@@ -462,7 +462,7 @@ namespace Ikas
                 {
                     // Download the image
                     Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
-                    Depot.DownloadManager.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
