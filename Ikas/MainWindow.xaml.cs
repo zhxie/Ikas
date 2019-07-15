@@ -96,6 +96,8 @@ namespace Ikas
                 }
             });
             tmBattle.Interval = new TimeSpan(0, 0, 30);
+            // Initialize notification
+            Ikas.Notification.NotificationHelper.InitializeNotification();
         }
 
         #region Control Event
@@ -152,6 +154,8 @@ namespace Ikas
             // Automatica Schedule and Battle update
             tmSchedule.Start();
             tmBattle.Start();
+            // TEST: Send notification
+            Ikas.Notification.NotificationHelper.SendTextNotification("Hello world！", "This is a text notification createad by Ikas.");
         }
 
         private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -14,7 +14,7 @@ namespace Ikas.Notification
     {
         public void Activate(string appUserModelId, string invokedArgs, NOTIFICATION_USER_INPUT_DATA[] data, uint dataCount)
         {
-            NotificationHelper.InvokeToastActivated();
+            // TODO: Do something
         }
 
         public static void Initialize()
