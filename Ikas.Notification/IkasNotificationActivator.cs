@@ -16,9 +16,11 @@ namespace Ikas.Notification
     // The GUID CLSID must be unique to your app. Create a new GUID if copying this code.
     [ClassInterface(ClassInterfaceType.None)]
     [ComSourceInterfaces(typeof(INotificationActivationCallback))]
-    [Guid("16f7ed7a-c091-418c-8fc4-b447ff9cefb0"), ComVisible(true)]
-    public class MyNotificationActivator : NotificationActivator
+    [Guid("a6f70341-f83c-4ba8-97de-1c6947715679"), ComVisible(true)]
+    public class IkasNotificationActivator : NotificationActivator
     {
+        public const string AppId = "Ikas";
+
         public override void OnActivated(string arguments, NotificationUserInput userInput, string appUserModelId)
         {
             

@@ -294,6 +294,9 @@
     <sys:String x:Key="battle_window-%">%</sys:String>
     <sys:String x:Key="battle_window-{0} count">{0} カウント</sys:String>
     <sys:String x:Key="battle_window-knock_out">ノックアウト!</sys:String>
+    <sys:String x:Key="battle_window-{0} ({1}% - {2}%)">{0} ({1}% - {2}%)</sys:String>
+    <sys:String x:Key="battle_window-{0} ({1} - {2})">{0} ({1} - {2})</sys:String>
+    <sys:String x:Key="battle_window-{0} - {1}\n{2} (+{3})">{0} - {1}\n{2} (+{3})</sys:String>
     <!-- WeaponWindow -->
     <!-- PlayerWindow -->
     <!-- SettingsWindow -->

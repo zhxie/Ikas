@@ -20,8 +20,8 @@ namespace Ikas.Notification
         public static void InitializeNotification()
         {
             // Register AUMID, COM server, and activator
-            DesktopNotificationManagerCompat.RegisterAumidAndComServer<MyNotificationActivator>("Ikas");
-            DesktopNotificationManagerCompat.RegisterActivator<MyNotificationActivator>();
+            DesktopNotificationManagerCompat.RegisterAumidAndComServer<IkasNotificationActivator>(IkasNotificationActivator.AppId);
+            DesktopNotificationManagerCompat.RegisterActivator<IkasNotificationActivator>();
         }
 
         /// <summary>
