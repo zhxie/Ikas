@@ -55,5 +55,10 @@
     <Compile Include="ShellHelpers.cs" />
     <Compile Include="ShellPropertyKeys.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ikas.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

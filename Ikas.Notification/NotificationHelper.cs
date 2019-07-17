@@ -18,13 +18,22 @@ namespace Ikas.Notification
     {
         public const string APP_ID = "Ikas";
 
+        /// <summary>
+        /// Initialize toast notification.
+        /// </summary>
         public static void InitializeNotification()
         {
             RegisterAppForNotificationSupport();
             NotificationActivator.Initialize();
         }
 
-        public static void SendTextNotification(string title, string text)
+        /// <summary>
+        /// Send toast notification with icon, title, and at most 2 lines of text.
+        /// </summary>
+        /// <param name="title">Title of toast notification</param>
+        /// <param name="line1">The first line of text of toast notification</param>
+        /// <param name="line2">The second line of text of toast notification</param>
+        public static void SendTextNotification(string title, string line1, string line2 = null)
         {
             // Get a toast XML template
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastImageAndText04);
@@ -32,10 +41,14 @@ namespace Ikas.Notification
             // Fill in the text elements
             XmlNodeList stringElements = toastXml.GetElementsByTagName("text");
             stringElements[0].AppendChild(toastXml.CreateTextNode(title));
-            stringElements[1].AppendChild(toastXml.CreateTextNode(text));
+            stringElements[1].AppendChild(toastXml.CreateTextNode(line1));
+            if (line2 != null)
+            {
+                stringElements[2].AppendChild(toastXml.CreateTextNode(line2));
+            }
 
             // Specify the absolute path to an image as a URI
-            string imagePath = new System.Uri(Path.GetFullPath("Ikas.png")).AbsoluteUri;
+            string imagePath = new System.Uri(Path.GetFullPath("Ikas.ico")).AbsoluteUri;
             XmlNodeList imageElements = toastXml.GetElementsByTagName("image");
             imageElements[0].Attributes.GetNamedItem("src").NodeValue = imagePath;
 
@@ -44,6 +57,18 @@ namespace Ikas.Notification
 
             // Show the toast. Be sure to specify the AppUserModelId on your application's shortcut!
             ToastNotificationManager.CreateToastNotifier(APP_ID).Show(toast);
+        }
+
+        /// <summary>
+        /// Send toast notification with icon, title, at most 2 lines of text and image.
+        /// </summary>
+        /// <param name="title">Title of toast notification</param>
+        /// <param name="image">Image of toast notification</param>
+        /// <param name="line1">The first line of text of toast notification</param>
+        /// <param name="line2">The second line of text of toast notification</param>
+        public static void SendTextAndImageNotification(string title, string image, string line1 = null, string line2 = null)
+        {
+
         }
 
         // In order to display toasts, a desktop application must have a shortcut on the Start menu.
