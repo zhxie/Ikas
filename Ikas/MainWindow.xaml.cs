@@ -155,7 +155,7 @@ namespace Ikas
             tmSchedule.Start();
             tmBattle.Start();
             // TEST: Send notification
-            Ikas.Notification.NotificationHelper.SendTextNotification("Hello world！", "This is a text notification createad by Ikas.");
+            Ikas.Notification.NotificationHelper.SendTextAndImageNotification("Hello world!", "This is a text notification createad by Ikas.", new Uri(System.IO.Path.GetFullPath("Ikas.ico")).AbsoluteUri);
         }
 
         private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
