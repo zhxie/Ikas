@@ -210,6 +210,20 @@ namespace IkasLib
                 }
             }
         }
+        public double ScoreRatio
+        {
+            get
+            {
+                if (MyScore == 0 && OtherScore == 0)
+                {
+                    return 0.5;
+                }
+                else
+                {
+                    return MyScore / (MyScore + OtherScore);
+                }
+            }
+        }
 
         public bool IsWin
         {
