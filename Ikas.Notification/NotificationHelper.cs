@@ -102,6 +102,53 @@ namespace Ikas.Notification
         }
 
         /// <summary>
+        /// Send text and progress bar toast notification.
+        /// </summary>
+        /// <param name="title">Title of the toast notification</param>
+        /// /// <param name="content">Content of te toast notification</param>
+        /// <param name="progressTitle">Title of the progress of the toast notification</param>
+        /// <param name="status">Status of the progress of the toast notification</param>
+        /// <param name="value">Value of the progress of the toast notification</param>
+        /// <param name="valueString">Value string of the progress of the toast notification</param>
+        public static void SendTextAndProgressBarNotification(string title, string content, string progressTitle, string status, double value, string valueString)
+        {
+            // Construct the toast content
+            ToastContent toastContent = new ToastContent
+            {
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = title
+                            },
+                            new AdaptiveText()
+                            {
+                                Text = content
+                            },
+                            new AdaptiveProgressBar()
+                            {
+                                Title = progressTitle,
+                                Value = value,
+                                ValueStringOverride = valueString,
+                                Status = status
+                            }
+                        },
+                        AppLogoOverride = new ToastGenericAppLogo()
+                        {
+                            Source = new Uri(Path.GetFullPath("Ikas.ico")).AbsoluteUri
+                        }
+                    }
+                }
+            };
+            // Send the toast notification
+            SendNotification(toastContent);
+        }
+
+        /// <summary>
         /// Send toast notification.
         /// </summary>
         /// <param name="toastContent">XML document of the toast notification</param>
