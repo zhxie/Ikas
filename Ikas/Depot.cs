@@ -9,6 +9,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading;
 using IniParser;
@@ -259,7 +260,7 @@ namespace Ikas
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationAlwaysOnTop] = value.ToString().ToLower();
                         FileIniDataParser parser = new FileIniDataParser();
-                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                        parser.WriteFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
                     catch { }
                     finally
@@ -290,7 +291,7 @@ namespace Ikas
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationNotification] = value.ToString().ToLower();
                         FileIniDataParser parser = new FileIniDataParser();
-                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                        parser.WriteFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
                     catch { }
                 }
@@ -317,7 +318,7 @@ namespace Ikas
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationStartMode] = ((int)value).ToString();
                         FileIniDataParser parser = new FileIniDataParser();
-                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                        parser.WriteFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
                     catch { }
                 }
@@ -344,7 +345,7 @@ namespace Ikas
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationStartX] = value.ToString();
                         FileIniDataParser parser = new FileIniDataParser();
-                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                        parser.WriteFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
                     catch { }
                 }
@@ -371,7 +372,7 @@ namespace Ikas
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationStartY] = value.ToString();
                         FileIniDataParser parser = new FileIniDataParser();
-                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                        parser.WriteFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
                     catch { }
                 }
@@ -398,7 +399,7 @@ namespace Ikas
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxy] = value.ToString().ToLower();
                         FileIniDataParser parser = new FileIniDataParser();
-                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                        parser.WriteFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
                     catch { }
                 }
@@ -425,7 +426,7 @@ namespace Ikas
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyHost] = value;
                         FileIniDataParser parser = new FileIniDataParser();
-                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                        parser.WriteFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
                     catch { }
                 }
@@ -452,7 +453,7 @@ namespace Ikas
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationNetworkSection][FileFolderUrl.SystemConfigurationUseProxyPort] = value.ToString();
                         FileIniDataParser parser = new FileIniDataParser();
-                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                        parser.WriteFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
                     catch { }
                 }
@@ -515,7 +516,7 @@ namespace Ikas
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage] = value;
                         FileIniDataParser parser = new FileIniDataParser();
-                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                        parser.WriteFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
                     catch { }
                     finally
@@ -529,7 +530,7 @@ namespace Ikas
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage] = value;
                         FileIniDataParser parser = new FileIniDataParser();
-                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                        parser.WriteFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
                     catch { }
                 }
@@ -556,7 +557,7 @@ namespace Ikas
                     {
                         systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationInUse] = value.ToString().ToLower();
                         FileIniDataParser parser = new FileIniDataParser();
-                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                        parser.WriteFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration, systemIniData);
                     }
                     catch { }
                 }
@@ -611,10 +612,10 @@ namespace Ikas
         /// <returns></returns>
         public static bool LoadUserConfiguration(string file = FileFolderUrl.UserConfiguration)
         {
-            userConfigurationPath = file;
+            userConfigurationPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location) + file;
             if (!File.Exists(userConfigurationPath))
             {
-                userConfigurationPath = System.Environment.CurrentDirectory + userConfigurationPath;
+                userConfigurationPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location) + userConfigurationPath;
                 if (!File.Exists(userConfigurationPath))
                 {
                     return false;
@@ -637,14 +638,14 @@ namespace Ikas
         /// <returns></returns>
         public static bool LoadSystemConfiguration()
         {
-            if (!File.Exists(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration))
+            if (!File.Exists(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration))
             {
                 return false;
             }
             try
             {
                 FileIniDataParser parser = new FileIniDataParser();
-                systemIniData = parser.ReadFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration);
+                systemIniData = parser.ReadFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.SystemConfiguration);
                 return true;
             }
             catch
