@@ -284,6 +284,6 @@
 copy "$(SolutionDir)LICENSE" "$(ProjectDir)$(OutDir)"
 copy "$(SolutionDir)LICENSE.ini-parser.md" "$(ProjectDir)$(OutDir)"
 copy "$(SolutionDir)LICENSE.Newtonsoft.Json.md" "$(ProjectDir)$(OutDir)"
-</PostBuildEvent>
+copy "$(SolutionDir)LICENSE.Microsoft.Toolkit.Uwp.Notifications.md" "$(ProjectDir)$(OutDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

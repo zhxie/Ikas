@@ -1733,7 +1733,7 @@ namespace Ikas
                     // Send 3rd Party HTTP POST
                     long timestamp = (long)(DateTime.Now - TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1))).TotalSeconds;
                     HttpRequestMessage requestHash = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.eliFesslerApi);
-                    requestHash.Headers.Add("User-Agent", "Ikas/0.1.2");
+                    requestHash.Headers.Add("User-Agent", "Ikas/0.2.0");
                     List<KeyValuePair<string, string>> requestHashContent = new List<KeyValuePair<string, string>>();
                     requestHashContent.Add(new KeyValuePair<string, string>("naIdToken", idToken));
                     requestHashContent.Add(new KeyValuePair<string, string>("timestamp", timestamp.ToString()));
