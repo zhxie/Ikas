@@ -47,7 +47,7 @@ namespace IkasLib
             the_switches,
             the_bouncey_twins,
             railway_chillin,
-            gusher_towns = 16,
+            gusher_towns,
             the_maze_dasher,
             flooders_in_the_attic,
             the_splat_in_our_zones,
