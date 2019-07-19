@@ -549,78 +549,72 @@ namespace Ikas
                     }
                 }
                 // Send battle notification
-                // TODO: Draw 364x180 image
                 DateTime endTime = battle.StartTime.AddSeconds(battle.ElapsedTime);
                 double diffTime = (DateTime.Now - endTime).TotalSeconds;
-                if (isNewBattle)
+                if (isNewBattle /*&& diffTime <= 300*/)
                 {
+                    // Format title
                     string title;
+                    if (battle.IsWin)
+                    {
+                        title = string.Format(Translate("{0} (No. {1})", true), Translate("Win!", true), Translate(battle.Number.ToString()));
+                    }
+                    else
+                    {
+                        title = string.Format(Translate("{0} (No. {1})", true), Translate("Lose..", true), Translate(battle.Number.ToString()));
+                    }
+                    // Format content
+                    string content = string.Format(Translate("{0} - {1}", true), Translate(battle.Stage.Id.ToString()), battle.StartTime.ToString("yyyy/M/dd HH:mm"));
+                    // Format progressTitle
+                    string scoreTitle = string.Format(Translate("{0} - {1}", true), Translate(battle.Mode.ToString()), Translate(battle.Rule.ToString()));
+                    // Format status and value string
+                    string myScore, otherScore;
                     switch (battle.Type)
                     {
                         case Mode.Key.regular_battle:
                         case Mode.Key.splatfest:
-                            if (battle.IsWin)
-                            {
-                                title = string.Format(Translate("{0} ({1}% - {2}%)", true), Translate("Win!", true), battle.MyScore, battle.OtherScore);
-                            }
-                            else
-                            {
-                                title = string.Format(Translate("{0} ({1}% - {2}%)", true), Translate("Lose..", true), battle.MyScore, battle.OtherScore);
-                            }
+                            myScore = string.Format(Translate("{0}%", true), battle.MyScore);
+                            otherScore = string.Format(Translate("{0}%", true), battle.OtherScore);
                             break;
                         case Mode.Key.ranked_battle:
-                            if (battle.IsWin)
+                            if ((battle as RankedBattle).IsKo)
                             {
-                                if ((battle as RankedBattle).IsKo)
-                                {
-                                    title = string.Format(Translate("{0} ({1} - {2})", true), Translate("Win!", true), Translate("knock_out", true), battle.OtherScore);
-                                }
-                                else
-                                {
-                                    title = string.Format(Translate("{0} ({1} - {2})", true), Translate("Win!", true), battle.MyScore, battle.OtherScore);
-                                }
+                                myScore = Translate("knock_out", true);
+                                otherScore = string.Format(Translate("{0} count", true), battle.OtherScore);
+                            }
+                            else if ((battle as RankedBattle).IsBeKoed)
+                            {
+                                myScore = string.Format(Translate("{0} count", true), battle.MyScore);
+                                otherScore = Translate("knock_out", true);
                             }
                             else
                             {
-                                if ((battle as RankedBattle).IsBeKoed)
-                                {
-                                    title = string.Format(Translate("{0} ({1} - {2})", true), Translate("Lose..", true), battle.MyScore, Translate("knock_out", true));
-                                }
-                                else
-                                {
-                                    title = string.Format(Translate("{0} ({1} - {2})", true), Translate("Lose..", true), battle.MyScore, battle.OtherScore);
-                                }
+                                myScore = string.Format(Translate("{0} count", true), battle.MyScore);
+                                otherScore = string.Format(Translate("{0} count", true), battle.OtherScore);
                             }
                             break;
                         case Mode.Key.league_battle:
-                            if (battle.IsWin)
+                            if ((battle as LeagueBattle).IsKo)
                             {
-                                if ((battle as LeagueBattle).IsKo)
-                                {
-                                    title = string.Format(Translate("{0} ({1} - {2})", true), Translate("Win!", true), Translate("knock_out", true), battle.OtherScore);
-                                }
-                                else
-                                {
-                                    title = string.Format(Translate("{0} ({1} - {2})", true), Translate("Win!", true), battle.MyScore, battle.OtherScore);
-                                }
+                                myScore = Translate("knock_out", true);
+                                otherScore = string.Format(Translate("{0} count", true), battle.OtherScore);
+                            }
+                            else if ((battle as LeagueBattle).IsBeKoed)
+                            {
+                                myScore = string.Format(Translate("{0} count", true), battle.MyScore);
+                                otherScore = Translate("knock_out", true);
                             }
                             else
                             {
-                                if ((battle as LeagueBattle).IsBeKoed)
-                                {
-                                    title = string.Format(Translate("{0} ({1} - {2})", true), Translate("Lose..", true), battle.MyScore, Translate("knock_out", true));
-                                }
-                                else
-                                {
-                                    title = string.Format(Translate("{0} ({1} - {2})", true), Translate("Lose..", true), battle.MyScore, battle.OtherScore);
-                                }
+                                myScore = string.Format(Translate("{0} count", true), battle.MyScore);
+                                otherScore = string.Format(Translate("{0} count", true), battle.OtherScore);
                             }
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
-                    string content = string.Format(Translate("{0} - {1}\n{2} (+{3})", true), Translate(battle.Mode.ToString()), Translate(battle.Rule.ToString()), battle.StartTime.ToString("yyyy/M/dd HH:mm"), battle.ElapsedTime);
-                    Notification.NotificationHelper.SendTextAndImageNotification(title, content, new Uri(System.IO.Path.GetFullPath("Ikas.ico")).AbsoluteUri);
+                    // Show notification
+                    NotificationHelper.SendBattleNotification(title, content, scoreTitle, myScore, otherScore, battle.ScoreRatio);
                 }
             }
             // Fade out loading

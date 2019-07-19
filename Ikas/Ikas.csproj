@@ -96,6 +96,7 @@
     <Compile Include="MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NotificationHelper.cs" />
     <Compile Include="PlayerControl.xaml.cs">
       <DependentUpon>PlayerControl.xaml</DependentUpon>
     </Compile>

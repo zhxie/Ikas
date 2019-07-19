@@ -35,6 +35,8 @@ namespace IkasLib
         public const string SystemConfigurationUseProxyHost = "UseProxyHost";
         public const string SystemConfigurationUseProxyPort = "UseProxyPort";
 
+        public const string NotificationDll = @"\Ikas.Notification.dll";
+
         #endregion
 
         #region Folder

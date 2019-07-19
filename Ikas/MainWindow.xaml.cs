@@ -97,7 +97,7 @@ namespace Ikas
             });
             tmBattle.Interval = new TimeSpan(0, 0, 30);
             // Initialize notification
-            Notification.NotificationHelper.InitializeNotification();
+            NotificationHelper.InitializeNotification();
         }
 
         #region Control Event
