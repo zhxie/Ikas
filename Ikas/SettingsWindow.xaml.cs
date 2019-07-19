@@ -183,7 +183,7 @@ namespace Ikas
         {
             if (txtCookie.Text.Trim() == "")
             {
-                if (MessageBox.Show(Translate("If you do not enter a valid cookie, Ikas may not work properly. Click Yes to close the settings, or click No to cancel.", true), "Ikas", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                if (MessageBox.Show(Translate("if_you_do_not_enter_a_valid_cookie,_ikas_may_not_work_properly._click_yes_to_close_the_settings,_or_click_no_to_cancel.", true), "Ikas", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
                 {
                     return;
                 }
@@ -192,13 +192,13 @@ namespace Ikas
             {
                 if (!int.TryParse(txtProxyPort.Text, out _))
                 {
-                    MessageBox.Show(Translate("You may enter a valid proxy port before closing the settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(Translate("you_may_enter_a_valid_proxy_port_before_closing_the_settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 int port = int.Parse(txtProxyPort.Text);
                 if (port < 1 || port > 65535)
                 {
-                    MessageBox.Show(Translate("You may enter a valid proxy port before closing the settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(Translate("you_may_enter_a_valid_proxy_port_before_closing_the_settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
             }
@@ -218,10 +218,10 @@ namespace Ikas
 
         private void LbWhatIsSessionToken_MouseEnter(object sender, MouseEventArgs e)
         {
-            ShowMessage(Translate("Session Token is..", true),
+            ShowMessage(Translate("session_token_is..", true),
                 string.Format(Translate("{0}\n{1}", true),
-                Translate("A Session Token is a small piece of data used for automatic cookie generation.", true),
-                Translate("Automatic cookie generation sends minimal data including the Session Token to Nintendo and non-Nintendo servers, and get cookie back for accessing SplatNet.", true)),
+                Translate("a_session_token_is_a_small_piece_of_data_used_for_automatic_cookie_generation.", true),
+                Translate("automatic_cookie_generation_sends_minimal_data_including_the_session_token_to_nintendo_and_non-nintendo_servers,_and_get_cookie_back_for_accessing_splatnet.", true)),
                 e.GetPosition(this));
         }
 
@@ -244,38 +244,38 @@ namespace Ikas
         {
             if (!txtSessionToken.Text.Contains("session_token_code="))
             {
-                MessageBox.Show(Translate("You will be led to a Nintendo website. Log in, right click on Select this Person, copy the link address, and paste it to Session Token textbox, and click this label again.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Translate("you_will_be_led_to_a_nintendo_website._log_in,_right_click_on_select_this_person,_copy_the_link_address,_and_paste_it_to_session_token_textbox,_and_click_this_label_again.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 // Authorize
                 string url = Depot.LogIn();
                 System.Diagnostics.Process.Start(url);
             }
             else
             {
-                MessageBox.Show(Translate("Ikas will try to get Session Token, which will take seconds to minutes to finish. During the process, Ikas may freeze.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Translate("ikas_will_try_to_get_session_token,_which_will_take_seconds_to_minutes_to_finish._during_the_process,_ikas_may_freeze.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 string regex = Regex.Match(txtSessionToken.Text, @"de=(.*)&").Value;
                 string sessionToken = Depot.GetSessionTokenAsync(regex.Substring(3, regex.Length - 4)).Result;
                 if (sessionToken == null || sessionToken == "")
                 {
-                    MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
-                        Translate("Ikas cannot get Session Token"),
-                        Translate("unknown error"),
-                        Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                    MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                        Translate("ikas_cannot_get_session_token"),
+                        Translate("unknown_error"),
+                        Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                         ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                     txtSessionToken.Text = "";
                 }
                 else if (sessionToken.StartsWith("!"))
                 {
                     string reason = sessionToken.TrimStart('!');
-                    MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
-                        Translate("Ikas cannot get Session Token"),
+                    MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                        Translate("ikas_cannot_get_session_token"),
                         Translate(reason),
-                        Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                        Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                         ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                     txtSessionToken.Text = "";
                 }
                 else
                 {
-                    MessageBox.Show(Translate("Get Session Token successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(Translate("get_session_token_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                     txtSessionToken.Text = sessionToken;
                 }
             }
@@ -283,11 +283,11 @@ namespace Ikas
 
         private void LbWhatIsCookie_MouseEnter(object sender, MouseEventArgs e)
         {
-            ShowMessage(Translate("Cookie is..", true),
+            ShowMessage(Translate("cookie_is..", true),
                 string.Format(Translate("{0}\n{1}\n{2}", true),
-                Translate("A Cookie is a small piece of data sent from a website and stored on the user's computer.", true),
-                Translate("Ikas uses cookies to access SplatNet, get schedule and battle data.", true),
-                Translate("If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.", true)),
+                Translate("a_cookie_is_a_small_piece_of_data_sent_from_a_website_and_stored_on_the_user's_computer.", true),
+                Translate("ikas_uses_cookies_to_access_splatnet,_get_schedule_and_battle_data.", true),
+                Translate("if_you_don't_know_how_to_get_a_cookie,_you_may_fill_out_the_session_token,_and_the_system_will_get_one_automatically.", true)),
                 e.GetPosition(this));
         }
 
@@ -310,32 +310,32 @@ namespace Ikas
         {
             if (txtSessionToken.Text != "")
             {
-                MessageBox.Show(Translate("Ikas will try to get Cookie, which will take seconds to minutes to finish. During the process, Ikas may freeze.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Translate("ikas_will_try_to_get_cookie,_which_will_take_seconds_to_minutes_to_finish._during_the_process,_ikas_may_freeze.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 // DISCLAIMER
-                if (MessageBox.Show(Translate("Automatic cookie generation will send your Session Token to Nintendo and non-Nintendo servers, which may lead to privacy breaches. Please read the instructions in the README carefully. Click Yes to continue, or click No to view other methods.", true), "Ikas", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                if (MessageBox.Show(Translate("automatic_cookie_generation_will_send_your_session_token_to_nintendo_and_non-nintendo_servers,_which_may_lead_to_privacy_breaches._please_read_the_instructions_in_the_readme_carefully._click_yes_to_continue,_or_click_no_to_view_other_methods.", true), "Ikas", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     // Automatic Cookie Generation
                     string cookie = Depot.GetCookie(txtSessionToken.Text).Result;
                     if (cookie == null || cookie == "")
                     {
-                        MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
-                            Translate("Ikas cannot update Cookie"),
-                            Translate("unknown error"),
-                            Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                        MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                            Translate("ikas_cannot_update_cookie"),
+                            Translate("unknown_error"),
+                            Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                             ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                     else if (cookie.StartsWith("!"))
                     {
                         string reason = cookie.TrimStart('!');
-                        MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
-                            Translate("Ikas cannot update Cookie"),
+                        MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                            Translate("ikas_cannot_update_cookie"),
                             Translate(reason),
-                            Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                            Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                             ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                     else
                     {
-                        MessageBox.Show(Translate("Update Cookie successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show(Translate("update_cookie_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                         txtCookie.Text = cookie;
                     }
                 }
@@ -347,7 +347,7 @@ namespace Ikas
             }
             else
             {
-                MessageBox.Show(Translate("You may enter a valid Session Token before update Cookie.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Translate("you_may_enter_a_valid_session_token_before_update_cookie.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -436,17 +436,17 @@ namespace Ikas
 
         private void LbClearCache_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show(Translate("Currently, we can not clear cache automatically, but we can guide you to the application data directory.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(Translate("currently,_ikas_can_not_clear_cache_automatically,_but_ikas_can_guide_you_to_the_application_data_directory.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
             System.Diagnostics.Process.Start("explorer.exe", FileFolderUrl.ApplicationData);
         }
 
         private void LbWhatIsClearCache_MouseEnter(object sender, MouseEventArgs e)
         {
-            ShowMessage(Translate("Clear Cache is..", true),
+            ShowMessage(Translate("clear_cache_is..", true),
                 string.Format(Translate("{0}\n{1}\n{2}", true),
-                Translate("When Ikas gets schedule and battle data, it will cache images including user icons, stages, weapons and gears.", true),
-                Translate("Sometimes, due to network or other reasons, Ikas may not get images properly, which may cause wrong cached images.", true),
-                Translate("You can help Ikas get back to normal operation by clearing the cached data.", true)),
+                Translate("when_ikas_gets_schedule_and_battle_data,_it_will_cache_images_including_user_icons,_stages,_weapons_and_gears.", true),
+                Translate("sometimes,_due_to_network_or_other_reasons,_ikas_may_not_get_images_properly,_which_may_cause_wrong_cached_images.", true),
+                Translate("you_can_help_ikas_get_back_to_normal_operation_by_clearing_the_cached_data.", true)),
                 e.GetPosition(this));
         }
 

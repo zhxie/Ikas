@@ -136,9 +136,9 @@ namespace Ikas
 #else
             if (Depot.InUse)
             {
-                MessageBox.Show(string.Format(Translate("{0}. {1}", true),
-                    Translate("Ikas has started, or Ikas failed to exit normally"),
-                    Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                MessageBox.Show(string.Format(Translate("{0}._{1}", true),
+                    Translate("ikas_has_started,_or_ikas_failed_to_exit_normally"),
+                    Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                     ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 #endif
@@ -146,7 +146,7 @@ namespace Ikas
             // Check cookie
             if (Depot.Cookie == null || Depot.Cookie == "")
             {
-                MessageBox.Show(Translate("Welcome to Ikas! To use Ikas, you may set up your Cookie first.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Translate("welcome_to_ikas!_to_use_ikas,_you_may_set_up_your_cookie_first.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 MenuItemSettings_Click(null, null);
             }
             // Update Schedule
@@ -233,9 +233,9 @@ namespace Ikas
 
         private void AppDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            MessageBox.Show(string.Format(Translate("{0}. {1}\n\n{2}", true),
-                Translate("Ikas meets an unhandled exception"),
-                Translate("This is a bug, please consider submitting the issue."),
+            MessageBox.Show(string.Format(Translate("{0}._{1}\n\n{2}", true),
+                Translate("ikas_meets_an_unhandled_exception"),
+                Translate("this_is_a_bug,_please_consider_submitting_the_issue."),
                 e.ExceptionObject.ToString()
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
@@ -424,20 +424,20 @@ namespace Ikas
         private void ScheduleFailed(string reason)
         {
             tmSchedule.Stop();
-            MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
-                Translate("Ikas cannot get schdule"),
+            MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                Translate("ikas_cannot_get_schdule"),
                 Translate(reason),
-                Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ),"Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void BattleFailed(string reason)
         {
             tmBattle.Stop();
-            MessageBox.Show(string.Format(Translate("{0}, because {1}. {2}", true),
-                Translate("Ikas cannot get the latest battle"),
+            MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                Translate("ikas_cannot_get_the_latest_battle"),
                 Translate(reason),
-                Translate("After you solve the problems above, if this error message continues to appear, please consider submitting the issue.")
+                Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 

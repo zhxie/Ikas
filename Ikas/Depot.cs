@@ -744,19 +744,19 @@ namespace Ikas
                 switch (schedule.EndTime.Ticks)
                 {
                     case 0:
-                        ScheduleFailed?.Invoke("schedule is not ready");
+                        ScheduleFailed?.Invoke("schedule_is_not_ready");
                         break;
                     case 1:
-                        ScheduleFailed?.Invoke("network cannot be reached, or Cookie is invalid or expired");
+                        ScheduleFailed?.Invoke("network_cannot_be_reached,_or_cookie_is_invalid_or_expired");
                         break;
                     case 2:
-                        ScheduleFailed?.Invoke("Cookie is empty");
+                        ScheduleFailed?.Invoke("cookie_is_empty");
                         break;
                     case 3:
-                        ScheduleFailed?.Invoke("schedule cannot be resolved");
+                        ScheduleFailed?.Invoke("schedule_cannot_be_resolved");
                         break;
                     case 4:
-                        ScheduleFailed?.Invoke("network cannot be reached");
+                        ScheduleFailed?.Invoke("network_cannot_be_reached");
                         break;
                     default:
                         break;
@@ -1365,31 +1365,31 @@ namespace Ikas
                 switch (battle.Number)
                 {
                     case 0:
-                        BattleFailed?.Invoke("battle is not ready");
+                        BattleFailed?.Invoke("battle_is_not_ready");
                         break;
                     case -1:
-                        BattleFailed?.Invoke("network cannot be reached, or Cookie is invalid or expired");
+                        BattleFailed?.Invoke("network_cannot_be_reached,_or_cookie_is_invalid_or_expired");
                         break;
                     case -2:
-                        BattleFailed?.Invoke("Cookie is empty");
+                        BattleFailed?.Invoke("cookie_is_empty");
                         break;
                     case -3:
-                        BattleFailed?.Invoke("battles cannot be resolved");
+                        BattleFailed?.Invoke("battles_cannot_be_resolved");
                         break;
                     case -4:
-                        BattleFailed?.Invoke("battle cannot be resolved");
+                        BattleFailed?.Invoke("battle_cannot_be_resolved");
                         break;
                     case -5:
-                        BattleFailed?.Invoke("player cannot be resolved");
+                        BattleFailed?.Invoke("player_cannot_be_resolved");
                         break;
                     case -6:
-                        BattleFailed?.Invoke("weapon cannot be resolved");
+                        BattleFailed?.Invoke("weapon_cannot_be_resolved");
                         break;
                     case -7:
-                        BattleFailed?.Invoke("gear cannot be resolved");
+                        BattleFailed?.Invoke("gear_cannot_be_resolved");
                         break;
                     case -8:
-                        BattleFailed?.Invoke("network cannot be reached");
+                        BattleFailed?.Invoke("network_cannot_be_reached");
                         break;
                     default:
                         break;
@@ -1619,7 +1619,7 @@ namespace Ikas
             }
             catch
             {
-                return "!network cannot be reached";
+                return "!network_cannot_be_reached";
             }
             // Send HTTP POST
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoSessionToken);
@@ -1631,7 +1631,7 @@ namespace Ikas
             }
             catch
             {
-                return "!network cannot be reached";
+                return "!network_cannot_be_reached";
             }
             if (response.IsSuccessStatusCode)
             {
@@ -1645,13 +1645,13 @@ namespace Ikas
                 }
                 catch
                 {
-                    return "!Session Token cannot be resolved";
+                    return "!session_token_cannot_be_resolved";
                 }
                 return sessionToken;
             }
             else
             {
-                return "!network cannot be reached, or Session Token link is invalid or expired";
+                return "!network_cannot_be_reached,_or_session_token_link_is_invalid_or_expired";
             }
         }
         /// <summary>
@@ -1681,7 +1681,7 @@ namespace Ikas
             }
             catch
             {
-                return "!network cannot be reached";
+                return "!network_cannot_be_reached";
             }
             if (responseToken.IsSuccessStatusCode)
             {
@@ -1697,7 +1697,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return "!Cookie cannot be resolved[1/7]";
+                    return "!cookie_cannot_be_resolved[1/7]";
                 }
                 // Send HTTP GET
                 HttpRequestMessage requestUserInfo = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.NintendoUserInfo);
@@ -1709,7 +1709,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    return "!network cannot be reached";
+                    return "!network_cannot_be_reached";
                 }
                 if (responseUserInfo.IsSuccessStatusCode)
                 {
@@ -1728,7 +1728,7 @@ namespace Ikas
                     }
                     catch
                     {
-                        return "!Cookie cannot be resolved[2/7]";
+                        return "!cookie_cannot_be_resolved[2/7]";
                     }
                     // Send 3rd Party HTTP POST
                     long timestamp = (long)(DateTime.Now - TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1))).TotalSeconds;
@@ -1745,7 +1745,7 @@ namespace Ikas
                     }
                     catch
                     {
-                        return "!network cannot be reached";
+                        return "!network_cannot_be_reached";
                     }
                     if (responseHash.IsSuccessStatusCode)
                     {
@@ -1759,7 +1759,7 @@ namespace Ikas
                         }
                         catch
                         {
-                            return "!Cookie cannot be resolved[3/7]";
+                            return "!cookie_cannot_be_resolved[3/7]";
                         }
                         // Send 3rd Party HTTP GET
                         string guid = Guid.NewGuid().ToString();
@@ -1803,7 +1803,7 @@ namespace Ikas
                         }
                         catch
                         {
-                            return "!network cannot be reached";
+                            return "!network_cannot_be_reached";
                         }
                         if (response3rd.IsSuccessStatusCode)
                         {
@@ -1833,7 +1833,7 @@ namespace Ikas
                             }
                             catch
                             {
-                                return "!Cookie cannot be resolved[4/7]";
+                                return "!cookie_cannot_be_resolved[4/7]";
                             }
                             // Send HTTP POST
                             HttpRequestMessage requestAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoAccessToken);
@@ -1854,7 +1854,7 @@ namespace Ikas
                             }
                             catch
                             {
-                                return "!network cannot be reached";
+                                return "!network_cannot_be_reached";
                             }
                             if (responseAccessToken.IsSuccessStatusCode)
                             {
@@ -1868,7 +1868,7 @@ namespace Ikas
                                 }
                                 catch
                                 {
-                                    return "!Cookie cannot be resolved[5/7]";
+                                    return "!cookie_cannot_be_resolved[5/7]";
                                 }
                                 // Send HTTP POST
                                 HttpRequestMessage requestSplatoonAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoSplatoonAccessToken);
@@ -1885,7 +1885,7 @@ namespace Ikas
                                 }
                                 catch
                                 {
-                                    return "!network cannot be reached";
+                                    return "!network_cannot_be_reached";
                                 }
                                 if (responseSplatoonAccessToken.IsSuccessStatusCode)
                                 {
@@ -1899,7 +1899,7 @@ namespace Ikas
                                     }
                                     catch
                                     {
-                                        return "!Cookie cannot be resolved[6/7]";
+                                        return "!cookie_cannot_be_resolved[6/7]";
                                     }
                                     // Send HTTP GET
                                     CookieContainer cookieContainer = new CookieContainer();
@@ -1920,7 +1920,7 @@ namespace Ikas
                                     }
                                     catch
                                     {
-                                        return "!network cannot be reached";
+                                        return "!network_cannot_be_reached";
                                     }
                                     if (responseCookie.IsSuccessStatusCode)
                                     {
@@ -1932,43 +1932,43 @@ namespace Ikas
                                         }
                                         catch
                                         {
-                                            return "!Cookie cannot be resolved";
+                                            return "!cookie_cannot_be_resolved";
                                         }
                                         return cookie;
                                     }
                                     else
                                     {
-                                        return "!network cannot be reached, or Session Token is invalid or expired";
+                                        return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
                                     }
                                 }
                                 else
                                 {
-                                    return "!network cannot be reached, or Session Token is invalid or expired";
+                                    return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
                                 }
                             }
                             else
                             {
-                                return "!network cannot be reached, or Session Token is invalid or expired";
+                                return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
                             }
                         }
                         else
                         {
-                            return "!network cannot be reached, or Session Token is invalid or expired";
+                            return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
                         }
                     }
                     else
                     {
-                        return "!network cannot be reached, or Session Token is invalid or expired";
+                        return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
                     }
                 }
                 else
                 {
-                    return "!network cannot be reached, or Session Token is invalid or expired";
+                    return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
                 }
             }
             else
             {
-                return "!network cannot be reached, or Session Token is invalid or expired";
+                return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
             }
         }
 

@@ -164,7 +164,7 @@ namespace Ikas
                 lbRule.Content = Translate(scheduledStages[0].Rule.ToString());
                 DateTime startTime = schedule.EndTime.AddHours(-2).ToLocalTime();
                 DateTime endTime = schedule.EndTime.ToLocalTime();
-                lbTime.Content = string.Format(Translate("{0} - {1}", true), startTime.ToString("HH:mm"), endTime.ToString("HH:mm"));
+                lbTime.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("HH:mm"), endTime.ToString("HH:mm"));
                 // Fade in labels
                 ((Storyboard)FindResource("fade_in")).Begin(imgMode);
                 ((Storyboard)FindResource("fade_in")).Begin(lbMode);
@@ -231,11 +231,11 @@ namespace Ikas
                 TimeSpan dTime = schedule.EndTime - DateTime.UtcNow;
                 if (dTime.Hours > 0)
                 {
-                    lbNextTime.Content = string.Format(Translate("in {0} hour {1} min", true), dTime.Hours, dTime.Minutes);
+                    lbNextTime.Content = string.Format(Translate("in_{0}_hour_{1}_min", true), dTime.Hours, dTime.Minutes);
                 }
                 else
                 {
-                    lbNextTime.Content = string.Format(Translate("in {0} min", true), dTime.Minutes);
+                    lbNextTime.Content = string.Format(Translate("in_{0}_min", true), dTime.Minutes);
                 }
                 // Fade in labels
                 ((Storyboard)FindResource("fade_in")).Begin(lbNextRule);
