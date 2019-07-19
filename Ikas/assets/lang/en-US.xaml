@@ -69,10 +69,10 @@
     <sys:String x:Key="wahoo_world">Wahoo World</sys:String>
     <sys:String x:Key="anchov_games">Anchov Games</sys:String>
     <sys:String x:Key="skipper_pavilion">Skipper Pavilion</sys:String>
+    <sys:String x:Key="windmill_house_on_the_pearlie">Windmill House on the Pearlie</sys:String>
     <sys:String x:Key="wayslide_cool">Wayslide Cool</sys:String>
     <sys:String x:Key="the_secret_of_splat">The Secret of S.P.L.A.T.</sys:String>
     <sys:String x:Key="goosponge">Goosponge</sys:String>
-    <sys:String x:Key="windmill_house_on_the_pearlie">Windmill House on the Pearlie</sys:String>
     <sys:String x:Key="fancy_spew">Fancy Spew</sys:String>
     <sys:String x:Key="zone_of_glass">Zone of Glass</sys:String>
     <sys:String x:Key="cannon_fire_pearl">Cannon Fire Pearl</sys:String>
@@ -117,10 +117,10 @@
     <sys:String x:Key="world">World</sys:String>
     <sys:String x:Key="games">Games</sys:String>
     <sys:String x:Key="pavilion">Pavilion</sys:String>
+    <sys:String x:Key="shifty_04">Shifty 04</sys:String>
     <sys:String x:Key="shifty_01">Shifty 01</sys:String>
     <sys:String x:Key="shifty_02">Shifty 02</sys:String>
     <sys:String x:Key="shifty_03">Shifty 03</sys:String>
-    <sys:String x:Key="shifty_04">Shifty 04</sys:String>
     <sys:String x:Key="shifty_05">Shifty 05</sys:String>
     <sys:String x:Key="shifty_06">Shifty 06</sys:String>
     <sys:String x:Key="shifty_07">Shifty 07</sys:String>
@@ -342,9 +342,9 @@
     <sys:String x:Key="battle_window-%">%</sys:String>
     <sys:String x:Key="battle_window-{0} count">{0} count</sys:String>
     <sys:String x:Key="battle_window-knock_out">KO BONUS!</sys:String>
-    <sys:String x:Key="battle_window-{0} ({1}% - {2}%)">{0} ({1}% - {2}%)</sys:String>
-    <sys:String x:Key="battle_window-{0} ({1} - {2})">{0} ({1} - {2})</sys:String>
-    <sys:String x:Key="battle_window-{0} - {1}\n{2} (+{3})">{0} - {1}\n{2} (+{3})</sys:String>
+    <sys:String x:Key="battle_window-{0} (No.{1})">{0} (No. {1})</sys:String>
+    <sys:String x:Key="battle_window-{0} - {1}">{0} - {1}</sys:String>
+    <sys:String x:Key="battle_window-{0}%">{0}%</sys:String>
     <!-- WeaponWindow -->
     <!-- PlayerWindow -->
     <!-- SettingsWindow -->

@@ -69,10 +69,10 @@
     <sys:String x:Key="wahoo_world">スメーシーワールド</sys:String>
     <sys:String x:Key="anchov_games">アンチョビットゲームズ</sys:String>
     <sys:String x:Key="skipper_pavilion">ムツゴ楼</sys:String>
+    <sys:String x:Key="windmill_house_on_the_pearlie">ウィンドミル・キス</sys:String>
     <sys:String x:Key="wayslide_cool">追憶のスライド</sys:String>
     <sys:String x:Key="the_secret_of_splat">約束の丘で会いましょう</sys:String>
     <sys:String x:Key="goosponge">ハンサムなスポンジ</sys:String>
-    <sys:String x:Key="windmill_house_on_the_pearlie">ウィンドミル・キス</sys:String>
     <sys:String x:Key="fancy_spew">バーの一族</sys:String>
     <sys:String x:Key="zone_of_glass">トランスペアレント・ボーイ</sys:String>
     <sys:String x:Key="cannon_fire_pearl">ヒメちゃんのキャノン</sys:String>
@@ -117,10 +117,10 @@
     <sys:String x:Key="world">スメーシー</sys:String>
     <sys:String x:Key="games">アンチョビット</sys:String>
     <sys:String x:Key="pavilion">ムツゴ</sys:String>
+    <sys:String x:Key="shifty_04">ミステリー 04</sys:String>
     <sys:String x:Key="shifty_01">ミステリー 01</sys:String>
     <sys:String x:Key="shifty_02">ミステリー 02</sys:String>
     <sys:String x:Key="shifty_03">ミステリー 03</sys:String>
-    <sys:String x:Key="shifty_04">ミステリー 04</sys:String>
     <sys:String x:Key="shifty_05">ミステリー 05</sys:String>
     <sys:String x:Key="shifty_06">ミステリー 06</sys:String>
     <sys:String x:Key="shifty_07">ミステリー 07</sys:String>
@@ -342,9 +342,9 @@
     <sys:String x:Key="battle_window-%">%</sys:String>
     <sys:String x:Key="battle_window-{0} count">{0} カウント</sys:String>
     <sys:String x:Key="battle_window-knock_out">ノックアウト!</sys:String>
-    <sys:String x:Key="battle_window-{0} ({1}% - {2}%)">{0} ({1}% - {2}%)</sys:String>
-    <sys:String x:Key="battle_window-{0} ({1} - {2})">{0} ({1} - {2})</sys:String>
-    <sys:String x:Key="battle_window-{0} - {1}\n{2} (+{3})">{0} - {1}\n{2} (+{3})</sys:String>
+    <sys:String x:Key="battle_window-{0} (No.{1})">{0} (No. {1})</sys:String>
+    <sys:String x:Key="battle_window-{0} - {1}">{0} - {1}</sys:String>
+    <sys:String x:Key="battle_window-{0}%">{0}%</sys:String>
     <!-- WeaponWindow -->
     <!-- PlayerWindow -->
     <!-- SettingsWindow -->
