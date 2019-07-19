@@ -269,6 +269,33 @@ namespace Ikas
                 }
             }
         }
+        public static bool Notification
+        {
+            get
+            {
+                try
+                {
+                    return bool.Parse(systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationNotification]);
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+            set
+            {
+                if (value != Notification)
+                {
+                    try
+                    {
+                        systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationNotification] = value.ToString().ToLower();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    }
+                    catch { }
+                }
+            }
+        }
         public static Mode.Key StartMode
         {
             get
@@ -495,6 +522,16 @@ namespace Ikas
                     {
                         LanguageChanged?.Invoke();
                     }
+                }
+                else
+                {
+                    try
+                    {
+                        systemIniData[FileFolderUrl.SystemConfigurationGeneralSection][FileFolderUrl.SystemConfigurationLanguage] = value;
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(System.Environment.CurrentDirectory + FileFolderUrl.SystemConfiguration, systemIniData);
+                    }
+                    catch { }
                 }
             }
         }

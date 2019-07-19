@@ -27,6 +27,7 @@ namespace IkasLib
         public const string SystemConfigurationInUse = "InUse";
         public const string SystemConfigurationAppearanceSection = "Appearance";
         public const string SystemConfigurationAlwaysOnTop = "AlwaysOnTop";
+        public const string SystemConfigurationNotification = "Notification";
         public const string SystemConfigurationStartMode = "StartMode";
         public const string SystemConfigurationStartX = "StartX";
         public const string SystemConfigurationStartY = "StartY";

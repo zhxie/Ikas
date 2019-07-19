@@ -378,6 +378,7 @@
     <sys:String x:Key="settings_window-You may enter a valid Session Token before update Cookie.">You may enter a valid Session Token before update Cookie.</sys:String>
     <sys:String x:Key="settings_window-system">System</sys:String>
     <sys:String x:Key="settings_window-always_on_top">Always on top</sys:String>
+    <sys:String x:Key="settings_window-notification">Notification</sys:String>
     <sys:String x:Key="settings_window-use_proxy">Use Proxy?</sys:String>
     <sys:String x:Key="settings_window-use_proxy_true">Yes</sys:String>
     <sys:String x:Key="settings_window-use_proxy_false">No</sys:String>

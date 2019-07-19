@@ -20,7 +20,7 @@ namespace Ikas
         public static void InitializeNotification()
         {
             osVersion = Environment.OSVersion.Version;
-            if (osVersion.Major > 6 || (osVersion.Major == 6 && osVersion.Minor >= 3))
+            if (osVersion.Major > 10 || (osVersion.Major == 10 && osVersion.Minor >= 0))
             {
                 Assembly assembly = Assembly.LoadFile(System.Environment.CurrentDirectory + FileFolderUrl.NotificationDll);
                 Type type = assembly.GetType("Ikas.Notification.NotificationHelper");
@@ -28,9 +28,17 @@ namespace Ikas
             }
         }
 
+        public static void SendTestNotification()
+        {
+            if (osVersion.Major > 10 || (osVersion.Major == 10 && osVersion.Minor >= 0))
+            {
+                SendTextNotification("Ikas", "Ikas、イカす！");
+            }
+        }
+
         public static void SendBattleNotification(string title, string content, string scoreTitle, string myScore, string otherScore, double scoreRatio)
         {
-            if (osVersion.Major > 6 || (osVersion.Major == 6 && osVersion.Minor >= 3))
+            if (osVersion.Major > 10 || (osVersion.Major == 10 && osVersion.Minor >= 0))
             {
                 if (osVersion.Major > 10 || (osVersion.Major == 10 && osVersion.Minor > 0) || (osVersion.Major == 10 && osVersion.Minor == 0 && osVersion.Build >= 14393))
                 {

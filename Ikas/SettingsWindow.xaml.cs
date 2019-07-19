@@ -59,6 +59,7 @@ namespace Ikas
         }
 
         private bool alwaysOnTop = false;
+        private bool notification = false;
         private bool useProxy = false;
         private string language = "en-US";
 
@@ -110,6 +111,16 @@ namespace Ikas
             {
                 LbAlwaysOnTopFalse_MouseDown(null, null);
                 lbAlwaysOnTopFalse.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+            }
+            if (Depot.Notification)
+            {
+                LbNotificationTrue_MouseDown(null, null);
+                lbNotificationTrue.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+            }
+            else
+            {
+                LbNotificationFalse_MouseDown(null, null);
+                lbNotificationFalse.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
             }
             if (Depot.UseProxy)
             {
@@ -194,6 +205,7 @@ namespace Ikas
             Depot.SessionToken = txtSessionToken.Text;
             Depot.Cookie = txtCookie.Text;
             Depot.AlwaysOnTop = alwaysOnTop;
+            Depot.Notification = notification;
             Depot.UseProxy = useProxy;
             Depot.ProxyHost = txtProxyHost.Text;
             if (txtProxyPort.Text != "")
@@ -353,6 +365,25 @@ namespace Ikas
             ((Storyboard)FindResource("fore_to_orange")).Begin(lbAlwaysOnTopFalse);
         }
 
+        private void LbNotificationTrue_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            notification = true;
+            ((Storyboard)FindResource("fore_to_orange")).Begin(lbNotificationTrue);
+            ((Storyboard)FindResource("fore_to_white")).Begin(lbNotificationFalse);
+            // Test notification
+            if (e != null)
+            {
+                NotificationHelper.SendTestNotification();
+            }
+        }
+
+        private void LbNotificationFalse_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            notification = false;
+            ((Storyboard)FindResource("fore_to_white")).Begin(lbNotificationTrue);
+            ((Storyboard)FindResource("fore_to_orange")).Begin(lbNotificationFalse);
+        }
+
         private void LbUseProxyTrue_MouseDown(object sender, MouseButtonEventArgs e)
         {
             useProxy = true;
@@ -465,5 +496,6 @@ namespace Ikas
                 return s;
             }
         }
+
     }
 }

@@ -551,7 +551,7 @@ namespace Ikas
                 // Send battle notification
                 DateTime endTime = battle.StartTime.AddSeconds(battle.ElapsedTime);
                 double diffTime = (DateTime.Now - endTime).TotalSeconds;
-                if (isNewBattle && diffTime <= 300)
+                if (isNewBattle && Depot.Notification && diffTime <= 300)
                 {
                     // Format title
                     string title;

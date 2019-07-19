@@ -139,6 +139,7 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="4"/>
                     </Grid.RowDefinitions>
@@ -159,8 +160,21 @@
                                MouseDown="LbAlwaysOnTopFalse_MouseDown"
                                Content="{DynamicResource settings_window-use_proxy_false}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
                     </Grid>
-                    <Label Grid.Row="1" Content="{DynamicResource settings_window-use_proxy}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Grid.Row="1" Content="{DynamicResource settings_window-notification}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="lbNotificationTrue" Grid.Column="0" Style="{DynamicResource ButtonLabel}"
+                               MouseDown="LbNotificationTrue_MouseDown"
+                               Content="{DynamicResource settings_window-use_proxy_true}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
+                        <Label x:Name="lbNotificationFalse" Grid.Column="1" Style="{DynamicResource ButtonLabel}"
+                               MouseDown="LbNotificationFalse_MouseDown"
+                               Content="{DynamicResource settings_window-use_proxy_false}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
+                    </Grid>
+                    <Label Grid.Row="2" Content="{DynamicResource settings_window-use_proxy}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Grid Grid.Row="2" Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
@@ -172,12 +186,12 @@
                                MouseDown="LbUseProxyFalse_MouseDown"
                                Content="{DynamicResource settings_window-use_proxy_false}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
                     </Grid>
-                    <Label Grid.Row="2" Content="{DynamicResource settings_window-host}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Margin="20,0,0,0" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="txtProxyHost" Grid.Row="2" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label Grid.Row="3" Content="{DynamicResource settings_window-port}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Margin="20,0,0,0" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="txtProxyPort" Grid.Row="3" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label Grid.Row="4" Content="{DynamicResource settings_window-language}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Grid Grid.Row="4" Grid.Column="1">
+                    <Label Grid.Row="3" Content="{DynamicResource settings_window-host}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Margin="20,0,0,0" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="txtProxyHost" Grid.Row="3" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Grid.Row="4" Content="{DynamicResource settings_window-port}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Margin="20,0,0,0" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="txtProxyPort" Grid.Row="4" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Grid.Row="5" Content="{DynamicResource settings_window-language}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Grid Grid.Row="5" Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
@@ -189,12 +203,12 @@
                                MouseDown="LbLanguageJaJp_MouseDown"
                                Content="{DynamicResource settings_window-language_ja_jp}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
                     </Grid>
-                    <Label x:Name="lbClearCache" Grid.Row="5"
+                    <Label x:Name="lbClearCache" Grid.Row="6"
                            MouseEnter="LbClearCache_MouseEnter"
                            MouseLeave="LbClearCache_MouseLeave"
                            MouseDown="LbClearCache_MouseDown"
                            Content="{DynamicResource settings_window-clear_cache}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Cursor="Hand"/>
-                    <Label x:Name="lbWhatIsClearCache" Grid.Row="6" Grid.ColumnSpan="2"
+                    <Label x:Name="lbWhatIsClearCache" Grid.Row="7" Grid.ColumnSpan="2"
                            MouseEnter="LbWhatIsClearCache_MouseEnter"
                            MouseLeave="LbWhatIsClearCache_MouseLeave"
                            Content="{DynamicResource settings_window-what_is_clear_cache}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="16" Height="40" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
