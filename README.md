@@ -13,6 +13,7 @@
 - Automatic cookie generation of SplatNet
 - Update current and coming schedules and display in a *fancy* way
 - Get the latest battle including details of players' gears and weapons and display in a *fancy* way
+- Receive notifications of the latest battles
 - Japanese and English (North America)
 
 ## Configuration
@@ -40,6 +41,6 @@ If you do not want to use Automatic Cookie Generation for obtaining cookie, you 
 
 Ikas is licensed under [the MIT License](/LICENSE).
 
-Ikas uses [Json.NET](https://github.com/JamesNK/Newtonsoft.Json) by Newtonsoft licensed under [the MIT License](/LICENSE.Newtonsoft.Json.md), and [ini-parser](https://github.com/rickyah/ini-parser) by rickyah licensed under [the MIT License](/LICENSE.ini-parser.md).
+Ikas uses [Json.NET](https://github.com/JamesNK/Newtonsoft.Json) by Newtonsoft licensed under [the MIT License](/LICENSE.Newtonsoft.Json.md), [ini-parser](https://github.com/rickyah/ini-parser) by rickyah licensed under [the MIT License](/LICENSE.ini-parser.md), and [Microsoft.Toolkit.Uwp.Notifications](https://github.com/windows-toolkit/WindowsCommunityToolkit) by Microsoft.Toolkit licensed under [the MIT License](/LICENSE.Microsoft.Toolkit.Uwp.Notifications.md).
 
 Ikas also uses API of [splatnet2statink](https://github.com/frozenpandaman/splatnet2statink) by [eli fessler](https://github.com/frozenpandaman) and flapg API by [NexusMine](https://twitter.com/NexusMine).
