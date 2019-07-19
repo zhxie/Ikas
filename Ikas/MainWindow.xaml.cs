@@ -104,6 +104,12 @@ namespace Ikas
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Check cookie
+            if (Depot.Cookie == null || Depot.Cookie == "")
+            {
+                MessageBox.Show(Translate("welcome_to_ikas!_to_use_ikas,_you_may_set_up_your_cookie_first.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                MenuItemSettings_Click(null, null);
+            }
             // Set properties for controls
             Topmost = Depot.AlwaysOnTop;
             switch (Depot.StartMode)
@@ -143,12 +149,6 @@ namespace Ikas
             }
 #endif
             Depot.InUse = true;
-            // Check cookie
-            if (Depot.Cookie == null || Depot.Cookie == "")
-            {
-                MessageBox.Show(Translate("welcome_to_ikas!_to_use_ikas,_you_may_set_up_your_cookie_first.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
-                MenuItemSettings_Click(null, null);
-            }
             // Update Schedule
             // Depot.GetSchedule();
             // Automatica Schedule and Battle update
