@@ -55,7 +55,7 @@ namespace IkasLib
             bridge_to_tentaswitchia,
             the_chronicles_of_rolonium,
             furler_in_the_ashes,
-            mc_princess_diaries = 151,
+            mc_princess_diaries,
             shifty_station = 9999
         }
         public enum ShortName
