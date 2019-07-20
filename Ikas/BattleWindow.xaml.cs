@@ -30,8 +30,6 @@ namespace Ikas
         private DispatcherTimer tmLoading;
         private int loadingRotationAngle;
 
-        private bool isNewBattle = false;
-
         public BattleWindow()
         {
             // Load language
@@ -58,6 +56,7 @@ namespace Ikas
             Depot.BattleChanged += new BattleChangedEventHandler(BattleChanged);
             Depot.BattleFound += new BattleFoundEventHandler(BattleFound);
             Depot.BattleUpdated += new BattleUpdatedEventHandler(BattleUpdated);
+            Depot.BattleNotifying += new BattleNotifyingHandler(BattleNotifying);
             // Prepare Icon and Weapon window
             playerWindow = new PlayerWindow();
             playerWindow.KeepAliveWindow = this;
@@ -209,8 +208,6 @@ namespace Ikas
         {
             // Fade in loading
             ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
-            // Mark not new battle
-            isNewBattle = false;
         }
 
         private void BattleFound()
@@ -234,8 +231,6 @@ namespace Ikas
             plLose2.SetPlayer(null, false);
             plLose3.SetPlayer(null, false);
             plLose4.SetPlayer(null, false);
-            // Mark new battle
-            isNewBattle = true;
         }
 
         private void BattleUpdated()
@@ -548,10 +543,20 @@ namespace Ikas
                         }
                     }
                 }
+            }
+            // Fade out loading
+            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+        }
+
+        private void BattleNotifying()
+        {
+            if (Depot.Notification)
+            {
+                Battle battle = Depot.Battle;
                 // Send battle notification
                 DateTime endTime = battle.StartTime.AddSeconds(battle.ElapsedTime);
                 double diffTime = (DateTime.Now - endTime).TotalSeconds;
-                if (isNewBattle && Depot.Notification && diffTime <= 300)
+                if (diffTime <= 300)
                 {
                     // Format title
                     string title;
@@ -617,8 +622,6 @@ namespace Ikas
                     NotificationHelper.SendBattleNotification(title, content, scoreTitle, myScore, otherScore, battle.ScoreRatio);
                 }
             }
-            // Fade out loading
-            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
         }
 
         private string Translate(string s, bool isLocal = false)

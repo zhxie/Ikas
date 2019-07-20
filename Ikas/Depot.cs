@@ -29,6 +29,7 @@ namespace Ikas
     public delegate void BattleFoundEventHandler();
     public delegate void BattleUpdatedEventHandler();
     public delegate void BattleFailedEventHandler(string reason);
+    public delegate void BattleNotifyingHandler();
     public static class Depot
     {
         private static string userConfigurationPath = "";
@@ -578,8 +579,10 @@ namespace Ikas
         public static event BattleFoundEventHandler BattleFound;
         public static event BattleUpdatedEventHandler BattleUpdated;
         public static event BattleFailedEventHandler BattleFailed;
+        public static event BattleNotifyingHandler BattleNotifying;
         private static Mutex BattleMutex = new Mutex();
         public static Battle Battle { get; set; } = new Battle(0);
+        private static int notifiedBattleNumber = 0;
 
         private static Mode.Key currentMode = Mode.Key.regular_battle;
         public static Mode.Key CurrentMode
@@ -1400,6 +1403,12 @@ namespace Ikas
             {
                 BattleMutex.WaitOne();
                 Battle = battle;
+                // Notify
+                if (battle.Number > notifiedBattleNumber)
+                {
+                    notifiedBattleNumber = battle.Number;
+                    BattleNotifying?.Invoke();
+                }
                 BattleMutex.ReleaseMutex();
                 // Raise event
                 BattleUpdated?.Invoke();
