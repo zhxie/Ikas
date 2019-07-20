@@ -1,4 +1,4 @@
-﻿<Window x:Class="Ikas.PlayerWindow"
+﻿<Window x:Class="Ikas.GearWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,7 +8,7 @@
         LocationChanged="Window_LocationChanged"
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
-        Title="Ikas - Player" Width="320" Height="404" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True" ShowInTaskbar="False">
+        Title="Ikas - Gear" Height="320" Width="320" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True" ShowInTaskbar="False">
     <Window.Resources>
         <Storyboard x:Key="fade_out">
             <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="2"/>
@@ -46,29 +46,19 @@
                 </Border.Background>
             </Border>
         </Border>
-        <StackPanel Orientation="Vertical" Margin="0,10,0,20">
-            <Border Height="60" Margin="20,0" VerticalAlignment="Top">
+        <Grid>
+            <Border Height="60" Margin="20,10" VerticalAlignment="Top">
                 <Viewbox Height="52">
-                    <TextBlock x:Name="tbName" FontFamily="{StaticResource splatfont}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0">[Name]</TextBlock>
+                    <TextBlock x:Name="tbName" FontFamily="{StaticResource splatfont}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0">[Gear]</TextBlock>
                 </Viewbox>
             </Border>
-            <Border Background="#7F000000" Width="100" Height="100" CornerRadius="50" Margin="0,10,0,0">
-                <Border x:Name="bdIcon" Background="Transparent" CornerRadius="50" Opacity="0"/>
-            </Border>
-            <StackPanel Orientation="Vertical" Margin="20,20,20,0">
-                <local:GearControl x:Name="gearHead"
-                                   MouseEnterGear="Gear_MouseEnterGear"
-                                   MouseLeaveGear="Gear_MouseLeaveGear"
-                                   Width="250" Height="48"/>
-                <local:GearControl x:Name="gearClothes"
-                                   MouseEnterGear="Gear_MouseEnterGear"
-                                   MouseLeaveGear="Gear_MouseLeaveGear"
-                                   Width="250" Height="48" Margin="0,10,0,0"/>
-                <local:GearControl x:Name="gearShoes"
-                                   MouseEnterGear="Gear_MouseEnterGear"
-                                   MouseLeaveGear="Gear_MouseLeaveGear"
-                                   Width="250" Height="48" Margin="0,10,0,0"/>
+            <Border x:Name="bdGear" Background="Transparent" Width="220" Height="220" Margin="0,5,0,0" Opacity="0"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,24,24">
+                <Grid Width="72" Height="72">
+                    <Border Background="#7FFFFFFF" CornerRadius="36"/>
+                    <Border x:Name="bdBrand" Background="Transparent" Opacity="0"/>
+                </Grid>
             </StackPanel>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Window>

@@ -19,12 +19,17 @@ using IkasLib;
 
 namespace Ikas
 {
+    public delegate void MouseEnterGearEventHandler(object sender, MouseEventArgs e);
+    public delegate void MouseLeaveGearEventHandler(object sender, MouseEventArgs e);
     /// <summary>
     /// GearControl.xaml 的交互逻辑
     /// </summary>
     public partial class GearControl : UserControl
     {
         public volatile Gear Gear;
+
+        public event MouseEnterGearEventHandler MouseEnterGear;
+        public event MouseLeaveGearEventHandler MouseLeaveGear;
 
         public GearControl()
         {
@@ -37,6 +42,10 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(bdSub2, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdSub3, BitmapScalingMode.HighQuality);
         }
+
+        #region Control Event
+
+        #endregion
 
         public void SetGear(Gear gear)
         {
@@ -196,6 +205,16 @@ namespace Ikas
                     ((Storyboard)FindResource("fade_in")).Begin(bdSub3);
                 }
             }
+        }
+
+        private void BdGear_MouseEnter(object sender, MouseEventArgs e)
+        {
+            MouseEnterGear?.Invoke(this, e);
+        }
+
+        private void BdGear_MouseLeave(object sender, MouseEventArgs e)
+        {
+            MouseLeaveGear?.Invoke(this, e);
         }
     }
 }

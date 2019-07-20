@@ -23,6 +23,8 @@ namespace Ikas
     /// </summary>
     public partial class PlayerWindow : Window
     {
+        private GearWindow gearWindow;
+
         public Window KeepAliveWindow { get; set; }
 
         public volatile Player Player;
@@ -33,6 +35,11 @@ namespace Ikas
             InitializeComponent();
             // Set properties for controls
             RenderOptions.SetBitmapScalingMode(bdIcon, BitmapScalingMode.HighQuality);
+            // Prepare Gear window
+            gearWindow = new GearWindow();
+            gearWindow.KeepAliveWindow = this;
+            gearWindow.Opacity = 0;
+            gearWindow.Visibility = Visibility.Hidden;
         }
 
         #region Control Event
@@ -43,12 +50,12 @@ namespace Ikas
             {
                 ((Storyboard)FindResource("window_fade_in")).Begin(KeepAliveWindow);
             }
-            // ((Storyboard)FindResource("window_fade_in")).Begin(this);
+            ((Storyboard)FindResource("window_fade_in")).Begin(this);
         }
 
         private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
-            // ((Storyboard)FindResource("window_fade_out")).Begin(this);
+            ((Storyboard)FindResource("window_fade_out")).Begin(this);
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -63,6 +70,44 @@ namespace Ikas
                 Top = WpfScreen.GetScreenFrom(this).DeviceBounds.Height - Height;
             }
             */
+        }
+
+        private void Gear_MouseEnterGear(object sender, MouseEventArgs e)
+        {
+            Gear gear = (sender as GearControl).Gear;
+            if (gear != null)
+            {
+                gearWindow.Top = e.GetPosition(this).Y + Top - Height / 2;
+                gearWindow.Left = e.GetPosition(this).X + Left + 10;
+                // Restrict in this window
+                if (KeepAliveWindow.Top - gearWindow.Top > 60)
+                {
+                    gearWindow.Top = KeepAliveWindow.Top - 60;
+                }
+                if (KeepAliveWindow.Left - gearWindow.Left > 60)
+                {
+                    gearWindow.Left = KeepAliveWindow.Left - 60;
+                }
+                if (gearWindow.Top + gearWindow.Height - (KeepAliveWindow.Top + KeepAliveWindow.Height) > 60)
+                {
+                    gearWindow.Top = KeepAliveWindow.Top + KeepAliveWindow.Height - gearWindow.Height + 60;
+                }
+                if (gearWindow.Left + gearWindow.Width - (KeepAliveWindow.Left + KeepAliveWindow.Width) > 60)
+                {
+                    gearWindow.Left = KeepAliveWindow.Left + KeepAliveWindow.Width - gearWindow.Width + 60;
+                }
+                gearWindow.SetGear(gear);
+                ((Storyboard)FindResource("window_fade_in")).Begin(gearWindow);
+            }
+        }
+
+        private void Gear_MouseLeaveGear(object sender, MouseEventArgs e)
+        {
+            Gear gear = (sender as GearControl).Gear;
+            if (gear != null)
+            {
+                ((Storyboard)FindResource("window_fade_out")).Begin(gearWindow);
+            }
         }
 
         #endregion

@@ -17,7 +17,10 @@
     <Grid>
         <Border Background="#7F000000" CornerRadius="8">
             <Grid Margin="5,0">
-                <Border x:Name="bdGear" Background="Transparent" Width="40" Height="40" HorizontalAlignment="Left" Opacity="1"/>
+                <Border x:Name="bdGear"
+                        MouseEnter="BdGear_MouseEnter"
+                        MouseLeave="BdGear_MouseLeave"
+                        Background="Transparent" Width="40" Height="40" HorizontalAlignment="Left" Opacity="1"/>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                     <Grid Width="36" Height="36">
                         <Border Background="#7F000000" CornerRadius="18"/>
