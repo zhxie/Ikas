@@ -20,6 +20,13 @@ namespace Ikas.Class
         public double MyScore { get; }
         public double OtherScore { get; }
 
+        public Player SelfPlayer
+        {
+            get
+            {
+                return MyPlayers.Find(p => p.IsSelf);
+            }
+        }
         public double MyAveragePaint
         {
             get
