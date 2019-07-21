@@ -618,8 +618,30 @@ namespace Ikas
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
-                    // Show notification
-                    NotificationHelper.SendBattleNotification(title, content, scoreTitle, myScore, otherScore, battle.ScoreRatio);
+                    // Get player icon
+                    Player player = battle.SelfPlayer;
+                    string image = FileFolderUrl.ApplicationData + FileFolderUrl.IconFolder + @"\" + System.IO.Path.GetFileName(player.Image) + ".jpg";
+                    try
+                    {
+                        // Show notification
+                        NotificationHelper.SendBattleNotification(title, content, scoreTitle, myScore, otherScore, battle.ScoreRatio, image);
+                    }
+                    catch
+                    {
+                        // Download the image
+                        Downloader downloader = new Downloader(player.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        {
+                            if (player != null)
+                            {
+                                if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(player.Image) + ".jpg")
+                                {
+                                    // Show notification
+                                    NotificationHelper.SendBattleNotification(title, content, scoreTitle, myScore, otherScore, battle.ScoreRatio, image);
+                                }
+                            }
+                        }));
+                    }
                 }
             }
         }

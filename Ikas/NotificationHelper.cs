@@ -33,44 +33,44 @@ namespace Ikas
         {
             if (osVersion.Major > 10 || (osVersion.Major == 10 && osVersion.Minor >= 0))
             {
-                SendTextNotification("Ikas", "Ikas、イカす！");
+                SendTextNotification("Ikas", "Ikas、イカす！", "Ikas.ico", false);
             }
         }
 
-        public static void SendBattleNotification(string title, string content, string scoreTitle, string myScore, string otherScore, double scoreRatio)
+        public static void SendBattleNotification(string title, string content, string scoreTitle, string myScore, string otherScore, double scoreRatio, string icon)
         {
             if (osVersion.Major > 10 || (osVersion.Major == 10 && osVersion.Minor >= 0))
             {
                 if (osVersion.Major > 10 || (osVersion.Major == 10 && osVersion.Minor > 0) || (osVersion.Major == 10 && osVersion.Minor == 0 && osVersion.Build >= 14393))
                 {
-                    SendTextAndProgressBarNotification(title, content, scoreTitle, myScore, scoreRatio, otherScore);
+                    SendTextAndProgressBarNotification(title, content, scoreTitle, myScore, scoreRatio, otherScore, icon, true);
                 }
                 else
                 {
-                    SendTextNotification(title, scoreTitle);
+                    SendTextNotification(title, scoreTitle, icon, true);
                 }
             }
         }
 
-        private static void SendTextNotification(string title, string content)
+        private static void SendTextNotification(string title, string content, string icon = "Ikas.ico", bool iconCrop = false)
         {
             Assembly assembly = Assembly.LoadFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.NotificationDll);
             Type type = assembly.GetType("Ikas.Notification.NotificationHelper");
-            type.InvokeMember("SendTextNotification", BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, new string[] { title, content });
+            type.InvokeMember("SendTextNotification", BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, new object[] { title, content, icon, iconCrop });
         }
 
-        private static void SendTextNotification(string title, string content, string image)
+        private static void SendTextNotification(string title, string content, string image, string icon = "Ikas.ico", bool iconCrop = false)
         {
             Assembly assembly = Assembly.LoadFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.NotificationDll);
             Type type = assembly.GetType("Ikas.Notification.NotificationHelper");
-            type.InvokeMember("SendTextAndImageNotification", BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, new string[] { title, content, image });
+            type.InvokeMember("SendTextAndImageNotification", BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, new object[] { title, content, image, icon, iconCrop });
         }
 
-        private static void SendTextAndProgressBarNotification(string title, string content, string progressTitle, string status, double value, string valueString)
+        private static void SendTextAndProgressBarNotification(string title, string content, string progressTitle, string status, double value, string valueString, string icon = "Ikas.ico", bool iconCrop = false)
         {
             Assembly assembly = Assembly.LoadFile(Directory.GetParent(Assembly.GetExecutingAssembly().Location) + FileFolderUrl.NotificationDll);
             Type type = assembly.GetType("Ikas.Notification.NotificationHelper");
-            type.InvokeMember("SendTextAndProgressBarNotification", BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, new object[] { title, content, progressTitle, status, value, valueString });
+            type.InvokeMember("SendTextAndProgressBarNotification", BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, new object[] { title, content, progressTitle, status, value, valueString, icon, iconCrop });
         }
     }
 }

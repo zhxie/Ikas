@@ -28,8 +28,10 @@ namespace Ikas.Notification
         /// Send text toast notification.
         /// </summary>
         /// <param name="title">Title of the toast notification</param>
-        /// <param name="content">Content of te toast notification</param>
-        public static void SendTextNotification(string title, string content)
+        /// <param name="content">Content of the toast notification</param>
+        /// <param name="icon">Icon of the toast notification</param>
+        /// <param name="iconCrop">Hint crop of the icon of the toast notification</param>
+        public static void SendTextNotification(string title, string content, string icon, bool iconCrop = false)
         {
             // Construct the toast content
             ToastContent toastContent = new ToastContent
@@ -51,7 +53,8 @@ namespace Ikas.Notification
                         },
                         AppLogoOverride = new ToastGenericAppLogo()
                         {
-                            Source = new Uri(Path.GetFullPath("Ikas.ico")).AbsoluteUri
+                            Source = new Uri(Path.GetFullPath(icon)).AbsoluteUri,
+                            HintCrop = iconCrop ? ToastGenericAppLogoCrop.Circle : ToastGenericAppLogoCrop.Default
                         }
                     }
                 }
@@ -64,9 +67,11 @@ namespace Ikas.Notification
         /// Send text and image toast notification.
         /// </summary>
         /// <param name="title">Title of the toast notification</param>
-        /// <param name="content">Content of te toast notification</param>
-        /// <param name="image">Image of te toast notification</param>
-        public static void SendTextAndImageNotification(string title, string content, string image)
+        /// <param name="content">Content of the toast notification</param>
+        /// <param name="image">Image of the toast notification</param>
+        /// <param name="icon">Icon of the toast notification</param>
+        /// <param name="iconCrop">Hint crop of the icon of the toast notification</param>
+        public static void SendTextAndImageNotification(string title, string content, string image, string icon, bool iconCrop = false)
         {
             // Construct the toast content
             ToastContent toastContent = new ToastContent
@@ -92,7 +97,8 @@ namespace Ikas.Notification
                         },
                         AppLogoOverride = new ToastGenericAppLogo()
                         {
-                            Source = new Uri(Path.GetFullPath("Ikas.ico")).AbsoluteUri
+                            Source = new Uri(Path.GetFullPath(icon)).AbsoluteUri,
+                            HintCrop = iconCrop ? ToastGenericAppLogoCrop.Circle : ToastGenericAppLogoCrop.Default
                         }
                     }
                 }
@@ -105,12 +111,14 @@ namespace Ikas.Notification
         /// Send text and progress bar toast notification.
         /// </summary>
         /// <param name="title">Title of the toast notification</param>
-        /// /// <param name="content">Content of te toast notification</param>
+        /// /// <param name="content">Content of the toast notification</param>
         /// <param name="progressTitle">Title of the progress of the toast notification</param>
         /// <param name="status">Status of the progress of the toast notification</param>
         /// <param name="value">Value of the progress of the toast notification</param>
         /// <param name="valueString">Value string of the progress of the toast notification</param>
-        public static void SendTextAndProgressBarNotification(string title, string content, string progressTitle, string status, double value, string valueString)
+        /// <param name="icon">Icon of the toast notification</param>
+        /// <param name="iconCrop">Hint crop of the icon of the toast notification</param>
+        public static void SendTextAndProgressBarNotification(string title, string content, string progressTitle, string status, double value, string valueString, string icon, bool iconCrop = false)
         {
             // Construct the toast content
             ToastContent toastContent = new ToastContent
@@ -139,7 +147,8 @@ namespace Ikas.Notification
                         },
                         AppLogoOverride = new ToastGenericAppLogo()
                         {
-                            Source = new Uri(Path.GetFullPath("Ikas.ico")).AbsoluteUri
+                            Source = new Uri(Path.GetFullPath(icon)).AbsoluteUri,
+                            HintCrop = iconCrop ? ToastGenericAppLogoCrop.Circle : ToastGenericAppLogoCrop.Default
                         }
                     }
                 }
