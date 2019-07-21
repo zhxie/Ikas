@@ -1,0 +1,8 @@
+﻿<Application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <VisualElements
+		BackgroundColor="#D2B48C"
+		ShowNameOnSquare150x150Logo="on"
+		ForegroundText="dark"
+		Square150x150Logo="Ikas-StartMenu.png"
+		Square70x70Logo="Ikas-StartMenu.png"/>
+</Application>

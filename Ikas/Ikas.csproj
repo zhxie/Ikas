@@ -248,7 +248,9 @@
     <Resource Include="assets\img\inklings-kill.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Ikas.ico" />
+    <Content Include="Ikas.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\img\bg-splat.png" />
@@ -284,6 +286,16 @@
       <Project>{53d340ae-de38-4af2-88e5-ba3a62d5ae3e}</Project>
       <Name>Ikas.Class</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ikas.VisualElementsManifest.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ikas-StartMenu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
