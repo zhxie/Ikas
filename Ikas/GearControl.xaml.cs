@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 using System.Windows.Media.Animation;
 
-using IkasLib;
+using Ikas.Class;
 
 namespace Ikas
 {

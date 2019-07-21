@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IkasLib
+namespace Ikas.Class
 {
     public static class Rank
     {

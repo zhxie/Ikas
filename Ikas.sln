@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ikas", "Ikas\Ikas.csproj", "{E9015686-96DA-4150-B27C-DA16EFD5EAE4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IkasLib", "IkasLib\IkasLib.csproj", "{53D340AE-DE38-4AF2-88E5-BA3A62D5AE3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ikas.Class", "Ikas.Class\Ikas.Class.csproj", "{53D340AE-DE38-4AF2-88E5-BA3A62D5AE3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ikas.Notification", "Ikas.Notification\Ikas.Notification.csproj", "{16F7ED7A-C091-418C-8FC4-B447FF9CEFB0}"
 EndProject

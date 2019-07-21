@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 
-using IkasLib;
+using Ikas.Class;
 
 namespace Ikas
 {

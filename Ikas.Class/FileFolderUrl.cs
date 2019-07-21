@@ -4,7 +4,7 @@ using System.Text;
 
 using System.Reflection;
 
-namespace IkasLib
+namespace Ikas.Class
 {
     public static class FileFolderUrl
     {

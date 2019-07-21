@@ -280,9 +280,9 @@
       <Project>{16f7ed7a-c091-418c-8fc4-b447ff9cefb0}</Project>
       <Name>Ikas.Notification</Name>
     </ProjectReference>
-    <ProjectReference Include="..\IkasLib\IkasLib.csproj">
+    <ProjectReference Include="..\Ikas.Class\Ikas.Class.csproj">
       <Project>{53d340ae-de38-4af2-88e5-ba3a62d5ae3e}</Project>
-      <Name>IkasLib</Name>
+      <Name>Ikas.Class</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

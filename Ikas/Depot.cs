@@ -16,7 +16,7 @@ using IniParser;
 using IniParser.Model;
 using Newtonsoft.Json.Linq;
 
-using IkasLib;
+using Ikas.Class;
 
 namespace Ikas
 {

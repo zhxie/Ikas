@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace IkasLib
+namespace Ikas.Class
 {
     public class Battle
     {
@@ -264,7 +264,7 @@ namespace IkasLib
     public class RegularBattle : Battle
     {
         public RegularBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, int levelAfter, double myScore, double otherScore)
-            : base(number, startTime, elapsedTime, IkasLib.Mode.Key.regular_battle, mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore)
+            : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.regular_battle, mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore)
         {
 
         }
@@ -292,7 +292,7 @@ namespace IkasLib
 
         public RankedBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, int levelAfter,
             double estimatedRankPower, Rank.Key rankAfter, double myScore, double otherScore)
-            : base(number, startTime, elapsedTime, IkasLib.Mode.Key.ranked_battle, mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), levelAfter, myScore, otherScore)
+            : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.ranked_battle, mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), levelAfter, myScore, otherScore)
         {
             EstimatedRankPower = estimatedRankPower;
             RankAfter = rankAfter;
@@ -349,7 +349,7 @@ namespace IkasLib
 
         public LeagueBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, int levelAfter,
             int myEstimatedLeaguePower, int otherEstimatedLeaguePower, double leaguePoint, double maxLeaguePoint, double myScore, double otherScore)
-            : base(number, startTime, elapsedTime, IkasLib.Mode.Key.league_battle, mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), levelAfter, myScore, otherScore)
+            : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.league_battle, mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), levelAfter, myScore, otherScore)
         {
             MyEstimatedLeaguePower = myEstimatedLeaguePower;
             OtherEstimatedLeaguePower = otherEstimatedLeaguePower;
@@ -383,7 +383,7 @@ namespace IkasLib
 
         public SplatfestBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Key splatfestMode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, int levelAfter,
             int myEstimatedSplatfestPower, int otherEstimatedSplatfestPower, double splatfestPower, double maxSplatfestPower, int contributionPoint, int totalContributionPoint, double myScore, double otherScore)
-            : base(number, startTime, elapsedTime, IkasLib.Mode.Key.splatfest, mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore)
+            : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.splatfest, mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore)
         {
             SplatfestMode = splatfestMode;
             MyEstimatedSplatfestPower = myEstimatedSplatfestPower;
