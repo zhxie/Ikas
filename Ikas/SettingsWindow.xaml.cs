@@ -27,6 +27,8 @@ namespace Ikas
     {
         private MessageWindow messageWindow;
 
+        private DispatcherTimer tmLoading;
+        private int loadingRotationAngle;
         private DispatcherTimer tmSessionToken;
 
         public string SelectionForeground
@@ -86,11 +88,28 @@ namespace Ikas
             InitializeComponent();
             // Add handler for global member
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
+            Depot.SessionTokenGet += new SessionTokenGetEventHandler(SessionTokenGet);
+            Depot.CookieGet += new CookieGetEventHandler(CookieGet);
             // Prepare windows
             messageWindow = new MessageWindow();
             messageWindow.Opacity = 0;
             messageWindow.Visibility = Visibility.Hidden;
             // Create timers
+            loadingRotationAngle = 0;
+            tmLoading = new DispatcherTimer();
+            tmLoading.Tick += new EventHandler((object source, EventArgs e) =>
+            {
+                imgLoading.RenderTransform = new RotateTransform(loadingRotationAngle, imgLoading.Source.Width / 2, imgLoading.Source.Height / 2);
+                if (loadingRotationAngle >= 359)
+                {
+                    loadingRotationAngle = 0;
+                }
+                else
+                {
+                    loadingRotationAngle++;
+                }
+            });
+            tmLoading.Interval = new TimeSpan(0, 0, 0, 0, 10);
             tmSessionToken = new DispatcherTimer();
             tmSessionToken.Tick += new EventHandler((object source, EventArgs e) =>
             {
@@ -174,6 +193,8 @@ namespace Ikas
                     lbLanguageEnUs.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
                     break;
             }
+            // Start timers
+            tmLoading.Start();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -269,6 +290,8 @@ namespace Ikas
             if (!txtSessionToken.Text.Contains("session_token_code="))
             {
                 MessageBox.Show(Translate("you_will_be_led_to_a_nintendo_website._log_in,_right_click_on_select_this_person,_copy_the_link_address,_and_then_ikas_will_try_to_get_session_token.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Clear the clipboard
+                Clipboard.Clear();
                 // Authorize
                 string url = Depot.LogIn();
                 System.Diagnostics.Process.Start(url);
@@ -277,33 +300,14 @@ namespace Ikas
             }
             else
             {
-                MessageBox.Show(Translate("ikas_will_try_to_get_session_token,_which_will_take_seconds_to_minutes_to_finish._during_the_process,_ikas_may_freeze.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Translate("ikas_will_try_to_get_session_token,_which_will_take_seconds_to_minutes_to_finish._please_do_not_close_this_window.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Fade in loading
+                lbOk.IsEnabled = false;
+                bdLoading.IsHitTestVisible = true;
+                ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
+                // Get session token
                 string regex = Regex.Match(txtSessionToken.Text, @"de=(.*)&").Value;
-                string sessionToken = Depot.GetSessionTokenAsync(regex.Substring(3, regex.Length - 4)).Result;
-                if (sessionToken == null || sessionToken == "")
-                {
-                    MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
-                        Translate("ikas_cannot_get_session_token"),
-                        Translate("unknown_error"),
-                        Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
-                        ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    txtSessionToken.Text = "";
-                }
-                else if (sessionToken.StartsWith("!"))
-                {
-                    string reason = sessionToken.TrimStart('!');
-                    MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
-                        Translate("ikas_cannot_get_session_token"),
-                        Translate(reason),
-                        Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
-                        ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    txtSessionToken.Text = "";
-                }
-                else
-                {
-                    MessageBox.Show(Translate("get_session_token_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
-                    txtSessionToken.Text = sessionToken;
-                }
+                Depot.GetSessionToken(regex.Substring(3, regex.Length - 4));
             }
         }
 
@@ -336,34 +340,16 @@ namespace Ikas
         {
             if (txtSessionToken.Text != "")
             {
-                MessageBox.Show(Translate("ikas_will_try_to_get_cookie,_which_will_take_seconds_to_minutes_to_finish._during_the_process,_ikas_may_freeze.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Translate("ikas_will_try_to_get_cookie,_which_will_take_seconds_to_minutes_to_finish._please_do_not_close_this_window.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 // DISCLAIMER
                 if (MessageBox.Show(Translate("automatic_cookie_generation_will_send_your_session_token_to_nintendo_and_non-nintendo_servers,_which_may_lead_to_privacy_breaches._please_read_the_instructions_in_the_readme_carefully._click_yes_to_continue,_or_click_no_to_view_other_methods.", true), "Ikas", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
+                    // Fade in loading
+                    lbOk.IsEnabled = false;
+                    bdLoading.IsHitTestVisible = true;
+                    ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
                     // Automatic Cookie Generation
-                    string cookie = Depot.GetCookie(txtSessionToken.Text).Result;
-                    if (cookie == null || cookie == "")
-                    {
-                        MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
-                            Translate("ikas_cannot_update_cookie"),
-                            Translate("unknown_error"),
-                            Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
-                            ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-                    else if (cookie.StartsWith("!"))
-                    {
-                        string reason = cookie.TrimStart('!');
-                        MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
-                            Translate("ikas_cannot_update_cookie"),
-                            Translate(reason),
-                            Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
-                            ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-                    else
-                    {
-                        MessageBox.Show(Translate("update_cookie_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
-                        txtCookie.Text = cookie;
-                    }
+                    Depot.GetCookie(txtSessionToken.Text);
                 }
                 else
                 {
@@ -494,6 +480,68 @@ namespace Ikas
                 }
                 Resources.MergedDictionaries.Add(lang);
             }
+        }
+
+        private void SessionTokenGet(string sessionToken)
+        {
+            if (sessionToken == null || sessionToken == "")
+            {
+                MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                    Translate("ikas_cannot_get_session_token"),
+                    Translate("unknown_error"),
+                    Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
+                    ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtSessionToken.Text = "";
+            }
+            else if (sessionToken.StartsWith("!"))
+            {
+                string reason = sessionToken.TrimStart('!');
+                MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                    Translate("ikas_cannot_get_session_token"),
+                    Translate(reason),
+                    Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
+                    ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtSessionToken.Text = "";
+            }
+            else
+            {
+                MessageBox.Show(Translate("get_session_token_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                txtSessionToken.Text = sessionToken;
+            }
+            // Fade out loading
+            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+            bdLoading.IsHitTestVisible = false;
+            lbOk.IsEnabled = true;
+        }
+
+        private void CookieGet(string cookie)
+        {
+            if (cookie == null || cookie == "")
+            {
+                MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                    Translate("ikas_cannot_update_cookie"),
+                    Translate("unknown_error"),
+                    Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
+                    ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (cookie.StartsWith("!"))
+            {
+                string reason = cookie.TrimStart('!');
+                MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                    Translate("ikas_cannot_update_cookie"),
+                    Translate(reason),
+                    Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
+                    ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                MessageBox.Show(Translate("update_cookie_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                txtCookie.Text = cookie;
+            }
+            // Fade out loading
+            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+            bdLoading.IsHitTestVisible = false;
+            lbOk.IsEnabled = true;
         }
 
         private void ShowMessage(string title, string content, Point point)

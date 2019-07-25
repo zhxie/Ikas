@@ -30,6 +30,8 @@ namespace Ikas
     public delegate void BattleUpdatedEventHandler();
     public delegate void BattleFailedEventHandler(string reason);
     public delegate void BattleNotifyingHandler();
+    public delegate void SessionTokenGetEventHandler(string sessionToken);
+    public delegate void CookieGetEventHandler(string cookie);
     public static class Depot
     {
         private static string userConfigurationPath = "";
@@ -583,6 +585,9 @@ namespace Ikas
         private static Mutex BattleMutex = new Mutex();
         public static Battle Battle { get; set; } = new Battle(0);
         private static int notifiedBattleNumber = 0;
+
+        public static event SessionTokenGetEventHandler SessionTokenGet;
+        public static event CookieGetEventHandler CookieGet;
 
         private static Mode.Key currentMode = Mode.Key.regular_battle;
         public static Mode.Key CurrentMode
@@ -1611,7 +1616,7 @@ namespace Ikas
         /// </summary>
         /// <param name="sessionTokenCode">Session Token code</param>
         /// <returns></returns>
-        public static async Task<string> GetSessionTokenAsync(string sessionTokenCode)
+        public static async void GetSessionToken(string sessionTokenCode)
         {
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
@@ -1625,11 +1630,12 @@ namespace Ikas
             HttpRequestMessage requestAuthorize = new HttpRequestMessage(HttpMethod.Get, string.Format(FileFolderUrl.NintendoAuthorize, authState, authCodeChallenge));
             try
             {
-                await client.SendAsync(requestAuthorize).ConfigureAwait(false);
+                await client.SendAsync(requestAuthorize);
             }
             catch
             {
-                return "!network_cannot_be_reached";
+                SessionTokenGet?.Invoke("!network_cannot_be_reached");
+                return;
             }
             // Send HTTP POST
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoSessionToken);
@@ -1637,15 +1643,16 @@ namespace Ikas
             HttpResponseMessage response;
             try
             {
-                response = await client.SendAsync(request).ConfigureAwait(false);
+                response = await client.SendAsync(request);
             }
             catch
             {
-                return "!network_cannot_be_reached";
+                SessionTokenGet?.Invoke("!network_cannot_be_reached");
+                return;
             }
             if (response.IsSuccessStatusCode)
             {
-                string resultString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                string resultString = await response.Content.ReadAsStringAsync();
                 // Parse JSON
                 JObject jObject = JObject.Parse(resultString);
                 string sessionToken = "";
@@ -1655,13 +1662,16 @@ namespace Ikas
                 }
                 catch
                 {
-                    return "!session_token_cannot_be_resolved";
+                    SessionTokenGet?.Invoke("!session_token_cannot_be_resolved");
+                    return;
                 }
-                return sessionToken;
+                SessionTokenGet?.Invoke(sessionToken);
+                return;
             }
             else
             {
-                return "!network_cannot_be_reached,_or_session_token_link_is_invalid_or_expired";
+                SessionTokenGet?.Invoke("!network_cannot_be_reached,_or_session_token_link_is_invalid_or_expired");
+                return;
             }
         }
         /// <summary>
@@ -1669,7 +1679,7 @@ namespace Ikas
         /// </summary>
         /// <param name="sessionToken">Session Token of Nintendo (3rd Party services was used)</param>
         /// <returns></returns>
-        public static async Task<string> GetCookie(string sessionToken)
+        public static async void GetCookie(string sessionToken)
         {
             // THIS METHOD USES 3RD PARTY SERVICES, WHICH MAY EXPOSE USERS TO HARM.
             // API DOCS HERE https://github.com/frozenpandaman/splatnet2statink/wiki/api-docs
@@ -1687,15 +1697,16 @@ namespace Ikas
             HttpResponseMessage responseToken;
             try
             {
-                responseToken = await client.SendAsync(requestToken).ConfigureAwait(false);
+                responseToken = await client.SendAsync(requestToken);
             }
             catch
             {
-                return "!network_cannot_be_reached";
+                CookieGet.Invoke("!network_cannot_be_reached");
+                return;
             }
             if (responseToken.IsSuccessStatusCode)
             {
-                string resultTokenString = await responseToken.Content.ReadAsStringAsync().ConfigureAwait(false);
+                string resultTokenString = await responseToken.Content.ReadAsStringAsync();
                 // Parse JSON
                 JObject jObject = JObject.Parse(resultTokenString);
                 string token = "";
@@ -1707,7 +1718,8 @@ namespace Ikas
                 }
                 catch
                 {
-                    return "!cookie_cannot_be_resolved[1/7]";
+                    CookieGet?.Invoke("!cookie_cannot_be_resolved[1/7]");
+                    return;
                 }
                 // Send HTTP GET
                 HttpRequestMessage requestUserInfo = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.NintendoUserInfo);
@@ -1715,15 +1727,16 @@ namespace Ikas
                 HttpResponseMessage responseUserInfo;
                 try
                 {
-                    responseUserInfo = await client.SendAsync(requestUserInfo).ConfigureAwait(false);
+                    responseUserInfo = await client.SendAsync(requestUserInfo);
                 }
                 catch
                 {
-                    return "!network_cannot_be_reached";
+                    CookieGet.Invoke("!network_cannot_be_reached");
+                    return;
                 }
                 if (responseUserInfo.IsSuccessStatusCode)
                 {
-                    string resultUserInfoString = await responseUserInfo.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    string resultUserInfoString = await responseUserInfo.Content.ReadAsStringAsync();
                     // Parse JSON
                     jObject = JObject.Parse(resultUserInfoString);
                     string country = "";
@@ -1738,7 +1751,8 @@ namespace Ikas
                     }
                     catch
                     {
-                        return "!cookie_cannot_be_resolved[2/7]";
+                        CookieGet?.Invoke("!cookie_cannot_be_resolved[2/7]");
+                        return;
                     }
                     // Send 3rd Party HTTP POST
                     long timestamp = (long)(DateTime.Now - TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1))).TotalSeconds;
@@ -1751,15 +1765,16 @@ namespace Ikas
                     HttpResponseMessage responseHash;
                     try
                     {
-                        responseHash = await client.SendAsync(requestHash).ConfigureAwait(false);
+                        responseHash = await client.SendAsync(requestHash);
                     }
                     catch
                     {
-                        return "!network_cannot_be_reached";
+                        CookieGet.Invoke("!network_cannot_be_reached");
+                        return;
                     }
                     if (responseHash.IsSuccessStatusCode)
                     {
-                        string resultHashString = await responseHash.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        string resultHashString = await responseHash.Content.ReadAsStringAsync();
                         // Parse JSON
                         jObject = JObject.Parse(resultHashString);
                         string hash = "";
@@ -1769,7 +1784,8 @@ namespace Ikas
                         }
                         catch
                         {
-                            return "!cookie_cannot_be_resolved[3/7]";
+                            CookieGet?.Invoke("!cookie_cannot_be_resolved[3/7]");
+                            return;
                         }
                         // Send 3rd Party HTTP GET
                         string guid = Guid.NewGuid().ToString();
@@ -1809,15 +1825,16 @@ namespace Ikas
                         HttpResponseMessage response3rd;
                         try
                         {
-                            response3rd = await client.SendAsync(request3rd).ConfigureAwait(false);
+                            response3rd = await client.SendAsync(request3rd);
                         }
                         catch
                         {
-                            return "!network_cannot_be_reached";
+                            CookieGet.Invoke("!network_cannot_be_reached");
+                            return;
                         }
                         if (response3rd.IsSuccessStatusCode)
                         {
-                            string result3rdString = await response3rd.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            string result3rdString = await response3rd.Content.ReadAsStringAsync();
                             // Parse JSON
                             jObject = JObject.Parse(result3rdString);
                             string loginNsoF = "";
@@ -1843,7 +1860,8 @@ namespace Ikas
                             }
                             catch
                             {
-                                return "!cookie_cannot_be_resolved[4/7]";
+                                CookieGet?.Invoke("!cookie_cannot_be_resolved[4/7]");
+                                return;
                             }
                             // Send HTTP POST
                             HttpRequestMessage requestAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoAccessToken);
@@ -1860,15 +1878,16 @@ namespace Ikas
                             HttpResponseMessage responseAccessToken;
                             try
                             {
-                                responseAccessToken = await client.SendAsync(requestAccessToken).ConfigureAwait(false);
+                                responseAccessToken = await client.SendAsync(requestAccessToken);
                             }
                             catch
                             {
-                                return "!network_cannot_be_reached";
+                                CookieGet.Invoke("!network_cannot_be_reached");
+                                return;
                             }
                             if (responseAccessToken.IsSuccessStatusCode)
                             {
-                                string resultAccessTokenString = await responseAccessToken.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                string resultAccessTokenString = await responseAccessToken.Content.ReadAsStringAsync();
                                 // Parse JSON
                                 jObject = JObject.Parse(resultAccessTokenString);
                                 string accessToken = "";
@@ -1878,7 +1897,8 @@ namespace Ikas
                                 }
                                 catch
                                 {
-                                    return "!cookie_cannot_be_resolved[5/7]";
+                                    CookieGet?.Invoke("!cookie_cannot_be_resolved[5/7]");
+                                    return;
                                 }
                                 // Send HTTP POST
                                 HttpRequestMessage requestSplatoonAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoSplatoonAccessToken);
@@ -1891,15 +1911,16 @@ namespace Ikas
                                 HttpResponseMessage responseSplatoonAccessToken;
                                 try
                                 {
-                                    responseSplatoonAccessToken = await client.SendAsync(requestSplatoonAccessToken).ConfigureAwait(false);
+                                    responseSplatoonAccessToken = await client.SendAsync(requestSplatoonAccessToken);
                                 }
                                 catch
                                 {
-                                    return "!network_cannot_be_reached";
+                                    CookieGet.Invoke("!network_cannot_be_reached");
+                                    return;
                                 }
                                 if (responseSplatoonAccessToken.IsSuccessStatusCode)
                                 {
-                                    string resultSplatoonAccessTokenString = await responseSplatoonAccessToken.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                    string resultSplatoonAccessTokenString = await responseSplatoonAccessToken.Content.ReadAsStringAsync();
                                     // Parse JSON
                                     jObject = JObject.Parse(resultSplatoonAccessTokenString);
                                     string splatoonAccessToken = "";
@@ -1909,7 +1930,8 @@ namespace Ikas
                                     }
                                     catch
                                     {
-                                        return "!cookie_cannot_be_resolved[6/7]";
+                                        CookieGet?.Invoke("!cookie_cannot_be_resolved[6/7]");
+                                        return;
                                     }
                                     // Send HTTP GET
                                     CookieContainer cookieContainer = new CookieContainer();
@@ -1926,11 +1948,12 @@ namespace Ikas
                                     HttpResponseMessage responseCookie;
                                     try
                                     {
-                                        responseCookie = await clientCookie.SendAsync(requestCookie).ConfigureAwait(false);
+                                        responseCookie = await clientCookie.SendAsync(requestCookie);
                                     }
                                     catch
                                     {
-                                        return "!network_cannot_be_reached";
+                                        CookieGet.Invoke("!network_cannot_be_reached");
+                                        return;
                                     }
                                     if (responseCookie.IsSuccessStatusCode)
                                     {
@@ -1942,43 +1965,52 @@ namespace Ikas
                                         }
                                         catch
                                         {
-                                            return "!cookie_cannot_be_resolved";
+                                            CookieGet?.Invoke("!cookie_cannot_be_resolved");
+                                            return;
                                         }
-                                        return cookie;
+                                        CookieGet?.Invoke(cookie);
+                                        return;
                                     }
                                     else
                                     {
-                                        return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
+                                        CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                                        return;
                                     }
                                 }
                                 else
                                 {
-                                    return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
+                                    CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                                    return;
                                 }
                             }
                             else
                             {
-                                return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
+                                CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                                return;
                             }
                         }
                         else
                         {
-                            return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
+                            CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                            return;
                         }
                     }
                     else
                     {
-                        return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
+                        CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                        return;
                     }
                 }
                 else
                 {
-                    return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
+                    CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                    return;
                 }
             }
             else
             {
-                return "!network_cannot_be_reached,_or_session_token_is_invalid_or_expired";
+                CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                return;
             }
         }
 

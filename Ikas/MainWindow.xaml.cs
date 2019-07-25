@@ -73,6 +73,7 @@ namespace Ikas
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
             Depot.ScheduleFailed += new ScheduleFailedEventHandler(ScheduleFailed);
             Depot.BattleFailed += new BattleFailedEventHandler(BattleFailed);
+            Depot.CookieGet += new CookieGetEventHandler(CookieGet);
             // Prepare windows
             scheduleWindow = new ScheduleWindow();
             scheduleWindow.Opacity = 0;
@@ -439,6 +440,15 @@ namespace Ikas
                 Translate(reason),
                 Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        private void CookieGet(string cookie)
+        {
+            if (cookie != null && cookie != "" && !cookie.StartsWith("!"))
+            {
+                tmSchedule.Start();
+                tmBattle.Start();
+            }
         }
 
         private string Translate(string s, bool isLocal = false)

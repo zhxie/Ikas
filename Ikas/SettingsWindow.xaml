@@ -10,6 +10,12 @@
         PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown"
         Title="Ikas - Setting" Width="600" SizeToContent="Height" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <Storyboard x:Key="fade_out">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="2"/>
+        </Storyboard>
+        <Storyboard x:Key="fade_in">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="2"/>
+        </Storyboard>
         <Storyboard x:Key="window_fade_out">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
@@ -216,5 +222,11 @@
                 </Grid>
             </StackPanel>
         </StackPanel>
+        <Border x:Name="bdLoading" CornerRadius="27" IsHitTestVisible="False" Opacity="0">
+            <Border.Background>
+                <SolidColorBrush Color="#7F000000"/>
+            </Border.Background>
+            <Image x:Name="imgLoading" Source="assets/img/bg-respawn-2x.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
     </Grid>
 </Window>
