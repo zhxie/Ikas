@@ -43,6 +43,10 @@
         <Storyboard x:Key="fore_to_white">
             <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" To="White" SpeedRatio="6"/>
         </Storyboard>
+        <Storyboard x:Key="label_zoom_in_and_out">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="FontSize" To="16.3" Duration="0:0:0.5"/>
+            <DoubleAnimation BeginTime="0:0:0.5" Storyboard.TargetProperty="FontSize" To="16" Duration="0:0:0.5"/>
+        </Storyboard>
         <Style x:Key="ButtonLabel">
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Mouse.MouseEnter">

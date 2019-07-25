@@ -30,6 +30,8 @@ namespace Ikas
         private DispatcherTimer tmLoading;
         private int loadingRotationAngle;
         private DispatcherTimer tmSessionToken;
+        private DispatcherTimer tmGetSessionToken;
+        private DispatcherTimer tmUpdateCookie;
 
         public string SelectionForeground
         {
@@ -124,6 +126,18 @@ namespace Ikas
                 }
             });
             tmSessionToken.Interval = new TimeSpan(0, 0, 1);
+            tmGetSessionToken = new DispatcherTimer();
+            tmGetSessionToken.Tick += new EventHandler((object source, EventArgs e) =>
+            {
+                ((Storyboard)FindResource("label_zoom_in_and_out")).Begin(lbGetSessionToken);
+            });
+            tmGetSessionToken.Interval = new TimeSpan(0, 0, 1);
+            tmUpdateCookie = new DispatcherTimer();
+            tmUpdateCookie.Tick += new EventHandler((object source, EventArgs e) =>
+            {
+                ((Storyboard)FindResource("label_zoom_in_and_out")).Begin(lbUpdateCookie);
+            });
+            tmUpdateCookie.Interval = new TimeSpan(0, 0, 1);
         }
 
         #region Control Event
@@ -137,6 +151,11 @@ namespace Ikas
             ((Storyboard)FindResource("fore_to_white")).Begin(lbOk);
             // Load configuration
             txtSessionToken.Text = Depot.SessionToken;
+            if (txtSessionToken.Text == "")
+            {
+                // Notify to get session token
+                tmGetSessionToken.Start();
+            }
             txtCookie.Text = Depot.Cookie;
             if (Depot.AlwaysOnTop)
             {
@@ -275,6 +294,7 @@ namespace Ikas
 
         private void LbGetSessionToken_MouseEnter(object sender, MouseEventArgs e)
         {
+            tmGetSessionToken.Stop();
             ((Storyboard)FindResource("fore_to_red")).Begin(lbGetSessionToken);
         }
 
@@ -328,6 +348,7 @@ namespace Ikas
 
         private void LbUpdateCookie_MouseEnter(object sender, MouseEventArgs e)
         {
+            tmUpdateCookie.Stop();
             ((Storyboard)FindResource("fore_to_red")).Begin(lbUpdateCookie);
         }
 
@@ -507,6 +528,8 @@ namespace Ikas
             {
                 MessageBox.Show(Translate("get_session_token_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 txtSessionToken.Text = sessionToken;
+                // Notify to update cookie
+                tmUpdateCookie.Start();
             }
             // Fade out loading
             ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
