@@ -208,6 +208,7 @@ namespace Ikas
         private void BattleChanged()
         {
             // Fade in loading
+            bdLoading.IsHitTestVisible = true;
             ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
         }
 
@@ -547,6 +548,7 @@ namespace Ikas
             }
             // Fade out loading
             ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+            bdLoading.IsHitTestVisible = false;
         }
 
         private void BattleNotifying()
