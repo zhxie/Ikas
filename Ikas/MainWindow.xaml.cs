@@ -188,12 +188,13 @@ namespace Ikas
         {
             scheduleWindow.Top = Top + Height + 10;
             scheduleWindow.Left = Left;
+            ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
             ((Storyboard)FindResource("window_fade_in")).Begin(scheduleWindow);
         }
 
         private void BdStage_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
+            ((Storyboard)FindResource("window_delay_fade_out")).Begin(scheduleWindow);
         }
 
         private void LbLevel_MouseEnter(object sender, MouseEventArgs e)
@@ -201,6 +202,7 @@ namespace Ikas
             Depot.GetLastBattle();
             battleWindow.Top = Top + Height + 10;
             battleWindow.Left = Left;
+            ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
             ((Storyboard)FindResource("window_fade_in")).Begin(battleWindow);
             // Automatica Battle update
             tmBattle.Start();
@@ -208,7 +210,7 @@ namespace Ikas
 
         private void LbLevel_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
+            ((Storyboard)FindResource("window_delay_fade_out")).Begin(battleWindow);
         }
 
         private void MenuItemSettings_Click(object sender, RoutedEventArgs e)
