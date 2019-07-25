@@ -157,6 +157,7 @@ namespace Ikas
         private void Player_MouseEnterWeapon(object sender, MouseEventArgs e)
         {
             Player player = (sender as PlayerControl).Player;
+            bool isMy = (sender as PlayerControl).IsMy;
             if (player != null)
             {
                 weaponWindow.Top = e.GetPosition(this).Y + Top - weaponWindow.Height / 2;
@@ -178,7 +179,7 @@ namespace Ikas
                 {
                     weaponWindow.Left = Left + Width - weaponWindow.Width + 30;
                 }
-                weaponWindow.SetWeapon(player.Weapon);
+                weaponWindow.SetWeapon(player.Weapon, isMy);
                 ((Storyboard)FindResource("window_fade_in")).Begin(weaponWindow);
             }
         }
