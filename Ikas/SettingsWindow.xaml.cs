@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 
 using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 using Ikas.Class;
 
@@ -25,6 +26,8 @@ namespace Ikas
     public partial class SettingsWindow : Window
     {
         private MessageWindow messageWindow;
+
+        private DispatcherTimer tmSessionToken;
 
         public string SelectionForeground
         {
@@ -87,6 +90,21 @@ namespace Ikas
             messageWindow = new MessageWindow();
             messageWindow.Opacity = 0;
             messageWindow.Visibility = Visibility.Hidden;
+            // Create timers
+            tmSessionToken = new DispatcherTimer();
+            tmSessionToken.Tick += new EventHandler((object source, EventArgs e) =>
+            {
+                if (Clipboard.ContainsText())
+                {
+                    string clipboard = Clipboard.GetText();
+                    if (clipboard.Contains("session_token_code="))
+                    {
+                        txtSessionToken.Text = clipboard;
+                        LbGetSessionToken_MouseDown(null, null);
+                    }
+                }
+            });
+            tmSessionToken.Interval = new TimeSpan(0, 0, 1);
         }
 
         #region Control Event
@@ -181,6 +199,9 @@ namespace Ikas
 
         private void LbOk_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            // Stop timers
+            tmSessionToken.Stop();
+            // Check validity for input
             if (txtCookie.Text.Trim() == "")
             {
                 if (MessageBox.Show(Translate("if_you_do_not_enter_a_valid_cookie,_ikas_may_not_work_properly._click_yes_to_close_the_settings,_or_click_no_to_cancel.", true), "Ikas", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
@@ -202,6 +223,7 @@ namespace Ikas
                     return;
                 }
             }
+            // Save configuration
             Depot.SessionToken = txtSessionToken.Text;
             Depot.Cookie = txtCookie.Text;
             Depot.AlwaysOnTop = alwaysOnTop;
@@ -242,12 +264,16 @@ namespace Ikas
 
         private void LbGetSessionToken_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            // Stop session token timer
+            tmSessionToken.Stop();
             if (!txtSessionToken.Text.Contains("session_token_code="))
             {
-                MessageBox.Show(Translate("you_will_be_led_to_a_nintendo_website._log_in,_right_click_on_select_this_person,_copy_the_link_address,_and_paste_it_to_session_token_textbox,_and_click_this_label_again.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Translate("you_will_be_led_to_a_nintendo_website._log_in,_right_click_on_select_this_person,_copy_the_link_address,_and_then_ikas_will_try_to_get_session_token.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 // Authorize
                 string url = Depot.LogIn();
                 System.Diagnostics.Process.Start(url);
+                // Start session token timer
+                tmSessionToken.Start();
             }
             else
             {
