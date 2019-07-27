@@ -16,6 +16,21 @@
         <Storyboard x:Key="fade_in">
             <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="2"/>
         </Storyboard>
+        <Storyboard x:Key="grid_fade_out">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="2"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="grid_fade_in">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.5" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
+        </Storyboard>
         <Storyboard x:Key="window_fade_out">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
@@ -43,9 +58,11 @@
         <Storyboard x:Key="fore_to_white">
             <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" To="White" SpeedRatio="6"/>
         </Storyboard>
-        <Storyboard x:Key="label_zoom_in_and_out">
-            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="FontSize" To="16.3" Duration="0:0:0.5"/>
-            <DoubleAnimation BeginTime="0:0:0.5" Storyboard.TargetProperty="FontSize" To="16" Duration="0:0:0.5"/>
+        <Storyboard x:Key="border_to_green">
+            <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=BorderGreenForeground}" SpeedRatio="6"/>
+        </Storyboard>
+        <Storyboard x:Key="border_to_black">
+            <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#7F000000" SpeedRatio="6"/>
         </Storyboard>
         <Style x:Key="ButtonLabel">
             <Style.Triggers>
@@ -100,43 +117,87 @@
                     <Label Content="{DynamicResource settings_window-user}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                 </Border>
                 <Grid Margin="20,0,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="4"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="8"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="4"/>
-                        <RowDefinition Height="20"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Content="{DynamicResource settings_window-session_token}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="txtSessionToken" Grid.Row="0" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="lbWhatIsSessionToken" Grid.Row="1" Grid.ColumnSpan="2"
+                    <Grid x:Name="gridUserLogIn" Opacity="0" Visibility="Hidden">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="16"/>
+                            <RowDefinition Height="80"/>
+                        </Grid.RowDefinitions>
+                        <Border x:Name="bdLogIn" Grid.Row="0"
+                                MouseEnter="BdLogIn_MouseEnter"
+                                MouseLeave="BdLogIn_MouseLeave"
+                                MouseDown="BdLogIn_MouseDown"
+                                Width="250" Height="60" CornerRadius="30" Background="#7F000000" VerticalAlignment="Bottom">
+                            <Label x:Name="lbLogIn" Content="{DynamicResource settings_window-log_in}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="24" Height="50" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
+                        </Border>
+                        <Border x:Name="bdLogInManually" Grid.Row="2"
+                                MouseEnter="BdLogInManually_MouseEnter"
+                                MouseLeave="BdLogInManually_MouseLeave"
+                                MouseDown="BdLogInManually_MouseDown"
+                                Width="250" Height="60" CornerRadius="30" Background="#7F000000" VerticalAlignment="Top">
+                            <Label Content="{DynamicResource settings_window-log_in_manually}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="24" Height="50" Padding="0" HorizontalAlignment="Center" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
+                        </Border>
+                    </Grid>
+                    <Grid x:Name="gridUserLoggedIn" Opacity="0" Visibility="Hidden">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="16"/>
+                            <RowDefinition Height="80"/>
+                        </Grid.RowDefinitions>
+                        <Border x:Name="bdUpdateCookie" Grid.Row="0"
+                                MouseEnter="BdUpdateCookie_MouseEnter"
+                                MouseLeave="BdUpdateCookie_MouseLeave"
+                                MouseDown="BdUpdateCookie_MouseDown"
+                                Width="250" Height="60" CornerRadius="30" Background="#7F000000" VerticalAlignment="Bottom">
+                            <Label x:Name="lbUpdateCookie" Content="{DynamicResource settings_window-update_cookie}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="24" Height="50" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
+                        </Border>
+                        <Border x:Name="bdSwitchAccount" Grid.Row="2"
+                                MouseEnter="BdSwitchAccount_MouseEnter"
+                                MouseLeave="BdSwitchAccount_MouseLeave"
+                                MouseDown="BdSwitchAccount_MouseDown"
+                                Width="250" Height="60" CornerRadius="30" Background="#7F000000" VerticalAlignment="Top">
+                            <Label Content="{DynamicResource settings_window-switch_account}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="24" Height="50" Padding="0" HorizontalAlignment="Center" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
+                        </Border>
+                    </Grid>
+                    <Grid x:Name="gridUserManual" Opacity="0" Visibility="Hidden">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="4"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="8"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="4"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Content="{DynamicResource settings_window-session_token}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <TextBox x:Name="txtSessionToken" Grid.Row="0" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                        <Label x:Name="lbWhatIsSessionToken" Grid.Row="1" Grid.ColumnSpan="2"
                            MouseEnter="LbWhatIsSessionToken_MouseEnter"
                            MouseLeave="LbWhatIsSessionToken_MouseLeave"
                            Content="{DynamicResource settings_window-what_is_session_token}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="16" Height="40" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="lbGetSessionToken" Grid.Row="3" Grid.ColumnSpan="2"
+                        <Label x:Name="lbGetSessionToken" Grid.Row="3" Grid.ColumnSpan="2"
                            MouseEnter="LbGetSessionToken_MouseEnter"
                            MouseLeave="LbGetSessionToken_MouseLeave"
                            MouseDown="LbGetSessionToken_MouseDown"
                            Content="{DynamicResource settings_window-get_session_token}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="16" Height="40" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Cursor="Hand"/>
-                    <Label Grid.Row="5" Content="{DynamicResource settings_window-cookie}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="txtCookie" Grid.Row="5" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="lbWhatIsCookie" Grid.Row="6" Grid.ColumnSpan="2"
+                        <Label Grid.Row="5" Content="{DynamicResource settings_window-cookie}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <TextBox x:Name="txtCookie" Grid.Row="5" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                        <Label x:Name="lbWhatIsCookie" Grid.Row="6" Grid.ColumnSpan="2"
                            MouseEnter="LbWhatIsCookie_MouseEnter"
                            MouseLeave="LbWhatIsCookie_MouseLeave"
                            Content="{DynamicResource settings_window-what_is_cookie}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="16" Height="40" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="lbUpdateCookie"
-                           MouseEnter="LbUpdateCookie_MouseEnter"
-                           MouseLeave="LbUpdateCookie_MouseLeave"
-                           MouseDown="LbUpdateCookie_MouseDown"
-                           Grid.Row="8" Grid.ColumnSpan="2" Content="{DynamicResource settings_window-update_cookie}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="16" Height="40" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
+                        <Label x:Name="lbUpdateCookie2"
+                           MouseEnter="LbUpdateCookie2_MouseEnter"
+                           MouseLeave="LbUpdateCookie2_MouseLeave"
+                           MouseDown="LbUpdateCookie2_MouseDown"
+                           Grid.Row="8" Grid.ColumnSpan="2" Content="{DynamicResource settings_window-update_cookie_2}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="16" Height="40" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
+                    </Grid>
                 </Grid>
                 <Border Height="40" Margin="0,10,0,0">
                     <Label Content="{DynamicResource settings_window-system}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>

@@ -30,8 +30,6 @@ namespace Ikas
         private DispatcherTimer tmLoading;
         private int loadingRotationAngle;
         private DispatcherTimer tmSessionToken;
-        private DispatcherTimer tmGetSessionToken;
-        private DispatcherTimer tmUpdateCookie;
 
         public string SelectionForeground
         {
@@ -46,6 +44,14 @@ namespace Ikas
             get
             {
                 return "#FF" + Design.NeonGreen;
+            }
+        }
+
+        public string BorderGreenForeground
+        {
+            get
+            {
+                return "#7F" + Design.NeonGreen;
             }
         }
 
@@ -126,18 +132,6 @@ namespace Ikas
                 }
             });
             tmSessionToken.Interval = new TimeSpan(0, 0, 1);
-            tmGetSessionToken = new DispatcherTimer();
-            tmGetSessionToken.Tick += new EventHandler((object source, EventArgs e) =>
-            {
-                ((Storyboard)FindResource("label_zoom_in_and_out")).Begin(lbGetSessionToken);
-            });
-            tmGetSessionToken.Interval = new TimeSpan(0, 0, 1);
-            tmUpdateCookie = new DispatcherTimer();
-            tmUpdateCookie.Tick += new EventHandler((object source, EventArgs e) =>
-            {
-                ((Storyboard)FindResource("label_zoom_in_and_out")).Begin(lbUpdateCookie);
-            });
-            tmUpdateCookie.Interval = new TimeSpan(0, 0, 1);
         }
 
         #region Control Event
@@ -151,11 +145,6 @@ namespace Ikas
             ((Storyboard)FindResource("fore_to_white")).Begin(lbOk);
             // Load configuration
             txtSessionToken.Text = Depot.SessionToken;
-            if (txtSessionToken.Text == "")
-            {
-                // Notify to get session token
-                tmGetSessionToken.Start();
-            }
             txtCookie.Text = Depot.Cookie;
             if (Depot.AlwaysOnTop)
             {
@@ -211,6 +200,23 @@ namespace Ikas
                     LbLanguageEnUs_MouseDown(null, null);
                     lbLanguageEnUs.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
                     break;
+            }
+            // Determine log in
+            gridUserLogIn.Opacity = 0;
+            gridUserLogIn.Visibility = Visibility.Hidden;
+            gridUserLoggedIn.Opacity = 0;
+            gridUserLoggedIn.Visibility = Visibility.Hidden;
+            gridUserManual.Opacity = 0;
+            gridUserManual.Visibility = Visibility.Hidden;
+            if (txtSessionToken.Text != "")
+            {
+                gridUserLoggedIn.Opacity = 1;
+                gridUserLoggedIn.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                gridUserLogIn.Opacity = 1;
+                gridUserLogIn.Visibility = Visibility.Visible;
             }
             // Start timers
             tmLoading.Start();
@@ -278,6 +284,68 @@ namespace Ikas
             ((Storyboard)FindResource("window_fade_out")).Begin(this);
         }
 
+        private void BdLogIn_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("border_to_green")).Begin(bdLogIn);
+        }
+
+        private void BdLogIn_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("border_to_black")).Begin(bdLogIn);
+        }
+
+        private void BdLogIn_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            LbGetSessionToken_MouseDown(null, null);
+        }
+
+        private void BdLogInManually_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("border_to_green")).Begin(bdLogInManually);
+        }
+
+        private void BdLogInManually_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("border_to_black")).Begin(bdLogInManually);
+        }
+
+        private void BdLogInManually_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ((Storyboard)FindResource("grid_fade_out")).Begin(gridUserLogIn);
+            ((Storyboard)FindResource("grid_fade_in")).Begin(gridUserManual);
+        }
+
+        private void BdUpdateCookie_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("border_to_green")).Begin(bdUpdateCookie);
+        }
+
+        private void BdUpdateCookie_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("border_to_black")).Begin(bdUpdateCookie);
+        }
+
+        private void BdUpdateCookie_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            LbUpdateCookie2_MouseDown(null, null);
+        }
+
+        private void BdSwitchAccount_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("border_to_green")).Begin(bdSwitchAccount);
+        }
+
+        private void BdSwitchAccount_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("border_to_black")).Begin(bdSwitchAccount);
+        }
+
+        private void BdSwitchAccount_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ((Storyboard)FindResource("grid_fade_out")).Begin(gridUserLoggedIn);
+            ((Storyboard)FindResource("grid_fade_in")).Begin(gridUserLogIn);
+        }
+
         private void LbWhatIsSessionToken_MouseEnter(object sender, MouseEventArgs e)
         {
             ShowMessage(Translate("session_token_is..", true),
@@ -294,7 +362,6 @@ namespace Ikas
 
         private void LbGetSessionToken_MouseEnter(object sender, MouseEventArgs e)
         {
-            tmGetSessionToken.Stop();
             ((Storyboard)FindResource("fore_to_red")).Begin(lbGetSessionToken);
         }
 
@@ -346,18 +413,17 @@ namespace Ikas
             ((Storyboard)FindResource("window_fade_out")).Begin(messageWindow);
         }
 
-        private void LbUpdateCookie_MouseEnter(object sender, MouseEventArgs e)
+        private void LbUpdateCookie2_MouseEnter(object sender, MouseEventArgs e)
         {
-            tmUpdateCookie.Stop();
-            ((Storyboard)FindResource("fore_to_red")).Begin(lbUpdateCookie);
+            ((Storyboard)FindResource("fore_to_red")).Begin(lbUpdateCookie2);
         }
 
-        private void LbUpdateCookie_MouseLeave(object sender, MouseEventArgs e)
+        private void LbUpdateCookie2_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((Storyboard)FindResource("fore_to_white")).Begin(lbUpdateCookie);
+            ((Storyboard)FindResource("fore_to_white")).Begin(lbUpdateCookie2);
         }
 
-        private void LbUpdateCookie_MouseDown(object sender, MouseButtonEventArgs e)
+        private void LbUpdateCookie2_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (txtSessionToken.Text != "")
             {
@@ -513,6 +579,10 @@ namespace Ikas
                     Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                     ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtSessionToken.Text = "";
+                // Fade out loading
+                ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+                bdLoading.IsHitTestVisible = false;
+                lbOk.IsEnabled = true;
             }
             else if (sessionToken.StartsWith("!"))
             {
@@ -523,18 +593,34 @@ namespace Ikas
                     Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                     ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtSessionToken.Text = "";
+                // Fade out loading
+                ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+                bdLoading.IsHitTestVisible = false;
+                lbOk.IsEnabled = true;
             }
             else
             {
                 MessageBox.Show(Translate("get_session_token_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 txtSessionToken.Text = sessionToken;
-                // Notify to update cookie
-                tmUpdateCookie.Start();
+                // Update cookie
+                if (gridUserLogIn.Visibility == Visibility.Visible)
+                {
+                    ((Storyboard)FindResource("grid_fade_out")).Begin(gridUserLogIn);
+                    ((Storyboard)FindResource("grid_fade_in")).Begin(gridUserLoggedIn);
+                    // Fade out loading
+                    ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+                    bdLoading.IsHitTestVisible = false;
+                    lbOk.IsEnabled = true;
+                    BdUpdateCookie_MouseDown(null, null);
+                }
+                else
+                {
+                    // Fade out loading
+                    ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+                    bdLoading.IsHitTestVisible = false;
+                    lbOk.IsEnabled = true;
+                }
             }
-            // Fade out loading
-            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
-            bdLoading.IsHitTestVisible = false;
-            lbOk.IsEnabled = true;
         }
 
         private void CookieGet(string cookie)
@@ -593,6 +679,5 @@ namespace Ikas
                 return s;
             }
         }
-
     }
 }
