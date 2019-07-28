@@ -908,7 +908,6 @@
     <sys:String x:Key="main_window-exit">Exit</sys:String>
     <sys:String x:Key="main_window-{0}._{1}">{0}. {1}</sys:String>
     <sys:String x:Key="main_window-{0},_because_{1}._{2}">{0}, because {1}. {2}</sys:String>
-    <sys:String x:Key="main_window-{0}._{1}\n\n{2}">{0}. {1}\n\n{2}</sys:String>
     <!-- ScheduleWindow -->
     <sys:String x:Key="schedule_window-next">Next</sys:String>
     <sys:String x:Key="schedule_window-{0}_-_{1}">{0} - {1}</sys:String>
@@ -943,7 +942,6 @@
     <sys:String x:Key="settings_window-session_token">Session Token</sys:String>
     <sys:String x:Key="settings_window-what_is_session_token">What is Session Token?</sys:String>
     <sys:String x:Key="settings_window-session_token_is..">Session Token is..</sys:String>
-    <sys:String x:Key="settings_window-{0}\n{1}">{0}\n{1}</sys:String>
     <sys:String x:Key="settings_window-a_session_token_is_a_small_piece_of_data_used_for_automatic_cookie_generation.">A Session Token is a small piece of data used for automatic cookie generation.</sys:String>
     <sys:String x:Key="settings_window-automatic_cookie_generation_sends_minimal_data_including_the_session_token_to_nintendo_and_non-nintendo_servers,_and_get_cookie_back_for_accessing_splatnet.">Automatic cookie generation sends minimal data including the Session Token to Nintendo and non-Nintendo servers, and get cookie back for accessing SplatNet.</sys:String>
     <sys:String x:Key="settings_window-get_session_token">How can I get a Session Token?</sys:String>
@@ -954,7 +952,6 @@
     <sys:String x:Key="settings_window-cookie">Cookie</sys:String>
     <sys:String x:Key="settings_window-what_is_cookie">What is Cookie?</sys:String>
     <sys:String x:Key="settings_window-cookie_is..">Cookie is..</sys:String>
-    <sys:String x:Key="settings_window-{0}\n{1}\n{2}">{0}\n{1}\n{2}</sys:String>
     <sys:String x:Key="settings_window-a_cookie_is_a_small_piece_of_data_sent_from_a_website_and_stored_on_the_user's_computer.">A Cookie is a small piece of data sent from a website and stored on the user's computer.</sys:String>
     <sys:String x:Key="settings_window-ikas_uses_cookies_to_access_splatnet,_get_schedule_and_battle_data.">Ikas uses cookies to access SplatNet, get schedule and battle data.</sys:String>
     <sys:String x:Key="settings_window-if_you_don't_know_how_to_get_a_cookie,_you_may_fill_out_the_session_token,_and_the_system_will_get_one_automatically.">If you don't know how to get a cookie, you may fill out the Session Token, and the system will get one automatically.</sys:String>

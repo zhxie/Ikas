@@ -908,7 +908,6 @@
     <sys:String x:Key="main_window-exit">終了</sys:String>
     <sys:String x:Key="main_window-{0}._{1}">{0}。{1}</sys:String>
     <sys:String x:Key="main_window-{0},_because_{1}._{2}">{1}ため、{0}。{2}</sys:String>
-    <sys:String x:Key="main_window-{0}._{1}\n\n{2}">{0}。{1}\n\n{2}</sys:String>
     <!-- ScheduleWindow -->
     <sys:String x:Key="schedule_window-next">つぎ</sys:String>
     <sys:String x:Key="schedule_window-{0}_-_{1}">{0} - {1}</sys:String>
@@ -943,7 +942,6 @@
     <sys:String x:Key="settings_window-session_token">セッショントークン</sys:String>
     <sys:String x:Key="settings_window-what_is_session_token">セッショントークンとは何ですか？</sys:String>
     <sys:String x:Key="settings_window-session_token_is..">セッショントークンとは..</sys:String>
-    <sys:String x:Key="settings_window-{0}\n{1}">{0}\n{1}</sys:String>
     <sys:String x:Key="settings_window-a_session_token_is_a_small_piece_of_data_used_for_automatic_cookie_generation.">セッショントークンは、自動クッキー生成に使用される小さなデータです。</sys:String>
     <sys:String x:Key="settings_window-automatic_cookie_generation_sends_minimal_data_including_the_session_token_to_nintendo_and_non-nintendo_servers,_and_get_cookie_back_for_accessing_splatnet.">自動クッキー生成は、セッショントークンを含む最小限のデータをニンテンドーおよび非ニンテンドーサーバーに送信し、イカリングにアクセスするためのクッキーを取得します。</sys:String>
     <sys:String x:Key="settings_window-get_session_token">どのように私はセッショントークンを得ることができますか？</sys:String>
@@ -954,7 +952,6 @@
     <sys:String x:Key="settings_window-cookie">クッキー</sys:String>
     <sys:String x:Key="settings_window-what_is_cookie">クッキーとは何ですか？</sys:String>
     <sys:String x:Key="settings_window-cookie_is..">クッキーとは..</sys:String>
-    <sys:String x:Key="settings_window-{0}\n{1}\n{2}">{0}\n{1}\n{2}</sys:String>
     <sys:String x:Key="settings_window-a_cookie_is_a_small_piece_of_data_sent_from_a_website_and_stored_on_the_user's_computer.">クッキーは、Webサイトから送信され、ユーザーのコンピュータに保存された小さなデータです。</sys:String>
     <sys:String x:Key="settings_window-ikas_uses_cookies_to_access_splatnet,_get_schedule_and_battle_data.">Ikas は、スケジュールと戦闘データを取得するためにクッキーを使ってイカリングにアクセスします。</sys:String>
     <sys:String x:Key="settings_window-if_you_don't_know_how_to_get_a_cookie,_you_may_fill_out_the_session_token,_and_the_system_will_get_one_automatically.">クッキーの取得方法がわからない場合は、セッショントークンに記入すると、システムが自動的に取得します。</sys:String>

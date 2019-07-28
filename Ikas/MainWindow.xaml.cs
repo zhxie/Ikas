@@ -237,9 +237,11 @@ namespace Ikas
 
         private void AppDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            MessageBox.Show(string.Format(Translate("{0}._{1}\n\n{2}", true),
+            MessageBox.Show(string.Format("{0}\n\n{1}",
+                string.Format(Translate("{0}._{1}", true),
                 Translate("ikas_meets_an_unhandled_exception"),
-                Translate("this_is_a_bug,_please_consider_submitting_the_issue."),
+                Translate("this_is_a_bug,_please_consider_submitting_the_issue.")
+                ),
                 e.ExceptionObject.ToString()
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
         }

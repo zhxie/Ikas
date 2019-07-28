@@ -349,7 +349,7 @@ namespace Ikas
         private void LbWhatIsSessionToken_MouseEnter(object sender, MouseEventArgs e)
         {
             ShowMessage(Translate("session_token_is..", true),
-                string.Format(Translate("{0}\n{1}", true),
+                string.Format("{0}\n{1}",
                 Translate("a_session_token_is_a_small_piece_of_data_used_for_automatic_cookie_generation.", true),
                 Translate("automatic_cookie_generation_sends_minimal_data_including_the_session_token_to_nintendo_and_non-nintendo_servers,_and_get_cookie_back_for_accessing_splatnet.", true)),
                 e.GetPosition(this));
@@ -401,7 +401,7 @@ namespace Ikas
         private void LbWhatIsCookie_MouseEnter(object sender, MouseEventArgs e)
         {
             ShowMessage(Translate("cookie_is..", true),
-                string.Format(Translate("{0}\n{1}\n{2}", true),
+                string.Format("{0}\n{1}\n{2}",
                 Translate("a_cookie_is_a_small_piece_of_data_sent_from_a_website_and_stored_on_the_user's_computer.", true),
                 Translate("ikas_uses_cookies_to_access_splatnet,_get_schedule_and_battle_data.", true),
                 Translate("if_you_don't_know_how_to_get_a_cookie,_you_may_fill_out_the_session_token,_and_the_system_will_get_one_automatically.", true)),
@@ -542,7 +542,7 @@ namespace Ikas
         private void LbWhatIsClearCache_MouseEnter(object sender, MouseEventArgs e)
         {
             ShowMessage(Translate("clear_cache_is..", true),
-                string.Format(Translate("{0}\n{1}\n{2}", true),
+                string.Format("{0}\n{1}\n{2}",
                 Translate("when_ikas_gets_schedule_and_battle_data,_it_will_cache_images_including_user_icons,_stages,_weapons_and_gears.", true),
                 Translate("sometimes,_due_to_network_or_other_reasons,_ikas_may_not_get_images_properly,_which_may_cause_wrong_cached_images.", true),
                 Translate("you_can_help_ikas_get_back_to_normal_operation_by_clearing_the_cached_data.", true)),
