@@ -281,6 +281,20 @@ namespace Ikas
                 Depot.ProxyPort = int.Parse(txtProxyPort.Text);
             }
             Depot.Language = language;
+            // Restore user-related controls
+            if (txtSessionToken.Text != "")
+            {
+                ((Storyboard)FindResource("grid_fade_out")).Begin(gridUserLogIn);
+                ((Storyboard)FindResource("grid_fade_out")).Begin(gridUserManual);
+                ((Storyboard)FindResource("grid_fade_in")).Begin(gridUserLoggedIn);
+            }
+            else
+            {
+                ((Storyboard)FindResource("grid_fade_out")).Begin(gridUserLoggedIn);
+                ((Storyboard)FindResource("grid_fade_out")).Begin(gridUserManual);
+                ((Storyboard)FindResource("grid_fade_in")).Begin(gridUserLogIn);
+            }
+            // Fade out settings
             ((Storyboard)FindResource("window_fade_out")).Begin(this);
         }
 
@@ -312,6 +326,7 @@ namespace Ikas
         private void BdLogInManually_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ((Storyboard)FindResource("grid_fade_out")).Begin(gridUserLogIn);
+            ((Storyboard)FindResource("grid_fade_out")).Begin(gridUserLoggedIn);
             ((Storyboard)FindResource("grid_fade_in")).Begin(gridUserManual);
         }
 
@@ -343,6 +358,7 @@ namespace Ikas
         private void BdSwitchAccount_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ((Storyboard)FindResource("grid_fade_out")).Begin(gridUserLoggedIn);
+            ((Storyboard)FindResource("grid_fade_out")).Begin(gridUserManual);
             ((Storyboard)FindResource("grid_fade_in")).Begin(gridUserLogIn);
         }
 
