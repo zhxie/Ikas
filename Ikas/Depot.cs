@@ -623,11 +623,7 @@ namespace Ikas
             userConfigurationPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location) + file;
             if (!File.Exists(userConfigurationPath))
             {
-                userConfigurationPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location) + userConfigurationPath;
-                if (!File.Exists(userConfigurationPath))
-                {
-                    return false;
-                }
+                return false;
             }
             try
             {
