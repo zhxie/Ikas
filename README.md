@@ -22,16 +22,16 @@ Ikas reads and parses configuration from both user.ini, for user information, an
 
 ### Setup
 
-When Ikas starts at the first time, it will ask for configuration. You can fill your SplatNet cookie in the cookie textbox directly, or obtain one by  Automatic Cookie Generation.
+When Ikas starts at the first time, it will ask for configuration. You can fill your SplatNet cookie in the cookie textbox directly, or obtain one by Automatic Cookie Generation.
 
-1. Obtain a session token. Press "How can I get a Session Token", log in into the Nintendo website, right click on "Select this Person", copy the link address, paste it back to session token textbox and press "How can I get a Session token" again.
-2. Obtain the SplatNet cookie. Press "Update my Cookie, please!", Ikas will handle everything that follows. **Please read "Security and Privacy" section below carefully before you start.**
+1. Obtain a session token. Press "Log In", log in into the Nintendo website opened by Ikas, right click on "Select this Person", copy the link address, and then Ikas will try to get session token.
+2. Obtain the SplatNet cookie. When Ikas successfully obtained the session token, it will try to get SplatNet cookie, and Automatic Cookie Generation will be used. **Please read "Security and Privacy" section below carefully before you start.**
 
 ## Security and Privacy
 
 ### Automatic Cookie Generation
 
-Ikas uses cookies to access SplatNet,  get schedule and battle data. This cookie may be obtained automatically using Automatic Cookie Generation which is also instructed in [splatnet2statink/Cookie Generation](https://github.com/frozenpandaman/splatnet2statink#cookie-generation). Please read the following paragraph CAREFULLY before you use Automatic Cookie Generation.
+Ikas uses cookies to access SplatNet, get schedule and battle data. This cookie may be obtained automatically using Automatic Cookie Generation which is also instructed in [splatnet2statink/Cookie Generation](https://github.com/frozenpandaman/splatnet2statink#cookie-generation). Please read the following paragraph CAREFULLY before you use Automatic Cookie Generation.
 
 Automatic Cookie Generation involves making a secure request to **two non-Nintendo servers** with minimal, non-identifying information. For details, please refer to [splatnet2statink/api docs](https://github.com/frozenpandaman/splatnet2statink/wiki/api-docs). The developers aim to be 100% transparent about this and provide in-depth information in [splatnet2statink/Cookie Generation/Automatic](https://github.com/frozenpandaman/splatnet2statink#automatic)'s privacy statement.
 
