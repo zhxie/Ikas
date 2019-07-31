@@ -560,6 +560,7 @@ namespace Ikas.Class
             office_attire = 21009,
             srl_coat = 21010,
             mecha_body_akm = 22000,
+            splatfest_tee_replica = 23000,
             school_uniform = 25000,
             samurai_jacket = 25001,
             power_armor = 25002,

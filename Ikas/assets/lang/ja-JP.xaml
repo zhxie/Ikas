@@ -682,6 +682,7 @@
     <sys:String x:Key="office_attire">ジムパーソンアーマー</sys:String>
     <sys:String x:Key="srl_coat">アカシックコート</sys:String>
     <sys:String x:Key="mecha_body_akm">メカボディ・AKM</sys:String>
+    <sys:String x:Key="splatfest_tee_replica">フェスＴ レプリカ</sys:String>
     <sys:String x:Key="school_uniform">スクールブレザー</sys:String>
     <sys:String x:Key="samurai_jacket">サムライジャケット</sys:String>
     <sys:String x:Key="power_armor">パワードスーツ</sys:String>

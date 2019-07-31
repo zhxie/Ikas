@@ -682,6 +682,7 @@
     <sys:String x:Key="office_attire">Office Attire</sys:String>
     <sys:String x:Key="srl_coat">SRL Coat</sys:String>
     <sys:String x:Key="mecha_body_akm">Mecha Body - AKM</sys:String>
+    <sys:String x:Key="splatfest_tee_replica">Splatfest Tee Replica</sys:String>
     <sys:String x:Key="school_uniform">School Uniform</sys:String>
     <sys:String x:Key="samurai_jacket">Samurai Jacket</sys:String>
     <sys:String x:Key="power_armor">Power Armor</sys:String>
