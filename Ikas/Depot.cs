@@ -1068,7 +1068,7 @@ namespace Ikas
                                     }
                                     int myScore = int.Parse(jObject["my_team_count"].ToString());
                                     int otherScore = int.Parse(jObject["other_team_count"].ToString());
-                                    bool isXPower = int.TryParse(jObject["x_power"].ToString(), out _);
+                                    bool isXPower = double.TryParse(jObject["x_power"].ToString(), out _);
                                     if (!isXPower)
                                     {
                                         // Ranked Battle
@@ -1204,7 +1204,7 @@ namespace Ikas
                                     int myEstimatedLeaguePower = int.Parse(jObject["my_estimate_league_point"].ToString());
                                     int otherEstimatedLeaguePower = int.Parse(jObject["other_estimate_league_point"].ToString());
                                     double leaguePoint;
-                                    bool isLeaguePoint = int.TryParse(jObject["league_point"].ToString(), out _);
+                                    bool isLeaguePoint = double.TryParse(jObject["league_point"].ToString(), out _);
                                     if (isLeaguePoint)
                                     {
                                         leaguePoint = double.Parse(jObject["league_point"].ToString());
