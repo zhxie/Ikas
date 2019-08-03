@@ -921,7 +921,7 @@
     <sys:String x:Key="battle_window-splatfest_power">Splatfest Power</sys:String>
     <sys:String x:Key="battle_window-estimated_{0}">Estimated {0}</sys:String>
     <sys:String x:Key="battle_window-calculating">Calculating..</sys:String>
-    <sys:String x:Key="battle_window-{0}/{1}">{0}/{1}</sys:String>
+    <sys:String x:Key="battle_window-{0:0.0}/{1:0.0}">{0:0.0}/{1:0.0}</sys:String>
     <sys:String x:Key="battle_window-%">%</sys:String>
     <sys:String x:Key="battle_window-{0}_count">{0} count</sys:String>
     <sys:String x:Key="battle_window-knock_out">KO BONUS!</sys:String>

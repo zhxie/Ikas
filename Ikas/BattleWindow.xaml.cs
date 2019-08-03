@@ -266,7 +266,7 @@ namespace Ikas
                         }
                         else
                         {
-                            lbPower.Content = string.Format(Translate("{0}/{1}", true), (battle as LeagueBattle).LeaguePoint, (battle as LeagueBattle).MaxLeaguePoint);
+                            lbPower.Content = string.Format(Translate("{0:0.0}/{1:0.0}", true), (battle as LeagueBattle).LeaguePoint, (battle as LeagueBattle).MaxLeaguePoint);
                         }
                         if (battle.IsWin)
                         {
@@ -302,7 +302,7 @@ namespace Ikas
                                 }
                                 else
                                 {
-                                    lbPower.Content = string.Format(Translate("{0}/{1}", true), (battle as SplatfestBattle).SplatfestPower, (battle as SplatfestBattle).MaxSplatfestPower);
+                                    lbPower.Content = string.Format(Translate("{0:0.0}/{1:0.0}", true), (battle as SplatfestBattle).SplatfestPower, (battle as SplatfestBattle).MaxSplatfestPower);
                                 }
                                 break;
                             default:
