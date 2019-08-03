@@ -36,6 +36,7 @@ namespace Ikas.Class
         {
             switch (s)
             {
+                case "":
                 case "C-":
                     return Key.c_minus;
                 case "C":
