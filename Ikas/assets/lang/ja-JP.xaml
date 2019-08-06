@@ -21,6 +21,13 @@
     <sys:String x:Key="tower">ガチヤグラ</sys:String>
     <sys:String x:Key="rain">ガチホコ</sys:String>
     <sys:String x:Key="clam">ガチアサリ</sys:String>
+    <!-- Freshness -->
+    <sys:String x:Key="dry">チョーシあげていこう</sys:String>
+    <sys:String x:Key="raw">チョーシぼちぼち</sys:String>
+    <sys:String x:Key="fresh">チョーシいいね！</sys:String>
+    <sys:String x:Key="superfresh">チョーシサイコー！！</sys:String>
+    <sys:String x:Key="superfresh2">チョーシサイコー！！</sys:String>
+    <sys:String x:Key="superfresh3">チョーシサイコー！！</sys:String>
     <!-- Rank -->
     <sys:String x:Key="rank_unknown">--</sys:String>
     <sys:String x:Key="c_minus">C-</sys:String>
@@ -917,6 +924,7 @@
     <!-- BattleWindow -->
     <sys:String x:Key="battle_window-win">Win!</sys:String>
     <sys:String x:Key="battle_window-lose">Lose..</sys:String>
+    <sys:String x:Key="battle_window-rank">ウデマエ</sys:String>
     <sys:String x:Key="battle_window-league_power">リーグパワー</sys:String>
     <sys:String x:Key="battle_window-splatfest_power">フェスパワー</sys:String>
     <sys:String x:Key="battle_window-estimated_{0}">推定 {0}</sys:String>

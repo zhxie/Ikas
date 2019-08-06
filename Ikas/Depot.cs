@@ -1013,11 +1013,11 @@ namespace Ikas
                                     {
                                         UpdateLevel(levelAfter);
                                     }
-                                    int freshness = int.Parse(jObject["win_meter"].ToString());
+                                    double winMeter = double.Parse(jObject["win_meter"].ToString());
                                     double myScore = double.Parse(jObject["my_team_percentage"].ToString());
                                     double otherScore = double.Parse(jObject["other_team_percentage"].ToString());
                                     UpdateBattle(new RegularBattle(battleNumber, startTime, elapsedTime, mode, rule, stage, myPlayers, otherPlayers, levelAfter,
-                                        freshness, myScore, otherScore) as Battle);
+                                        winMeter, myScore, otherScore) as Battle);
                                 }
                                 break;
                             case Mode.Key.ranked_battle:

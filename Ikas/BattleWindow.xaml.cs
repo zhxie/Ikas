@@ -24,6 +24,14 @@ namespace Ikas
     /// </summary>
     public partial class BattleWindow : Window
     {
+        public string YellowForeground
+        {
+            get
+            {
+                return "#FF" + Design.NeonYellow;
+            }
+        }
+
         private PlayerWindow playerWindow;
         private WeaponWindow weaponWindow;
 
@@ -245,28 +253,48 @@ namespace Ikas
                 {
                     case Mode.Key.regular_battle:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_regular");
-                        lbPowerName.Content = "";
-                        lbPower.Content = "";
+                        lbPowerName.Content = Translate((battle as RegularBattle).Freshness.ToString());
+                        lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                        lbPower.Margin = new Thickness(0, -20, 0, 0);
+                        tbPower.FontSize = 36;
+                        tbPower.Text = (battle as RegularBattle).WinMeter.ToString("0.0");
+                        tbPowerSub.Text = "";
                         lbWinEstimatedPower.Content = "";
                         lbLoseEstimatedPower.Content = "";
                         break;
                     case Mode.Key.ranked_battle:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_ranked");
-                        lbPowerName.Content = "";
-                        lbPower.Content = "";
+                        lbPowerName.Content = Translate("rank", true);
+                        lbPower.FontFamily = FindResource("splatfont") as FontFamily;
+                        lbPower.Margin = new Thickness(0, -20, 0, 0);
+                        tbPower.FontSize = 36;
+                        tbPower.Text = Translate((battle as RankedBattle).RankAfter.ToString());
+                        if ((battle as RankedBattle).RankAfter > Rank.Key.s && (battle as RankedBattle).RankAfter < Rank.Key.x)
+                        {
+                            tbPowerSub.Text = ((battle as RankedBattle).RankAfter - Rank.Key.s_plus_0).ToString();
+                        }
+                        else
+                        {
+                            tbPowerSub.Text = "";
+                        }
                         lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (battle as RankedBattle).EstimatedRankPower);
                         lbLoseEstimatedPower.Content = "";
                         break;
                     case Mode.Key.league_battle:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_league");
                         lbPowerName.Content = Translate("league_power", true);
+                        lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                        lbPower.Margin = new Thickness(0, -10, 0, 0);
+                        tbPower.FontSize = 28;
                         if ((battle as LeagueBattle).IsCalculating)
                         {
-                            lbPower.Content = Translate("calculating", true);
+                            tbPower.Text = Translate("calculating", true);
+                            tbPowerSub.Text = "";
                         }
                         else
                         {
-                            lbPower.Content = string.Format(Translate("{0:0.0}/{1:0.0}", true), (battle as LeagueBattle).LeaguePoint, (battle as LeagueBattle).MaxLeaguePoint);
+                            tbPower.Text = string.Format(Translate("{0:0.0}/{1:0.0}", true), (battle as LeagueBattle).LeaguePoint, (battle as LeagueBattle).MaxLeaguePoint);
+                            tbPowerSub.Text = "";
                         }
                         if (battle.IsWin)
                         {
@@ -282,27 +310,37 @@ namespace Ikas
                     case Mode.Key.private_battle:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_private");
                         lbPowerName.Content = "";
-                        lbPower.Content = "";
+                        lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                        lbPower.Margin = new Thickness(0, -10, 0, 0);
+                        tbPower.FontSize = 28;
+                        tbPower.Text = "";
+                        tbPowerSub.Text = "";
                         lbWinEstimatedPower.Content = "";
                         lbLoseEstimatedPower.Content = "";
                         break;
                     case Mode.Key.splatfest:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_splatfest");
+                        lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                        lbPower.Margin = new Thickness(0, -10, 0, 0);
+                        tbPower.FontSize = 28;
                         switch ((battle as SplatfestBattle).SplatfestMode)
                         {
                             case SplatfestBattle.Key.regular:
                                 lbPowerName.Content = "";
-                                lbPower.Content = "";
+                                tbPower.Text = "";
+                                tbPowerSub.Text = "";
                                 break;
                             case SplatfestBattle.Key.challenge:
                                 lbPowerName.Content = Translate("splatfest_power", true);
                                 if ((battle as SplatfestBattle).IsCalculating)
                                 {
-                                    lbPower.Content = Translate("calculating", true);
+                                    tbPower.Text = Translate("calculating", true);
+                                    tbPowerSub.Text = "";
                                 }
                                 else
                                 {
-                                    lbPower.Content = string.Format(Translate("{0:0.0}/{1:0.0}", true), (battle as SplatfestBattle).SplatfestPower, (battle as SplatfestBattle).MaxSplatfestPower);
+                                    tbPower.Text = string.Format(Translate("{0:0.0}/{1:0.0}", true), (battle as SplatfestBattle).SplatfestPower, (battle as SplatfestBattle).MaxSplatfestPower);
+                                    tbPowerSub.Text = "";
                                 }
                                 break;
                             default:

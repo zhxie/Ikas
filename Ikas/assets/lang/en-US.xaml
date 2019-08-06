@@ -21,6 +21,13 @@
     <sys:String x:Key="tower">Tower</sys:String>
     <sys:String x:Key="rain">Rain</sys:String>
     <sys:String x:Key="clam">Clam</sys:String>
+    <!-- Freshness -->
+    <sys:String x:Key="dry">Dry</sys:String>
+    <sys:String x:Key="raw">Raw</sys:String>
+    <sys:String x:Key="fresh">Fresh</sys:String>
+    <sys:String x:Key="superfresh">SUPERFRESH!</sys:String>
+    <sys:String x:Key="superfresh2">SUPERFRESH!</sys:String>
+    <sys:String x:Key="superfresh3">SUPERFRESH!</sys:String>
     <!-- Rank -->
     <sys:String x:Key="rank_unknown">--</sys:String>
     <sys:String x:Key="c_minus">C-</sys:String>
@@ -917,6 +924,7 @@
     <!-- BattleWindow -->
     <sys:String x:Key="battle_window-win">Win!</sys:String>
     <sys:String x:Key="battle_window-lose">Lose..</sys:String>
+    <sys:String x:Key="battle_window-rank">Rank</sys:String>
     <sys:String x:Key="battle_window-league_power">League Power</sys:String>
     <sys:String x:Key="battle_window-splatfest_power">Splatfest Power</sys:String>
     <sys:String x:Key="battle_window-estimated_{0}">Estimated {0}</sys:String>

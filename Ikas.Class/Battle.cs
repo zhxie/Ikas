@@ -270,13 +270,53 @@ namespace Ikas.Class
 
     public class RegularBattle : Battle
     {
-        public int Freshness { get; }
+        public enum FreshnessKey
+        {
+            dry,
+            raw,
+            fresh,
+            superfresh,
+            superfresh2,
+            superfresh3
+        }
+
+        public double WinMeter { get; }
+        public FreshnessKey Freshness
+        {
+            get
+            {
+                if (WinMeter < 5)
+                {
+                    return FreshnessKey.dry;
+                }
+                else if (WinMeter < 10)
+                {
+                    return FreshnessKey.raw;
+                }
+                else if (WinMeter < 15)
+                {
+                    return FreshnessKey.fresh;
+                }
+                else if (WinMeter < 20)
+                {
+                    return FreshnessKey.superfresh;
+                }
+                else if (WinMeter < 50)
+                {
+                    return FreshnessKey.superfresh2;
+                }
+                else
+                {
+                    return FreshnessKey.superfresh3;
+                }
+            }
+        }
 
         public RegularBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, int levelAfter,
-            int freshness, double myScore, double otherScore)
-            : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.regular_battle, mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore)
+            double winMeter, double myScore, double otherScore)
+            : base(number, startTime, elapsedTime, Class.Mode.Key.regular_battle, mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore)
         {
-            Freshness = freshness;
+            WinMeter = winMeter;
         }
     }
 
