@@ -1862,7 +1862,7 @@ namespace Ikas
                             // Send HTTP POST
                             HttpRequestMessage requestAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoAccessToken);
                             requestAccessToken.Headers.Add("Authorization", "Bearer");
-                            requestAccessToken.Headers.Add("X-ProductVersion", "1.5.0");
+                            requestAccessToken.Headers.Add("X-ProductVersion", "1.5.2");
                             requestAccessToken.Headers.Add("X-Platform", "Android");
                             requestAccessToken.Content = new StringContent("{\"parameter\":{\"f\":\"" + loginNsoF +
                                 "\",\"naIdToken\":\"" + loginNsoP1 +
