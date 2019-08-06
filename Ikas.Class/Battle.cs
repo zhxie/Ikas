@@ -270,10 +270,13 @@ namespace Ikas.Class
 
     public class RegularBattle : Battle
     {
-        public RegularBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, int levelAfter, double myScore, double otherScore)
+        public int Freshness { get; }
+
+        public RegularBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, int levelAfter,
+            int freshness, double myScore, double otherScore)
             : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.regular_battle, mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore)
         {
-
+            Freshness = freshness;
         }
     }
 
