@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ikas.Class
 {
-    public class Battle
+    public class Battle : Base
     {
         public int Number { get; }
         public DateTime StartTime { get; }
@@ -255,9 +255,9 @@ namespace Ikas.Class
             MyScore = myScore;
             OtherScore = otherScore;
         }
-        public Battle(int error)
+        public Battle(int error) : base(error)
         {
-            Number = error;
+            Number = -1;
             StartTime = new DateTime(0);
             ElapsedTime = -1;
             MyPlayers = new List<Player>();
@@ -494,15 +494,6 @@ namespace Ikas.Class
             GoldenEgg = goldenEgg;
             GoldenEggPop = goldenEggPop;
         }
-        public Wave(int error)
-        {
-            WaterLevel = WaterLevelType.normal;
-            EventType = EventTypeType.water_levels;
-            Quota = error;
-            PowerEgg = -1;
-            GoldenEgg = -1;
-            GoldenEggPop = -1;
-        }
 
         public static WaterLevelType ParseWaterLevel(string s)
         {
@@ -514,7 +505,7 @@ namespace Ikas.Class
         }
     }
 
-    public class SalmonRunBattle
+    public class SalmonRunBattle : Base
     {
         public enum ResultType
         {
@@ -605,9 +596,9 @@ namespace Ikas.Class
             Result = result;
             FailureWave = failureWave;
         }
-        public SalmonRunBattle(int error)
+        public SalmonRunBattle(int error) : base(error)
         {
-            Number = error;
+            Number = -1;
             StartTime = new DateTime(0);
             DangerRate = -1;
             Waves = new List<Wave>();

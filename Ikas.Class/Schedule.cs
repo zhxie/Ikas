@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ikas.Class
 {
-    public class Schedule
+    public class Schedule : Base
     {
         public DateTime EndTime { get; }
         public List<ScheduledStage> Stages { get; }
@@ -16,9 +16,9 @@ namespace Ikas.Class
             Stages = stages;
             NextStages = nextStages;
         }
-        public Schedule(int error)
+        public Schedule(int error) : base(error)
         {
-            EndTime = new DateTime(error);
+            EndTime = new DateTime(0);
             Stages = new List<ScheduledStage>();
             NextStages = new List<ScheduledStage>();
         }
@@ -49,7 +49,7 @@ namespace Ikas.Class
         }
     }
 
-    public class SalmonRunSchedule
+    public class SalmonRunSchedule : Base
     {
         public SalmonRunStage Stage { get; }
         public SalmonRunStage NextStage { get; }
@@ -58,6 +58,10 @@ namespace Ikas.Class
         {
             Stage = stage;
             NextStage = nextStage;
+        }
+        public SalmonRunSchedule(int error) : base(error)
+        {
+
         }
     }
 }

@@ -754,9 +754,9 @@ namespace Ikas
         /// <returns></returns>
         private static bool UpdateSchedule(Schedule schedule)
         {
-            if (schedule.EndTime.Ticks <= 10)
+            if (schedule.Error >= 0)
             {
-                switch (schedule.EndTime.Ticks)
+                switch (schedule.Error)
                 {
                     case 0:
                         ScheduleFailed?.Invoke("schedule_is_not_ready");
@@ -774,7 +774,7 @@ namespace Ikas
                         ScheduleFailed?.Invoke("network_cannot_be_reached");
                         break;
                     default:
-                        break;
+                        throw new ArgumentOutOfRangeException();
                 }
             }
             if (Schedule != schedule)
@@ -820,7 +820,7 @@ namespace Ikas
             catch
             {
                 // Update Battle on error
-                UpdateBattle(new Battle(-2));
+                UpdateBattle(new Battle(2));
                 return;
             }
             HttpResponseMessage response;
@@ -831,7 +831,7 @@ namespace Ikas
             catch
             {
                 // Update Battle on error
-                UpdateBattle(new Battle(-8));
+                UpdateBattle(new Battle(8));
                 return;
             }
             if (response.IsSuccessStatusCode)
@@ -910,7 +910,7 @@ namespace Ikas
                 catch
                 {
                     // Update Battle on error
-                    UpdateBattle(new Battle(-3));
+                    UpdateBattle(new Battle(3));
                     return;
                 }
                 // Same battle
@@ -934,7 +934,7 @@ namespace Ikas
                 catch
                 {
                     // Update Battle on error
-                    UpdateBattle(new Battle(-2));
+                    UpdateBattle(new Battle(2));
                     return;
                 }
                 try
@@ -944,7 +944,7 @@ namespace Ikas
                 catch
                 {
                     // Update Battle on error
-                    UpdateBattle(new Battle(-8));
+                    UpdateBattle(new Battle(8));
                     return;
                 }
                 if (response.IsSuccessStatusCode)
@@ -1336,37 +1336,28 @@ namespace Ikas
                     }
                     catch (Exception ex)
                     {
-                        switch (ex.Message)
+                        if (int.TryParse(ex.Message, out _))
                         {
-                            case "-5":
-                                // Update Battle on error
-                                UpdateBattle(new Battle(-5));
-                                break;
-                            case "-6":
-                                // Update Battle on error
-                                UpdateBattle(new Battle(-6));
-                                break;
-                            case "-7":
-                                // Update Battle on error
-                                UpdateBattle(new Battle(-7));
-                                break;
-                            default:
-                                // Update Battle on error
-                                UpdateBattle(new Battle(-4));
-                                break;
+                            // Update Battle on error
+                            UpdateBattle(new Battle(int.Parse(ex.Message)));
+                        }
+                        else
+                        {
+                            // Update Battle on error
+                            UpdateBattle(new Battle(4));
                         }
                     }
                 }
                 else
                 {
                     // Update Battle on error
-                    UpdateBattle(new Battle(-1));
+                    UpdateBattle(new Battle(1));
                 }
             }
             else
             {
                 // Update Battle on error
-                UpdateBattle(new Battle(-1));
+                UpdateBattle(new Battle(1));
             }
         }
         /// <summary>
@@ -1376,39 +1367,39 @@ namespace Ikas
         /// <returns></returns>
         private static bool UpdateBattle(Battle battle)
         {
-            if (battle.Number <= 0)
+            if (battle.Error >= 0)
             {
-                switch (battle.Number)
+                switch (battle.Error)
                 {
                     case 0:
                         BattleFailed?.Invoke("battle_is_not_ready");
                         break;
-                    case -1:
+                    case 1:
                         BattleFailed?.Invoke("network_cannot_be_reached,_or_cookie_is_invalid_or_expired");
                         break;
-                    case -2:
+                    case 2:
                         BattleFailed?.Invoke("cookie_is_empty");
                         break;
-                    case -3:
+                    case 3:
                         BattleFailed?.Invoke("battles_cannot_be_resolved");
                         break;
-                    case -4:
+                    case 4:
                         BattleFailed?.Invoke("battle_cannot_be_resolved");
                         break;
-                    case -5:
+                    case 5:
                         BattleFailed?.Invoke("player_cannot_be_resolved");
                         break;
-                    case -6:
+                    case 6:
                         BattleFailed?.Invoke("weapon_cannot_be_resolved");
                         break;
-                    case -7:
+                    case 7:
                         BattleFailed?.Invoke("gear_cannot_be_resolved");
                         break;
-                    case -8:
+                    case 8:
                         BattleFailed?.Invoke("network_cannot_be_reached");
                         break;
                     default:
-                        break;
+                        throw new ArgumentOutOfRangeException();
                 }
             }
             if (Battle != battle)
@@ -2156,12 +2147,12 @@ namespace Ikas
             {
                 switch (ex.Message)
                 {
-                    case "-6":
-                        throw new FormatException("-6");
-                    case "-7":
-                        throw new FormatException("-7");
+                    case "6":
+                        throw new FormatException("6");
+                    case "7":
+                        throw new FormatException("7");
                     default:
-                        throw new FormatException("-5");
+                        throw new FormatException("5");
                 }
             }
         }
@@ -2212,12 +2203,12 @@ namespace Ikas
             {
                 switch (ex.Message)
                 {
-                    case "-6":
-                        throw new FormatException("-6");
-                    case "-7":
-                        throw new FormatException("-7");
+                    case "6":
+                        throw new FormatException("6");
+                    case "7":
+                        throw new FormatException("7");
                     default:
-                        throw new FormatException("-5");
+                        throw new FormatException("5");
                 }
             }
         }
@@ -2236,7 +2227,7 @@ namespace Ikas
             }
             catch
             {
-                throw new FormatException("-6");
+                throw new FormatException("6");
             }
         }
         /// <summary>
@@ -2304,12 +2295,12 @@ namespace Ikas
                         ShoesGear shoesGear = new ShoesGear((ShoesGear.Key)int.Parse(gearNode["id"].ToString()), brand, mainSkill, subSkills, gearNode["image"].ToString());
                         return shoesGear as Gear;
                     default:
-                        throw new ArgumentOutOfRangeException("-7");
+                        throw new ArgumentOutOfRangeException("7");
                 }
             }
             catch
             {
-                throw new FormatException("-7");
+                throw new FormatException("7");
             }
         }
         /// <summary>
