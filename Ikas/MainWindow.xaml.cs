@@ -73,7 +73,7 @@ namespace Ikas
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
             Depot.ScheduleFailed += new ScheduleFailedEventHandler(ScheduleFailed);
             Depot.BattleFailed += new BattleFailedEventHandler(BattleFailed);
-            Depot.CookieGet += new CookieGetEventHandler(CookieGet);
+            Depot.CookieUpdated += new CookieUpdatedEventHandler(CookieUpdated);
             // Prepare windows
             scheduleWindow = new ScheduleWindow();
             scheduleWindow.Opacity = 0;
@@ -151,9 +151,7 @@ namespace Ikas
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            // Update Schedule
-            // Depot.GetSchedule();
-            // Automatica Schedule and Battle update
+            // Automatic schedule and battle update
             tmSchedule.Start();
             tmBattle.Start();
         }
@@ -439,13 +437,11 @@ namespace Ikas
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-        private void CookieGet(string cookie)
+        private void CookieUpdated()
         {
-            if (cookie != null && cookie != "" && !cookie.StartsWith("!"))
-            {
-                tmSchedule.Start();
-                tmBattle.Start();
-            }
+            // Automatic schedule and bsattle update
+            tmSchedule.Start();
+            tmBattle.Start();
         }
 
         private string Translate(string s, bool isLocal = false)

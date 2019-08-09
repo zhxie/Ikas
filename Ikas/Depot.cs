@@ -32,6 +32,7 @@ namespace Ikas
     public delegate void BattleNotifyingHandler();
     public delegate void SessionTokenGetEventHandler(string sessionToken);
     public delegate void CookieGetEventHandler(string cookie);
+    public delegate void CookieUpdatedEventHandler();
     public static class Depot
     {
         private static string userConfigurationPath = "";
@@ -87,6 +88,8 @@ namespace Ikas
                         parser.WriteFile(userConfigurationPath, userIniData);
                     }
                     catch { }
+                    // Raise event
+                    CookieUpdated?.Invoke();
                 }
             }
         }
@@ -588,6 +591,7 @@ namespace Ikas
 
         public static event SessionTokenGetEventHandler SessionTokenGet;
         public static event CookieGetEventHandler CookieGet;
+        public static event CookieUpdatedEventHandler CookieUpdated;
 
         private static Mode.Key currentMode = Mode.Key.regular_battle;
         public static Mode.Key CurrentMode

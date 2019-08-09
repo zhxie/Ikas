@@ -55,6 +55,7 @@ namespace Ikas
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
             Depot.ScheduleChanged += new ScheduleChangedEventHandler(ScheduleChanged);
             Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
+            Depot.CookieUpdated += new CookieUpdatedEventHandler(CookieUpdated);
             // Create timers
             loadingRotationAngle = 0;
             tmLoading = new DispatcherTimer();
@@ -294,6 +295,12 @@ namespace Ikas
             // Fade out loading
             ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
             bdLoading.IsHitTestVisible = false;
+        }
+
+        private void CookieUpdated()
+        {
+            // Update schedule
+            Depot.CurrentMode = Depot.CurrentMode;
         }
 
         private string Translate(string s, bool isLocal = false)
