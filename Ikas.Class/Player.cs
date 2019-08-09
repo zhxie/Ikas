@@ -67,7 +67,7 @@ namespace Ikas.Class
         }
     }
 
-    public class Player
+    public abstract class BasePlayer
     {
         public enum SpeciesType
         {
@@ -79,7 +79,10 @@ namespace Ikas.Class
             girl,
             boy
         }
+    }
 
+    public class Player : BasePlayer
+    {
         public string Id { get; }
         public string Nickname { get; }
         public SpeciesType Species { get; }
@@ -171,27 +174,11 @@ namespace Ikas.Class
 
         public static SpeciesType ParseSpecies(string s)
         {
-            switch (s)
-            {
-                case "inklings":
-                    return SpeciesType.inklings;
-                case "octolings":
-                    return SpeciesType.octolings;
-                default:
-                    throw new FormatException();
-            }
+            return (SpeciesType)Enum.Parse(typeof(SpeciesType), s);
         }
         public static StyleType ParseStyle(string s)
         {
-            switch (s)
-            {
-                case "girl":
-                    return StyleType.girl;
-                case "boy":
-                    return StyleType.boy;
-                default:
-                    throw new FormatException();
-            }
+            return (StyleType)Enum.Parse(typeof(StyleType), s);
         }
     }
 
@@ -208,6 +195,97 @@ namespace Ikas.Class
             : this(player.Id, player.Nickname, player.Species, player.Style, player.Level, rank, player.HeadGear, player.ClothesGear, player.ShoesGear, player.Weapon, player.Paint, player.Kill, player.Assist, player.Death, player.Special, player.Sort, player.Image, player.IsSelf)
         {
 
+        }
+    }
+
+    public class SalmonRunPlayer : BasePlayer
+    {
+        public enum GradeType
+        {
+            intern,
+            apprentice,
+            part_timer,
+            go_getter,
+            overachiever,
+            profeshional
+        }
+
+        public string Id { get; }
+        public string Nickname { get; }
+        public SpeciesType Species { get; }
+        public StyleType Style { get; }
+        public bool IsSelf { get; }
+        public GradeType Grade { get; }
+        public int GradePoint { get; }
+        public List<Weapon> Weapons { get; }
+        public List<int> SpecialWeaponCount { get; }
+        public int SteelheadKill { get; }
+        public int FlyfishKill { get; }
+        public int SteelEelKill { get; }
+        public int DrizzlerKill { get; }
+        public int StingerKill { get; }
+        public int ScrapperKill { get; }
+        public int MawsKill { get; }
+        public int GrillerKill { get; }
+        public int GoldieKill { get; }
+        public int Help { get; }
+        public int Dead { get; }
+        public int PowerEgg { get; }
+        public int GoldenEgg { get; }
+        public string Image { get; }
+
+        public int Rate
+        {
+            get
+            {
+                if (Grade == GradeType.intern)
+                {
+                    return 90;
+                }
+                else
+                {
+                    return 65 + 25 * (int)Grade + 5 * (GradePoint / 20);
+                }
+            }
+        }
+        public int SpecialWeaponRemained
+        {
+            get
+            {
+                int use = 0;
+                foreach (int count in SpecialWeaponCount)
+                {
+                    use = use + count;
+                }
+                return 2 - use;
+            }
+        }
+
+        public SalmonRunPlayer(string id, string nickname, SpeciesType species, StyleType style, GradeType grade, int gradePoint, List<Weapon> weapons, List<int> specialWeaponCount,
+            int steelHeadKill, int flyFishKill, int steelEelKill, int drizzlerKill, int stingerKill, int mawsKill, int grillerKill, int goldieKill, int help, int dead, int powerEgg, int goldenEgg, string image, bool isSelf = false)
+        {
+            Id = id;
+            Nickname = nickname;
+            Species = species;
+            Style = style;
+            IsSelf = isSelf;
+            Grade = grade;
+            GradePoint = gradePoint;
+            Weapons = weapons;
+            SpecialWeaponCount = specialWeaponCount;
+            SteelheadKill = steelHeadKill;
+            FlyfishKill = flyFishKill;
+            SteelEelKill = steelEelKill;
+            DrizzlerKill = drizzlerKill;
+            StingerKill = stingerKill;
+            MawsKill = mawsKill;
+            GrillerKill = grillerKill;
+            GoldieKill = goldieKill;
+            Help = help;
+            Dead = dead;
+            PowerEgg = powerEgg;
+            GoldenEgg = goldenEgg;
+            Image = image;
         }
     }
 }

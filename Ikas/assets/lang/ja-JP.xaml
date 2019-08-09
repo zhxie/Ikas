@@ -52,7 +52,7 @@
     <sys:String x:Key="s_plus_9">S+</sys:String>
     <sys:String x:Key="x">X</sys:String>
     <!-- Stage -->
-    <sys:String x:Key="unknown">不明</sys:String>
+    <sys:String x:Key="stage_unknown">不明</sys:String>
     <sys:String x:Key="the_reef">バッテラストリート</sys:String>
     <sys:String x:Key="musselforge_fitness">フジツボスポーツクラブ</sys:String>
     <sys:String x:Key="starfish_mainstage">ガンガゼ野外音楽堂</sys:String>

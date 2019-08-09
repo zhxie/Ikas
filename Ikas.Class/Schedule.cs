@@ -48,4 +48,16 @@ namespace Ikas.Class
             return stages;
         }
     }
+
+    public class SalmonRunSchedule
+    {
+        public SalmonRunStage Stage { get; }
+        public SalmonRunStage NextStage { get; }
+
+        public SalmonRunSchedule(SalmonRunStage stage, SalmonRunStage nextStage)
+        {
+            Stage = stage;
+            NextStage = nextStage;
+        }
+    }
 }

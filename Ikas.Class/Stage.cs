@@ -8,7 +8,7 @@ namespace Ikas.Class
     {
         public enum Key
         {
-            unknown = -1,
+            stage_unknown = -1,
             the_reef,
             musselforge_fitness,
             starfish_mainstage,
@@ -56,11 +56,11 @@ namespace Ikas.Class
             the_chronicles_of_rolonium,
             furler_in_the_ashes,
             mc_princess_diaries,
-            shifty_station = 9999
+            shifty_station = 9999,
         }
         public enum ShortName
         {
-            unknown = -1,
+            stage_unknown = -1,
             reef,
             fitness,
             mainstage,
@@ -108,7 +108,7 @@ namespace Ikas.Class
             shifty_22,          // shifty_rolonium
             shifty_23,          // shifty_furler
             shifty_24,          // shifty_diaries
-            shifty = 9999
+            shifty = 9999,
         }
 
         public Key Id { get; }
@@ -141,5 +141,72 @@ namespace Ikas.Class
             Mode = mode;
             Rule = rule;
         }
+    }
+
+    public class SalmonRunStage
+    {
+        public enum Key
+        {
+            salmon_run_stage_unknown = -1,
+            spawning_grounds,
+            marooners_bay,
+            lost_outpost,
+            salmonid_smokeyard,
+            ruins_of_ark_polaris
+        }
+
+        public enum ShortName
+        {
+            salmon_run_stage_unknown = -1,
+            grounds,
+            bay,
+            outpost,
+            smokeyard,
+            ruins
+        }
+
+        public Key Id { get; }
+        public string Image { get; }
+        public DateTime StartTime { get; }
+        public DateTime EndTime { get; }
+        public List<Weapon> Weapons { get; }
+
+        public SalmonRunStage(Key key, string image, DateTime startTime, DateTime endTime, List<Weapon> weapons)
+        {
+            Id = key;
+            Image = image;
+            StartTime = startTime;
+            EndTime = endTime;
+            Weapons = weapons;
+        }
+        public SalmonRunStage(string image, DateTime startTime, DateTime endTime, List<Weapon> weapons)
+        {
+            switch (image)
+            {
+                case "/images/coop_stage/65c68c6f0641cc5654434b78a6f10b0ad32ccdee.png":
+                    Id = Key.spawning_grounds;
+                    break;
+                case "/images/coop_stage/e07d73b7d9f0c64e552b34a2e6c29b8564c63388.png":
+                    Id = Key.marooners_bay;
+                    break;
+                case "/images/coop_stage/6d68f5baa75f3a94e5e9bfb89b82e7377e3ecd2c.png":
+                    Id = Key.lost_outpost;
+                    break;
+                case "/images/coop_stage/e9f7c7b35e6d46778cd3cbc0d89bd7e1bc3be493.png":
+                    Id = Key.salmonid_smokeyard;
+                    break;
+                case "/images/coop_stage/50064ec6e97aac91e70df5fc2cfecf61ad8615fd.png":
+                    Id = Key.ruins_of_ark_polaris;
+                    break;
+                default:
+                    Id = (Key)(-1);
+                    break;
+            }
+            Image = image;
+            StartTime = startTime;
+            EndTime = endTime;
+            Weapons = weapons;
+        }
+
     }
 }
