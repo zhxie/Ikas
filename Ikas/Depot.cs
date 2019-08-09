@@ -610,10 +610,6 @@ namespace Ikas
                 {
                     currentMode = value;
                 }
-                // Raise event
-                ScheduleChanged?.Invoke();
-                // Update schedule
-                GetSchedule();
             }
         }
 
@@ -740,6 +736,16 @@ namespace Ikas
                 // Update Schedule on error
                 UpdateSchedule(new Schedule(1));
             }
+        }
+        /// <summary>
+        /// Get current and next Schedule in regular, ranked and league mode, also raise ScheduleChanged event
+        /// </summary>
+        public static void ForceGetSchedule()
+        {
+            // Raise event
+            ScheduleChanged?.Invoke();
+            // Update schedule
+            GetSchedule();
         }
         /// <summary>
         /// Update Schedule.
@@ -1439,12 +1445,12 @@ namespace Ikas
                 try
                 {
                     Depot.level = level;
-                    CurrentMode = currentMode;
+                    ForceGetSchedule();
                     return true;
                 }
                 catch
                 {
-                    CurrentMode = currentMode;
+                    ForceGetSchedule();
                     return false;
                 }
             }
@@ -1469,12 +1475,12 @@ namespace Ikas
                         try
                         {
                             splatZonesRank = rank;
-                            CurrentMode = currentMode;
+                            ForceGetSchedule();
                             return true;
                         }
                         catch
                         {
-                            CurrentMode = currentMode;
+                            ForceGetSchedule();
                             return false;
                         }
                     }
@@ -1485,12 +1491,12 @@ namespace Ikas
                         try
                         {
                             towerControlRank = rank;
-                            CurrentMode = currentMode;
+                            ForceGetSchedule();
                             return true;
                         }
                         catch
                         {
-                            CurrentMode = currentMode;
+                            ForceGetSchedule();
                             return false;
                         }
                     }
@@ -1501,12 +1507,12 @@ namespace Ikas
                         try
                         {
                             rainmakerRank = rank;
-                            CurrentMode = currentMode;
+                            ForceGetSchedule();
                             return true;
                         }
                         catch
                         {
-                            CurrentMode = currentMode;
+                            ForceGetSchedule();
                             return false;
                         }
                     }
@@ -1517,12 +1523,12 @@ namespace Ikas
                         try
                         {
                             clamBlitzRank = rank;
-                            CurrentMode = currentMode;
+                            ForceGetSchedule();
                             return true;
                         }
                         catch
                         {
-                            CurrentMode = currentMode;
+                            ForceGetSchedule();
                             return false;
                         }
                     }

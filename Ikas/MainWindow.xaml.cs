@@ -115,6 +115,22 @@ namespace Ikas
                     Top = Depot.StartY;
                 }
             }
+            switch (Depot.StartMode)
+            {
+                case Mode.Key.ranked_battle:
+                    Depot.CurrentMode = Mode.Key.ranked_battle;
+                    break;
+                case Mode.Key.league_battle:
+                    Depot.CurrentMode = Mode.Key.league_battle;
+                    break;
+                case Mode.Key.regular_battle:
+                case Mode.Key.private_battle:
+                case Mode.Key.splatfest:
+                    Depot.CurrentMode = Mode.Key.regular_battle;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
             // In use
 #if DEBUG
             // Do not popup in use message in Debug
@@ -134,26 +150,11 @@ namespace Ikas
                 MessageBox.Show(Translate("welcome_to_ikas!_to_use_ikas,_you_may_set_up_your_cookie_first.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 MenuItemSettings_Click(null, null);
             }
-            // Set properties for controls (2/2)
-            switch (Depot.StartMode)
-            {
-                case Mode.Key.ranked_battle:
-                    Depot.CurrentMode = Mode.Key.ranked_battle;
-                    break;
-                case Mode.Key.league_battle:
-                    Depot.CurrentMode = Mode.Key.league_battle;
-                    break;
-                case Mode.Key.regular_battle:
-                case Mode.Key.private_battle:
-                case Mode.Key.splatfest:
-                    Depot.CurrentMode = Mode.Key.regular_battle;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
             // Automatic schedule and battle update
             tmSchedule.Start();
             tmBattle.Start();
+            // Update schedule
+            Depot.ForceGetSchedule();
         }
 
         private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -179,6 +180,8 @@ namespace Ikas
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            // Update schedule
+            Depot.ForceGetSchedule();
             // Automatica Schedule update
             tmSchedule.Start();
         }

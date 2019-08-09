@@ -300,7 +300,7 @@ namespace Ikas
         private void CookieUpdated()
         {
             // Update schedule
-            Depot.CurrentMode = Depot.CurrentMode;
+            Depot.ForceGetSchedule();
         }
 
         private string Translate(string s, bool isLocal = false)
