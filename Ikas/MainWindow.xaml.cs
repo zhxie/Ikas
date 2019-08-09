@@ -274,156 +274,148 @@ namespace Ikas
         {
             Schedule schedule = Depot.Schedule;
             List<ScheduledStage> scheduledStages = schedule.GetStages(Depot.CurrentMode);
-            if (scheduledStages.Count > 0 || Depot.CurrentMode == Mode.Key.regular_battle)
+            if (scheduledStages.Count > 0)
             {
-                if (scheduledStages.Count > 0)
+                // Change UI
+                switch (Depot.CurrentMode)
                 {
-                    // Change UI
-                    switch (Depot.CurrentMode)
-                    {
-                        case Mode.Key.regular_battle:
-                            lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            break;
-                        case Mode.Key.ranked_battle:
-                            lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
-                            // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
-                            break;
-                        case Mode.Key.league_battle:
-                            lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                    lbMode.Content = Translate(((Rule.ShortName)scheduledStages[0].Rule).ToString());
-                    switch (scheduledStages[0].Rule)
-                    {
-                        case Rule.Key.turf_war:
-                            if (Depot.Level > 0)
+                    case Mode.Key.regular_battle:
+                        lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                        // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                        break;
+                    case Mode.Key.ranked_battle:
+                        lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+                        // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+                        break;
+                    case Mode.Key.league_battle:
+                        lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                        // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                lbMode.Content = Translate(((Rule.ShortName)scheduledStages[0].Rule).ToString());
+                switch (scheduledStages[0].Rule)
+                {
+                    case Rule.Key.turf_war:
+                        if (Depot.Level > 0)
+                        {
+                            if (Depot.Level > 100)
                             {
-                                if (Depot.Level > 100)
-                                {
-                                    tbLevel.Text = (Depot.Level - Depot.Level / 100 * 100).ToString();
-                                    tbStar.Text = Translate("★", true);
-                                }
-                                else
-                                {
-                                    tbLevel.Text = Depot.Level.ToString();
-                                    tbStar.Text = "";
-                                }
+                                tbLevel.Text = (Depot.Level - Depot.Level / 100 * 100).ToString();
+                                tbStar.Text = Translate("★", true);
                             }
                             else
                             {
-                                tbLevel.Text = Translate("--", true);
+                                tbLevel.Text = Depot.Level.ToString();
                                 tbStar.Text = "";
                             }
-                            break;
-                        case Rule.Key.splat_zones:
-                            if (Depot.SplatZonesRank > Rank.Key.s && Depot.SplatZonesRank < Rank.Key.x)
-                            {
-                                tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
-                                tbStar.Text = (Depot.SplatZonesRank - Rank.Key.s_plus_0).ToString();
-                            }
-                            else
-                            {
-                                tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
-                                tbStar.Text = "";
-                            }
-                            break;
-                        case Rule.Key.tower_control:
-                            if (Depot.TowerControlRank > Rank.Key.s && Depot.TowerControlRank < Rank.Key.x)
-                            {
-                                tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
-                                tbStar.Text = (Depot.TowerControlRank - Rank.Key.s_plus_0).ToString();
-                            }
-                            else
-                            {
-                                tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
-                                tbStar.Text = "";
-                            }
-                            break;
-                        case Rule.Key.rainmaker:
-                            if (Depot.RainmakerRank > Rank.Key.s && Depot.RainmakerRank < Rank.Key.x)
-                            {
-                                tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
-                                tbStar.Text = (Depot.RainmakerRank - Rank.Key.s_plus_0).ToString();
-                            }
-                            else
-                            {
-                                tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
-                                tbStar.Text = "";
-                            }
-                            break;
-                        case Rule.Key.clam_blitz:
-                            if (Depot.ClamBlitzRank > Rank.Key.s && Depot.ClamBlitzRank < Rank.Key.x)
-                            {
-                                tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
-                                tbStar.Text = (Depot.ClamBlitzRank - Rank.Key.s_plus_0).ToString();
-                            }
-                            else
-                            {
-                                tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
-                                tbStar.Text = "";
-                            }
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                    // Fade in labels
-                    ((Storyboard)FindResource("fade_in")).Begin(lbMode);
-                    ((Storyboard)FindResource("fade_in")).Begin(lbLevel);
-                    // Update Stages
-                    Stage stage = scheduledStages[0];
-                    string image = FileFolderUrl.ApplicationData + stage.Image;
-                    try
+                        }
+                        else
+                        {
+                            tbLevel.Text = Translate("--", true);
+                            tbStar.Text = "";
+                        }
+                        break;
+                    case Rule.Key.splat_zones:
+                        if (Depot.SplatZonesRank > Rank.Key.s && Depot.SplatZonesRank < Rank.Key.x)
+                        {
+                            tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
+                            tbStar.Text = (Depot.SplatZonesRank - Rank.Key.s_plus_0).ToString();
+                        }
+                        else
+                        {
+                            tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
+                            tbStar.Text = "";
+                        }
+                        break;
+                    case Rule.Key.tower_control:
+                        if (Depot.TowerControlRank > Rank.Key.s && Depot.TowerControlRank < Rank.Key.x)
+                        {
+                            tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
+                            tbStar.Text = (Depot.TowerControlRank - Rank.Key.s_plus_0).ToString();
+                        }
+                        else
+                        {
+                            tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
+                            tbStar.Text = "";
+                        }
+                        break;
+                    case Rule.Key.rainmaker:
+                        if (Depot.RainmakerRank > Rank.Key.s && Depot.RainmakerRank < Rank.Key.x)
+                        {
+                            tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
+                            tbStar.Text = (Depot.RainmakerRank - Rank.Key.s_plus_0).ToString();
+                        }
+                        else
+                        {
+                            tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
+                            tbStar.Text = "";
+                        }
+                        break;
+                    case Rule.Key.clam_blitz:
+                        if (Depot.ClamBlitzRank > Rank.Key.s && Depot.ClamBlitzRank < Rank.Key.x)
+                        {
+                            tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
+                            tbStar.Text = (Depot.ClamBlitzRank - Rank.Key.s_plus_0).ToString();
+                        }
+                        else
+                        {
+                            tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
+                            tbStar.Text = "";
+                        }
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                // Fade in labels
+                ((Storyboard)FindResource("fade_in")).Begin(lbMode);
+                ((Storyboard)FindResource("fade_in")).Begin(lbLevel);
+                // Update Stages
+                Stage stage = scheduledStages[0];
+                string image = FileFolderUrl.ApplicationData + stage.Image;
+                try
+                {
+                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                    brush.Stretch = Stretch.UniformToFill;
+                    bdStage1.Background = brush;
+                    ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
+                }
+                catch
+                {
+                    // Download the image
+                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
+                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
                         bdStage1.Background = brush;
                         ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
+                    }));
+                }
+                if (scheduledStages.Count > 1)
+                {
+                    Stage stage2 = scheduledStages[1];
+                    string image2 = FileFolderUrl.ApplicationData + stage2.Image;
+                    try
+                    {
+                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
+                        brush.Stretch = Stretch.UniformToFill;
+                        bdStage2.Background = brush;
+                        ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
                     }
                     catch
                     {
-                        // Download the image
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
                         DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                        {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                            brush.Stretch = Stretch.UniformToFill;
-                            bdStage1.Background = brush;
-                            ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
-                        }));
-                    }
-                    if (scheduledStages.Count > 1)
-                    {
-                        Stage stage2 = scheduledStages[1];
-                        string image2 = FileFolderUrl.ApplicationData + stage2.Image;
-                        try
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                             brush.Stretch = Stretch.UniformToFill;
                             bdStage2.Background = brush;
                             ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
-                        }
-                        catch
-                        {
-                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
-                            DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                            {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
-                                brush.Stretch = Stretch.UniformToFill;
-                                bdStage2.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
-                            }));
-                        }
+                        }));
                     }
                 }
-            }
-            else
-            {
-                // Current mode do not has a schedule, switch to regular battle
-                Depot.CurrentMode = Mode.Key.regular_battle;
             }
         }
 
