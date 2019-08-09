@@ -255,7 +255,7 @@ namespace Ikas.Class
             MyScore = myScore;
             OtherScore = otherScore;
         }
-        public Battle(int error) : base(error)
+        public Battle(ErrorType error) : base(error)
         {
             Number = -1;
             StartTime = new DateTime(0);
@@ -596,7 +596,7 @@ namespace Ikas.Class
             Result = result;
             FailureWave = failureWave;
         }
-        public SalmonRunBattle(int error) : base(error)
+        public SalmonRunBattle(ErrorType error) : base(error)
         {
             Number = -1;
             StartTime = new DateTime(0);

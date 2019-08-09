@@ -84,8 +84,8 @@ namespace Ikas
                         }
                     }));
                 }
-                // Main skill
-                string image2 = FileFolderUrl.ApplicationData + Gear.MainSkill.Image;
+                // Primary ability
+                string image2 = FileFolderUrl.ApplicationData + Gear.PrimaryAbility.Image;
                 try
                 {
                     ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
@@ -96,10 +96,10 @@ namespace Ikas
                 catch
                 {
                     // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.MainSkill.Image, image2, Downloader.SourceType.Gear, Depot.Proxy);
+                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.PrimaryAbility.Image, image2, Downloader.SourceType.Gear, Depot.Proxy);
                     DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
-                        if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Gear.MainSkill.Image))
+                        if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Gear.PrimaryAbility.Image))
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                             brush.Stretch = Stretch.Uniform;
@@ -108,8 +108,8 @@ namespace Ikas
                         }
                     }));
                 }
-                // Sub skill
-                string image3 = FileFolderUrl.ApplicationData + Gear.SubSkills[0].Image;
+                // Secondary ability
+                string image3 = FileFolderUrl.ApplicationData + Gear.SecondaryAbilities[0].Image;
                 try
                 {
                     ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
@@ -120,10 +120,10 @@ namespace Ikas
                 catch
                 {
                     // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[0].Image, image3, Downloader.SourceType.Gear, Depot.Proxy);
+                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SecondaryAbilities[0].Image, image3, Downloader.SourceType.Gear, Depot.Proxy);
                     DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
-                        if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Gear.SubSkills[0].Image))
+                        if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Gear.SecondaryAbilities[0].Image))
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
                             brush.Stretch = Stretch.Uniform;
@@ -132,10 +132,10 @@ namespace Ikas
                         }
                     }));
                 }
-                if (Gear.SubSkills.Count > 1)
+                if (Gear.SecondaryAbilities.Count > 1)
                 {
-                    // Sub skill 2
-                    string image4 = FileFolderUrl.ApplicationData + Gear.SubSkills[1].Image;
+                    // Secondary ability 2
+                    string image4 = FileFolderUrl.ApplicationData + Gear.SecondaryAbilities[1].Image;
                     try
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image4)));
@@ -146,12 +146,12 @@ namespace Ikas
                     catch
                     {
                         // Download the image
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[1].Image, image4, Downloader.SourceType.Gear, Depot.Proxy);
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SecondaryAbilities[1].Image, image4, Downloader.SourceType.Gear, Depot.Proxy);
                         DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            if (Gear.SubSkills.Count > 1)
+                            if (Gear.SecondaryAbilities.Count > 1)
                             {
-                                if (System.IO.Path.GetFileName(image4) == System.IO.Path.GetFileName(Gear.SubSkills[1].Image))
+                                if (System.IO.Path.GetFileName(image4) == System.IO.Path.GetFileName(Gear.SecondaryAbilities[1].Image))
                                 {
                                     ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image4)));
                                     brush.Stretch = Stretch.Uniform;
@@ -161,10 +161,10 @@ namespace Ikas
                             }
                         }));
                     }
-                    if (Gear.SubSkills.Count > 2)
+                    if (Gear.SecondaryAbilities.Count > 2)
                     {
-                        // Sub skill 3
-                        string image5 = FileFolderUrl.ApplicationData + Gear.SubSkills[2].Image;
+                        // Secondary ability 3
+                        string image5 = FileFolderUrl.ApplicationData + Gear.SecondaryAbilities[2].Image;
                         try
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image5)));
@@ -175,12 +175,12 @@ namespace Ikas
                         catch
                         {
                             // Download the image
-                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SubSkills[2].Image, image5, Downloader.SourceType.Gear, Depot.Proxy);
+                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Gear.SecondaryAbilities[2].Image, image5, Downloader.SourceType.Gear, Depot.Proxy);
                             DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                             {
-                                if (Gear.SubSkills.Count > 2)
+                                if (Gear.SecondaryAbilities.Count > 2)
                                 {
-                                    if (System.IO.Path.GetFileName(image5) == System.IO.Path.GetFileName(Gear.SubSkills[2].Image))
+                                    if (System.IO.Path.GetFileName(image5) == System.IO.Path.GetFileName(Gear.SecondaryAbilities[2].Image))
                                     {
                                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image5)));
                                         brush.Stretch = Stretch.Uniform;

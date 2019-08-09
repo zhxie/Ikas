@@ -885,17 +885,21 @@
     <sys:String x:Key="after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.">After you solve the problems above, if this error message continues to appear, please consider submitting the issue.</sys:String>
     <!-- Problem -->
     <sys:String x:Key="unknown_error">unknown error</sys:String>
-    <sys:String x:Key="schedule_is_not_ready">schedule is not ready</sys:String>
     <sys:String x:Key="network_cannot_be_reached">network cannot be reached</sys:String>
-    <sys:String x:Key="network_cannot_be_reached,_or_cookie_is_invalid_or_expired">network can not be reached, or Cookie is invalid or expired</sys:String>
+    <sys:String x:Key="network_cannot_be_reached_or_cookie_is_invalid_or_expired">network can not be reached, or Cookie is invalid or expired</sys:String>
     <sys:String x:Key="cookie_is_empty">Cookie is empty</sys:String>
+    <sys:String x:Key="schedule_is_not_ready">schedule is not ready</sys:String>
     <sys:String x:Key="schedule_cannot_be_resolved">schedule cannot be resolved</sys:String>
     <sys:String x:Key="battle_is_not_ready">battle is not ready</sys:String>
     <sys:String x:Key="battles_cannot_be_resolved">battles cannot be resolved</sys:String>
     <sys:String x:Key="battle_cannot_be_resolved">battle cannot be resolved</sys:String>
     <sys:String x:Key="player_cannot_be_resolved">player cannot be resolved</sys:String>
     <sys:String x:Key="weapon_cannot_be_resolved">weapon cannot be resolved</sys:String>
+    <sys:String x:Key="sub_weapon_cannot_be_resolved">sub weapon cannot be resolved</sys:String>
+    <sys:String x:Key="special_weapon_cannot_be_resolved"> special weapon cannot be resolved</sys:String>
     <sys:String x:Key="gear_cannot_be_resolved">gear cannot be resolved</sys:String>
+    <sys:String x:Key="primary_ability_cannot_be_resolved">primary gear ability cannot be resolved</sys:String>
+    <sys:String x:Key="secondary_ability_cannot_be_resolved">secondary gear ability cannot be resolved</sys:String>
     <sys:String x:Key="network_cannot_be_reached,_or_session_token_link_is_invalid_or_expired">network cannot be reached, or Session Token link is invalid or expired</sys:String>
     <sys:String x:Key="network_cannot_be_reached,_or_session_token_is_invalid_or_expired">network cannot be reached, or Session Token is invalid or expired</sys:String>
     <sys:String x:Key="session_token_cannot_be_resolved">Session Token cannot be resolved</sys:String>

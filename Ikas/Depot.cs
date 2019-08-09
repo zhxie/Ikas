@@ -24,11 +24,11 @@ namespace Ikas
     public delegate void LanguageChangedEventHandler();
     public delegate void ScheduleChangedEventHandler();
     public delegate void ScheduleUpdatedEventHandler();
-    public delegate void ScheduleFailedEventHandler(string reason);
+    public delegate void ScheduleFailedEventHandler(Base.ErrorType error);
     public delegate void BattleChangedEventHandler();
     public delegate void BattleFoundEventHandler();
     public delegate void BattleUpdatedEventHandler();
-    public delegate void BattleFailedEventHandler(string reason);
+    public delegate void BattleFailedEventHandler(Base.ErrorType error);
     public delegate void BattleNotifyingHandler();
     public delegate void SessionTokenGetEventHandler(string sessionToken);
     public delegate void CookieGetEventHandler(string cookie);
@@ -681,7 +681,7 @@ namespace Ikas
             catch
             {
                 // Update Schedule on error
-                UpdateSchedule(new Schedule(2));
+                UpdateSchedule(new Schedule(Base.ErrorType.cookie_is_empty));
                 return;
             }
             HttpResponseMessage response;
@@ -692,7 +692,7 @@ namespace Ikas
             catch
             {
                 // Update Schedule on error
-                UpdateSchedule(new Schedule(4));
+                UpdateSchedule(new Schedule(Base.ErrorType.network_cannot_be_reached));
                 return;
             }
             if (response.IsSuccessStatusCode)
@@ -725,7 +725,7 @@ namespace Ikas
                 catch
                 {
                     // Update Schedule on error
-                    UpdateSchedule(new Schedule(3));
+                    UpdateSchedule(new Schedule(Base.ErrorType.schedule_cannot_be_resolved));
                     return;
                 }
                 // Update Schedule
@@ -734,7 +734,7 @@ namespace Ikas
             else
             {
                 // Update Schedule on error
-                UpdateSchedule(new Schedule(1));
+                UpdateSchedule(new Schedule(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
             }
         }
         /// <summary>
@@ -756,26 +756,11 @@ namespace Ikas
         {
             if (schedule.Error >= 0)
             {
-                switch (schedule.Error)
-                {
-                    case 0:
-                        ScheduleFailed?.Invoke("schedule_is_not_ready");
-                        break;
-                    case 1:
-                        ScheduleFailed?.Invoke("network_cannot_be_reached,_or_cookie_is_invalid_or_expired");
-                        break;
-                    case 2:
-                        ScheduleFailed?.Invoke("cookie_is_empty");
-                        break;
-                    case 3:
-                        ScheduleFailed?.Invoke("schedule_cannot_be_resolved");
-                        break;
-                    case 4:
-                        ScheduleFailed?.Invoke("network_cannot_be_reached");
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                ScheduleFailed?.Invoke(schedule.Error);
+            }
+            else if (schedule.EndTime == new DateTime(0))
+            {
+                ScheduleFailed?.Invoke(Base.ErrorType.schedule_is_not_ready);
             }
             if (Schedule != schedule)
             {
@@ -820,7 +805,7 @@ namespace Ikas
             catch
             {
                 // Update Battle on error
-                UpdateBattle(new Battle(2));
+                UpdateBattle(new Battle(Base.ErrorType.cookie_is_empty));
                 return;
             }
             HttpResponseMessage response;
@@ -831,7 +816,7 @@ namespace Ikas
             catch
             {
                 // Update Battle on error
-                UpdateBattle(new Battle(8));
+                UpdateBattle(new Battle(Base.ErrorType.network_cannot_be_reached));
                 return;
             }
             if (response.IsSuccessStatusCode)
@@ -910,7 +895,7 @@ namespace Ikas
                 catch
                 {
                     // Update Battle on error
-                    UpdateBattle(new Battle(3));
+                    UpdateBattle(new Battle(Base.ErrorType.battles_cannot_be_resolved));
                     return;
                 }
                 // Same battle
@@ -934,7 +919,7 @@ namespace Ikas
                 catch
                 {
                     // Update Battle on error
-                    UpdateBattle(new Battle(2));
+                    UpdateBattle(new Battle(Base.ErrorType.cookie_is_empty));
                     return;
                 }
                 try
@@ -944,7 +929,7 @@ namespace Ikas
                 catch
                 {
                     // Update Battle on error
-                    UpdateBattle(new Battle(8));
+                    UpdateBattle(new Battle(Base.ErrorType.network_cannot_be_reached));
                     return;
                 }
                 if (response.IsSuccessStatusCode)
@@ -1336,28 +1321,28 @@ namespace Ikas
                     }
                     catch (Exception ex)
                     {
-                        if (int.TryParse(ex.Message, out _))
+                        if (Base.TryParseErrorType(ex.Message, out _))
                         {
                             // Update Battle on error
-                            UpdateBattle(new Battle(int.Parse(ex.Message)));
+                            UpdateBattle(new Battle(Base.ParseErrorType(ex.Message)));
                         }
                         else
                         {
                             // Update Battle on error
-                            UpdateBattle(new Battle(4));
+                            UpdateBattle(new Battle(Base.ErrorType.battle_cannot_be_resolved));
                         }
                     }
                 }
                 else
                 {
                     // Update Battle on error
-                    UpdateBattle(new Battle(1));
+                    UpdateBattle(new Battle(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
                 }
             }
             else
             {
                 // Update Battle on error
-                UpdateBattle(new Battle(1));
+                UpdateBattle(new Battle(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
             }
         }
         /// <summary>
@@ -1369,38 +1354,11 @@ namespace Ikas
         {
             if (battle.Error >= 0)
             {
-                switch (battle.Error)
-                {
-                    case 0:
-                        BattleFailed?.Invoke("battle_is_not_ready");
-                        break;
-                    case 1:
-                        BattleFailed?.Invoke("network_cannot_be_reached,_or_cookie_is_invalid_or_expired");
-                        break;
-                    case 2:
-                        BattleFailed?.Invoke("cookie_is_empty");
-                        break;
-                    case 3:
-                        BattleFailed?.Invoke("battles_cannot_be_resolved");
-                        break;
-                    case 4:
-                        BattleFailed?.Invoke("battle_cannot_be_resolved");
-                        break;
-                    case 5:
-                        BattleFailed?.Invoke("player_cannot_be_resolved");
-                        break;
-                    case 6:
-                        BattleFailed?.Invoke("weapon_cannot_be_resolved");
-                        break;
-                    case 7:
-                        BattleFailed?.Invoke("gear_cannot_be_resolved");
-                        break;
-                    case 8:
-                        BattleFailed?.Invoke("network_cannot_be_reached");
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                BattleFailed?.Invoke(battle.Error);
+            }
+            else if (battle.Number == -1)
+            {
+                BattleFailed?.Invoke(Base.ErrorType.battle_is_not_ready);
             }
             if (Battle != battle)
             {
@@ -2124,9 +2082,16 @@ namespace Ikas
                 ShoesGear shoesGear = parseGear(playerNode["shoes"], playerNode["shoes_skills"], Gear.KindType.Shoes) as ShoesGear;
                 return new Player(id, nickname, species, style, level, headGear, clothesGear, shoesGear, weapon, paint, kill, assist, death, special, sort, image, isSelf);
             }
-            catch
+            catch (Exception ex)
             {
-                throw new FormatException();
+                if (Base.TryParseErrorType(ex.Message, out _))
+                {
+                    throw new FormatException(ex.Message);
+                }
+                else
+                {
+                    throw new FormatException(Base.ErrorType.player_cannot_be_resolved.ToString());
+                }
             }
         }
         /// <summary>
@@ -2145,14 +2110,13 @@ namespace Ikas
             }
             catch (Exception ex)
             {
-                switch (ex.Message)
+                if (Base.TryParseErrorType(ex.Message, out _))
                 {
-                    case "6":
-                        throw new FormatException("6");
-                    case "7":
-                        throw new FormatException("7");
-                    default:
-                        throw new FormatException("5");
+                    throw new FormatException(ex.Message);
+                }
+                else
+                {
+                    throw new FormatException(Base.ErrorType.player_cannot_be_resolved.ToString());
                 }
             }
         }
@@ -2180,9 +2144,16 @@ namespace Ikas
                 }
                 return new RankedPlayer(player, rank);
             }
-            catch
+            catch (Exception ex)
             {
-                throw new FormatException();
+                if (Base.TryParseErrorType(ex.Message, out _))
+                {
+                    throw new FormatException(ex.Message);
+                }
+                else
+                {
+                    throw new FormatException(Base.ErrorType.player_cannot_be_resolved.ToString());
+                }
             }
         }
         /// <summary>
@@ -2201,14 +2172,13 @@ namespace Ikas
             }
             catch (Exception ex)
             {
-                switch (ex.Message)
+                if (Base.TryParseErrorType(ex.Message, out _))
                 {
-                    case "6":
-                        throw new FormatException("6");
-                    case "7":
-                        throw new FormatException("7");
-                    default:
-                        throw new FormatException("5");
+                    throw new FormatException(ex.Message);
+                }
+                else
+                {
+                    throw new FormatException(Base.ErrorType.player_cannot_be_resolved.ToString());
                 }
             }
         }
@@ -2225,9 +2195,16 @@ namespace Ikas
                 SpecialWeapon special = parseSpecialWeapon(node["special"]);
                 return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), sub, special, node["image"].ToString());
             }
-            catch
+            catch (Exception ex)
             {
-                throw new FormatException("6");
+                if (Base.TryParseErrorType(ex.Message, out _))
+                {
+                    throw new FormatException(ex.Message);
+                }
+                else
+                {
+                    throw new FormatException(Base.ErrorType.weapon_cannot_be_resolved.ToString());
+                }
             }
         }
         /// <summary>
@@ -2243,7 +2220,7 @@ namespace Ikas
             }
             catch
             {
-                throw new FormatException();
+                throw new FormatException(Base.ErrorType.sub_weapon_cannot_be_resolved.ToString());
             }
         }
         /// <summary>
@@ -2259,7 +2236,7 @@ namespace Ikas
             }
             catch
             {
-                throw new FormatException();
+                throw new FormatException(Base.ErrorType.special_weapon_cannot_be_resolved.ToString());
             }
         }
         /// <summary>
@@ -2274,65 +2251,72 @@ namespace Ikas
             try
             {
                 Brand brand = new Brand((Brand.Key)int.Parse(gearNode["brand"]["id"].ToString()), gearNode["brand"]["image"].ToString());
-                MainSkill mainSkill = parseMainSkill(skillNode["main"]);
-                List<SubSkill> subSkills = new List<SubSkill>();
+                PrimaryAbility primaryAbility = parsePrimaryAbility(skillNode["main"]);
+                List<SecondaryAbility> secondaryAbilities = new List<SecondaryAbility>();
                 foreach (JToken subNode in skillNode["subs"])
                 {
                     if (subNode.HasValues)
                     {
-                        subSkills.Add(parseSubSkill(subNode));
+                        secondaryAbilities.Add(parseSecondaryAbility(subNode));
                     }
                 }
                 switch (kind)
                 {
                     case Gear.KindType.Head:
-                        HeadGear headGear = new HeadGear((HeadGear.Key)int.Parse(gearNode["id"].ToString()), brand, mainSkill, subSkills, gearNode["image"].ToString());
+                        HeadGear headGear = new HeadGear((HeadGear.Key)int.Parse(gearNode["id"].ToString()), brand, primaryAbility, secondaryAbilities, gearNode["image"].ToString());
                         return headGear as Gear;
                     case Gear.KindType.Clothes:
-                        ClothesGear clothesGear = new ClothesGear((ClothesGear.Key)int.Parse(gearNode["id"].ToString()), brand, mainSkill, subSkills, gearNode["image"].ToString());
+                        ClothesGear clothesGear = new ClothesGear((ClothesGear.Key)int.Parse(gearNode["id"].ToString()), brand, primaryAbility, secondaryAbilities, gearNode["image"].ToString());
                         return clothesGear as Gear;
                     case Gear.KindType.Shoes:
-                        ShoesGear shoesGear = new ShoesGear((ShoesGear.Key)int.Parse(gearNode["id"].ToString()), brand, mainSkill, subSkills, gearNode["image"].ToString());
+                        ShoesGear shoesGear = new ShoesGear((ShoesGear.Key)int.Parse(gearNode["id"].ToString()), brand, primaryAbility, secondaryAbilities, gearNode["image"].ToString());
                         return shoesGear as Gear;
                     default:
-                        throw new ArgumentOutOfRangeException("7");
+                        throw new ArgumentOutOfRangeException(Base.ErrorType.gear_cannot_be_resolved.ToString());
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw new FormatException("7");
+                if (Base.TryParseErrorType(ex.Message, out _))
+                {
+                    throw new FormatException(ex.Message);
+                }
+                else
+                {
+                    throw new FormatException(Base.ErrorType.gear_cannot_be_resolved.ToString());
+                }
             }
         }
         /// <summary>
-        /// Parse MainSkill from JToken
+        /// Parse primary ability from JToken
         /// </summary>
         /// <param name="node">JToken of a main skill</param>
         /// <returns></returns>
-        private static MainSkill parseMainSkill(JToken node)
+        private static PrimaryAbility parsePrimaryAbility(JToken node)
         {
             try
             {
-                return new MainSkill((MainSkill.Key)int.Parse(node["id"].ToString()), node["image"].ToString());
+                return new PrimaryAbility((PrimaryAbility.Key)int.Parse(node["id"].ToString()), node["image"].ToString());
             }
             catch
             {
-                throw new FormatException();
+                throw new FormatException(Base.ErrorType.primary_ability_cannot_be_resolved.ToString());
             }
         }
         /// <summary>
-        /// Parse SubSkill from JToken
+        /// Parse secondary ability from JToken
         /// </summary>
         /// <param name="node">JToken of a sub skill</param>
         /// <returns></returns>
-        private static SubSkill parseSubSkill(JToken node)
+        private static SecondaryAbility parseSecondaryAbility(JToken node)
         {
             try
             {
-                return new SubSkill((SubSkill.Key)int.Parse(node["id"].ToString()), node["image"].ToString());
+                return new SecondaryAbility((SecondaryAbility.Key)int.Parse(node["id"].ToString()), node["image"].ToString());
             }
             catch
             {
-                throw new FormatException();
+                throw new FormatException(Base.ErrorType.secondary_ability_cannot_be_resolved.ToString());
             }
         }
 

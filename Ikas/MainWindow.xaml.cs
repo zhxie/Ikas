@@ -420,22 +420,22 @@ namespace Ikas
             }
         }
 
-        private void ScheduleFailed(string reason)
+        private void ScheduleFailed(Base.ErrorType error)
         {
             tmSchedule.Stop();
             MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
                 Translate("ikas_cannot_get_schdule"),
-                Translate(reason),
+                Translate(error.ToString()),
                 Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ),"Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-        private void BattleFailed(string reason)
+        private void BattleFailed(Base.ErrorType error)
         {
             tmBattle.Stop();
             MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
                 Translate("ikas_cannot_get_the_latest_battle"),
-                Translate(reason),
+                Translate(error.ToString()),
                 Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
         }

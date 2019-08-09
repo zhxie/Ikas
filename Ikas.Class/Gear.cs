@@ -38,19 +38,19 @@ namespace Ikas.Class
         }
     }
 
-    public class Skill
+    public class Ability
     {
         public int Id { get; }
         public string Image { get; }
 
-        public Skill(int id, string image)
+        public Ability(int id, string image)
         {
             Id = id;
             Image = image;
         }
     }
 
-    public class MainSkill : Skill
+    public class PrimaryAbility : Ability
     {
         public enum Key
         {
@@ -84,13 +84,13 @@ namespace Ikas.Class
             main_power_up = 201
         }
 
-        public MainSkill(Key id, string image) : base((int)id, image)
+        public PrimaryAbility(Key id, string image) : base((int)id, image)
         {
 
         }
     }
 
-    public class SubSkill : Skill
+    public class SecondaryAbility : Ability
     {
         public enum Key
         {
@@ -113,7 +113,7 @@ namespace Ikas.Class
             none = 255 // はてな
         }
 
-        public SubSkill(Key id, string image) : base((int)id, image)
+        public SecondaryAbility(Key id, string image) : base((int)id, image)
         {
 
         }
@@ -131,17 +131,17 @@ namespace Ikas.Class
         public KindType Kind { get; }
         public int Id { get; }
         public Brand Brand { get; }
-        public MainSkill MainSkill { get; }
-        public List<SubSkill> SubSkills { get; }
+        public PrimaryAbility PrimaryAbility { get; }
+        public List<SecondaryAbility> SecondaryAbilities { get; }
         public string Image { get; }
 
-        public Gear(KindType kind, int id, Brand brand, MainSkill mainSkill, List<SubSkill> subSkills, string image)
+        public Gear(KindType kind, int id, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image)
         {
             Kind = kind;
             Id = id;
             Brand = brand;
-            MainSkill = mainSkill;
-            SubSkills = subSkills;
+            PrimaryAbility = primaryAbility;
+            SecondaryAbilities = secondaryAbilities;
             Image = image;
         }
     }
@@ -313,7 +313,7 @@ namespace Ikas.Class
             golden_toothpick = 27108,
         }
 
-        public HeadGear(Key id, Brand brand, MainSkill mainSkill, List<SubSkill> subSkills, string image) : base(KindType.Head, (int)id, brand, mainSkill, subSkills, image)
+        public HeadGear(Key id, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image) : base(KindType.Head, (int)id, brand, primaryAbility, secondaryAbilities, image)
         {
 
         }
@@ -581,7 +581,7 @@ namespace Ikas.Class
             old_timey_clothes = 27106
         }
 
-        public ClothesGear(Key id, Brand brand, MainSkill mainSkill, List<SubSkill> subSkills, string image) : base(KindType.Clothes, (int)id, brand, mainSkill, subSkills, image)
+        public ClothesGear(Key id, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image) : base(KindType.Clothes, (int)id, brand, primaryAbility, secondaryAbilities, image)
         {
 
         }
@@ -758,7 +758,7 @@ namespace Ikas.Class
             old_timey_shoes = 27106
         }
 
-        public ShoesGear(Key id, Brand brand, MainSkill mainSkill, List<SubSkill> subSkills, string image) : base(KindType.Shoes, (int)id, brand, mainSkill, subSkills, image)
+        public ShoesGear(Key id, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image) : base(KindType.Shoes, (int)id, brand, primaryAbility, secondaryAbilities, image)
         {
 
         }

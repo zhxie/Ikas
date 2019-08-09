@@ -885,17 +885,21 @@
     <sys:String x:Key="after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.">上記の問題を解決した後、このエラーメッセージが引き続き表示される場合は、問題の送信を検討してください。</sys:String>
     <!-- Problem -->
     <sys:String x:Key="unknown_errors">未知のエラーの</sys:String>
-    <sys:String x:Key="schedule_is_not_ready">スケジュールの準備ができていない</sys:String>
     <sys:String x:Key="network_cannot_be_reached">ネットワークにアクセスできない</sys:String>
-    <sys:String x:Key="network_cannot_be_reached,_or_cookie_is_invalid_or_expired">ネットワークにアクセスできない、またはクッキーが無効か期限切れの</sys:String>
+    <sys:String x:Key="network_cannot_be_reached_or_cookie_is_invalid_or_expired">ネットワークにアクセスできない、またはクッキーが無効か期限切れの</sys:String>
     <sys:String x:Key="cookie_is_empty">クッキーが空です</sys:String>
+    <sys:String x:Key="schedule_is_not_ready">スケジュールの準備ができていない</sys:String>
     <sys:String x:Key="schedule_cannot_be_resolved">スケジュールは解決できない</sys:String>
     <sys:String x:Key="battle_is_not_ready">戦闘データの準備ができていない</sys:String>
     <sys:String x:Key="battles_cannot_be_resolved">戦闘データは解決できない</sys:String>
     <sys:String x:Key="battle_cannot_be_resolved">戦闘データは解決できない</sys:String>
     <sys:String x:Key="player_cannot_be_resolved">プレイヤーは解決できない</sys:String>
     <sys:String x:Key="weapon_cannot_be_resolved">ブキは解決できない</sys:String>
+    <sys:String x:Key="sub_weapon_cannot_be_resolved">サブウェポンは解決できない</sys:String>
+    <sys:String x:Key="special_weapon_cannot_be_resolved">スペシャルウェポンは解決できない</sys:String>
     <sys:String x:Key="gear_cannot_be_resolved">ギアは解決できない</sys:String>
+    <sys:String x:Key="primary_ability_cannot_be_resolved">基本ギアパワーは解決できない</sys:String>
+    <sys:String x:Key="secondary_ability_cannot_be_resolved">追加ギアパワーは解決できない</sys:String>
     <sys:String x:Key="network_cannot_be_reached,_or_session_token_link_is_invalid_or_expired">ネットワークにアクセスできない、またはセッショントークンリンクが無効か期限切れの</sys:String>
     <sys:String x:Key="network_cannot_be_reached,_or_session_token_is_invalid_or_expired">ネットワークにアクセスできない、またはセッショントークンが無効か期限切れの</sys:String>
     <sys:String x:Key="session_token_cannot_be_resolved">セッショントークンは解決できない</sys:String>
