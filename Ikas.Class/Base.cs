@@ -11,6 +11,8 @@ namespace Ikas.Class
             no_error = -1,
             network_cannot_be_reached,
             network_cannot_be_reached_or_cookie_is_invalid_or_expired,
+            network_cannot_be_reached_or_session_token_link_is_invalid_or_expired,
+            network_cannot_be_reached_or_session_token_is_invalid_or_expired,
             cookie_is_empty,
             schedule_is_not_ready = 100,
             schedule_cannot_be_resolved,
@@ -23,7 +25,15 @@ namespace Ikas.Class
             special_weapon_cannot_be_resolved = 600,
             gear_cannot_be_resolved = 700,
             primary_ability_cannot_be_resolved = 800,
-            secondary_ability_cannot_be_resolved = 900
+            secondary_ability_cannot_be_resolved = 900,
+            session_token_cannot_be_resolved = 1000,
+            cookie_cannot_be_resolved = 1100,
+            cookie_cannot_be_resolved_1_7,
+            cookie_cannot_be_resolved_2_7,
+            cookie_cannot_be_resolved_3_7,
+            cookie_cannot_be_resolved_4_7,
+            cookie_cannot_be_resolved_5_7,
+            cookie_cannot_be_resolved_6_7,
         }
 
         public ErrorType Error { get; }

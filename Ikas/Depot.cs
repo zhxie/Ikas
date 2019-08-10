@@ -27,8 +27,8 @@ namespace Ikas
     public delegate void ContentUpdatedEventHandler();
     public delegate void ContentFailedEventHandler(Base.ErrorType error);
     public delegate void ContentNotifyingHandler();
-    public delegate void SessionTokenGetEventHandler(string sessionToken);
-    public delegate void CookieGetEventHandler(string cookie);
+    public delegate void SessionTokenGetEventHandler(Base.ErrorType error, string sessionToken = "");
+    public delegate void CookieGetEventHandler(Base.ErrorType error, string cookie = "");
     public delegate void CookieUpdatedEventHandler();
     public static class Depot
     {
@@ -1587,7 +1587,7 @@ namespace Ikas
             }
             catch
             {
-                SessionTokenGet?.Invoke("!network_cannot_be_reached");
+                SessionTokenGet?.Invoke(Base.ErrorType.network_cannot_be_reached);
                 return;
             }
             // Send HTTP POST
@@ -1600,7 +1600,7 @@ namespace Ikas
             }
             catch
             {
-                SessionTokenGet?.Invoke("!network_cannot_be_reached");
+                SessionTokenGet?.Invoke(Base.ErrorType.network_cannot_be_reached);
                 return;
             }
             if (response.IsSuccessStatusCode)
@@ -1615,15 +1615,15 @@ namespace Ikas
                 }
                 catch
                 {
-                    SessionTokenGet?.Invoke("!session_token_cannot_be_resolved");
+                    SessionTokenGet?.Invoke(Base.ErrorType.session_token_cannot_be_resolved);
                     return;
                 }
-                SessionTokenGet?.Invoke(sessionToken);
+                SessionTokenGet?.Invoke(Base.ErrorType.no_error, sessionToken);
                 return;
             }
             else
             {
-                SessionTokenGet?.Invoke("!network_cannot_be_reached,_or_session_token_link_is_invalid_or_expired");
+                SessionTokenGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_link_is_invalid_or_expired);
                 return;
             }
         }
@@ -1654,7 +1654,7 @@ namespace Ikas
             }
             catch
             {
-                CookieGet.Invoke("!network_cannot_be_reached");
+                CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                 return;
             }
             if (responseToken.IsSuccessStatusCode)
@@ -1671,7 +1671,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    CookieGet?.Invoke("!cookie_cannot_be_resolved[1/7]");
+                    CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_1_7);
                     return;
                 }
                 // Send HTTP GET
@@ -1684,7 +1684,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    CookieGet.Invoke("!network_cannot_be_reached");
+                    CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                     return;
                 }
                 if (responseUserInfo.IsSuccessStatusCode)
@@ -1704,7 +1704,7 @@ namespace Ikas
                     }
                     catch
                     {
-                        CookieGet?.Invoke("!cookie_cannot_be_resolved[2/7]");
+                        CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_2_7);
                         return;
                     }
                     // Send 3rd Party HTTP POST
@@ -1722,7 +1722,7 @@ namespace Ikas
                     }
                     catch
                     {
-                        CookieGet.Invoke("!network_cannot_be_reached");
+                        CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                         return;
                     }
                     if (responseHash.IsSuccessStatusCode)
@@ -1737,7 +1737,7 @@ namespace Ikas
                         }
                         catch
                         {
-                            CookieGet?.Invoke("!cookie_cannot_be_resolved[3/7]");
+                            CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_3_7);
                             return;
                         }
                         // Send 3rd Party HTTP GET
@@ -1782,7 +1782,7 @@ namespace Ikas
                         }
                         catch
                         {
-                            CookieGet.Invoke("!network_cannot_be_reached");
+                            CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                             return;
                         }
                         if (response3rd.IsSuccessStatusCode)
@@ -1813,7 +1813,7 @@ namespace Ikas
                             }
                             catch
                             {
-                                CookieGet?.Invoke("!cookie_cannot_be_resolved[4/7]");
+                                CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_4_7);
                                 return;
                             }
                             // Send HTTP POST
@@ -1835,7 +1835,7 @@ namespace Ikas
                             }
                             catch
                             {
-                                CookieGet.Invoke("!network_cannot_be_reached");
+                                CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                                 return;
                             }
                             if (responseAccessToken.IsSuccessStatusCode)
@@ -1850,7 +1850,7 @@ namespace Ikas
                                 }
                                 catch
                                 {
-                                    CookieGet?.Invoke("!cookie_cannot_be_resolved[5/7]");
+                                    CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_5_7);
                                     return;
                                 }
                                 // Send HTTP POST
@@ -1868,7 +1868,7 @@ namespace Ikas
                                 }
                                 catch
                                 {
-                                    CookieGet.Invoke("!network_cannot_be_reached");
+                                    CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                                     return;
                                 }
                                 if (responseSplatoonAccessToken.IsSuccessStatusCode)
@@ -1883,7 +1883,7 @@ namespace Ikas
                                     }
                                     catch
                                     {
-                                        CookieGet?.Invoke("!cookie_cannot_be_resolved[6/7]");
+                                        CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_6_7);
                                         return;
                                     }
                                     // Send HTTP GET
@@ -1905,7 +1905,7 @@ namespace Ikas
                                     }
                                     catch
                                     {
-                                        CookieGet.Invoke("!network_cannot_be_reached");
+                                        CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                                         return;
                                     }
                                     if (responseCookie.IsSuccessStatusCode)
@@ -1918,51 +1918,51 @@ namespace Ikas
                                         }
                                         catch
                                         {
-                                            CookieGet?.Invoke("!cookie_cannot_be_resolved");
+                                            CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved);
                                             return;
                                         }
-                                        CookieGet?.Invoke(cookie);
+                                        CookieGet?.Invoke(Base.ErrorType.no_error, cookie);
                                         return;
                                     }
                                     else
                                     {
-                                        CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                                        CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                                         return;
                                     }
                                 }
                                 else
                                 {
-                                    CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                                    CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                                     return;
                                 }
                             }
                             else
                             {
-                                CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                                CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                                 return;
                             }
                         }
                         else
                         {
-                            CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                            CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                             return;
                         }
                     }
                     else
                     {
-                        CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                        CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                         return;
                     }
                 }
                 else
                 {
-                    CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                    CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                     return;
                 }
             }
             else
             {
-                CookieGet?.Invoke("!network_cannot_be_reached,_or_session_token_is_invalid_or_expired");
+                CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                 return;
             }
         }

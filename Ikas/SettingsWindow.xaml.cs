@@ -650,27 +650,13 @@ namespace Ikas
             }
         }
 
-        private void SessionTokenGet(string sessionToken)
+        private void SessionTokenGet(Base.ErrorType error, string sessionToken)
         {
             if (sessionToken == null || sessionToken == "")
             {
                 MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
                     Translate("ikas_cannot_get_session_token"),
-                    Translate("unknown_error"),
-                    Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
-                    ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-                txtSessionToken.Text = "";
-                // Fade out loading
-                ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
-                bdLoading.IsHitTestVisible = false;
-                lbOk.IsEnabled = true;
-            }
-            else if (sessionToken.StartsWith("!"))
-            {
-                string reason = sessionToken.TrimStart('!');
-                MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
-                    Translate("ikas_cannot_get_session_token"),
-                    Translate(reason),
+                    Translate(error.ToString()),
                     Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                     ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtSessionToken.Text = "";
@@ -705,22 +691,13 @@ namespace Ikas
             }
         }
 
-        private void CookieGet(string cookie)
+        private void CookieGet(Base.ErrorType error, string cookie)
         {
             if (cookie == null || cookie == "")
             {
                 MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
                     Translate("ikas_cannot_update_cookie"),
-                    Translate("unknown_error"),
-                    Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
-                    ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else if (cookie.StartsWith("!"))
-            {
-                string reason = cookie.TrimStart('!');
-                MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
-                    Translate("ikas_cannot_update_cookie"),
-                    Translate(reason),
+                    Translate(error.ToString()),
                     Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                     ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
             }

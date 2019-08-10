@@ -887,6 +887,8 @@
     <sys:String x:Key="unknown_error">unknown error</sys:String>
     <sys:String x:Key="network_cannot_be_reached">network cannot be reached</sys:String>
     <sys:String x:Key="network_cannot_be_reached_or_cookie_is_invalid_or_expired">network can not be reached, or Cookie is invalid or expired</sys:String>
+    <sys:String x:Key="network_cannot_be_reached_or_session_token_link_is_invalid_or_expired">network cannot be reached, or Session Token link is invalid or expired</sys:String>
+    <sys:String x:Key="network_cannot_be_reached_or_session_token_is_invalid_or_expired">network cannot be reached, or Session Token is invalid or expired</sys:String>
     <sys:String x:Key="cookie_is_empty">Cookie is empty</sys:String>
     <sys:String x:Key="schedule_is_not_ready">schedule is not ready</sys:String>
     <sys:String x:Key="schedule_cannot_be_resolved">schedule cannot be resolved</sys:String>
@@ -900,16 +902,14 @@
     <sys:String x:Key="gear_cannot_be_resolved">gear cannot be resolved</sys:String>
     <sys:String x:Key="primary_ability_cannot_be_resolved">primary gear ability cannot be resolved</sys:String>
     <sys:String x:Key="secondary_ability_cannot_be_resolved">secondary gear ability cannot be resolved</sys:String>
-    <sys:String x:Key="network_cannot_be_reached,_or_session_token_link_is_invalid_or_expired">network cannot be reached, or Session Token link is invalid or expired</sys:String>
-    <sys:String x:Key="network_cannot_be_reached,_or_session_token_is_invalid_or_expired">network cannot be reached, or Session Token is invalid or expired</sys:String>
     <sys:String x:Key="session_token_cannot_be_resolved">Session Token cannot be resolved</sys:String>
-    <sys:String x:Key="cookie_cannot_be_resolved[1/7]">Cookie cannot be resolved[1/7]</sys:String>
-    <sys:String x:Key="cookie_cannot_be_resolved[2/7]">Cookie cannot be resolved[2/7]</sys:String>
-    <sys:String x:Key="cookie_cannot_be_resolved[3/7]">Cookie cannot be resolved[3/7]</sys:String>
-    <sys:String x:Key="cookie_cannot_be_resolved[4/7]">Cookie cannot be resolved[4/7]</sys:String>
-    <sys:String x:Key="cookie_cannot_be_resolved[5/7]">Cookie cannot be resolved[5/7]</sys:String>
-    <sys:String x:Key="cookie_cannot_be_resolved[6/7]">Cookie cannot be resolved[6/7]</sys:String>
     <sys:String x:Key="cookie_cannot_be_resolved">Cookie cannot be resolved</sys:String>
+    <sys:String x:Key="cookie_cannot_be_resolved_1_7">Cookie cannot be resolved[1/7]</sys:String>
+    <sys:String x:Key="cookie_cannot_be_resolved_2_7">Cookie cannot be resolved[2/7]</sys:String>
+    <sys:String x:Key="cookie_cannot_be_resolved_3_7">Cookie cannot be resolved[3/7]</sys:String>
+    <sys:String x:Key="cookie_cannot_be_resolved_4_7">Cookie cannot be resolved[4/7]</sys:String>
+    <sys:String x:Key="cookie_cannot_be_resolved_5_7">Cookie cannot be resolved[5/7]</sys:String>
+    <sys:String x:Key="cookie_cannot_be_resolved_6_7">Cookie cannot be resolved[6/7]</sys:String>
     <!-- MainWindow -->
     <sys:String x:Key="main_window-welcome_to_ikas!_to_use_ikas,_you_may_set_up_your_cookie_first.">Welcome to Ikas! To use Ikas, you may set up your Cookie first.</sys:String>
     <sys:String x:Key="main_window-level">Level</sys:String>
