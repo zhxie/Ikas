@@ -71,10 +71,7 @@ namespace Ikas
             }
         }
 
-        private bool alwaysOnTop = false;
-        private bool notification = false;
-        private bool useProxy = false;
-        private string language = "en-US";
+        private bool isReady = false;
 
         public SettingsWindow()
         {
@@ -201,6 +198,8 @@ namespace Ikas
                     lbLanguageEnUs.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
                     break;
             }
+            // Finish loading
+            isReady = true;
             // Determine log in
             gridUserLogIn.Opacity = 0;
             gridUserLogIn.Visibility = Visibility.Hidden;
@@ -255,32 +254,6 @@ namespace Ikas
                     return;
                 }
             }
-            if (txtProxyPort.Text != "")
-            {
-                if (!int.TryParse(txtProxyPort.Text, out _))
-                {
-                    MessageBox.Show(Translate("you_may_enter_a_valid_proxy_port_before_closing_the_settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-                int port = int.Parse(txtProxyPort.Text);
-                if (port < 1 || port > 65535)
-                {
-                    MessageBox.Show(Translate("you_may_enter_a_valid_proxy_port_before_closing_the_settings.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-            }
-            // Save configuration
-            Depot.SessionToken = txtSessionToken.Text;
-            Depot.Cookie = txtCookie.Text;
-            Depot.AlwaysOnTop = alwaysOnTop;
-            Depot.Notification = notification;
-            Depot.UseProxy = useProxy;
-            Depot.ProxyHost = txtProxyHost.Text;
-            if (txtProxyPort.Text != "")
-            {
-                Depot.ProxyPort = int.Parse(txtProxyPort.Text);
-            }
-            Depot.Language = language;
             // Restore user-related controls
             if (txtSessionToken.Text != "")
             {
@@ -362,6 +335,14 @@ namespace Ikas
             ((Storyboard)FindResource("grid_fade_in")).Begin(gridUserLogIn);
         }
 
+        private void TxtSessionToken_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (isReady)
+            {
+                Depot.SessionToken = txtSessionToken.Text;
+            }
+        }
+
         private void LbWhatIsSessionToken_MouseEnter(object sender, MouseEventArgs e)
         {
             ShowMessage(Translate("session_token_is..", true),
@@ -411,6 +392,14 @@ namespace Ikas
                 // Get session token
                 string regex = Regex.Match(txtSessionToken.Text, @"de=(.*)&").Value;
                 Depot.GetSessionToken(regex.Substring(3, regex.Length - 4));
+            }
+        }
+
+        private void TxtCookie_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (isReady)
+            {
+                Depot.Cookie = txtCookie.Text;
             }
         }
 
@@ -468,21 +457,30 @@ namespace Ikas
 
         private void LbAlwaysOnTopTrue_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            alwaysOnTop = true;
+            if (isReady)
+            {
+                Depot.AlwaysOnTop = true;
+            }
             ((Storyboard)FindResource("fore_to_orange")).Begin(lbAlwaysOnTopTrue);
             ((Storyboard)FindResource("fore_to_white")).Begin(lbAlwaysOnTopFalse);
         }
 
         private void LbAlwaysOnTopFalse_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            alwaysOnTop = false;
+            if (isReady)
+            {
+                Depot.AlwaysOnTop = false;
+            }
             ((Storyboard)FindResource("fore_to_white")).Begin(lbAlwaysOnTopTrue);
             ((Storyboard)FindResource("fore_to_orange")).Begin(lbAlwaysOnTopFalse);
         }
 
         private void LbNotificationTrue_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            notification = true;
+            if (isReady)
+            {
+                Depot.Notification = true;
+            }
             ((Storyboard)FindResource("fore_to_orange")).Begin(lbNotificationTrue);
             ((Storyboard)FindResource("fore_to_white")).Begin(lbNotificationFalse);
             // Test notification
@@ -494,49 +492,116 @@ namespace Ikas
 
         private void LbNotificationFalse_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            notification = false;
+            if (isReady)
+            {
+                Depot.Notification = false;
+            }
             ((Storyboard)FindResource("fore_to_white")).Begin(lbNotificationTrue);
             ((Storyboard)FindResource("fore_to_orange")).Begin(lbNotificationFalse);
         }
 
         private void LbUseProxyTrue_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            useProxy = true;
+            if (isReady)
+            {
+                Depot.UseProxy = true;
+            }
             ((Storyboard)FindResource("fore_to_orange")).Begin(lbUseProxyTrue);
             ((Storyboard)FindResource("fore_to_white")).Begin(lbUseProxyFalse);
         }
 
         private void LbUseProxyFalse_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            useProxy = false;
+            if (isReady)
+            {
+                Depot.UseProxy = false;
+            }
             ((Storyboard)FindResource("fore_to_white")).Begin(lbUseProxyTrue);
             ((Storyboard)FindResource("fore_to_orange")).Begin(lbUseProxyFalse);
         }
 
+        private void TxtProxyHost_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (isReady)
+            {
+                Depot.ProxyHost = txtProxyHost.Text;
+            }
+        }
+
+        private void TxtProxyPort_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (isReady)
+            {
+                if (txtProxyPort.Text != "")
+                {
+                    int port;
+                    if (int.TryParse(txtProxyPort.Text, out port))
+                    {
+                        if (port < 1 || port > 65535)
+                        {
+                            MessageBox.Show(Translate("please_enter_a_valid_proxy_port.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            // Restore port
+                            if (Depot.ProxyPort > 0)
+                            {
+                                txtProxyPort.Text = Depot.ProxyPort.ToString();
+                            }
+                            else
+                            {
+                                txtProxyPort.Text = "";
+                            }
+                        }
+                        else
+                        {
+                            Depot.ProxyPort = port;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(Translate("please_enter_a_valid_proxy_port.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        // Restore port
+                        if (Depot.ProxyPort > 0)
+                        {
+                            txtProxyPort.Text = Depot.ProxyPort.ToString();
+                        }
+                        else
+                        {
+                            txtProxyPort.Text = "";
+                        }
+                    }
+                }
+                else
+                {
+                    // Restore port
+                    if (Depot.ProxyPort > 0)
+                    {
+                        txtProxyPort.Text = Depot.ProxyPort.ToString();
+                    }
+                    else
+                    {
+                        txtProxyPort.Text = "";
+                    }
+                }
+            }
+        }
+
         private void LbLanguageEnUs_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            language = "en-US";
+            if (isReady)
+            {
+                Depot.Language = "en-US";
+            }
             ((Storyboard)FindResource("fore_to_orange")).Begin(lbLanguageEnUs);
             ((Storyboard)FindResource("fore_to_white")).Begin(lbLanguageJaJp);
-            ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + language + ".xaml", UriKind.Relative));
-            if (Resources.MergedDictionaries.Count > 0)
-            {
-                Resources.MergedDictionaries.Clear();
-            }
-            Resources.MergedDictionaries.Add(lang);
         }
 
         private void LbLanguageJaJp_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            language = "ja-JP";
+            if (isReady)
+            {
+                Depot.Language = "ja-JP";
+            }
             ((Storyboard)FindResource("fore_to_white")).Begin(lbLanguageEnUs);
             ((Storyboard)FindResource("fore_to_orange")).Begin(lbLanguageJaJp);
-            ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + language + ".xaml", UriKind.Relative));
-            if (Resources.MergedDictionaries.Count > 0)
-            {
-                Resources.MergedDictionaries.Clear();
-            }
-            Resources.MergedDictionaries.Add(lang);
         }
 
         private void LbClearCache_MouseEnter(object sender, MouseEventArgs e)
@@ -618,6 +683,7 @@ namespace Ikas
             {
                 MessageBox.Show(Translate("get_session_token_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 txtSessionToken.Text = sessionToken;
+                TxtSessionToken_LostFocus(null, null);
                 // Update cookie
                 if (gridUserLogIn.Visibility == Visibility.Visible)
                 {
@@ -662,6 +728,7 @@ namespace Ikas
             {
                 MessageBox.Show(Translate("update_cookie_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 txtCookie.Text = cookie;
+                TxtCookie_LostFocus(null, null);
             }
             // Fade out loading
             ((Storyboard)FindResource("fade_out")).Begin(bdLoading);

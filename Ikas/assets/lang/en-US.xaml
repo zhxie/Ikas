@@ -946,7 +946,6 @@
     <sys:String x:Key="settings_window-settings">Settings</sys:String>
     <sys:String x:Key="settings_window-ok">OK!</sys:String>
     <sys:String x:Key="settings_window-if_you_do_not_enter_a_valid_cookie,_ikas_may_not_work_properly._click_yes_to_close_the_settings,_or_click_no_to_cancel.">If you do not enter a valid cookie, Ikas may not work properly. Click Yes to close the settings, or click No to cancel.</sys:String>
-    <sys:String x:Key="settings_window-you_may_enter_a_valid_proxy_port_before_closing_the_settings.">You may enter a valid proxy port before closing the settings.</sys:String>
     <sys:String x:Key="settings_window-user">User</sys:String>
     <sys:String x:Key="settings_window-log_in">Log In</sys:String>
     <sys:String x:Key="settings_window-log_in_manually">Log In Manually</sys:String>
@@ -981,6 +980,7 @@
     <sys:String x:Key="settings_window-no">No</sys:String>
     <sys:String x:Key="settings_window-host">Host</sys:String>
     <sys:String x:Key="settings_window-port">Port</sys:String>
+    <sys:String x:Key="settings_window-please_enter_a_valid_proxy_port.">Please enter a valid proxy port.</sys:String>
     <sys:String x:Key="settings_window-language">Language</sys:String>
     <sys:String x:Key="settings_window-language_en_us">English</sys:String>
     <sys:String x:Key="settings_window-language_ja_jp">日本語</sys:String>

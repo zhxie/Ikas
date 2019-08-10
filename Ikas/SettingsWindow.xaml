@@ -176,7 +176,9 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Row="0" Content="{DynamicResource settings_window-session_token}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                        <TextBox x:Name="txtSessionToken" Grid.Row="0" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                        <TextBox x:Name="txtSessionToken" Grid.Row="0" Grid.Column="1"
+                                 LostFocus="TxtSessionToken_LostFocus"
+                                 Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                         <Label x:Name="lbWhatIsSessionToken" Grid.Row="1" Grid.ColumnSpan="2"
                            MouseEnter="LbWhatIsSessionToken_MouseEnter"
                            MouseLeave="LbWhatIsSessionToken_MouseLeave"
@@ -187,7 +189,9 @@
                            MouseDown="LbGetSessionToken_MouseDown"
                            Content="{DynamicResource settings_window-get_session_token}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="16" Height="40" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Cursor="Hand"/>
                         <Label Grid.Row="5" Content="{DynamicResource settings_window-cookie}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                        <TextBox x:Name="txtCookie" Grid.Row="5" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                        <TextBox x:Name="txtCookie" Grid.Row="5" Grid.Column="1"
+                                 LostFocus="TxtCookie_LostFocus"
+                                 Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                         <Label x:Name="lbWhatIsCookie" Grid.Row="6" Grid.ColumnSpan="2"
                            MouseEnter="LbWhatIsCookie_MouseEnter"
                            MouseLeave="LbWhatIsCookie_MouseLeave"
@@ -258,9 +262,13 @@
                                Content="{DynamicResource settings_window-no}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" Height="50" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Focusable="True" Cursor="Hand"/>
                     </Grid>
                     <Label Grid.Row="3" Content="{DynamicResource settings_window-host}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Margin="20,0,0,0" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="txtProxyHost" Grid.Row="3" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="txtProxyHost" Grid.Row="3" Grid.Column="1"
+                             LostFocus="TxtProxyHost_LostFocus"
+                             Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <Label Grid.Row="4" Content="{DynamicResource settings_window-port}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Margin="20,0,0,0" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="txtProxyPort" Grid.Row="4" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="txtProxyPort" Grid.Row="4" Grid.Column="1"
+                             LostFocus="TxtProxyPort_LostFocus"
+                             Background="Transparent" BorderBrush="Transparent" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="20" SelectionBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectionForeground}" CaretBrush="White" Width="260" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <Label Grid.Row="5" Content="{DynamicResource settings_window-language}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="26" Height="60" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     <Grid Grid.Row="5" Grid.Column="1">
                         <Grid.ColumnDefinitions>

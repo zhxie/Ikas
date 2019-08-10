@@ -946,7 +946,6 @@
     <sys:String x:Key="settings_window-settings">設定</sys:String>
     <sys:String x:Key="settings_window-ok">OK!</sys:String>
     <sys:String x:Key="settings_window-if_you_do_not_enter_a_valid_cookie,_ikas_may_not_work_properly._click_yes_to_close_the_settings,_or_click_no_to_cancel.">有効なクッキーを入力しないと、Ikas が正しく機能しない可能性があります。設定を閉じるにははいをクリックし、キャンセルするにはいいえをクリックします。</sys:String>
-    <sys:String x:Key="settings_window-you_may_enter_a_valid_proxy_port_before_closing_the_settings.">設定を閉じる前に、有効なプロキシポートを入力する必要があります。</sys:String>
     <sys:String x:Key="settings_window-user">ユーザー</sys:String>
     <sys:String x:Key="settings_window-log_in">ログイン</sys:String>
     <sys:String x:Key="settings_window-log_in_manually">手動でログインする</sys:String>
@@ -981,6 +980,7 @@
     <sys:String x:Key="settings_window-no">いいえ</sys:String>
     <sys:String x:Key="settings_window-host">ホスト</sys:String>
     <sys:String x:Key="settings_window-port">ポート</sys:String>
+    <sys:String x:Key="settings_window-please_enter_a_valid_proxy_port.">有効なプロキシポートを入力してください。</sys:String>
     <sys:String x:Key="settings_window-language">言語</sys:String>
     <sys:String x:Key="settings_window-language_en_us">English</sys:String>
     <sys:String x:Key="settings_window-language_ja_jp">日本語</sys:String>
