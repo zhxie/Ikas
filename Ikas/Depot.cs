@@ -591,6 +591,15 @@ namespace Ikas
         public static Battle Battle { get; set; } = new Battle();
         private static int notifiedBattleNumber = 0;
 
+        public static event ContentChangedEventHandler SalmonRunBattleChanged;
+        public static event ContentFoundEventHandler SalmonRunBattleFound;
+        public static event ContentUpdatedEventHandler SalmonRunBattleUpdated;
+        public static event ContentFailedEventHandler SalmonRunBattleFailed;
+        public static event ContentNotifyingHandler SalmonRunBattleNotifying;
+        private static Mutex SalmonRunBattleMutex = new Mutex();
+        public static SalmonRunBattle SalmonRunBattle { get; set; } = new SalmonRunBattle();
+        private static int notifiedSalmonRunBattleNumber = 0;
+
         public static event AccessGetEventHandler SessionTokenGet;
         public static event AccessGetEventHandler CookieGet;
         public static event CookieUpdatedEventHandler CookieUpdated;
@@ -749,7 +758,7 @@ namespace Ikas
             }
         }
         /// <summary>
-        /// Get current and next schedule in regular, ranked and league mode, also raise ScheduleChanged event
+        /// Get current and next schedule in regular, ranked and league mode, also raise ScheduleChanged event.
         /// </summary>
         public static void ForceGetSchedule()
         {
@@ -866,6 +875,16 @@ namespace Ikas
             }
         }
         /// <summary>
+        /// Get current and next salmon run schedule, also raise SalmonRunScheduleChanged event.
+        /// </summary>
+        public static void ForceGetSalmonRunSchedule()
+        {
+            // Raise event
+            SalmonRunScheduleChanged?.Invoke();
+            // Update schedule
+            GetSalmonRunSchedule();
+        }
+        /// <summary>
         /// Update salmon run.
         /// </summary>
         /// <param name="schedule"></param>
@@ -875,6 +894,10 @@ namespace Ikas
             if (schedule.Error >= 0)
             {
                 SalmonRunScheduleFailed?.Invoke(schedule.Error);
+            }
+            else if (schedule.Stages.Count == 0)
+            {
+                SalmonRunScheduleFailed?.Invoke(Base.ErrorType.salmon_run_schedule_is_not_ready);
             }
             if (SalmonRunSchedule != schedule)
             {
@@ -900,7 +923,7 @@ namespace Ikas
         {
             // Raise event
             BattleChanged?.Invoke();
-            // Remove previous Downloader's handlers
+            // Remove previous downloader's handlers
             DownloadHelper.RemoveDownloaders(Downloader.SourceType.Battle);
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
@@ -918,7 +941,7 @@ namespace Ikas
             }
             catch
             {
-                // Update Battle on error
+                // Update battle on error
                 UpdateBattle(new Battle(Base.ErrorType.cookie_is_empty));
                 return;
             }
@@ -1083,7 +1106,7 @@ namespace Ikas
                                     List<Player> myPlayers = new List<Player>();
                                     JToken myPlayersNode = jObject["my_team_members"];
                                     List<Task<Player>> myPlayerTasks = new List<Task<Player>>();
-                                    foreach (JToken playerNode in myPlayersNode.Children())
+                                    foreach (JToken playerNode in myPlayersNode)
                                     {
                                         if (playerNode.HasValues)
                                         {
@@ -1102,7 +1125,7 @@ namespace Ikas
                                     List<Player> otherPlayers = new List<Player>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
                                     List<Task<Player>> otherPlayerTasks = new List<Task<Player>>();
-                                    foreach (JToken playerNode in otherPlayersNode.Children())
+                                    foreach (JToken playerNode in otherPlayersNode)
                                     {
                                         if (playerNode.HasValues)
                                         {
@@ -1137,7 +1160,7 @@ namespace Ikas
                                     List<RankedPlayer> myPlayers = new List<RankedPlayer>();
                                     JToken myPlayersNode = jObject["my_team_members"];
                                     List<Task<RankedPlayer>> myPlayerTasks = new List<Task<RankedPlayer>>();
-                                    foreach (JToken playerNode in myPlayersNode.Children())
+                                    foreach (JToken playerNode in myPlayersNode)
                                     {
                                         if (playerNode.HasValues)
                                         {
@@ -1156,7 +1179,7 @@ namespace Ikas
                                     List<RankedPlayer> otherPlayers = new List<RankedPlayer>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
                                     List<Task<RankedPlayer>> otherPlayerTasks = new List<Task<RankedPlayer>>();
-                                    foreach (JToken playerNode in otherPlayersNode.Children())
+                                    foreach (JToken playerNode in otherPlayersNode)
                                     {
                                         if (playerNode.HasValues)
                                         {
@@ -1272,7 +1295,7 @@ namespace Ikas
                                     List<RankedPlayer> myPlayers = new List<RankedPlayer>();
                                     JToken myPlayersNode = jObject["my_team_members"];
                                     List<Task<RankedPlayer>> myPlayerTasks = new List<Task<RankedPlayer>>();
-                                    foreach (JToken playerNode in myPlayersNode.Children())
+                                    foreach (JToken playerNode in myPlayersNode)
                                     {
                                         if (playerNode.HasValues)
                                         {
@@ -1291,7 +1314,7 @@ namespace Ikas
                                     List<RankedPlayer> otherPlayers = new List<RankedPlayer>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
                                     List<Task<RankedPlayer>> otherPlayerTasks = new List<Task<RankedPlayer>>();
-                                    foreach (JToken playerNode in otherPlayersNode.Children())
+                                    foreach (JToken playerNode in otherPlayersNode)
                                     {
                                         if (playerNode.HasValues)
                                         {
@@ -1377,7 +1400,7 @@ namespace Ikas
                                     List<Player> myPlayers = new List<Player>();
                                     JToken myPlayersNode = jObject["my_team_members"];
                                     List<Task<Player>> myPlayerTasks = new List<Task<Player>>();
-                                    foreach (JToken playerNode in myPlayersNode.Children())
+                                    foreach (JToken playerNode in myPlayersNode)
                                     {
                                         if (playerNode.HasValues)
                                         {
@@ -1396,7 +1419,7 @@ namespace Ikas
                                     List<Player> otherPlayers = new List<Player>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
                                     List<Task<Player>> otherPlayerTasks = new List<Task<Player>>();
-                                    foreach (JToken playerNode in otherPlayersNode.Children())
+                                    foreach (JToken playerNode in otherPlayersNode)
                                     {
                                         if (playerNode.HasValues)
                                         {
@@ -1479,9 +1502,9 @@ namespace Ikas
                 BattleMutex.WaitOne();
                 Battle = battle;
                 // Notify
-                if (battle.Number > notifiedBattleNumber)
+                if (Battle.Number > notifiedBattleNumber)
                 {
-                    notifiedBattleNumber = battle.Number;
+                    notifiedBattleNumber = Battle.Number;
                     BattleNotifying?.Invoke();
                 }
                 BattleMutex.ReleaseMutex();
@@ -1493,6 +1516,211 @@ namespace Ikas
             {
                 // Raise event
                 BattleUpdated?.Invoke();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Get last salmon run battle result.
+        /// </summary>
+        public static async void GetLastSalmonRunBattle()
+        {
+            // Raise event
+            SalmonRunBattleChanged?.Invoke();
+            // Remove previous downloader's handlers
+            DownloadHelper.RemoveDownloaders(Downloader.SourceType.SalmonRunBattle);
+            // Send HTTP GET
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.UseCookies = false;
+            if (Proxy != null)
+            {
+                handler.UseProxy = true;
+                handler.Proxy = Proxy;
+            }
+            HttpClient client = new HttpClient(handler);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetSalmonRunBattleApi);
+            try
+            {
+                request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+            }
+            catch
+            {
+                // Update battle on error
+                UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.cookie_is_empty));
+                return;
+            }
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.SendAsync(request);
+            }
+            catch
+            {
+                // Update battle on error
+                UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.network_cannot_be_reached));
+                return;
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                string resultString = await response.Content.ReadAsStringAsync();
+                // Parse JSON
+                JObject jObject = JObject.Parse(resultString);
+                int battleNumber = -1;
+                try
+                {
+                    battleNumber = int.Parse(jObject["results"][0]["job_id"].ToString());
+                }
+                catch
+                {
+                    // Update battle on error
+                    UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.salmon_run_battles_cannot_be_resolved));
+                    return;
+                }
+                // Same battle
+                if (battleNumber == SalmonRunBattle.Number)
+                {
+                    // Update same battle
+                    UpdateSalmonRunBattle(SalmonRunBattle);
+                    return;
+                }
+                else
+                {
+                    // Raise event
+                    SalmonRunBattleFound?.Invoke();
+                }
+                // Send HTTP GET
+                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetSalmonRunIndividualBattleApi, battleNumber));
+                try
+                {
+                    request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+                }
+                catch
+                {
+                    // Update Battle on error
+                    UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.cookie_is_empty));
+                    return;
+                }
+                try
+                {
+                    response = await client.SendAsync(request);
+                }
+                catch
+                {
+                    // Update Battle on error
+                    UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.network_cannot_be_reached));
+                    return;
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    resultString = await response.Content.ReadAsStringAsync();
+                    // Parse JSON
+                    jObject = JObject.Parse(resultString);
+                    try
+                    {
+                        DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)).AddSeconds(long.Parse(jObject["play_time"].ToString()));
+                        double dangerRate = double.Parse(jObject["danger_rate"].ToString());
+                        SalmonRunStage stage = parseSalmonRunStage(jObject["schedule"]);
+                        List<Wave> waves = new List<Wave>();
+                        foreach (JToken node in jObject["wave_details"])
+                        {
+                            waves.Add(parseWave(node));
+                        }
+                        SalmonRunPlayer myPlayer = await parseSalmonRunPlayer(jObject["my_result"], true, (SalmonRunPlayer.GradeType)int.Parse(jObject["grade"]["id"].ToString()), int.Parse(jObject["grade_point"].ToString()));
+                        List<SalmonRunPlayer> otherPlayers = new List<SalmonRunPlayer>();
+                        List<Task<SalmonRunPlayer>> otherPlayerTasks = new List<Task<SalmonRunPlayer>>();
+                        foreach (JToken node in jObject["other_results"])
+                        {
+                            if (node.HasValues)
+                            {
+                                Task<SalmonRunPlayer> playerTask = parseSalmonRunPlayer(node);
+                                otherPlayerTasks.Add(playerTask);
+                            }
+                        }
+                        await Task.WhenAll(otherPlayerTasks);
+                        foreach (Task<SalmonRunPlayer> playerTask in otherPlayerTasks)
+                        {
+                            otherPlayers.Add(playerTask.Result);
+                        }
+                        int steelheadCount = int.Parse(jObject["boss_counts"]["6"]["count"].ToString());
+                        int flyfishCount = int.Parse(jObject["boss_counts"]["9"]["count"].ToString());
+                        int steelEelCount = int.Parse(jObject["boss_counts"]["13"]["count"].ToString());
+                        int drizzlerCount = int.Parse(jObject["boss_counts"]["21"]["count"].ToString());
+                        int stingerCount = int.Parse(jObject["boss_counts"]["14"]["count"].ToString());
+                        int scrapperCount = int.Parse(jObject["boss_counts"]["12"]["count"].ToString());
+                        int mawsCount = int.Parse(jObject["boss_counts"]["15"]["count"].ToString());
+                        int grillerCount = int.Parse(jObject["boss_counts"]["16"]["count"].ToString());
+                        int goldieCount = int.Parse(jObject["boss_counts"]["3"]["count"].ToString());
+                        int score = int.Parse(jObject["job_score"].ToString());
+                        int gradePointDelta = int.Parse(jObject["grade_point_delta"].ToString());
+                        SalmonRunBattle.ResultType result = SalmonRunBattle.ResultType.clear;
+                        if (!bool.Parse(jObject["job_result"]["is_clear"].ToString()))
+                        {
+                            result = SalmonRunBattle.ParseResultType(jObject["job_result"]["failure_reason"].ToString());
+                        }
+                        UpdateSalmonRunBattle(new SalmonRunBattle(battleNumber, startTime, dangerRate, stage, waves, myPlayer, otherPlayers,
+                            steelheadCount, flyfishCount, steelEelCount, drizzlerCount, stingerCount, scrapperCount, mawsCount, grillerCount, goldieCount,
+                            score, gradePointDelta, result));
+                    }
+                    catch (Exception ex)
+                    {
+                        if (Base.TryParseErrorType(ex.Message, out _))
+                        {
+                            // Update Battle on error
+                            UpdateSalmonRunBattle(new SalmonRunBattle(Base.ParseErrorType(ex.Message)));
+                        }
+                        else
+                        {
+                            // Update Battle on error
+                            UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.salmon_run_battle_cannot_be_resolved));
+                        }
+                    }
+                }
+                else
+                {
+                    // Update battle on error
+                    UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                }
+            }
+            else
+            {
+                // Update battle on error
+                UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+            }
+        }
+        /// <summary>
+        /// Update salmon run battle.
+        /// </summary>
+        /// <param name="battle">Updated salmon run battle</param>
+        /// <returns></returns>
+        private static bool UpdateSalmonRunBattle(SalmonRunBattle battle)
+        {
+            if (battle.Error >= 0)
+            {
+                SalmonRunBattleFailed?.Invoke(battle.Error);
+            }
+            else if (battle.Number == -1)
+            {
+                SalmonRunBattleFailed?.Invoke(Base.ErrorType.salmon_run_battle_is_not_ready);
+            }
+            if (SalmonRunBattle != battle)
+            {
+                SalmonRunBattleMutex.WaitOne();
+                SalmonRunBattle = battle;
+                // Notify
+                if (SalmonRunBattle.Number > notifiedSalmonRunBattleNumber)
+                {
+                    notifiedSalmonRunBattleNumber = SalmonRunBattle.Number;
+                    SalmonRunBattleNotifying.Invoke();
+                }
+                SalmonRunBattleMutex.ReleaseMutex();
+                // Raise event
+                SalmonRunBattleUpdated?.Invoke();
+                return true;
+            }
+            else
+            {
+                // Raise event
+                SalmonRunBattleUpdated?.Invoke();
                 return false;
             }
         }
@@ -2191,6 +2419,28 @@ namespace Ikas
             }
         }
         /// <summary>
+        /// Parse wave from JToken
+        /// </summary>
+        /// <param name="node">JToken of a wave</param>
+        /// <returns></returns>
+        private static Wave parseWave(JToken node)
+        {
+            try
+            {
+                Wave.WaterLevelType waterLevel = Wave.ParseWaterLevel(node["water_level"]["key"].ToString());
+                Wave.EventTypeType eventType = Wave.ParseEventType(node["event_type"]["key"].ToString());
+                int quota = int.Parse(node["quota_num"].ToString());
+                int powerEgg = int.Parse(node["ikura_num"].ToString());
+                int goldenEgg = int.Parse(node["golden_ikura_num"].ToString());
+                int goldenEggPop = int.Parse(node["golden_ikura_pop_num"].ToString());
+                return new Wave(waterLevel, eventType, quota, powerEgg, goldenEgg, goldenEggPop);
+            }
+            catch
+            {
+                throw new FormatException(Base.ErrorType.wave_cannot_be_resolved.ToString());
+            }
+        }
+        /// <summary>
         /// Parse player from JToken
         /// </summary>
         /// <param name="node">JToken of a player</param>
@@ -2329,6 +2579,93 @@ namespace Ikas
             }
         }
         /// <summary>
+        /// Parse SalmonRunPlayer from JToken
+        /// </summary>
+        /// <param name="node">JToken of a player in salmon run</param>
+        /// <param name="image">Url of the user icon</param>
+        /// <param name="isSelf">If the player is player itself</param>
+        /// <param name="grade">Grade of the player</param>
+        /// <param name="gradePoint">Grade point of the player</param>
+        /// <returns></returns>
+        private static SalmonRunPlayer parseSalmonRunPlayer(JToken node, string image, bool isSelf = false, SalmonRunPlayer.GradeType grade = SalmonRunPlayer.GradeType.intern, int gradePoint = 0)
+        {
+            try
+            {
+                if (image == "")
+                {
+                    throw new ArgumentNullException();
+                }
+                string id = node["pid"].ToString();
+                string nickname = node["name"].ToString();
+                SalmonRunPlayer.SpeciesType species = SalmonRunPlayer.ParseSpecies(node["player_type"]["species"].ToString());
+                SalmonRunPlayer.StyleType style = SalmonRunPlayer.ParseStyle(node["player_type"]["style"].ToString());
+                List<Weapon> weapons = new List<Weapon>();
+                foreach (JToken weaponNode in node["weapon_list"])
+                {
+                    weapons.Add(parseSalmonRunWeapon(weaponNode["weapon"], node["special"]));
+                }
+                List<int> specialWeaponCount = new List<int>();
+                foreach (JToken count in node["special_counts"])
+                {
+                    specialWeaponCount.Add(int.Parse(count.ToString()));
+                }
+                int steelheadKill = int.Parse(node["boss_kill_counts"]["6"]["count"].ToString());
+                int flyfishKill = int.Parse(node["boss_kill_counts"]["9"]["count"].ToString());
+                int steelEelKill = int.Parse(node["boss_kill_counts"]["13"]["count"].ToString());
+                int drizzlerKill = int.Parse(node["boss_kill_counts"]["21"]["count"].ToString());
+                int stingerKill = int.Parse(node["boss_kill_counts"]["14"]["count"].ToString());
+                int scrapperKill = int.Parse(node["boss_kill_counts"]["12"]["count"].ToString());
+                int mawsKill = int.Parse(node["boss_kill_counts"]["15"]["count"].ToString());
+                int grillerKill = int.Parse(node["boss_kill_counts"]["16"]["count"].ToString());
+                int goldieKill = int.Parse(node["boss_kill_counts"]["3"]["count"].ToString());
+                int help = int.Parse(node["help_count"].ToString());
+                int dead = int.Parse(node["dead_count"].ToString());
+                int powerEgg = int.Parse(node["ikura_num"].ToString());
+                int goldenEgg = int.Parse(node["golden_ikura_num"].ToString());
+                return new SalmonRunPlayer(id, nickname, species, style, grade, gradePoint, weapons, specialWeaponCount,
+                    steelheadKill, flyfishKill, steelEelKill, drizzlerKill, stingerKill, mawsKill, grillerKill, goldieKill, help, dead, powerEgg, goldenEgg, image, isSelf);
+            }
+            catch (Exception ex)
+            {
+                if (Base.TryParseErrorType(ex.Message, out _))
+                {
+                    throw new FormatException(ex.Message);
+                }
+                else
+                {
+                    throw new FormatException(Base.ErrorType.salmon_run_player_cannot_be_resolved.ToString());
+                }
+            }
+        }
+        /// <summary>
+        /// Parse SalmonRunPlayer from JToken
+        /// </summary>
+        /// <param name="node">JToken of a player in salmon run</param>
+        /// <param name="isSelf">If the player is player itself</param>
+        /// <param name="grade">Grade of the player</param>
+        /// <param name="gradePoint">Grade point of the player</param>
+        /// <returns></returns>
+        private static async Task<SalmonRunPlayer> parseSalmonRunPlayer(JToken node, bool isSelf = false, SalmonRunPlayer.GradeType grade = SalmonRunPlayer.GradeType.intern, int gradePoint = 0)
+        {
+            try
+            {
+                string image = await GetPlayerIcon(node["pid"].ToString()).ConfigureAwait(false);
+                SalmonRunPlayer player = parseSalmonRunPlayer(node, image, isSelf, grade, gradePoint);
+                return player;
+            }
+            catch (Exception ex)
+            {
+                if (Base.TryParseErrorType(ex.Message, out _))
+                {
+                    throw new FormatException(ex.Message);
+                }
+                else
+                {
+                    throw new FormatException(Base.ErrorType.salmon_run_player_cannot_be_resolved.ToString());
+                }
+            }
+        }
+        /// <summary>
         /// Parse weapon from JToken
         /// </summary>
         /// <param name="node">JToken of a weapon</param>
@@ -2367,6 +2704,35 @@ namespace Ikas
             catch
             {
                 throw new FormatException(Base.ErrorType.salmon_run_stage_weapon_cannot_be_resolved.ToString());
+            }
+        }
+        /// <summary>
+        /// Parse salmon run weapon from JToken
+        /// </summary>
+        /// <param name="node">JToken of a weapon in salmon run</param>
+        /// <param name="specialNode">JToken of a special weapon in salmon run</param>
+        /// <returns></returns>
+        private static Weapon parseSalmonRunWeapon(JToken node, JToken specialNode)
+        {
+            try
+            {
+                SpecialWeapon special = parseSpecialWeapon(specialNode);
+                return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), null, special, node["image"].ToString());
+            }
+            catch (Exception ex)
+            {
+                if (Base.ParseErrorType(ex.Message) == Base.ErrorType.special_weapon_cannot_be_resolved)
+                {
+                    throw new FormatException(Base.ErrorType.salmon_run_special_weapon_cannot_be_resolved.ToString());
+                }
+                else if (Base.TryParseErrorType(ex.Message, out _))
+                {
+                    throw new FormatException(ex.Message);
+                }
+                else
+                {
+                    throw new FormatException(Base.ErrorType.salmon_run_weapon_cannot_be_resolved.ToString());
+                }
             }
         }
         /// <summary>

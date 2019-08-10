@@ -79,6 +79,15 @@ namespace Ikas.Class
             girl,
             boy
         }
+
+        public static SpeciesType ParseSpecies(string s)
+        {
+            return (SpeciesType)Enum.Parse(typeof(SpeciesType), s);
+        }
+        public static StyleType ParseStyle(string s)
+        {
+            return (StyleType)Enum.Parse(typeof(StyleType), s);
+        }
     }
 
     public class Player : BasePlayer
@@ -170,15 +179,6 @@ namespace Ikas.Class
             Special = special;
             Sort = sort;
             Image = image;
-        }
-
-        public static SpeciesType ParseSpecies(string s)
-        {
-            return (SpeciesType)Enum.Parse(typeof(SpeciesType), s);
-        }
-        public static StyleType ParseStyle(string s)
-        {
-            return (StyleType)Enum.Parse(typeof(StyleType), s);
         }
     }
 

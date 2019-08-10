@@ -544,7 +544,6 @@ namespace Ikas.Class
         public int Score { get; }
         public int GradePointDelta { get; }
         public ResultType Result { get; }
-        public int FailureWave { get; }
 
         public bool IsClear
         {
@@ -581,10 +580,24 @@ namespace Ikas.Class
                 return Rate / 100 * Score;
             }
         }
+        public int FailureWave
+        {
+            get
+            {
+                if (Result == ResultType.clear)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return Waves.Count;
+                }
+            }
+        }
 
         public SalmonRunBattle(int number, DateTime startTime, double dangerRate, SalmonRunStage stage, List<Wave> waves, SalmonRunPlayer myPlayer, List<SalmonRunPlayer> otherPlayers,
             int steelheadCount, int flyfishCount, int steelEelCount, int drizzlerCount, int stingerCount, int scrapperCount, int mawsCount, int grillerCount, int goldieCount,
-            int score, int gradePointDelta, ResultType result, int failureWave)
+            int score, int gradePointDelta, ResultType result)
         {
             Number = number;
             StartTime = startTime;
@@ -605,7 +618,26 @@ namespace Ikas.Class
             Score = score;
             GradePointDelta = gradePointDelta;
             Result = result;
-            FailureWave = failureWave;
+        }
+        public SalmonRunBattle()
+        {
+            Number = -1;
+            StartTime = new DateTime(0);
+            DangerRate = -1;
+            Waves = new List<Wave>();
+            OtherPlayers = new List<SalmonRunPlayer>();
+            SteelheadCount = -1;
+            FlyfishCount = -1;
+            SteelEelCount = -1;
+            DrizzlerCount = -1;
+            StingerCount = -1;
+            ScrapperCount = -1;
+            MawsCount = -1;
+            GrillerCount = -1;
+            GoldieCount = -1;
+            Score = -1;
+            GradePointDelta = -1;
+            Result = ResultType.clear;
         }
         public SalmonRunBattle(ErrorType error) : base(error)
         {
@@ -626,7 +658,6 @@ namespace Ikas.Class
             Score = -1;
             GradePointDelta = -1;
             Result = ResultType.clear;
-            FailureWave = -1;
         }
 
         public static ResultType ParseResultType(string s)
