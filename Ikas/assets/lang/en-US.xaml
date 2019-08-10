@@ -150,6 +150,7 @@
     <sys:String x:Key="shifty_24">Shifty 24</sys:String>
     <sys:String x:Key="shifty">Shifty</sys:String>
     <!-- Weapon -->
+    <sys:String x:Key="random">Random</sys:String>
     <sys:String x:Key="bold">Sploosh-o-matic</sys:String>
     <sys:String x:Key="bold_neo">Neo Sploosh-o-matic</sys:String>
     <sys:String x:Key="bold_7">Sploosh-o-matic 7</sys:String>

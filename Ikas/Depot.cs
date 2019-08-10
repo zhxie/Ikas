@@ -2402,7 +2402,7 @@ namespace Ikas
                 JToken weaponsNode = node["weapons"];
                 foreach (JToken weaponNode in weaponsNode)
                 {
-                    weapons.Add(parseSalmonRunStageWeapon(weaponNode["weapon"]));
+                    weapons.Add(parseSalmonRunStageWeapon(weaponNode));
                 }
                 return new SalmonRunStage(image, startTime, endTime, weapons);
             }
@@ -2699,7 +2699,17 @@ namespace Ikas
         {
             try
             {
-                return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), null, null, node["image"].ToString());
+                JToken weaponNode;
+                if (int.Parse(node["id"].ToString()) < 0)
+                {
+                    weaponNode = node["coop_special_weapon"];
+                    return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), null, null, weaponNode["image"].ToString());
+                }
+                else
+                {
+                    weaponNode = node["weapon"];
+                    return new Weapon((Weapon.Key)int.Parse(weaponNode["id"].ToString()), null, null, weaponNode["image"].ToString());
+                }
             }
             catch
             {

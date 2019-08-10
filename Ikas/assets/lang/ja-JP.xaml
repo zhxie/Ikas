@@ -150,6 +150,7 @@
     <sys:String x:Key="shifty_24">ミステリー 24</sys:String>
     <sys:String x:Key="shifty">ミステリー</sys:String>
     <!-- Weapon -->
+    <sys:String x:Key="random">ランダム</sys:String>
     <sys:String x:Key="bold">ボールドマーカー</sys:String>
     <sys:String x:Key="bold_neo">ボールドマーカーネオ</sys:String>
     <sys:String x:Key="bold_7">ボールドマーカー7</sys:String>
