@@ -69,10 +69,10 @@ namespace Ikas
             // Add handler for global member
             Depot.AlwaysOnTopChanged += new AlwaysOnTopChangedEventHandler(AlwaysOnTopChanged);
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
-            Depot.ScheduleChanged += new ScheduleChangedEventHandler(ScheduleChanged);
-            Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
-            Depot.ScheduleFailed += new ScheduleFailedEventHandler(ScheduleFailed);
-            Depot.BattleFailed += new BattleFailedEventHandler(BattleFailed);
+            Depot.ScheduleChanged += new ContentChangedEventHandler(ScheduleChanged);
+            Depot.ScheduleUpdated += new ContentUpdatedEventHandler(ScheduleUpdated);
+            Depot.ScheduleFailed += new ContentFailedEventHandler(ScheduleFailed);
+            Depot.BattleFailed += new ContentFailedEventHandler(BattleFailed);
             Depot.CookieUpdated += new CookieUpdatedEventHandler(CookieUpdated);
             // Prepare windows
             scheduleWindow = new ScheduleWindow();

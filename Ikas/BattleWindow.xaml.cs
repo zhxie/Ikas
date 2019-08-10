@@ -61,10 +61,10 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(stg, BitmapScalingMode.HighQuality);
             // Add handler for global member
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
-            Depot.BattleChanged += new BattleChangedEventHandler(BattleChanged);
-            Depot.BattleFound += new BattleFoundEventHandler(BattleFound);
-            Depot.BattleUpdated += new BattleUpdatedEventHandler(BattleUpdated);
-            Depot.BattleNotifying += new BattleNotifyingHandler(BattleNotifying);
+            Depot.BattleChanged += new ContentChangedEventHandler(BattleChanged);
+            Depot.BattleFound += new ContentFoundEventHandler(BattleFound);
+            Depot.BattleUpdated += new ContentUpdatedEventHandler(BattleUpdated);
+            Depot.BattleNotifying += new ContentNotifyingHandler(BattleNotifying);
             // Prepare Icon and Weapon window
             playerWindow = new PlayerWindow();
             playerWindow.KeepAliveWindow = this;

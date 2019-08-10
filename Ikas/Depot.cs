@@ -22,14 +22,11 @@ namespace Ikas
 {
     public delegate void AlwaysOnTopChangedEventHandler();
     public delegate void LanguageChangedEventHandler();
-    public delegate void ScheduleChangedEventHandler();
-    public delegate void ScheduleUpdatedEventHandler();
-    public delegate void ScheduleFailedEventHandler(Base.ErrorType error);
-    public delegate void BattleChangedEventHandler();
-    public delegate void BattleFoundEventHandler();
-    public delegate void BattleUpdatedEventHandler();
-    public delegate void BattleFailedEventHandler(Base.ErrorType error);
-    public delegate void BattleNotifyingHandler();
+    public delegate void ContentChangedEventHandler();
+    public delegate void ContentFoundEventHandler();
+    public delegate void ContentUpdatedEventHandler();
+    public delegate void ContentFailedEventHandler(Base.ErrorType error);
+    public delegate void ContentNotifyingHandler();
     public delegate void SessionTokenGetEventHandler(string sessionToken);
     public delegate void CookieGetEventHandler(string cookie);
     public delegate void CookieUpdatedEventHandler();
@@ -574,17 +571,17 @@ namespace Ikas
         private static string authCodeChallenge = "";
         private static string authCodeVerifier = "";
 
-        public static event ScheduleChangedEventHandler ScheduleChanged;
-        public static event ScheduleUpdatedEventHandler ScheduleUpdated;
-        public static event ScheduleFailedEventHandler ScheduleFailed;
+        public static event ContentChangedEventHandler ScheduleChanged;
+        public static event ContentUpdatedEventHandler ScheduleUpdated;
+        public static event ContentFailedEventHandler ScheduleFailed;
         private static Mutex ScheduleMutex = new Mutex();
         public static Schedule Schedule { get; set; } = new Schedule(0);
 
-        public static event BattleChangedEventHandler BattleChanged;
-        public static event BattleFoundEventHandler BattleFound;
-        public static event BattleUpdatedEventHandler BattleUpdated;
-        public static event BattleFailedEventHandler BattleFailed;
-        public static event BattleNotifyingHandler BattleNotifying;
+        public static event ContentChangedEventHandler BattleChanged;
+        public static event ContentFoundEventHandler BattleFound;
+        public static event ContentUpdatedEventHandler BattleUpdated;
+        public static event ContentFailedEventHandler BattleFailed;
+        public static event ContentNotifyingHandler BattleNotifying;
         private static Mutex BattleMutex = new Mutex();
         public static Battle Battle { get; set; } = new Battle(0);
         private static int notifiedBattleNumber = 0;

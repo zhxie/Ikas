@@ -53,8 +53,8 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(stgNext2, BitmapScalingMode.HighQuality);
             // Add handler for global member
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
-            Depot.ScheduleChanged += new ScheduleChangedEventHandler(ScheduleChanged);
-            Depot.ScheduleUpdated += new ScheduleUpdatedEventHandler(ScheduleUpdated);
+            Depot.ScheduleChanged += new ContentChangedEventHandler(ScheduleChanged);
+            Depot.ScheduleUpdated += new ContentUpdatedEventHandler(ScheduleUpdated);
             Depot.CookieUpdated += new CookieUpdatedEventHandler(CookieUpdated);
             // Create timers
             loadingRotationAngle = 0;
