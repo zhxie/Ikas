@@ -574,7 +574,13 @@ namespace Ikas
         public static event ContentUpdatedEventHandler ScheduleUpdated;
         public static event ContentFailedEventHandler ScheduleFailed;
         private static Mutex ScheduleMutex = new Mutex();
-        public static Schedule Schedule { get; set; } = new Schedule(0);
+        public static Schedule Schedule { get; set; } = new Schedule();
+
+        public static event ContentChangedEventHandler SalmonRunScheduleChanged;
+        public static event ContentUpdatedEventHandler SalmonRunScheduleUpdated;
+        public static event ContentFailedEventHandler SalmonRunScheduleFailed;
+        private static Mutex SalmonRunScheduleMutex = new Mutex();
+        public static SalmonRunSchedule SalmonRunSchedule { get; set; } = new SalmonRunSchedule();
 
         public static event ContentChangedEventHandler BattleChanged;
         public static event ContentFoundEventHandler BattleFound;
@@ -582,7 +588,7 @@ namespace Ikas
         public static event ContentFailedEventHandler BattleFailed;
         public static event ContentNotifyingHandler BattleNotifying;
         private static Mutex BattleMutex = new Mutex();
-        public static Battle Battle { get; set; } = new Battle(0);
+        public static Battle Battle { get; set; } = new Battle();
         private static int notifiedBattleNumber = 0;
 
         public static event AccessGetEventHandler SessionTokenGet;
@@ -653,12 +659,13 @@ namespace Ikas
                 return false;
             }
         }
+
         /// <summary>
-        /// Get current and next Schedule in regular, ranked and league mode.
+        /// Get current and next schedule in regular, ranked and league mode.
         /// </summary>
         public static async void GetSchedule()
         {
-            // Remove previous Downloader's handlers
+            // Remove previous downloader's handlers
             DownloadHelper.RemoveDownloaders(Downloader.SourceType.Schedule);
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
@@ -676,7 +683,7 @@ namespace Ikas
             }
             catch
             {
-                // Update Schedule on error
+                // Update schedule on error
                 UpdateSchedule(new Schedule(Base.ErrorType.cookie_is_empty));
                 return;
             }
@@ -687,7 +694,7 @@ namespace Ikas
             }
             catch
             {
-                // Update Schedule on error
+                // Update schedule on error
                 UpdateSchedule(new Schedule(Base.ErrorType.network_cannot_be_reached));
                 return;
             }
@@ -709,7 +716,7 @@ namespace Ikas
                     // League
                     List<ScheduledStage> leagueStages = parseScheduledStages(jObject["league"][0]);
                     List<ScheduledStage> nextLeagueStages = parseScheduledStages(jObject["league"][1]);
-                    // Create Schedule
+                    // Create schedules
                     endTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(int.Parse(jObject["regular"][0]["end_time"].ToString()));
                     stages.AddRange(regularStages);
                     stages.AddRange(rankedStages);
@@ -718,23 +725,31 @@ namespace Ikas
                     nextStages.AddRange(nextRankedStages);
                     nextStages.AddRange(nextLeagueStages);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // Update Schedule on error
-                    UpdateSchedule(new Schedule(Base.ErrorType.schedule_cannot_be_resolved));
+                    if (Base.TryParseErrorType(ex.Message, out _))
+                    {
+                        // Update schedule on error
+                        UpdateSchedule(new Schedule(Base.ParseErrorType(ex.Message)));
+                    }
+                    else
+                    {
+                        // Update schedule on error
+                        UpdateSchedule(new Schedule(Base.ErrorType.schedule_cannot_be_resolved));
+                    }
                     return;
                 }
-                // Update Schedule
+                // Update schedule
                 UpdateSchedule(new Schedule(endTime, stages, nextStages));
             }
             else
             {
-                // Update Schedule on error
+                // Update schedule on error
                 UpdateSchedule(new Schedule(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
             }
         }
         /// <summary>
-        /// Get current and next Schedule in regular, ranked and league mode, also raise ScheduleChanged event
+        /// Get current and next schedule in regular, ranked and league mode, also raise ScheduleChanged event
         /// </summary>
         public static void ForceGetSchedule()
         {
@@ -744,9 +759,9 @@ namespace Ikas
             GetSchedule();
         }
         /// <summary>
-        /// Update Schedule.
+        /// Update schedule.
         /// </summary>
-        /// <param name="schedule">Updated Schedule</param>
+        /// <param name="schedule">Updated schedule</param>
         /// <returns></returns>
         private static bool UpdateSchedule(Schedule schedule)
         {
@@ -771,6 +786,109 @@ namespace Ikas
             {
                 // Raise event
                 ScheduleUpdated?.Invoke();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Get current and next salmon run schedule.
+        /// </summary>
+        public static async void GetSalmonRunSchedule()
+        {
+            // Remove previous downloader's handlers
+            DownloadHelper.RemoveDownloaders(Downloader.SourceType.SalmonRunSchedule);
+            // Send HTTP GET
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.UseCookies = false;
+            if (Proxy != null)
+            {
+                handler.UseProxy = true;
+                handler.Proxy = Proxy;
+            }
+            HttpClient client = new HttpClient(handler);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetSalmonRunScheduleApi);
+            try
+            {
+                request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+            }
+            catch
+            {
+                // Update schedule on error
+                UpdateSalmonRunSchedule(new SalmonRunSchedule(Base.ErrorType.cookie_is_empty));
+                return;
+            }
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.SendAsync(request);
+            }
+            catch
+            {
+                // Update schedule on error
+                UpdateSalmonRunSchedule(new SalmonRunSchedule(Base.ErrorType.network_cannot_be_reached));
+                return;
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                string resultString = await response.Content.ReadAsStringAsync();
+                // Parse JSON
+                JObject jObject = JObject.Parse(resultString);
+                JToken details = jObject["details"];
+                List<SalmonRunStage> stages = new List<SalmonRunStage>();
+                try
+                {
+                    foreach (JToken node in details)
+                    {
+                        stages.Add(parseSalmonRunStage(node));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (Base.TryParseErrorType(ex.Message, out _))
+                    {
+                        // Update schedule on error
+                        UpdateSalmonRunSchedule(new SalmonRunSchedule(Base.ParseErrorType(ex.Message)));
+                    }
+                    else
+                    {
+                        // Update schedule on error
+                        UpdateSalmonRunSchedule(new SalmonRunSchedule(Base.ErrorType.schedule_cannot_be_resolved));
+                    }
+                    return;
+                }
+                // Update schedule
+                UpdateSalmonRunSchedule(new SalmonRunSchedule(stages));
+            }
+            else
+            {
+                // Update schedule on error
+                UpdateSalmonRunSchedule(new SalmonRunSchedule(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+            }
+        }
+        /// <summary>
+        /// Update salmon run.
+        /// </summary>
+        /// <param name="schedule"></param>
+        /// <returns></returns>
+        private static bool UpdateSalmonRunSchedule(SalmonRunSchedule schedule)
+        {
+            if (schedule.Error >= 0)
+            {
+                SalmonRunScheduleFailed?.Invoke(schedule.Error);
+            }
+            if (SalmonRunSchedule != schedule)
+            {
+                SalmonRunScheduleMutex.WaitOne();
+                SalmonRunSchedule = schedule;
+                SalmonRunScheduleMutex.ReleaseMutex();
+                // Raise event
+                SalmonRunScheduleUpdated?.Invoke();
+                return true;
+            }
+            else
+            {
+                // Raise event
+                SalmonRunScheduleUpdated?.Invoke();
                 return false;
             }
         }
@@ -1342,9 +1460,9 @@ namespace Ikas
             }
         }
         /// <summary>
-        ///  Update Battle.
+        ///  Update battle.
         /// </summary>
-        /// <param name="battle">Updated Battle</param>
+        /// <param name="battle">Updated battle</param>
         /// <returns></returns>
         private static bool UpdateBattle(Battle battle)
         {
@@ -1564,9 +1682,9 @@ namespace Ikas
             return string.Format(FileFolderUrl.NintendoAuthorize, authState, authCodeChallenge);
         }
         /// <summary>
-        /// Get Session Token from Nintendo.
+        /// Get session token from Nintendo.
         /// </summary>
-        /// <param name="sessionTokenCode">Session Token code</param>
+        /// <param name="sessionTokenCode">Session token code</param>
         /// <returns></returns>
         public static async void GetSessionToken(string sessionTokenCode)
         {
@@ -1627,9 +1745,9 @@ namespace Ikas
             }
         }
         /// <summary>
-        /// Get Cookie from Nintendo (3rd Party services was used).
+        /// Get cookie from Nintendo (3rd Party services was used).
         /// </summary>
-        /// <param name="sessionToken">Session Token of Nintendo (3rd Party services was used)</param>
+        /// <param name="sessionToken">Session token of Nintendo (3rd party services was used)</param>
         /// <returns></returns>
         public static async void GetCookie(string sessionToken)
         {
@@ -1967,8 +2085,8 @@ namespace Ikas
         }
 
         /// <summary>
-        /// Sort Players.
-        /// Players are sorted by Paint/Sort, Kill + Assist, Special, Death, Kill and Nickname.
+        /// Sort players.
+        /// Players are sorted by paint/sort, kill + assist, special, death, kill and nickname.
         /// </summary>
         /// <param name="players">Player list which is going to be sorted</param>
         /// <returns></returns>
@@ -1985,7 +2103,7 @@ namespace Ikas
         }
         /// <summary>
         /// Sort RankedPlayers.
-        /// RankedPlayers are sorted by Paint/Sort, Kill + Assist, Special, Death, Kill and Nickname.
+        /// RankedPlayers are sorted by paint/sort, kill + assist, special, death, kill and nickname.
         /// </summary>
         /// <param name="players">Player list which is going to be sorted</param>
         /// <returns></returns>
@@ -2007,9 +2125,9 @@ namespace Ikas
         /// <param name="node">JToken of a schedule</param>
         private static List<ScheduledStage> parseScheduledStages(JToken node)
         {
-            List<ScheduledStage> stages = new List<ScheduledStage>();
             try
             {
+                List<ScheduledStage> stages = new List<ScheduledStage>();
                 Mode.Key mode = Mode.ParseKey(node["game_mode"]["key"].ToString());
                 Rule.Key rule = Rule.ParseKey(node["rule"]["key"].ToString());
                 ScheduledStage stage1, stage2;
@@ -2033,15 +2151,47 @@ namespace Ikas
                 }
                 stages.Add(stage1);
                 stages.Add(stage2);
+                return stages;
             }
             catch
             {
-                return new List<ScheduledStage>();
+                throw new FormatException(Base.ErrorType.stage_cannot_be_resolved.ToString());
             }
-            return stages;
         }
         /// <summary>
-        /// Parse Player from JToken
+        /// Parse SalmonRunStage from JToken
+        /// </summary>
+        /// <param name="node">JToken of a detail schedule of salmon run</param>
+        /// <returns></returns>
+        private static SalmonRunStage parseSalmonRunStage(JToken node)
+        {
+            try
+            {
+                string image = node["stage"]["image"].ToString();
+                DateTime startTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(int.Parse(node["start_time"].ToString()));
+                DateTime endTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(int.Parse(node["end_time"].ToString()));
+                List<Weapon> weapons = new List<Weapon>();
+                JToken weaponsNode = node["weapons"];
+                foreach (JToken weaponNode in weaponsNode)
+                {
+                    weapons.Add(parseSalmonRunStageWeapon(weaponNode["weapon"]));
+                }
+                return new SalmonRunStage(image, startTime, endTime, weapons);
+            }
+            catch (Exception ex)
+            {
+                if (Base.TryParseErrorType(ex.Message, out _))
+                {
+                    throw new FormatException(ex.Message);
+                }
+                else
+                {
+                    throw new FormatException(Base.ErrorType.salmon_run_stage_cannot_be_resolved.ToString());
+                }
+            }
+        }
+        /// <summary>
+        /// Parse player from JToken
         /// </summary>
         /// <param name="node">JToken of a player</param>
         /// <param name="image">Url of the user icon</param>
@@ -2091,7 +2241,7 @@ namespace Ikas
             }
         }
         /// <summary>
-        /// Parse Player from JToken
+        /// Parse player from JToken
         /// </summary>
         /// <param name="node">JToken of a player</param>
         /// <param name="isSelf">If the player is player itself</param>
@@ -2179,7 +2329,7 @@ namespace Ikas
             }
         }
         /// <summary>
-        /// Parse Weapon from JToken
+        /// Parse weapon from JToken
         /// </summary>
         /// <param name="node">JToken of a weapon</param>
         /// <returns></returns>
@@ -2204,7 +2354,23 @@ namespace Ikas
             }
         }
         /// <summary>
-        /// Parse SubWeapon from JToken
+        /// Parse salmon run stage weapon from JToken
+        /// </summary>
+        /// <param name="node">JToken of a weapon in salmon run schedule</param>
+        /// <returns></returns>
+        private static Weapon parseSalmonRunStageWeapon(JToken node)
+        {
+            try
+            {
+                return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), null, null, node["image"].ToString());
+            }
+            catch
+            {
+                throw new FormatException(Base.ErrorType.salmon_run_stage_weapon_cannot_be_resolved.ToString());
+            }
+        }
+        /// <summary>
+        /// Parse sub weapon from JToken
         /// </summary>
         /// <param name="node">JToken of a sub weapon</param>
         /// <returns></returns>
@@ -2220,7 +2386,7 @@ namespace Ikas
             }
         }
         /// <summary>
-        /// Parse SpecialWeapon from JToken
+        /// Parse special weapon from JToken
         /// </summary>
         /// <param name="node">JToken of a special weapon</param>
         /// <returns></returns>
@@ -2236,7 +2402,7 @@ namespace Ikas
             }
         }
         /// <summary>
-        /// Parse Gear from JToken
+        /// Parse gear from JToken
         /// </summary>
         /// <param name="gearNode">JToken of a head, clothes or shoes</param>
         /// <param name="skillNode">JToken of a head skills, clothes skills or shoes skills</param>

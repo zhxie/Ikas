@@ -57,21 +57,19 @@ namespace Ikas.Class
 
     public class SalmonRunSchedule : Base
     {
-        public SalmonRunStage Stage { get; }
-        public SalmonRunStage NextStage { get; }
+        public List<SalmonRunStage> Stages { get; }
 
-        public SalmonRunSchedule(SalmonRunStage stage, SalmonRunStage nextStage)
+        public SalmonRunSchedule(List<SalmonRunStage> stages)
         {
-            Stage = stage;
-            NextStage = nextStage;
+            Stages = stages;
         }
         public SalmonRunSchedule()
         {
-
+            Stages = new List<SalmonRunStage>();
         }
         public SalmonRunSchedule(ErrorType error) : base(error)
         {
-
+            Stages = new List<SalmonRunStage>();
         }
     }
 }
