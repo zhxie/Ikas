@@ -27,8 +27,7 @@ namespace Ikas
     public delegate void ContentUpdatedEventHandler();
     public delegate void ContentFailedEventHandler(Base.ErrorType error);
     public delegate void ContentNotifyingHandler();
-    public delegate void SessionTokenGetEventHandler(Base.ErrorType error, string sessionToken = "");
-    public delegate void CookieGetEventHandler(Base.ErrorType error, string cookie = "");
+    public delegate void AccessGetEventHandler(Base.ErrorType error, string access = null);
     public delegate void CookieUpdatedEventHandler();
     public static class Depot
     {
@@ -586,8 +585,8 @@ namespace Ikas
         public static Battle Battle { get; set; } = new Battle(0);
         private static int notifiedBattleNumber = 0;
 
-        public static event SessionTokenGetEventHandler SessionTokenGet;
-        public static event CookieGetEventHandler CookieGet;
+        public static event AccessGetEventHandler SessionTokenGet;
+        public static event AccessGetEventHandler CookieGet;
         public static event CookieUpdatedEventHandler CookieUpdated;
 
         private static Mode.Key currentMode = Mode.Key.regular_battle;

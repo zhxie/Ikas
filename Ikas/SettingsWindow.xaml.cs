@@ -93,8 +93,8 @@ namespace Ikas
             InitializeComponent();
             // Add handler for global member
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
-            Depot.SessionTokenGet += new SessionTokenGetEventHandler(SessionTokenGet);
-            Depot.CookieGet += new CookieGetEventHandler(CookieGet);
+            Depot.SessionTokenGet += new AccessGetEventHandler(SessionTokenGet);
+            Depot.CookieGet += new AccessGetEventHandler(CookieGet);
             // Prepare windows
             messageWindow = new MessageWindow();
             messageWindow.Opacity = 0;
