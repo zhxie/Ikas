@@ -255,6 +255,17 @@ namespace Ikas.Class
             MyScore = myScore;
             OtherScore = otherScore;
         }
+        public Battle()
+        {
+            Number = -1;
+            StartTime = new DateTime(0);
+            ElapsedTime = -1;
+            MyPlayers = new List<Player>();
+            OtherPlayers = new List<Player>();
+            LevelAfter = -1;
+            MyScore = -1;
+            OtherScore = -1;
+        }
         public Battle(ErrorType error) : base(error)
         {
             Number = -1;

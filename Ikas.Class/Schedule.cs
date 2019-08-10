@@ -16,6 +16,12 @@ namespace Ikas.Class
             Stages = stages;
             NextStages = nextStages;
         }
+        public Schedule()
+        {
+            EndTime = new DateTime(0);
+            Stages = new List<ScheduledStage>();
+            NextStages = new List<ScheduledStage>();
+        }
         public Schedule(ErrorType error) : base(error)
         {
             EndTime = new DateTime(0);
@@ -58,6 +64,10 @@ namespace Ikas.Class
         {
             Stage = stage;
             NextStage = nextStage;
+        }
+        public SalmonRunSchedule()
+        {
+
         }
         public SalmonRunSchedule(ErrorType error) : base(error)
         {
