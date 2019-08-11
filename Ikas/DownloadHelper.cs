@@ -17,9 +17,9 @@ namespace Ikas
         public enum SourceType
         {
             Schedule,
-            SalmonRunSchedule,
+            Shift,
             Battle,
-            SalmonRunBattle,
+            Job,
             Player,
             Gear,
             Weapon

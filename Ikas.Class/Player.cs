@@ -198,7 +198,7 @@ namespace Ikas.Class
         }
     }
 
-    public class SalmonRunPlayer : BasePlayer
+    public class JobPlayer : BasePlayer
     {
         public enum GradeType
         {
@@ -261,7 +261,7 @@ namespace Ikas.Class
             }
         }
 
-        public SalmonRunPlayer(string id, string nickname, SpeciesType species, StyleType style, GradeType grade, int gradePoint, List<Weapon> weapons, List<int> specialWeaponCount,
+        public JobPlayer(string id, string nickname, SpeciesType species, StyleType style, GradeType grade, int gradePoint, List<Weapon> weapons, List<int> specialWeaponCount,
             int steelHeadKill, int flyFishKill, int steelEelKill, int drizzlerKill, int stingerKill, int mawsKill, int grillerKill, int goldieKill, int help, int dead, int powerEgg, int goldenEgg, string image, bool isSelf = false)
         {
             Id = id;

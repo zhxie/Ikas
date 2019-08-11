@@ -576,11 +576,11 @@ namespace Ikas
         private static Mutex ScheduleMutex = new Mutex();
         public static Schedule Schedule { get; set; } = new Schedule();
 
-        public static event ContentChangedEventHandler SalmonRunScheduleChanged;
-        public static event ContentUpdatedEventHandler SalmonRunScheduleUpdated;
-        public static event ContentFailedEventHandler SalmonRunScheduleFailed;
-        private static Mutex SalmonRunScheduleMutex = new Mutex();
-        public static SalmonRunSchedule SalmonRunSchedule { get; set; } = new SalmonRunSchedule();
+        public static event ContentChangedEventHandler ShiftChanged;
+        public static event ContentUpdatedEventHandler ShiftUpdated;
+        public static event ContentFailedEventHandler ShiftFailed;
+        private static Mutex ShiftMutex = new Mutex();
+        public static Shift Shift { get; set; } = new Shift();
 
         public static event ContentChangedEventHandler BattleChanged;
         public static event ContentFoundEventHandler BattleFound;
@@ -591,14 +591,14 @@ namespace Ikas
         public static Battle Battle { get; set; } = new Battle();
         private static int notifiedBattleNumber = 0;
 
-        public static event ContentChangedEventHandler SalmonRunBattleChanged;
-        public static event ContentFoundEventHandler SalmonRunBattleFound;
-        public static event ContentUpdatedEventHandler SalmonRunBattleUpdated;
-        public static event ContentFailedEventHandler SalmonRunBattleFailed;
-        public static event ContentNotifyingHandler SalmonRunBattleNotifying;
-        private static Mutex SalmonRunBattleMutex = new Mutex();
-        public static SalmonRunBattle SalmonRunBattle { get; set; } = new SalmonRunBattle();
-        private static int notifiedSalmonRunBattleNumber = 0;
+        public static event ContentChangedEventHandler JobChanged;
+        public static event ContentFoundEventHandler JobFound;
+        public static event ContentUpdatedEventHandler JobUpdated;
+        public static event ContentFailedEventHandler JobFailed;
+        public static event ContentNotifyingHandler JobNotifying;
+        private static Mutex JobMutex = new Mutex();
+        public static Job Job { get; set; } = new Job();
+        private static int notifiedJobNumber = 0;
 
         public static event AccessGetEventHandler SessionTokenGet;
         public static event AccessGetEventHandler CookieGet;
@@ -800,12 +800,12 @@ namespace Ikas
         }
 
         /// <summary>
-        /// Get current and next salmon run schedule.
+        /// Get current and next shift.
         /// </summary>
-        public static async void GetSalmonRunSchedule()
+        public static async void GetShift()
         {
             // Remove previous downloader's handlers
-            DownloadHelper.RemoveDownloaders(Downloader.SourceType.SalmonRunSchedule);
+            DownloadHelper.RemoveDownloaders(Downloader.SourceType.Shift);
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseCookies = false;
@@ -822,8 +822,8 @@ namespace Ikas
             }
             catch
             {
-                // Update schedule on error
-                UpdateSalmonRunSchedule(new SalmonRunSchedule(Base.ErrorType.cookie_is_empty));
+                // Update shift on error
+                UpdateShift(new Shift(Base.ErrorType.cookie_is_empty));
                 return;
             }
             HttpResponseMessage response;
@@ -833,8 +833,8 @@ namespace Ikas
             }
             catch
             {
-                // Update schedule on error
-                UpdateSalmonRunSchedule(new SalmonRunSchedule(Base.ErrorType.network_cannot_be_reached));
+                // Update shift on error
+                UpdateShift(new Shift(Base.ErrorType.network_cannot_be_reached));
                 return;
             }
             if (response.IsSuccessStatusCode)
@@ -843,75 +843,75 @@ namespace Ikas
                 // Parse JSON
                 JObject jObject = JObject.Parse(resultString);
                 JToken details = jObject["details"];
-                List<SalmonRunStage> stages = new List<SalmonRunStage>();
+                List<ShiftStage> stages = new List<ShiftStage>();
                 try
                 {
                     foreach (JToken node in details)
                     {
-                        stages.Add(parseSalmonRunStage(node));
+                        stages.Add(parseShiftStage(node));
                     }
                 }
                 catch (Exception ex)
                 {
                     if (Base.TryParseErrorType(ex.Message, out _))
                     {
-                        // Update schedule on error
-                        UpdateSalmonRunSchedule(new SalmonRunSchedule(Base.ParseErrorType(ex.Message)));
+                        // Update shift on error
+                        UpdateShift(new Shift(Base.ParseErrorType(ex.Message)));
                     }
                     else
                     {
-                        // Update schedule on error
-                        UpdateSalmonRunSchedule(new SalmonRunSchedule(Base.ErrorType.schedule_cannot_be_resolved));
+                        // Update shift on error
+                        UpdateShift(new Shift(Base.ErrorType.schedule_cannot_be_resolved));
                     }
                     return;
                 }
-                // Update schedule
-                UpdateSalmonRunSchedule(new SalmonRunSchedule(stages));
+                // Update shift
+                UpdateShift(new Shift(stages));
             }
             else
             {
-                // Update schedule on error
-                UpdateSalmonRunSchedule(new SalmonRunSchedule(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                // Update shift on error
+                UpdateShift(new Shift(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
             }
         }
         /// <summary>
-        /// Get current and next salmon run schedule, also raise SalmonRunScheduleChanged event.
+        /// Get current and next shift, also raise ShiftChanged event.
         /// </summary>
-        public static void ForceGetSalmonRunSchedule()
+        public static void ForceGetShift()
         {
             // Raise event
-            SalmonRunScheduleChanged?.Invoke();
-            // Update schedule
-            GetSalmonRunSchedule();
+            ShiftChanged?.Invoke();
+            // Update shift
+            GetShift();
         }
         /// <summary>
-        /// Update salmon run.
+        /// Update shift.
         /// </summary>
-        /// <param name="schedule"></param>
+        /// <param name="shift">Updated shift</param>
         /// <returns></returns>
-        private static bool UpdateSalmonRunSchedule(SalmonRunSchedule schedule)
+        private static bool UpdateShift(Shift shift)
         {
-            if (schedule.Error >= 0)
+            if (shift.Error >= 0)
             {
-                SalmonRunScheduleFailed?.Invoke(schedule.Error);
+                ShiftFailed?.Invoke(shift.Error);
             }
-            else if (schedule.Stages.Count == 0)
+            else if (shift.Stages.Count == 0)
             {
-                SalmonRunScheduleFailed?.Invoke(Base.ErrorType.salmon_run_schedule_is_not_ready);
+                ShiftFailed?.Invoke(Base.ErrorType.shift_is_not_ready);
             }
-            if (SalmonRunSchedule != schedule)
+            if (Shift != shift)
             {
-                SalmonRunScheduleMutex.WaitOne();
-                SalmonRunSchedule = schedule;
-                SalmonRunScheduleMutex.ReleaseMutex();
+                ShiftMutex.WaitOne();
+                Shift = shift;
+                ShiftMutex.ReleaseMutex();
                 // Raise event
-                SalmonRunScheduleUpdated?.Invoke();
+                ShiftUpdated?.Invoke();
                 return true;
             }
             else
             {
                 // Raise event
-                SalmonRunScheduleUpdated?.Invoke();
+                ShiftUpdated?.Invoke();
                 return false;
             }
         }
@@ -1521,14 +1521,14 @@ namespace Ikas
         }
 
         /// <summary>
-        /// Get last salmon run battle result.
+        /// Get last job result.
         /// </summary>
-        public static async void GetLastSalmonRunBattle()
+        public static async void GetLastJob()
         {
             // Raise event
-            SalmonRunBattleChanged?.Invoke();
+            JobChanged?.Invoke();
             // Remove previous downloader's handlers
-            DownloadHelper.RemoveDownloaders(Downloader.SourceType.SalmonRunBattle);
+            DownloadHelper.RemoveDownloaders(Downloader.SourceType.Job);
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseCookies = false;
@@ -1545,8 +1545,8 @@ namespace Ikas
             }
             catch
             {
-                // Update battle on error
-                UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.cookie_is_empty));
+                // Update job on error
+                UpdateJob(new Job(Base.ErrorType.cookie_is_empty));
                 return;
             }
             HttpResponseMessage response;
@@ -1556,8 +1556,8 @@ namespace Ikas
             }
             catch
             {
-                // Update battle on error
-                UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.network_cannot_be_reached));
+                // Update job on error
+                UpdateJob(new Job(Base.ErrorType.network_cannot_be_reached));
                 return;
             }
             if (response.IsSuccessStatusCode)
@@ -1572,21 +1572,21 @@ namespace Ikas
                 }
                 catch
                 {
-                    // Update battle on error
-                    UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.salmon_run_battles_cannot_be_resolved));
+                    // Update job on error
+                    UpdateJob(new Job(Base.ErrorType.jobs_cannot_be_resolved));
                     return;
                 }
-                // Same battle
-                if (battleNumber == SalmonRunBattle.Number)
+                // Same job
+                if (battleNumber == Job.Number)
                 {
-                    // Update same battle
-                    UpdateSalmonRunBattle(SalmonRunBattle);
+                    // Update same job
+                    UpdateJob(Job);
                     return;
                 }
                 else
                 {
                     // Raise event
-                    SalmonRunBattleFound?.Invoke();
+                    JobFound?.Invoke();
                 }
                 // Send HTTP GET
                 request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetSalmonRunIndividualBattleApi, battleNumber));
@@ -1596,8 +1596,8 @@ namespace Ikas
                 }
                 catch
                 {
-                    // Update Battle on error
-                    UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.cookie_is_empty));
+                    // Update job on error
+                    UpdateJob(new Job(Base.ErrorType.cookie_is_empty));
                     return;
                 }
                 try
@@ -1606,8 +1606,8 @@ namespace Ikas
                 }
                 catch
                 {
-                    // Update Battle on error
-                    UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.network_cannot_be_reached));
+                    // Update job on error
+                    UpdateJob(new Job(Base.ErrorType.network_cannot_be_reached));
                     return;
                 }
                 if (response.IsSuccessStatusCode)
@@ -1619,25 +1619,25 @@ namespace Ikas
                     {
                         DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)).AddSeconds(long.Parse(jObject["play_time"].ToString()));
                         double dangerRate = double.Parse(jObject["danger_rate"].ToString());
-                        SalmonRunStage stage = parseSalmonRunStage(jObject["schedule"]);
+                        ShiftStage stage = parseShiftStage(jObject["schedule"]);
                         List<Wave> waves = new List<Wave>();
                         foreach (JToken node in jObject["wave_details"])
                         {
                             waves.Add(parseWave(node));
                         }
-                        SalmonRunPlayer myPlayer = await parseSalmonRunPlayer(jObject["my_result"], true, (SalmonRunPlayer.GradeType)int.Parse(jObject["grade"]["id"].ToString()), int.Parse(jObject["grade_point"].ToString()));
-                        List<SalmonRunPlayer> otherPlayers = new List<SalmonRunPlayer>();
-                        List<Task<SalmonRunPlayer>> otherPlayerTasks = new List<Task<SalmonRunPlayer>>();
+                        JobPlayer myPlayer = await parseJobPlayer(jObject["my_result"], true, (JobPlayer.GradeType)int.Parse(jObject["grade"]["id"].ToString()), int.Parse(jObject["grade_point"].ToString()));
+                        List<JobPlayer> otherPlayers = new List<JobPlayer>();
+                        List<Task<JobPlayer>> otherPlayerTasks = new List<Task<JobPlayer>>();
                         foreach (JToken node in jObject["other_results"])
                         {
                             if (node.HasValues)
                             {
-                                Task<SalmonRunPlayer> playerTask = parseSalmonRunPlayer(node);
+                                Task<JobPlayer> playerTask = parseJobPlayer(node);
                                 otherPlayerTasks.Add(playerTask);
                             }
                         }
                         await Task.WhenAll(otherPlayerTasks);
-                        foreach (Task<SalmonRunPlayer> playerTask in otherPlayerTasks)
+                        foreach (Task<JobPlayer> playerTask in otherPlayerTasks)
                         {
                             otherPlayers.Add(playerTask.Result);
                         }
@@ -1652,12 +1652,12 @@ namespace Ikas
                         int goldieCount = int.Parse(jObject["boss_counts"]["3"]["count"].ToString());
                         int score = int.Parse(jObject["job_score"].ToString());
                         int gradePointDelta = int.Parse(jObject["grade_point_delta"].ToString());
-                        SalmonRunBattle.ResultType result = SalmonRunBattle.ResultType.clear;
+                        Job.ResultType result = Job.ResultType.clear;
                         if (!bool.Parse(jObject["job_result"]["is_clear"].ToString()))
                         {
-                            result = SalmonRunBattle.ParseResultType(jObject["job_result"]["failure_reason"].ToString());
+                            result = Job.ParseResultType(jObject["job_result"]["failure_reason"].ToString());
                         }
-                        UpdateSalmonRunBattle(new SalmonRunBattle(battleNumber, startTime, dangerRate, stage, waves, myPlayer, otherPlayers,
+                        UpdateJob(new Job(battleNumber, startTime, dangerRate, stage, waves, myPlayer, otherPlayers,
                             steelheadCount, flyfishCount, steelEelCount, drizzlerCount, stingerCount, scrapperCount, mawsCount, grillerCount, goldieCount,
                             score, gradePointDelta, result));
                     }
@@ -1665,62 +1665,62 @@ namespace Ikas
                     {
                         if (Base.TryParseErrorType(ex.Message, out _))
                         {
-                            // Update Battle on error
-                            UpdateSalmonRunBattle(new SalmonRunBattle(Base.ParseErrorType(ex.Message)));
+                            // Update job on error
+                            UpdateJob(new Job(Base.ParseErrorType(ex.Message)));
                         }
                         else
                         {
-                            // Update Battle on error
-                            UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.salmon_run_battle_cannot_be_resolved));
+                            // Update job on error
+                            UpdateJob(new Job(Base.ErrorType.job_cannot_be_resolved));
                         }
                     }
                 }
                 else
                 {
-                    // Update battle on error
-                    UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                    // Update job on error
+                    UpdateJob(new Job(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
                 }
             }
             else
             {
-                // Update battle on error
-                UpdateSalmonRunBattle(new SalmonRunBattle(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                // Update job on error
+                UpdateJob(new Job(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
             }
         }
         /// <summary>
-        /// Update salmon run battle.
+        /// Update job.
         /// </summary>
-        /// <param name="battle">Updated salmon run battle</param>
+        /// <param name="job">Updated job</param>
         /// <returns></returns>
-        private static bool UpdateSalmonRunBattle(SalmonRunBattle battle)
+        private static bool UpdateJob(Job job)
         {
-            if (battle.Error >= 0)
+            if (job.Error >= 0)
             {
-                SalmonRunBattleFailed?.Invoke(battle.Error);
+                JobFailed?.Invoke(job.Error);
             }
-            else if (battle.Number == -1)
+            else if (job.Number == -1)
             {
-                SalmonRunBattleFailed?.Invoke(Base.ErrorType.salmon_run_battle_is_not_ready);
+                JobFailed?.Invoke(Base.ErrorType.job_is_not_ready);
             }
-            if (SalmonRunBattle != battle)
+            if (Job != job)
             {
-                SalmonRunBattleMutex.WaitOne();
-                SalmonRunBattle = battle;
+                JobMutex.WaitOne();
+                Job = job;
                 // Notify
-                if (SalmonRunBattle.Number > notifiedSalmonRunBattleNumber)
+                if (Job.Number > notifiedJobNumber)
                 {
-                    notifiedSalmonRunBattleNumber = SalmonRunBattle.Number;
-                    SalmonRunBattleNotifying.Invoke();
+                    notifiedJobNumber = Job.Number;
+                    JobNotifying.Invoke();
                 }
-                SalmonRunBattleMutex.ReleaseMutex();
+                JobMutex.ReleaseMutex();
                 // Raise event
-                SalmonRunBattleUpdated?.Invoke();
+                JobUpdated?.Invoke();
                 return true;
             }
             else
             {
                 // Raise event
-                SalmonRunBattleUpdated?.Invoke();
+                JobUpdated?.Invoke();
                 return false;
             }
         }
@@ -2387,11 +2387,11 @@ namespace Ikas
             }
         }
         /// <summary>
-        /// Parse SalmonRunStage from JToken
+        /// Parse ShiftStage from JToken
         /// </summary>
         /// <param name="node">JToken of a detail schedule of salmon run</param>
         /// <returns></returns>
-        private static SalmonRunStage parseSalmonRunStage(JToken node)
+        private static ShiftStage parseShiftStage(JToken node)
         {
             try
             {
@@ -2402,9 +2402,9 @@ namespace Ikas
                 JToken weaponsNode = node["weapons"];
                 foreach (JToken weaponNode in weaponsNode)
                 {
-                    weapons.Add(parseSalmonRunStageWeapon(weaponNode));
+                    weapons.Add(parseShiftWeapon(weaponNode));
                 }
-                return new SalmonRunStage(image, startTime, endTime, weapons);
+                return new ShiftStage(image, startTime, endTime, weapons);
             }
             catch (Exception ex)
             {
@@ -2414,7 +2414,7 @@ namespace Ikas
                 }
                 else
                 {
-                    throw new FormatException(Base.ErrorType.salmon_run_stage_cannot_be_resolved.ToString());
+                    throw new FormatException(Base.ErrorType.shift_stage_cannot_be_resolved.ToString());
                 }
             }
         }
@@ -2579,7 +2579,7 @@ namespace Ikas
             }
         }
         /// <summary>
-        /// Parse SalmonRunPlayer from JToken
+        /// Parse JobPlayer from JToken
         /// </summary>
         /// <param name="node">JToken of a player in salmon run</param>
         /// <param name="image">Url of the user icon</param>
@@ -2587,7 +2587,7 @@ namespace Ikas
         /// <param name="grade">Grade of the player</param>
         /// <param name="gradePoint">Grade point of the player</param>
         /// <returns></returns>
-        private static SalmonRunPlayer parseSalmonRunPlayer(JToken node, string image, bool isSelf = false, SalmonRunPlayer.GradeType grade = SalmonRunPlayer.GradeType.intern, int gradePoint = 0)
+        private static JobPlayer parseJobPlayer(JToken node, string image, bool isSelf = false, JobPlayer.GradeType grade = JobPlayer.GradeType.intern, int gradePoint = 0)
         {
             try
             {
@@ -2597,12 +2597,12 @@ namespace Ikas
                 }
                 string id = node["pid"].ToString();
                 string nickname = node["name"].ToString();
-                SalmonRunPlayer.SpeciesType species = SalmonRunPlayer.ParseSpecies(node["player_type"]["species"].ToString());
-                SalmonRunPlayer.StyleType style = SalmonRunPlayer.ParseStyle(node["player_type"]["style"].ToString());
+                JobPlayer.SpeciesType species = JobPlayer.ParseSpecies(node["player_type"]["species"].ToString());
+                JobPlayer.StyleType style = JobPlayer.ParseStyle(node["player_type"]["style"].ToString());
                 List<Weapon> weapons = new List<Weapon>();
                 foreach (JToken weaponNode in node["weapon_list"])
                 {
-                    weapons.Add(parseSalmonRunWeapon(weaponNode["weapon"], node["special"]));
+                    weapons.Add(parseJobWeapon(weaponNode["weapon"], node["special"]));
                 }
                 List<int> specialWeaponCount = new List<int>();
                 foreach (JToken count in node["special_counts"])
@@ -2622,7 +2622,7 @@ namespace Ikas
                 int dead = int.Parse(node["dead_count"].ToString());
                 int powerEgg = int.Parse(node["ikura_num"].ToString());
                 int goldenEgg = int.Parse(node["golden_ikura_num"].ToString());
-                return new SalmonRunPlayer(id, nickname, species, style, grade, gradePoint, weapons, specialWeaponCount,
+                return new JobPlayer(id, nickname, species, style, grade, gradePoint, weapons, specialWeaponCount,
                     steelheadKill, flyfishKill, steelEelKill, drizzlerKill, stingerKill, mawsKill, grillerKill, goldieKill, help, dead, powerEgg, goldenEgg, image, isSelf);
             }
             catch (Exception ex)
@@ -2633,24 +2633,24 @@ namespace Ikas
                 }
                 else
                 {
-                    throw new FormatException(Base.ErrorType.salmon_run_player_cannot_be_resolved.ToString());
+                    throw new FormatException(Base.ErrorType.job_player_cannot_be_resolved.ToString());
                 }
             }
         }
         /// <summary>
-        /// Parse SalmonRunPlayer from JToken
+        /// Parse JobPlayer from JToken
         /// </summary>
         /// <param name="node">JToken of a player in salmon run</param>
         /// <param name="isSelf">If the player is player itself</param>
         /// <param name="grade">Grade of the player</param>
         /// <param name="gradePoint">Grade point of the player</param>
         /// <returns></returns>
-        private static async Task<SalmonRunPlayer> parseSalmonRunPlayer(JToken node, bool isSelf = false, SalmonRunPlayer.GradeType grade = SalmonRunPlayer.GradeType.intern, int gradePoint = 0)
+        private static async Task<JobPlayer> parseJobPlayer(JToken node, bool isSelf = false, JobPlayer.GradeType grade = JobPlayer.GradeType.intern, int gradePoint = 0)
         {
             try
             {
                 string image = await GetPlayerIcon(node["pid"].ToString()).ConfigureAwait(false);
-                SalmonRunPlayer player = parseSalmonRunPlayer(node, image, isSelf, grade, gradePoint);
+                JobPlayer player = parseJobPlayer(node, image, isSelf, grade, gradePoint);
                 return player;
             }
             catch (Exception ex)
@@ -2661,7 +2661,7 @@ namespace Ikas
                 }
                 else
                 {
-                    throw new FormatException(Base.ErrorType.salmon_run_player_cannot_be_resolved.ToString());
+                    throw new FormatException(Base.ErrorType.job_player_cannot_be_resolved.ToString());
                 }
             }
         }
@@ -2691,11 +2691,11 @@ namespace Ikas
             }
         }
         /// <summary>
-        /// Parse salmon run stage weapon from JToken
+        /// Parse shift weapon from JToken
         /// </summary>
         /// <param name="node">JToken of a weapon in salmon run schedule</param>
         /// <returns></returns>
-        private static Weapon parseSalmonRunStageWeapon(JToken node)
+        private static Weapon parseShiftWeapon(JToken node)
         {
             try
             {
@@ -2713,16 +2713,16 @@ namespace Ikas
             }
             catch
             {
-                throw new FormatException(Base.ErrorType.salmon_run_stage_weapon_cannot_be_resolved.ToString());
+                throw new FormatException(Base.ErrorType.shift_weapon_cannot_be_resolved.ToString());
             }
         }
         /// <summary>
-        /// Parse salmon run weapon from JToken
+        /// Parse job weapon from JToken
         /// </summary>
         /// <param name="node">JToken of a weapon in salmon run</param>
         /// <param name="specialNode">JToken of a special weapon in salmon run</param>
         /// <returns></returns>
-        private static Weapon parseSalmonRunWeapon(JToken node, JToken specialNode)
+        private static Weapon parseJobWeapon(JToken node, JToken specialNode)
         {
             try
             {
@@ -2733,7 +2733,7 @@ namespace Ikas
             {
                 if (Base.ParseErrorType(ex.Message) == Base.ErrorType.special_weapon_cannot_be_resolved)
                 {
-                    throw new FormatException(Base.ErrorType.salmon_run_special_weapon_cannot_be_resolved.ToString());
+                    throw new FormatException(Base.ErrorType.job_special_weapon_cannot_be_resolved.ToString());
                 }
                 else if (Base.TryParseErrorType(ex.Message, out _))
                 {
@@ -2741,7 +2741,7 @@ namespace Ikas
                 }
                 else
                 {
-                    throw new FormatException(Base.ErrorType.salmon_run_weapon_cannot_be_resolved.ToString());
+                    throw new FormatException(Base.ErrorType.job_weapon_cannot_be_resolved.ToString());
                 }
             }
         }

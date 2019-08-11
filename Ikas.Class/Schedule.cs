@@ -54,22 +54,4 @@ namespace Ikas.Class
             return stages;
         }
     }
-
-    public class SalmonRunSchedule : Base
-    {
-        public List<SalmonRunStage> Stages { get; }
-
-        public SalmonRunSchedule(List<SalmonRunStage> stages)
-        {
-            Stages = stages;
-        }
-        public SalmonRunSchedule()
-        {
-            Stages = new List<SalmonRunStage>();
-        }
-        public SalmonRunSchedule(ErrorType error) : base(error)
-        {
-            Stages = new List<SalmonRunStage>();
-        }
-    }
 }

@@ -143,7 +143,7 @@ namespace Ikas.Class
         }
     }
 
-    public class SalmonRunStage
+    public class ShiftStage
     {
         public enum Key
         {
@@ -171,7 +171,7 @@ namespace Ikas.Class
         public DateTime EndTime { get; }
         public List<Weapon> Weapons { get; }
 
-        public SalmonRunStage(Key key, string image, DateTime startTime, DateTime endTime, List<Weapon> weapons)
+        public ShiftStage(Key key, string image, DateTime startTime, DateTime endTime, List<Weapon> weapons)
         {
             Id = key;
             Image = image;
@@ -179,7 +179,7 @@ namespace Ikas.Class
             EndTime = endTime;
             Weapons = weapons;
         }
-        public SalmonRunStage(string image, DateTime startTime, DateTime endTime, List<Weapon> weapons)
+        public ShiftStage(string image, DateTime startTime, DateTime endTime, List<Weapon> weapons)
         {
             switch (image)
             {
