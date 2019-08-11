@@ -149,6 +149,18 @@
     <sys:String x:Key="shifty_23">Shifty 23</sys:String>
     <sys:String x:Key="shifty_24">Shifty 24</sys:String>
     <sys:String x:Key="shifty">Shifty</sys:String>
+    <!-- Shift stage -->
+    <sys:String x:Key="shift_stage_unknown">Unknown</sys:String>
+    <sys:String x:Key="spawning_grounds">Spawning Grounds</sys:String>
+    <sys:String x:Key="marooners_bay">Marooners Bay</sys:String>
+    <sys:String x:Key="lost_outpost">Lost Outpost</sys:String>
+    <sys:String x:Key="salmonid_smokeyard">Salmonid Smokeyard</sys:String>
+    <sys:String x:Key="ruins_of_ark_polaris">Ruins of Ark Polaris</sys:String>
+    <sys:String x:Key="grounds">Grounds</sys:String>
+    <sys:String x:Key="bay">Bay</sys:String>
+    <sys:String x:Key="outpost">Outpost</sys:String>
+    <sys:String x:Key="smokeyard">Smokeyard</sys:String>
+    <sys:String x:Key="ark">Ark</sys:String>
     <!-- Weapon -->
     <sys:String x:Key="random">Random</sys:String>
     <sys:String x:Key="bold">Sploosh-o-matic</sys:String>
@@ -875,6 +887,10 @@
     <sys:String x:Key="neo_octoling_boots">Neo Octoling Boots</sys:String>
     <sys:String x:Key="null_boots_replica">Null Boots Replica</sys:String>
     <sys:String x:Key="old_timey_shoes">Old-Timey Shoes</sys:String>
+    <!-- Job -->
+    <sys:String x:Key="clear">Clear</sys:String>
+    <sys:String x:Key="time_limit">Time Up!</sys:String>
+    <sys:String x:Key="wipe_out">DEFEAT!</sys:String>
     <!-- Errors -->
     <sys:String x:Key="ikas_meets_an_unhandled_exception">Ikas meet an unhandled exception</sys:String>
     <sys:String x:Key="ikas_has_started,_or_ikas_failed_to_exit_normally">Ikas has started, or Ikas failed to exit normally</sys:String>
@@ -893,6 +909,7 @@
     <sys:String x:Key="cookie_is_empty">Cookie is empty</sys:String>
     <sys:String x:Key="schedule_is_not_ready">schedule is not ready</sys:String>
     <sys:String x:Key="schedule_cannot_be_resolved">schedule cannot be resolved</sys:String>
+    <sys:String x:Key="stage_cannot_be_resolved">stage cannot be resolved</sys:String>
     <sys:String x:Key="battle_is_not_ready">battle is not ready</sys:String>
     <sys:String x:Key="battles_cannot_be_resolved">battles cannot be resolved</sys:String>
     <sys:String x:Key="battle_cannot_be_resolved">battle cannot be resolved</sys:String>
@@ -903,6 +920,17 @@
     <sys:String x:Key="gear_cannot_be_resolved">gear cannot be resolved</sys:String>
     <sys:String x:Key="primary_ability_cannot_be_resolved">primary gear ability cannot be resolved</sys:String>
     <sys:String x:Key="secondary_ability_cannot_be_resolved">secondary gear ability cannot be resolved</sys:String>
+    <sys:String x:Key="shift_is_not_ready">shift is not ready</sys:String>
+    <sys:String x:Key="shift_cannot_be_resolved">shift cannot be resolved</sys:String>
+    <sys:String x:Key="shift_stage_cannot_be_resolved">stage cannot be resolved</sys:String>
+    <sys:String x:Key="shift_weapon_cannot_be_resolved">weapon cannot be resolved</sys:String>
+    <sys:String x:Key="job_is_not_ready">job is not ready</sys:String>
+    <sys:String x:Key="jobs_cannot_be_resolved">jobs cannot be resolved</sys:String>
+    <sys:String x:Key="job_cannot_be_resolved">job cannot be resolved</sys:String>
+    <sys:String x:Key="wave_cannot_be_resolved">wave cannot be resolved</sys:String>
+    <sys:String x:Key="job_player_cannot_be_resolved">player cannot be resolved</sys:String>
+    <sys:String x:Key="job_weapon_cannot_be_resolved">weapon cannot be resolved</sys:String>
+    <sys:String x:Key="job_special_weapon_cannot_be_resolved">special weapon cannot be resolved</sys:String>
     <sys:String x:Key="session_token_cannot_be_resolved">Session Token cannot be resolved</sys:String>
     <sys:String x:Key="cookie_cannot_be_resolved">Cookie cannot be resolved</sys:String>
     <sys:String x:Key="cookie_cannot_be_resolved_1_7">Cookie cannot be resolved[1/7]</sys:String>

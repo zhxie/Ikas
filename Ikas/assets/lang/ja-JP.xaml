@@ -149,6 +149,18 @@
     <sys:String x:Key="shifty_23">ミステリー 23</sys:String>
     <sys:String x:Key="shifty_24">ミステリー 24</sys:String>
     <sys:String x:Key="shifty">ミステリー</sys:String>
+    <!-- Shift stage -->
+    <sys:String x:Key="shift_stage_unknown">不明</sys:String>
+    <sys:String x:Key="spawning_grounds">シェケナダム</sys:String>
+    <sys:String x:Key="marooners_bay">難破船ドン・ブラコ</sys:String>
+    <sys:String x:Key="lost_outpost">海上集落シャケト場</sys:String>
+    <sys:String x:Key="salmonid_smokeyard">トキシラズいぶし工房</sys:String>
+    <sys:String x:Key="ruins_of_ark_polaris">朽ちた箱舟 ポラリス</sys:String>
+    <sys:String x:Key="grounds">ダム</sys:String>
+    <sys:String x:Key="bay">難破船</sys:String>
+    <sys:String x:Key="outpost">シャケト場</sys:String>
+    <sys:String x:Key="smokeyard">工房</sys:String>
+    <sys:String x:Key="ark">箱舟</sys:String>
     <!-- Weapon -->
     <sys:String x:Key="random">ランダム</sys:String>
     <sys:String x:Key="bold">ボールドマーカー</sys:String>
@@ -875,6 +887,10 @@
     <sys:String x:Key="neo_octoling_boots">タコゾネスブーツネオ</sys:String>
     <sys:String x:Key="null_boots_replica">ネルブーツ レプリカ</sys:String>
     <sys:String x:Key="old_timey_shoes">グランパなクツ</sys:String>
+    <!-- Job -->
+    <sys:String x:Key="clear">Clear</sys:String>
+    <sys:String x:Key="time_limit">時間切れ</sys:String>
+    <sys:String x:Key="wipe_out">ゼンメツ!</sys:String>
     <!-- Errors -->
     <sys:String x:Key="ikas_meets_an_unhandled_exception">Ikas で処理できない例外が発生しました</sys:String>
     <sys:String x:Key="ikas_has_started,_or_ikas_failed_to_exit_normally">Ikas が起動したか、Ikas が前回正常に終了できませんでした</sys:String>
@@ -893,6 +909,7 @@
     <sys:String x:Key="cookie_is_empty">クッキーが空です</sys:String>
     <sys:String x:Key="schedule_is_not_ready">スケジュールの準備ができていない</sys:String>
     <sys:String x:Key="schedule_cannot_be_resolved">スケジュールは解析できない</sys:String>
+    <sys:String x:Key="stage_cannot_be_resolved">ステージは解析できない</sys:String>
     <sys:String x:Key="battle_is_not_ready">戦闘データの準備ができていない</sys:String>
     <sys:String x:Key="battles_cannot_be_resolved">戦闘データは解析できない</sys:String>
     <sys:String x:Key="battle_cannot_be_resolved">戦闘データは解析できない</sys:String>
@@ -903,6 +920,17 @@
     <sys:String x:Key="gear_cannot_be_resolved">ギアは解析できない</sys:String>
     <sys:String x:Key="primary_ability_cannot_be_resolved">基本ギアパワーは解析できない</sys:String>
     <sys:String x:Key="secondary_ability_cannot_be_resolved">追加ギアパワーは解析できない</sys:String>
+    <sys:String x:Key="shift_is_not_ready">シフトの準備ができていない</sys:String>
+    <sys:String x:Key="shift_cannot_be_resolved">シフトは解析できない</sys:String>
+    <sys:String x:Key="shift_stage_cannot_be_resolved">ステージは解析できない</sys:String>
+    <sys:String x:Key="shift_weapon_cannot_be_resolved">ブキは解析できない</sys:String>
+    <sys:String x:Key="job_is_not_ready">バイトデータの準備ができていない</sys:String>
+    <sys:String x:Key="jobs_cannot_be_resolved">バイトデータは解析できない</sys:String>
+    <sys:String x:Key="job_cannot_be_resolved">バイトデータは解析できない</sys:String>
+    <sys:String x:Key="wave_cannot_be_resolved">WAVE は解析できない</sys:String>
+    <sys:String x:Key="job_player_cannot_be_resolved">プレイヤーは解析できない</sys:String>
+    <sys:String x:Key="job_weapon_cannot_be_resolved">ブキは解析できない</sys:String>
+    <sys:String x:Key="job_special_weapon_cannot_be_resolved">special weapon cannot be resolved</sys:String>
     <sys:String x:Key="session_token_cannot_be_resolved">セッショントークンは解析できない</sys:String>
     <sys:String x:Key="cookie_cannot_be_resolved">クッキーは解析できない</sys:String>
     <sys:String x:Key="cookie_cannot_be_resolved_1_7">クッキーは解析できない[1/7]</sys:String>

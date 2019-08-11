@@ -147,7 +147,7 @@ namespace Ikas.Class
     {
         public enum Key
         {
-            salmon_run_stage_unknown = -1,
+            shift_stage_unknown = -1,
             spawning_grounds,
             marooners_bay,
             lost_outpost,
@@ -157,12 +157,12 @@ namespace Ikas.Class
 
         public enum ShortName
         {
-            salmon_run_stage_unknown = -1,
+            shift_stage_unknown = -1,
             grounds,
             bay,
             outpost,
             smokeyard,
-            ruins
+            ark
         }
 
         public Key Id { get; }
