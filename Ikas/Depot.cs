@@ -1736,7 +1736,7 @@ namespace Ikas
                 if (Job.Number > notifiedJobNumber)
                 {
                     notifiedJobNumber = Job.Number;
-                    JobNotifying.Invoke();
+                    JobNotifying?.Invoke();
                 }
                 JobMutex.ReleaseMutex();
                 // Raise event
