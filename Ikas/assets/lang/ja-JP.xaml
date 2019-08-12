@@ -101,6 +101,12 @@
     <sys:String x:Key="furler_in_the_ashes">ピロピロなんかじゃない</sys:String>
     <sys:String x:Key="mc_princess_diaries">DEAR SENPAI</sys:String>
     <sys:String x:Key="shifty_station">ミステリーゾーン</sys:String>
+    <sys:String x:Key="shift_stage_unknown">不明</sys:String>
+    <sys:String x:Key="spawning_grounds">シェケナダム</sys:String>
+    <sys:String x:Key="marooners_bay">難破船ドン・ブラコ</sys:String>
+    <sys:String x:Key="lost_outpost">海上集落シャケト場</sys:String>
+    <sys:String x:Key="salmonid_smokeyard">トキシラズいぶし工房</sys:String>
+    <sys:String x:Key="ruins_of_ark_polaris">朽ちた箱舟 ポラリス</sys:String>
     <sys:String x:Key="reef">バッテラ</sys:String>
     <sys:String x:Key="fitness">フジツボ</sys:String>
     <sys:String x:Key="mainstage">ガンガゼ</sys:String>
@@ -149,13 +155,6 @@
     <sys:String x:Key="shifty_23">ミステリー 23</sys:String>
     <sys:String x:Key="shifty_24">ミステリー 24</sys:String>
     <sys:String x:Key="shifty">ミステリー</sys:String>
-    <!-- Shift stage -->
-    <sys:String x:Key="shift_stage_unknown">不明</sys:String>
-    <sys:String x:Key="spawning_grounds">シェケナダム</sys:String>
-    <sys:String x:Key="marooners_bay">難破船ドン・ブラコ</sys:String>
-    <sys:String x:Key="lost_outpost">海上集落シャケト場</sys:String>
-    <sys:String x:Key="salmonid_smokeyard">トキシラズいぶし工房</sys:String>
-    <sys:String x:Key="ruins_of_ark_polaris">朽ちた箱舟 ポラリス</sys:String>
     <sys:String x:Key="grounds">ダム</sys:String>
     <sys:String x:Key="bay">難破船</sys:String>
     <sys:String x:Key="outpost">シャケト場</sys:String>

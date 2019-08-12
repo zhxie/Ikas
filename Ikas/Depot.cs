@@ -2404,7 +2404,7 @@ namespace Ikas
                 {
                     weapons.Add(parseShiftWeapon(weaponNode));
                 }
-                return new ShiftStage(image, startTime, endTime, weapons);
+                return ShiftStage.FromUrl(image, startTime, endTime, weapons);
             }
             catch (Exception ex)
             {

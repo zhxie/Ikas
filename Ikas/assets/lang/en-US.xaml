@@ -101,6 +101,12 @@
     <sys:String x:Key="furler_in_the_ashes">Furler in the Ashes</sys:String>
     <sys:String x:Key="mc_princess_diaries">MC.Princess Diaries</sys:String>
     <sys:String x:Key="shifty_station">Shifty Station</sys:String>
+    <sys:String x:Key="shift_stage_unknown">Unknown</sys:String>
+    <sys:String x:Key="spawning_grounds">Spawning Grounds</sys:String>
+    <sys:String x:Key="marooners_bay">Marooners Bay</sys:String>
+    <sys:String x:Key="lost_outpost">Lost Outpost</sys:String>
+    <sys:String x:Key="salmonid_smokeyard">Salmonid Smokeyard</sys:String>
+    <sys:String x:Key="ruins_of_ark_polaris">Ruins of Ark Polaris</sys:String>
     <sys:String x:Key="reef">Reef</sys:String>
     <sys:String x:Key="fitness">Fitness</sys:String>
     <sys:String x:Key="mainstage">Mainstage</sys:String>
@@ -149,13 +155,6 @@
     <sys:String x:Key="shifty_23">Shifty 23</sys:String>
     <sys:String x:Key="shifty_24">Shifty 24</sys:String>
     <sys:String x:Key="shifty">Shifty</sys:String>
-    <!-- Shift stage -->
-    <sys:String x:Key="shift_stage_unknown">Unknown</sys:String>
-    <sys:String x:Key="spawning_grounds">Spawning Grounds</sys:String>
-    <sys:String x:Key="marooners_bay">Marooners Bay</sys:String>
-    <sys:String x:Key="lost_outpost">Lost Outpost</sys:String>
-    <sys:String x:Key="salmonid_smokeyard">Salmonid Smokeyard</sys:String>
-    <sys:String x:Key="ruins_of_ark_polaris">Ruins of Ark Polaris</sys:String>
     <sys:String x:Key="grounds">Grounds</sys:String>
     <sys:String x:Key="bay">Bay</sys:String>
     <sys:String x:Key="outpost">Outpost</sys:String>

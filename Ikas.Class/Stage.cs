@@ -57,6 +57,12 @@ namespace Ikas.Class
             furler_in_the_ashes,
             mc_princess_diaries,
             shifty_station = 9999,
+            shift_stage_unknown = -2,
+            spawning_grounds = 10000,
+            marooners_bay,
+            lost_outpost,
+            salmonid_smokeyard,
+            ruins_of_ark_polaris
         }
         public enum ShortName
         {
@@ -109,6 +115,12 @@ namespace Ikas.Class
             shifty_23,          // shifty_furler
             shifty_24,          // shifty_diaries
             shifty = 9999,
+            shift_stage_unknown = -2,
+            grounds = 10000,
+            bay,
+            outpost,
+            smokeyard,
+            ark
         }
 
         public Key Id { get; }
@@ -143,70 +155,36 @@ namespace Ikas.Class
         }
     }
 
-    public class ShiftStage
+    public class ShiftStage : Stage
     {
-        public enum Key
-        {
-            shift_stage_unknown = -1,
-            spawning_grounds,
-            marooners_bay,
-            lost_outpost,
-            salmonid_smokeyard,
-            ruins_of_ark_polaris
-        }
-
-        public enum ShortName
-        {
-            shift_stage_unknown = -1,
-            grounds,
-            bay,
-            outpost,
-            smokeyard,
-            ark
-        }
-
-        public Key Id { get; }
-        public string Image { get; }
         public DateTime StartTime { get; }
         public DateTime EndTime { get; }
         public List<Weapon> Weapons { get; }
 
-        public ShiftStage(Key key, string image, DateTime startTime, DateTime endTime, List<Weapon> weapons)
+        public ShiftStage(Key key, string image, DateTime startTime, DateTime endTime, List<Weapon> weapons) : base(key, image)
         {
-            Id = key;
-            Image = image;
-            StartTime = startTime;
-            EndTime = endTime;
-            Weapons = weapons;
-        }
-        public ShiftStage(string image, DateTime startTime, DateTime endTime, List<Weapon> weapons)
-        {
-            switch (image)
-            {
-                case "/images/coop_stage/65c68c6f0641cc5654434b78a6f10b0ad32ccdee.png":
-                    Id = Key.spawning_grounds;
-                    break;
-                case "/images/coop_stage/e07d73b7d9f0c64e552b34a2e6c29b8564c63388.png":
-                    Id = Key.marooners_bay;
-                    break;
-                case "/images/coop_stage/6d68f5baa75f3a94e5e9bfb89b82e7377e3ecd2c.png":
-                    Id = Key.lost_outpost;
-                    break;
-                case "/images/coop_stage/e9f7c7b35e6d46778cd3cbc0d89bd7e1bc3be493.png":
-                    Id = Key.salmonid_smokeyard;
-                    break;
-                case "/images/coop_stage/50064ec6e97aac91e70df5fc2cfecf61ad8615fd.png":
-                    Id = Key.ruins_of_ark_polaris;
-                    break;
-                default:
-                    Id = (Key)(-1);
-                    break;
-            }
-            Image = image;
             StartTime = startTime;
             EndTime = endTime;
             Weapons = weapons;
         }
 
+        public static ShiftStage FromUrl(string image, DateTime startTime, DateTime endTime, List<Weapon> weapons)
+        {
+            switch (image)
+            {
+                case "/images/coop_stage/65c68c6f0641cc5654434b78a6f10b0ad32ccdee.png":
+                    return new ShiftStage(Key.spawning_grounds, image, startTime, endTime, weapons);
+                case "/images/coop_stage/e07d73b7d9f0c64e552b34a2e6c29b8564c63388.png":
+                    return new ShiftStage(Key.marooners_bay, image, startTime, endTime, weapons);
+                case "/images/coop_stage/6d68f5baa75f3a94e5e9bfb89b82e7377e3ecd2c.png":
+                    return new ShiftStage(Key.lost_outpost, image, startTime, endTime, weapons);
+                case "/images/coop_stage/e9f7c7b35e6d46778cd3cbc0d89bd7e1bc3be493.png":
+                    return new ShiftStage(Key.salmonid_smokeyard, image, startTime, endTime, weapons);
+                case "/images/coop_stage/50064ec6e97aac91e70df5fc2cfecf61ad8615fd.png":
+                    return new ShiftStage(Key.ruins_of_ark_polaris, image, startTime, endTime, weapons);
+                default:
+                    return new ShiftStage((Key)(-2), image, startTime, endTime, weapons);
+            }
+        }
     }
 }
