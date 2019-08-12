@@ -22,6 +22,7 @@ namespace Ikas.Class
         public const string UserConfigurationTowerControlRank = "TowerControlRank";
         public const string UserConfigurationRainmakerRank = "RainmakerRank";
         public const string UserConfigurationClamBlitzRank = "ClamBlitzRank";
+        public const string UserConfigurationSalmonRunGrade = "SalmonRunGrade";
         public const string SystemConfigurationGeneralSection = "Ikas";
         public const string SystemConfigurationLanguage = "Language";
         public const string SystemConfigurationInUse = "InUse";

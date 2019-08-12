@@ -51,6 +51,14 @@
     <sys:String x:Key="s_plus_8">S+</sys:String>
     <sys:String x:Key="s_plus_9">S+</sys:String>
     <sys:String x:Key="x">X</sys:String>
+    <!-- Salmon Run Grade -->
+    <sys:String x:Key="grade_unknown">不明</sys:String>
+    <sys:String x:Key="intern">けんしゅう</sys:String>
+    <sys:String x:Key="apprentice">かけだし</sys:String>
+    <sys:String x:Key="part_timer">はんにんまえ</sys:String>
+    <sys:String x:Key="go_getter">いちにんまえ</sys:String>
+    <sys:String x:Key="overachiever">じゅくれん</sys:String>
+    <sys:String x:Key="profeshional">たつじん</sys:String>
     <!-- Stage -->
     <sys:String x:Key="stage_unknown">不明</sys:String>
     <sys:String x:Key="the_reef">バッテラストリート</sys:String>
@@ -894,7 +902,9 @@
     <sys:String x:Key="ikas_meets_an_unhandled_exception">Ikas で処理できない例外が発生しました</sys:String>
     <sys:String x:Key="ikas_has_started,_or_ikas_failed_to_exit_normally">Ikas が起動したか、Ikas が前回正常に終了できませんでした</sys:String>
     <sys:String x:Key="ikas_cannot_get_schdule">Ikas はスケジュールを取得できませんでした</sys:String>
+    <sys:String x:Key="ikas_cannot_get_shift">Ikas はシフトを取得できませんでした</sys:String>
     <sys:String x:Key="ikas_cannot_get_the_latest_battle">Ikas は最新の戦闘データを取得できませんでした</sys:String>
+    <sys:String x:Key="ikas_cannot_get_the_latest_job">Ikas は最新のバイトデータを取得できませんでした</sys:String>
     <sys:String x:Key="ikas_cannot_get_session_token">Ikas はセッショントークンを取得できませんでした</sys:String>
     <sys:String x:Key="ikas_cannot_update_cookie">Ikas はクッキーを更新できませんでした</sys:String>
     <sys:String x:Key="this_is_a_bug,_please_consider_submitting_the_issue.">これはバグです、問題の送信を検討してください。</sys:String>
@@ -942,6 +952,7 @@
     <sys:String x:Key="main_window-welcome_to_ikas!_to_use_ikas,_you_may_set_up_your_cookie_first.">Ikas へようこそ！ Ikas を使用するには、最初にクッキーを設定してください。</sys:String>
     <sys:String x:Key="main_window-level">レベル</sys:String>
     <sys:String x:Key="main_window-rank">ウデマエ</sys:String>
+    <sys:String x:Key="main_window-job">バイト</sys:String>
     <sys:String x:Key="main_window---">--</sys:String>
     <sys:String x:Key="main_window-★">★</sys:String>
     <sys:String x:Key="main_window-settings">設定</sys:String>

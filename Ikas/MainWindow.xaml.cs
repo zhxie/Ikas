@@ -34,11 +34,14 @@ namespace Ikas
         }
 
         private ScheduleWindow scheduleWindow;
+        // TODO: private ShiftWindow shiftWindow;
         private BattleWindow battleWindow;
+        // TODO: private JobWindow jobWindow;
         private SettingsWindow settingsWindow;
 
-        private DispatcherTimer tmSchedule;
+        private DispatcherTimer tmScheduleAndShift;
         private DispatcherTimer tmBattle;
+        private DispatcherTimer tmJob;
 
         public MainWindow()
         {
@@ -69,25 +72,41 @@ namespace Ikas
             // Add handler for global member
             Depot.AlwaysOnTopChanged += new AlwaysOnTopChangedEventHandler(AlwaysOnTopChanged);
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
-            Depot.ScheduleChanged += new ContentChangedEventHandler(ScheduleChanged);
+            Depot.ScheduleChanged += new ContentChangedEventHandler(ScheduleAndShiftChanged);
             Depot.ScheduleUpdated += new ContentUpdatedEventHandler(ScheduleUpdated);
             Depot.ScheduleFailed += new ContentFailedEventHandler(ScheduleFailed);
+            Depot.ShiftChanged += new ContentChangedEventHandler(ScheduleAndShiftChanged);
+            Depot.ShiftUpdated += new ContentUpdatedEventHandler(ShiftUpdated);
+            Depot.ShiftFailed += new ContentFailedEventHandler(ShiftFailed);
             Depot.BattleFailed += new ContentFailedEventHandler(BattleFailed);
+            Depot.JobFailed += new ContentFailedEventHandler(JobFailed);
             Depot.CookieUpdated += new CookieUpdatedEventHandler(CookieUpdated);
             // Prepare windows
             scheduleWindow = new ScheduleWindow();
             scheduleWindow.Opacity = 0;
             scheduleWindow.Visibility = Visibility.Hidden;
+            // TODO: shift window
+            // shiftWindow = new ShiftWindow();
+            // shiftWindow.Opacity = 0;
+            // shiftWindow.Visibility = Visibility.Hidden;
             battleWindow = new BattleWindow();
             battleWindow.Opacity = 0;
             battleWindow.Visibility = Visibility.Hidden;
+            // TODO: job window
+            // jobWindow = new JobWindow();
+            // jobWindow.Opacity = 0;
+            // jobWindow.Visibility = Visibility.Hidden;
             settingsWindow = new SettingsWindow();
             settingsWindow.Opacity = 0;
             settingsWindow.Visibility = Visibility.Hidden;
             // Create timers
-            tmSchedule = new DispatcherTimer();
-            tmSchedule.Tick += new EventHandler((object source, EventArgs e) => { Depot.GetSchedule(); });
-            tmSchedule.Interval = new TimeSpan(0, 0, 15);
+            tmScheduleAndShift = new DispatcherTimer();
+            tmScheduleAndShift.Tick += new EventHandler((object source, EventArgs e) =>
+            {
+                Depot.GetSchedule();
+                Depot.GetShift();
+            });
+            tmScheduleAndShift.Interval = new TimeSpan(0, 0, 15);
             tmBattle = new DispatcherTimer();
             tmBattle.Tick += new EventHandler((object source, EventArgs e) =>
             {
@@ -97,6 +116,13 @@ namespace Ikas
                 }
             });
             tmBattle.Interval = new TimeSpan(0, 0, 30);
+            tmJob = new DispatcherTimer();
+            tmJob.Tick += new EventHandler((object source, EventArgs e) =>
+            {
+                // TODO: Stop updating job automatically if jobWindow is visible
+                Depot.GetLastJob();
+            });
+            tmJob.Interval = new TimeSpan(0, 0, 15);
             // Initialize notification
             NotificationHelper.InitializeNotification();
         }
@@ -115,22 +141,7 @@ namespace Ikas
                     Top = Depot.StartY;
                 }
             }
-            switch (Depot.StartMode)
-            {
-                case Mode.Key.ranked_battle:
-                    Depot.CurrentMode = Mode.Key.ranked_battle;
-                    break;
-                case Mode.Key.league_battle:
-                    Depot.CurrentMode = Mode.Key.league_battle;
-                    break;
-                case Mode.Key.regular_battle:
-                case Mode.Key.private_battle:
-                case Mode.Key.splatfest:
-                    Depot.CurrentMode = Mode.Key.regular_battle;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            Depot.CurrentMode = Depot.StartMode;
             // In use
 #if DEBUG
             // Do not popup in use message in Debug
@@ -150,17 +161,32 @@ namespace Ikas
                 MessageBox.Show(Translate("welcome_to_ikas!_to_use_ikas,_you_may_set_up_your_cookie_first.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
                 MenuItemSettings_Click(null, null);
             }
-            // Automatic schedule and battle update
-            tmSchedule.Start();
+            // Automatic schedule and shift, battle, and job update
+            tmScheduleAndShift.Start();
             tmBattle.Start();
-            // Update schedule
-            Depot.ForceGetSchedule();
+            tmJob.Start();
+            // Update schedule or shift
+            switch (Depot.CurrentMode)
+            {
+                case Depot.Mode.regular_battle:
+                case Depot.Mode.ranked_battle:
+                case Depot.Mode.league_battle:
+                    Depot.ForceGetSchedule();
+                    break;
+                case Depot.Mode.salmon_run:
+                    Depot.ForceGetShift();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
+            // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
             ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
+            // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
             DragMove();
         }
 
@@ -168,22 +194,37 @@ namespace Ikas
         {
             switch (Depot.CurrentMode)
             {
-                case Mode.Key.regular_battle:
-                    Depot.CurrentMode = Mode.Key.ranked_battle;
+                case Depot.Mode.regular_battle:
+                    Depot.CurrentMode = Depot.Mode.ranked_battle;
+                    // Update schedule
+                    Depot.ForceGetSchedule();
+                    // Automatic schedule and shift update
+                    tmScheduleAndShift.Start();
                     break;
-                case Mode.Key.ranked_battle:
-                    Depot.CurrentMode = Mode.Key.league_battle;
+                case Depot.Mode.ranked_battle:
+                    Depot.CurrentMode = Depot.Mode.league_battle;
+                    // Update schedule
+                    Depot.ForceGetSchedule();
+                    // Automatic schedule and shift update
+                    tmScheduleAndShift.Start();
                     break;
-                case Mode.Key.league_battle:
-                    Depot.CurrentMode = Mode.Key.regular_battle;
+                case Depot.Mode.league_battle:
+                    Depot.CurrentMode = Depot.Mode.salmon_run;
+                    // Update shift
+                    Depot.ForceGetShift();
+                    // Automatic schedule and shift update
+                    tmScheduleAndShift.Start();
+                    break;
+                case Depot.Mode.salmon_run:
+                    Depot.CurrentMode = Depot.Mode.regular_battle;
+                    // Update schedule
+                    Depot.ForceGetSchedule();
+                    // Automatic schedule and shift update
+                    tmScheduleAndShift.Start();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            // Update schedule
-            Depot.ForceGetSchedule();
-            // Automatica Schedule update
-            tmSchedule.Start();
         }
 
         private void BdStage_MouseEnter(object sender, MouseEventArgs e)
@@ -191,7 +232,17 @@ namespace Ikas
             scheduleWindow.Top = Top + Height + 10;
             scheduleWindow.Left = Left;
             ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
-            ((Storyboard)FindResource("window_fade_in")).Begin(scheduleWindow);
+            // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
+            if (Depot.CurrentMode != Depot.Mode.salmon_run)
+            {
+                // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
+                ((Storyboard)FindResource("window_fade_in")).Begin(scheduleWindow);
+            }
+            else
+            {
+                ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
+                // TODO: ((Storyboard)FindResource("window_fade_in")).Begin(shiftWindow);
+            }
         }
 
         private void BdStage_MouseLeave(object sender, MouseEventArgs e)
@@ -205,7 +256,17 @@ namespace Ikas
             battleWindow.Top = Top + Height + 10;
             battleWindow.Left = Left;
             ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
-            ((Storyboard)FindResource("window_fade_in")).Begin(battleWindow);
+            // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
+            if (Depot.CurrentMode != Depot.Mode.salmon_run)
+            {
+                // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
+                ((Storyboard)FindResource("window_fade_in")).Begin(battleWindow);
+            }
+            else
+            {
+                ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
+                // TODO: ((Storyboard)FindResource("window_fade_in")).Begin(jobWindow);
+            }
             // Automatica Battle update
             tmBattle.Start();
         }
@@ -262,7 +323,7 @@ namespace Ikas
             Resources.MergedDictionaries.Add(lang);
         }
 
-        private void ScheduleChanged()
+        private void ScheduleAndShiftChanged()
         {
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(lbMode);
@@ -273,148 +334,166 @@ namespace Ikas
 
         private void ScheduleUpdated()
         {
-            Schedule schedule = Depot.Schedule;
-            List<ScheduledStage> scheduledStages = schedule.GetStages(Depot.CurrentMode);
-            if (scheduledStages.Count > 0)
+            if (Depot.CurrentMode != Depot.Mode.salmon_run)
             {
-                // Change UI
+                Schedule schedule = Depot.Schedule;
+                Mode.Key mode = Mode.Key.regular_battle;
                 switch (Depot.CurrentMode)
                 {
-                    case Mode.Key.regular_battle:
-                        lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                        // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                    case Depot.Mode.regular_battle:
+                        mode = Mode.Key.regular_battle;
                         break;
-                    case Mode.Key.ranked_battle:
-                        lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
-                        // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+                    case Depot.Mode.ranked_battle:
+                        mode = Mode.Key.ranked_battle;
                         break;
-                    case Mode.Key.league_battle:
-                        lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                        // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                    case Depot.Mode.league_battle:
+                        mode = Mode.Key.league_battle;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                lbMode.Content = Translate(((Rule.ShortName)scheduledStages[0].Rule).ToString());
-                switch (scheduledStages[0].Rule)
+                List<ScheduledStage> scheduledStages = schedule.GetStages(mode);
+                if (scheduledStages.Count > 0)
                 {
-                    case Rule.Key.turf_war:
-                        if (Depot.Level > 0)
-                        {
-                            if (Depot.Level > 100)
+                    // Change UI
+                    switch (mode)
+                    {
+                        case Mode.Key.regular_battle:
+                            lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                            // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                            break;
+                        case Mode.Key.ranked_battle:
+                            lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+                            // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+                            break;
+                        case Mode.Key.league_battle:
+                            lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                            // tbStar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    lbMode.Content = Translate(((Rule.ShortName)scheduledStages[0].Rule).ToString());
+                    switch (scheduledStages[0].Rule)
+                    {
+                        case Rule.Key.turf_war:
+                            if (Depot.Level > 0)
                             {
-                                tbLevel.Text = (Depot.Level - Depot.Level / 100 * 100).ToString();
-                                tbStar.Text = Translate("★", true);
+                                if (Depot.Level > 100)
+                                {
+                                    tbLevel.Text = (Depot.Level - Depot.Level / 100 * 100).ToString();
+                                    tbStar.Text = Translate("★", true);
+                                }
+                                else
+                                {
+                                    tbLevel.Text = Depot.Level.ToString();
+                                    tbStar.Text = "";
+                                }
                             }
                             else
                             {
-                                tbLevel.Text = Depot.Level.ToString();
+                                tbLevel.Text = Translate("--", true);
                                 tbStar.Text = "";
                             }
-                        }
-                        else
-                        {
-                            tbLevel.Text = Translate("--", true);
-                            tbStar.Text = "";
-                        }
-                        break;
-                    case Rule.Key.splat_zones:
-                        if (Depot.SplatZonesRank > Rank.Key.s && Depot.SplatZonesRank < Rank.Key.x)
-                        {
-                            tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
-                            tbStar.Text = (Depot.SplatZonesRank - Rank.Key.s_plus_0).ToString();
-                        }
-                        else
-                        {
-                            tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
-                            tbStar.Text = "";
-                        }
-                        break;
-                    case Rule.Key.tower_control:
-                        if (Depot.TowerControlRank > Rank.Key.s && Depot.TowerControlRank < Rank.Key.x)
-                        {
-                            tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
-                            tbStar.Text = (Depot.TowerControlRank - Rank.Key.s_plus_0).ToString();
-                        }
-                        else
-                        {
-                            tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
-                            tbStar.Text = "";
-                        }
-                        break;
-                    case Rule.Key.rainmaker:
-                        if (Depot.RainmakerRank > Rank.Key.s && Depot.RainmakerRank < Rank.Key.x)
-                        {
-                            tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
-                            tbStar.Text = (Depot.RainmakerRank - Rank.Key.s_plus_0).ToString();
-                        }
-                        else
-                        {
-                            tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
-                            tbStar.Text = "";
-                        }
-                        break;
-                    case Rule.Key.clam_blitz:
-                        if (Depot.ClamBlitzRank > Rank.Key.s && Depot.ClamBlitzRank < Rank.Key.x)
-                        {
-                            tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
-                            tbStar.Text = (Depot.ClamBlitzRank - Rank.Key.s_plus_0).ToString();
-                        }
-                        else
-                        {
-                            tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
-                            tbStar.Text = "";
-                        }
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-                // Fade in labels
-                ((Storyboard)FindResource("fade_in")).Begin(lbMode);
-                ((Storyboard)FindResource("fade_in")).Begin(lbLevel);
-                // Update Stages
-                Stage stage = scheduledStages[0];
-                string image = FileFolderUrl.ApplicationData + stage.Image;
-                try
-                {
-                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                    brush.Stretch = Stretch.UniformToFill;
-                    bdStage1.Background = brush;
-                    ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
-                }
-                catch
-                {
-                    // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
-                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                            break;
+                        case Rule.Key.splat_zones:
+                            if (Depot.SplatZonesRank > Rank.Key.s && Depot.SplatZonesRank < Rank.Key.x)
+                            {
+                                tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
+                                tbStar.Text = (Depot.SplatZonesRank - Rank.Key.s_plus_0).ToString();
+                            }
+                            else
+                            {
+                                tbLevel.Text = Translate(Depot.SplatZonesRank.ToString());
+                                tbStar.Text = "";
+                            }
+                            break;
+                        case Rule.Key.tower_control:
+                            if (Depot.TowerControlRank > Rank.Key.s && Depot.TowerControlRank < Rank.Key.x)
+                            {
+                                tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
+                                tbStar.Text = (Depot.TowerControlRank - Rank.Key.s_plus_0).ToString();
+                            }
+                            else
+                            {
+                                tbLevel.Text = Translate(Depot.TowerControlRank.ToString());
+                                tbStar.Text = "";
+                            }
+                            break;
+                        case Rule.Key.rainmaker:
+                            if (Depot.RainmakerRank > Rank.Key.s && Depot.RainmakerRank < Rank.Key.x)
+                            {
+                                tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
+                                tbStar.Text = (Depot.RainmakerRank - Rank.Key.s_plus_0).ToString();
+                            }
+                            else
+                            {
+                                tbLevel.Text = Translate(Depot.RainmakerRank.ToString());
+                                tbStar.Text = "";
+                            }
+                            break;
+                        case Rule.Key.clam_blitz:
+                            if (Depot.ClamBlitzRank > Rank.Key.s && Depot.ClamBlitzRank < Rank.Key.x)
+                            {
+                                tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
+                                tbStar.Text = (Depot.ClamBlitzRank - Rank.Key.s_plus_0).ToString();
+                            }
+                            else
+                            {
+                                tbLevel.Text = Translate(Depot.ClamBlitzRank.ToString());
+                                tbStar.Text = "";
+                            }
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    // Fade in labels
+                    ((Storyboard)FindResource("fade_in")).Begin(lbMode);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbLevel);
+                    // Update stages
+                    Stage stage = scheduledStages[0];
+                    string image = FileFolderUrl.ApplicationData + stage.Image;
+                    try
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
                         bdStage1.Background = brush;
                         ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
-                    }));
-                }
-                if (scheduledStages.Count > 1)
-                {
-                    Stage stage2 = scheduledStages[1];
-                    string image2 = FileFolderUrl.ApplicationData + stage2.Image;
-                    try
-                    {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
-                        brush.Stretch = Stretch.UniformToFill;
-                        bdStage2.Background = brush;
-                        ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
                     }
                     catch
                     {
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
+                        // Download the image
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
                         DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        {
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                            brush.Stretch = Stretch.UniformToFill;
+                            bdStage1.Background = brush;
+                            ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
+                        }));
+                    }
+                    if (scheduledStages.Count > 1)
+                    {
+                        Stage stage2 = scheduledStages[1];
+                        string image2 = FileFolderUrl.ApplicationData + stage2.Image;
+                        try
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                             brush.Stretch = Stretch.UniformToFill;
                             bdStage2.Background = brush;
                             ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
-                        }));
+                        }
+                        catch
+                        {
+                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
+                            DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                            {
+                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
+                                brush.Stretch = Stretch.UniformToFill;
+                                bdStage2.Background = brush;
+                                ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
+                            }));
+                        }
                     }
                 }
             }
@@ -422,12 +501,86 @@ namespace Ikas
 
         private void ScheduleFailed(Base.ErrorType error)
         {
-            tmSchedule.Stop();
+            tmScheduleAndShift.Stop();
             MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
                 Translate("ikas_cannot_get_schdule"),
                 Translate(error.ToString()),
                 Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ),"Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        private void ShiftUpdated()
+        {
+            if (Depot.CurrentMode == Depot.Mode.salmon_run)
+            {
+                Shift shift = Depot.Shift;
+                if (shift.Stages.Count > 0)
+                {
+                    // Change UI
+                    lbMode.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+                    lbMode.Content = Translate("job", true);
+                    tbLevel.Text = Translate("--", true);
+                    tbStar.Text = "";
+                    // Fade in labels
+                    ((Storyboard)FindResource("fade_in")).Begin(lbMode);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbLevel);
+                    // Update stages
+                    Stage stage = shift.Stages[0];
+                    string image = FileFolderUrl.ApplicationData + stage.Image;
+                    try
+                    {
+                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                        brush.Stretch = Stretch.UniformToFill;
+                        bdStage1.Background = brush;
+                        ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
+                    }
+                    catch
+                    {
+                        // Download the image
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Shift, Depot.Proxy);
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        {
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                            brush.Stretch = Stretch.UniformToFill;
+                            bdStage1.Background = brush;
+                            ((Storyboard)FindResource("fade_in")).Begin(bdStage1);
+                        }));
+                    }
+                    if (shift.Stages.Count > 1)
+                    {
+                        Stage stage2 = shift.Stages[1];
+                        string image2 = FileFolderUrl.ApplicationData + stage2.Image;
+                        try
+                        {
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
+                            brush.Stretch = Stretch.UniformToFill;
+                            bdStage2.Background = brush;
+                            ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
+                        }
+                        catch
+                        {
+                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Shift, Depot.Proxy);
+                            DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                            {
+                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
+                                brush.Stretch = Stretch.UniformToFill;
+                                bdStage2.Background = brush;
+                                ((Storyboard)FindResource("fade_in")).Begin(bdStage2);
+                            }));
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ShiftFailed(Base.ErrorType error)
+        {
+            tmScheduleAndShift.Stop();
+            MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                Translate("ikas_cannot_get_shift"),
+                Translate(error.ToString()),
+                Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
+                ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void BattleFailed(Base.ErrorType error)
@@ -440,10 +593,20 @@ namespace Ikas
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
+        private void JobFailed(Base.ErrorType error)
+        {
+            tmJob.Stop();
+            MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
+                Translate("ikas_cannot_get_the_latest_job"),
+                Translate(error.ToString()),
+                Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
+                ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
         private void CookieUpdated()
         {
             // Automatic schedule and bsattle update
-            tmSchedule.Start();
+            tmScheduleAndShift.Start();
             tmBattle.Start();
         }
 

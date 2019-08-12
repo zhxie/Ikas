@@ -31,6 +31,14 @@ namespace Ikas
     public delegate void CookieUpdatedEventHandler();
     public static class Depot
     {
+        public enum Mode
+        {
+            regular_battle,
+            ranked_battle,
+            league_battle,
+            salmon_run
+        }
+
         private static string userConfigurationPath = "";
         private static IniData userIniData = new IniData();
         public static string SessionToken
@@ -238,6 +246,36 @@ namespace Ikas
                 }
             }
         }
+        private static JobPlayer.GradeType salmonRunGrade
+        {
+            set
+            {
+                if (value != SalmonRunGrade)
+                {
+                    try
+                    {
+                        userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSalmonRunGrade] = ((int)value).ToString();
+                        FileIniDataParser parser = new FileIniDataParser();
+                        parser.WriteFile(userConfigurationPath, userIniData);
+                    }
+                    catch { }
+                }
+            }
+        }
+        public static JobPlayer.GradeType SalmonRunGrade
+        {
+            get
+            {
+                try
+                {
+                    return (JobPlayer.GradeType)int.Parse(userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSalmonRunGrade]);
+                }
+                catch
+                {
+                    return JobPlayer.GradeType.grade_unknown;
+                }
+            }
+        }
 
         private static IniData systemIniData = new IniData();
         public static event AlwaysOnTopChangedEventHandler AlwaysOnTopChanged;
@@ -299,17 +337,17 @@ namespace Ikas
                 }
             }
         }
-        public static Mode.Key StartMode
+        public static Mode StartMode
         {
             get
             {
                 try
                 {
-                    return (Mode.Key)int.Parse(systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationStartMode]);
+                    return (Mode)int.Parse(systemIniData[FileFolderUrl.SystemConfigurationAppearanceSection][FileFolderUrl.SystemConfigurationStartMode]);
                 }
                 catch
                 {
-                    return Mode.Key.regular_battle;
+                    return Mode.regular_battle;
                 }
             }
             set
@@ -604,25 +642,7 @@ namespace Ikas
         public static event AccessGetEventHandler CookieGet;
         public static event CookieUpdatedEventHandler CookieUpdated;
 
-        private static Mode.Key currentMode = Mode.Key.regular_battle;
-        public static Mode.Key CurrentMode
-        {
-            get
-            {
-                return currentMode;
-            }
-            set
-            {
-                if ((int)value > 2)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                if (CurrentMode != value)
-                {
-                    currentMode = value;
-                }
-            }
-        }
+        public static Mode CurrentMode { get; set; } = Mode.regular_battle;
 
         /// <summary>
         /// Load user configuration from a file.
@@ -976,8 +996,8 @@ namespace Ikas
                             int thisBattleNumber = int.Parse(battle["battle_number"].ToString());
                             if (thisBattleNumber > Battle.Number)
                             {
-                                Mode.Key type = Mode.ParseKey(battle["type"].ToString());
-                                if (type == Mode.Key.ranked_battle || type == Mode.Key.league_battle)
+                                Class.Mode.Key type = Class.Mode.ParseKey(battle["type"].ToString());
+                                if (type == Class.Mode.Key.ranked_battle || type == Class.Mode.Key.league_battle)
                                 {
                                     Rule.Key rule = Rule.ParseKey(battle["rule"]["key"].ToString());
                                     Rank.Key rankAfter;
@@ -1078,8 +1098,8 @@ namespace Ikas
                     {
                         DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)).AddSeconds(long.Parse(jObject["start_time"].ToString()));
                         double elapsedTime;
-                        Mode.Key type = Mode.ParseKey(jObject["type"].ToString());
-                        Mode.Key mode = Mode.ParseGameModeKey(jObject["game_mode"]["key"].ToString());
+                        Class.Mode.Key type = Class.Mode.ParseKey(jObject["type"].ToString());
+                        Class.Mode.Key mode = Class.Mode.ParseGameModeKey(jObject["game_mode"]["key"].ToString());
                         Rule.Key rule = Rule.ParseKey(jObject["rule"]["key"].ToString());
                         switch (rule)
                         {
@@ -1098,7 +1118,7 @@ namespace Ikas
                         Stage stage = new Stage((Stage.Key)int.Parse(jObject["stage"]["id"].ToString()), jObject["stage"]["image"].ToString());
                         switch (type)
                         {
-                            case Mode.Key.regular_battle:
+                            case Class.Mode.Key.regular_battle:
                                 {
                                     // Self
                                     Player selfPlayer = await parsePlayer(jObject["player_result"], true);
@@ -1152,7 +1172,7 @@ namespace Ikas
                                         winMeter, myScore, otherScore) as Battle);
                                 }
                                 break;
-                            case Mode.Key.ranked_battle:
+                            case Class.Mode.Key.ranked_battle:
                                 {
                                     // Self
                                     RankedPlayer selfPlayer = await parseRankedPlayer(jObject["player_result"], true);
@@ -1287,7 +1307,7 @@ namespace Ikas
                                     }
                                 }
                                 break;
-                            case Mode.Key.league_battle:
+                            case Class.Mode.Key.league_battle:
                                 {
                                     // Self
                                     RankedPlayer selfPlayer = await parseRankedPlayer(jObject["player_result"], true);
@@ -1392,7 +1412,7 @@ namespace Ikas
                                         myEstimatedLeaguePower, otherEstimatedLeaguePower, leaguePoint, maxLeaguePoint, myScore, otherScore) as Battle);
                                 }
                                 break;
-                            case Mode.Key.splatfest:
+                            case Class.Mode.Key.splatfest:
                                 {
                                     // Self
                                     Player selfPlayer = await parsePlayer(jObject["player_result"], true);
@@ -1569,6 +1589,12 @@ namespace Ikas
                 try
                 {
                     battleNumber = int.Parse(jObject["results"][0]["job_id"].ToString());
+                    JobPlayer.GradeType grade = (JobPlayer.GradeType)int.Parse(jObject["results"][0]["grade"]["id"].ToString());
+                    if (grade != SalmonRunGrade)
+                    {
+                        salmonRunGrade = grade;
+                        ForceGetShift();
+                    }
                 }
                 catch
                 {
@@ -1656,7 +1682,7 @@ namespace Ikas
                         if (!bool.Parse(jObject["job_result"]["is_clear"].ToString()))
                         {
                             result = Job.ParseResultType(jObject["job_result"]["failure_reason"].ToString());
-                        }
+                        }                       
                         UpdateJob(new Job(battleNumber, startTime, dangerRate, stage, waves, myPlayer, otherPlayers,
                             steelheadCount, flyfishCount, steelEelCount, drizzlerCount, stingerCount, scrapperCount, mawsCount, grillerCount, goldieCount,
                             score, gradePointDelta, result));
@@ -2356,7 +2382,7 @@ namespace Ikas
             try
             {
                 List<ScheduledStage> stages = new List<ScheduledStage>();
-                Mode.Key mode = Mode.ParseKey(node["game_mode"]["key"].ToString());
+                Class.Mode.Key mode = Class.Mode.ParseKey(node["game_mode"]["key"].ToString());
                 Rule.Key rule = Rule.ParseKey(node["rule"]["key"].ToString());
                 ScheduledStage stage1, stage2;
                 if (int.TryParse(node["stage_a"]["id"].ToString(), out int stage1Id))

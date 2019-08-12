@@ -51,6 +51,14 @@
     <sys:String x:Key="s_plus_8">S+</sys:String>
     <sys:String x:Key="s_plus_9">S+</sys:String>
     <sys:String x:Key="x">X</sys:String>
+    <!-- Salmon Run Grade -->
+    <sys:String x:Key="grade_unknown">Unknown</sys:String>
+    <sys:String x:Key="intern">Intern</sys:String>
+    <sys:String x:Key="apprentice">Apprentice</sys:String>
+    <sys:String x:Key="part_timer">Part-Timer</sys:String>
+    <sys:String x:Key="go_getter">Go-Getter</sys:String>
+    <sys:String x:Key="overachiever">Overachiever</sys:String>
+    <sys:String x:Key="profeshional">Profeshional</sys:String>
     <!-- Stage -->
     <sys:String x:Key="stage_unknown">Unknown</sys:String>
     <sys:String x:Key="the_reef">The Reef</sys:String>
@@ -894,7 +902,9 @@
     <sys:String x:Key="ikas_meets_an_unhandled_exception">Ikas meet an unhandled exception</sys:String>
     <sys:String x:Key="ikas_has_started,_or_ikas_failed_to_exit_normally">Ikas has started, or Ikas failed to exit normally</sys:String>
     <sys:String x:Key="ikas_cannot_get_schdule">Ikas can not get schdule</sys:String>
+    <sys:String x:Key="ikas_cannot_get_shift">Ikas can not get shift</sys:String>
     <sys:String x:Key="ikas_cannot_get_the_latest_battle">Ikas can not get the latest battle</sys:String>
+    <sys:String x:Key="ikas_cannot_get_the_latest_job">Ikas can not get the latest job</sys:String>
     <sys:String x:Key="ikas_cannot_get_session_token">Ikas cannot get Session Token</sys:String>
     <sys:String x:Key="ikas_cannot_update_cookie">Ikas cannot update Cookie</sys:String>
     <sys:String x:Key="this_is_a_bug,_please_consider_submitting_the_issue.">This is a bug, please consider submitting the issue.</sys:String>
@@ -942,6 +952,7 @@
     <sys:String x:Key="main_window-welcome_to_ikas!_to_use_ikas,_you_may_set_up_your_cookie_first.">Welcome to Ikas! To use Ikas, you may set up your Cookie first.</sys:String>
     <sys:String x:Key="main_window-level">Level</sys:String>
     <sys:String x:Key="main_window-rank">Rank</sys:String>
+    <sys:String x:Key="main_window-job">Job</sys:String>
     <sys:String x:Key="main_window---">--</sys:String>
     <sys:String x:Key="main_window-★">★</sys:String>
     <sys:String x:Key="main_window-settings">Settings</sys:String>

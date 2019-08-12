@@ -140,12 +140,28 @@ namespace Ikas
         private void ScheduleUpdated()
         {
             Schedule schedule = Depot.Schedule;
+            Mode.Key mode = Mode.Key.regular_battle;
+            switch (Depot.CurrentMode)
+            {
+                case Depot.Mode.regular_battle:
+                case Depot.Mode.salmon_run:
+                    mode = Mode.Key.regular_battle;
+                    break;
+                case Depot.Mode.ranked_battle:
+                    mode = Mode.Key.ranked_battle;
+                    break;
+                case Depot.Mode.league_battle:
+                    mode = Mode.Key.league_battle;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
             // Update current Schedule
-            List<ScheduledStage> scheduledStages = schedule.GetStages(Depot.CurrentMode);
+            List<ScheduledStage> scheduledStages = schedule.GetStages(mode);
             if (scheduledStages.Count > 0)
             {
                 // Change UI
-                switch (Depot.CurrentMode)
+                switch (mode)
                 {
                     case Mode.Key.regular_battle:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_regular");
@@ -225,7 +241,7 @@ namespace Ikas
                 }
             }
             // Update next Schedule
-            List<ScheduledStage> nextScheduledStages = schedule.GetNextStages(Depot.CurrentMode);
+            List<ScheduledStage> nextScheduledStages = schedule.GetNextStages(mode);
             if (nextScheduledStages.Count > 0)
             {
                 // Change UI

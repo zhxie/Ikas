@@ -202,6 +202,7 @@ namespace Ikas.Class
     {
         public enum GradeType
         {
+            grade_unknown = -1,
             intern,
             apprentice,
             part_timer,
