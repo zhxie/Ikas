@@ -255,7 +255,29 @@ namespace Ikas
                         imgMode.Source = (BitmapImage)FindResource("image_battle_regular");
                         lbPowerName.Content = Translate((battle as RegularBattle).Freshness.ToString());
                         lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                        switch ((battle as RegularBattle).Freshness)
+                        {
+                            case RegularBattle.FreshnessKey.raw:
+                                lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
+                                break;
+                            case RegularBattle.FreshnessKey.dry:
+                                lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterGreen));
+                                break;
+                            case RegularBattle.FreshnessKey.fresh:
+                                lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterBronze));
+                                break;
+                            case RegularBattle.FreshnessKey.superfresh:
+                            case RegularBattle.FreshnessKey.superfresh2:
+                                lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterSilver));
+                                break;
+                            case RegularBattle.FreshnessKey.superfresh3:
+                                lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterGold));
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
                         lbPower.Margin = new Thickness(0, -20, 0, 0);
+                        tbPower.Foreground = new SolidColorBrush();
                         tbPower.FontSize = 36;
                         tbPower.Text = (battle as RegularBattle).WinMeter.ToString("0.0");
                         tbPowerSub.Text = "";
@@ -266,6 +288,7 @@ namespace Ikas
                         imgMode.Source = (BitmapImage)FindResource("image_battle_ranked");
                         lbPowerName.Content = Translate("rank", true);
                         lbPower.FontFamily = FindResource("splatfont") as FontFamily;
+                        lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
                         lbPower.Margin = new Thickness(0, -20, 0, 0);
                         tbPower.FontSize = 36;
                         tbPower.Text = Translate((battle as RankedBattle).RankAfter.ToString());
@@ -284,6 +307,7 @@ namespace Ikas
                         imgMode.Source = (BitmapImage)FindResource("image_battle_league");
                         lbPowerName.Content = Translate("league_power", true);
                         lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                        lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
                         lbPower.Margin = new Thickness(0, -10, 0, 0);
                         tbPower.FontSize = 28;
                         if ((battle as LeagueBattle).IsCalculating)
@@ -311,6 +335,7 @@ namespace Ikas
                         imgMode.Source = (BitmapImage)FindResource("image_battle_private");
                         lbPowerName.Content = "";
                         lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                        lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
                         lbPower.Margin = new Thickness(0, -10, 0, 0);
                         tbPower.FontSize = 28;
                         tbPower.Text = "";
@@ -321,6 +346,7 @@ namespace Ikas
                     case Mode.Key.splatfest:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_splatfest");
                         lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                        lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
                         lbPower.Margin = new Thickness(0, -10, 0, 0);
                         tbPower.FontSize = 28;
                         switch ((battle as SplatfestBattle).SplatfestMode)
