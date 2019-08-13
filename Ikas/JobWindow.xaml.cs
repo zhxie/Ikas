@@ -149,7 +149,7 @@ namespace Ikas
                 }
                 else
                 {
-                    lbHazardLevel.Content = string.Format("{0}{1}", job.HazardLevel.ToString("0.0"), Translate("%", true));
+                    lbHazardLevel.Content = string.Format("{0}{1}", job.HazardLevel.ToString(), Translate("%", true));
                 }
                 lbGrizzcoPoints.Content = string.Format(Translate("{0}_X_{1}_=_{2}", true), job.Score, string.Format("{0}{1}", job.Rate, Translate("%", true)), job.GrizzcoPoint);
                 ((Storyboard)FindResource("fade_in")).Begin(imgMode);
