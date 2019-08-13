@@ -31,11 +31,11 @@
                         <Border x:Name="bdSub1" Background="Transparent"/>
                     </Grid>
                     <Grid Width="30" Height="30" Margin="5,0,0,0">
-                        <Border Background="#7F000000" CornerRadius="15"/>
+                        <Border x:Name="bdSub2Background" Background="#7F000000" CornerRadius="15"/>
                         <Border x:Name="bdSub2" Background="Transparent"/>
                     </Grid>
                     <Grid Width="30" Height="30" Margin="5,0,0,0">
-                        <Border Background="#7F000000" CornerRadius="15"/>
+                        <Border x:Name="bdSub3Background" Background="#7F000000" CornerRadius="15"/>
                         <Border x:Name="bdSub3" Background="Transparent"/>
                     </Grid>
                 </StackPanel>

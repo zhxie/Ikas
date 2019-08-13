@@ -157,6 +157,7 @@ namespace Ikas
                         brush.Stretch = Stretch.Uniform;
                         bdSubWeapon.Background = brush;
                         ((Storyboard)FindResource("fade_in")).Begin(bdSubWeapon);
+                        ((Storyboard)FindResource("fade_in")).Begin(bdSubWeaponBackground);
                     }
                     catch
                     {
@@ -180,6 +181,7 @@ namespace Ikas
                                     brush.Stretch = Stretch.Uniform;
                                     bdSubWeapon.Background = brush;
                                     ((Storyboard)FindResource("fade_in")).Begin(bdSubWeapon);
+                                    ((Storyboard)FindResource("fade_in")).Begin(bdSubWeaponBackground);
                                 }
                             }
                             else
@@ -190,10 +192,15 @@ namespace Ikas
                                     brush.Stretch = Stretch.Uniform;
                                     bdSubWeapon.Background = brush;
                                     ((Storyboard)FindResource("fade_in")).Begin(bdSubWeapon);
+                                    ((Storyboard)FindResource("fade_in")).Begin(bdSubWeaponBackground);
                                 }
                             }
                         }));
                     }
+                }
+                else
+                {
+                    ((Storyboard)FindResource("fade_out")).Begin(bdSubWeaponBackground);
                 }
                 if (Weapon.SubWeapon != null)
                 {
@@ -212,6 +219,7 @@ namespace Ikas
                         brush.Stretch = Stretch.Uniform;
                         bdSpecialWeapon.Background = brush;
                         ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeapon);
+                        ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeaponBackground);
                     }
                     catch
                     {
@@ -237,6 +245,7 @@ namespace Ikas
                                         brush.Stretch = Stretch.Uniform;
                                         bdSpecialWeapon.Background = brush;
                                         ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeapon);
+                                        ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeaponBackground);
                                     }
                                 }
                                 else
@@ -247,11 +256,16 @@ namespace Ikas
                                         brush.Stretch = Stretch.Uniform;
                                         bdSpecialWeapon.Background = brush;
                                         ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeapon);
+                                        ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeaponBackground);
                                     }
                                 }
                             }
                         }));
                     }
+                }
+                else
+                {
+                    ((Storyboard)FindResource("fade_out")).Begin(bdSpecialWeaponBackground);
                 }
             }
         }

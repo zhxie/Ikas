@@ -142,6 +142,7 @@ namespace Ikas
                         brush.Stretch = Stretch.Uniform;
                         bdSub2.Background = brush;
                         ((Storyboard)FindResource("fade_in")).Begin(bdSub2);
+                        ((Storyboard)FindResource("fade_in")).Begin(bdSub2Background);
                     }
                     catch
                     {
@@ -157,6 +158,7 @@ namespace Ikas
                                     brush.Stretch = Stretch.Uniform;
                                     bdSub2.Background = brush;
                                     ((Storyboard)FindResource("fade_in")).Begin(bdSub2);
+                                    ((Storyboard)FindResource("fade_in")).Begin(bdSub2Background);
                                 }
                             }
                         }));
@@ -171,6 +173,7 @@ namespace Ikas
                             brush.Stretch = Stretch.Uniform;
                             bdSub3.Background = brush;
                             ((Storyboard)FindResource("fade_in")).Begin(bdSub3);
+                            ((Storyboard)FindResource("fade_in")).Begin(bdSub3Background);
                         }
                         catch
                         {
@@ -186,6 +189,7 @@ namespace Ikas
                                         brush.Stretch = Stretch.Uniform;
                                         bdSub3.Background = brush;
                                         ((Storyboard)FindResource("fade_in")).Begin(bdSub3);
+                                        ((Storyboard)FindResource("fade_in")).Begin(bdSub3Background);
                                     }
                                 }
                             }));
@@ -193,16 +197,13 @@ namespace Ikas
                     }
                     else
                     {
-                        bdSub3.Background = new SolidColorBrush(Colors.Transparent);
-                        ((Storyboard)FindResource("fade_in")).Begin(bdSub3);
+                        ((Storyboard)FindResource("fade_out")).Begin(bdSub3Background);
                     }
                 }
                 else
                 {
-                    bdSub2.Background = new SolidColorBrush(Colors.Transparent);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdSub2);
-                    bdSub3.Background = new SolidColorBrush(Colors.Transparent);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdSub3);
+                    ((Storyboard)FindResource("fade_out")).Begin(bdSub2Background);
+                    ((Storyboard)FindResource("fade_out")).Begin(bdSub3Background);
                 }
             }
         }

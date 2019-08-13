@@ -55,11 +55,11 @@
             <Border x:Name="bdWeapon" Background="Transparent" Width="220" Height="220" Margin="0,5,0,0" Opacity="0"/>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,24,24">
                 <Grid Width="48" Height="48">
-                    <Border Background="#7F000000" CornerRadius="24"/>
+                    <Border x:Name="bdSubWeaponBackground" Background="#7F000000" CornerRadius="24"/>
                     <Border x:Name="bdSubWeapon" Background="Transparent" Opacity="0"/>
                 </Grid>
                 <Grid Width="48" Height="48" Margin="10,0,0,0">
-                    <Border Background="#7F000000" CornerRadius="24"/>
+                    <Border x:Name="bdSpecialWeaponBackground" Background="#7F000000" CornerRadius="24"/>
                     <Border x:Name="bdSpecialWeapon" Background="Transparent" Opacity="0"/>
                 </Grid>
             </StackPanel>
