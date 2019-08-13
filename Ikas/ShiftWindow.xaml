@@ -17,6 +17,15 @@
         <Storyboard x:Key="fade_in">
             <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="2"/>
         </Storyboard>
+        <Storyboard x:Key="window_fade_out">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="4"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
         <Storyboard x:Key="window_delay_fade_out">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Visible}"/>
@@ -67,16 +76,28 @@
                                     </Border>
                                     <StackPanel Orientation="Horizontal">
                                         <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000">
-                                            <Border x:Name="bdWeapon11" Background="Transparent" Opacity="0"/>
+                                            <local:WeaponControl x:Name="wp11"
+                                                                 MouseEnter="Weapon_MouseEnter"
+                                                                 MouseLeave="Weapon_MouseLeave"
+                                                                 />
                                         </Border>
                                         <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
-                                            <Border x:Name="bdWeapon12" Background="Transparent" Opacity="0"/>
+                                            <local:WeaponControl x:Name="wp12"
+                                                                 MouseEnter="Weapon_MouseEnter"
+                                                                 MouseLeave="Weapon_MouseLeave"
+                                                                 />
                                         </Border>
                                         <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
-                                            <Border x:Name="bdWeapon13" Background="Transparent" Opacity="0"/>
+                                            <local:WeaponControl x:Name="wp13"
+                                                                 MouseEnter="Weapon_MouseEnter"
+                                                                 MouseLeave="Weapon_MouseLeave"
+                                                                 />
                                         </Border>
                                         <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
-                                            <Border x:Name="bdWeapon14" Background="Transparent" Opacity="0"/>
+                                            <local:WeaponControl x:Name="wp14"
+                                                                 MouseEnter="Weapon_MouseEnter"
+                                                                 MouseLeave="Weapon_MouseLeave"
+                                                                 />
                                         </Border>
                                     </StackPanel>
                                 </StackPanel>
@@ -101,16 +122,28 @@
                                     </Border>
                                     <StackPanel Orientation="Horizontal">
                                         <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000">
-                                            <Border x:Name="bdWeapon21" Background="Transparent" Opacity="0"/>
+                                            <local:WeaponControl x:Name="wp21"
+                                                                 MouseEnter="Weapon_MouseEnter"
+                                                                 MouseLeave="Weapon_MouseLeave"
+                                                                 />
                                         </Border>
                                         <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
-                                            <Border x:Name="bdWeapon22" Background="Transparent" Opacity="0"/>
+                                            <local:WeaponControl x:Name="wp22"
+                                                                 MouseEnter="Weapon_MouseEnter"
+                                                                 MouseLeave="Weapon_MouseLeave"
+                                                                 />
                                         </Border>
                                         <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
-                                            <Border x:Name="bdWeapon23" Background="Transparent" Opacity="0"/>
+                                            <local:WeaponControl x:Name="wp23"
+                                                                 MouseEnter="Weapon_MouseEnter"
+                                                                 MouseLeave="Weapon_MouseLeave"
+                                                                 />
                                         </Border>
                                         <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
-                                            <Border x:Name="bdWeapon24" Background="Transparent" Opacity="0"/>
+                                            <local:WeaponControl x:Name="wp24"
+                                                                 MouseEnter="Weapon_MouseEnter"
+                                                                 MouseLeave="Weapon_MouseLeave"
+                                                                 />
                                         </Border>
                                     </StackPanel>
                                 </StackPanel>

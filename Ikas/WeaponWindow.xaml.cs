@@ -140,112 +140,118 @@ namespace Ikas
                         }
                     }));
                 }
-                string image2;
-                if (IsMy)
+                if (Weapon.SubWeapon != null)
                 {
-                    image2 = FileFolderUrl.ApplicationData + Weapon.SubWeapon.Image1;
-                }
-                else
-                {
-                    image2 = FileFolderUrl.ApplicationData + Weapon.SubWeapon.Image2;
-                }
-                try
-                {
-                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
-                    brush.Stretch = Stretch.Uniform;
-                    bdSubWeapon.Background = brush;
-                    ((Storyboard)FindResource("fade_in")).Begin(bdSubWeapon);
-                }
-                catch
-                {
-                    // Download the image
-                    Downloader downloader;
-                    if (isMy)
+                    string image2;
+                    if (IsMy)
                     {
-                        downloader = new Downloader(FileFolderUrl.SplatNet + Weapon.SubWeapon.Image1, image2, Downloader.SourceType.Weapon, Depot.Proxy);
+                        image2 = FileFolderUrl.ApplicationData + Weapon.SubWeapon.Image1;
                     }
                     else
                     {
-                        downloader = new Downloader(FileFolderUrl.SplatNet + Weapon.SubWeapon.Image2, image2, Downloader.SourceType.Weapon, Depot.Proxy);
+                        image2 = FileFolderUrl.ApplicationData + Weapon.SubWeapon.Image2;
                     }
-                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    try
                     {
-                        if (IsMy)
+                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
+                        brush.Stretch = Stretch.Uniform;
+                        bdSubWeapon.Background = brush;
+                        ((Storyboard)FindResource("fade_in")).Begin(bdSubWeapon);
+                    }
+                    catch
+                    {
+                        // Download the image
+                        Downloader downloader;
+                        if (isMy)
                         {
-                            if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Weapon.SubWeapon.Image1))
-                            {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
-                                brush.Stretch = Stretch.Uniform;
-                                bdSubWeapon.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(bdSubWeapon);
-                            }
+                            downloader = new Downloader(FileFolderUrl.SplatNet + Weapon.SubWeapon.Image1, image2, Downloader.SourceType.Weapon, Depot.Proxy);
                         }
                         else
                         {
-                            if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Weapon.SubWeapon.Image2))
-                            {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
-                                brush.Stretch = Stretch.Uniform;
-                                bdSubWeapon.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(bdSubWeapon);
-                            }
+                            downloader = new Downloader(FileFolderUrl.SplatNet + Weapon.SubWeapon.Image2, image2, Downloader.SourceType.Weapon, Depot.Proxy);
                         }
-                    }));
-                }
-                string image3;
-                if (isMy)
-                {
-                    image3 = FileFolderUrl.ApplicationData + Weapon.SpecialWeapon.Image1;
-                }
-                else
-                {
-                    image3 = FileFolderUrl.ApplicationData + Weapon.SpecialWeapon.Image2;
-                }
-                try
-                {
-                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
-                    brush.Stretch = Stretch.Uniform;
-                    bdSpecialWeapon.Background = brush;
-                    ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeapon);
-                }
-                catch
-                {
-                    // Download the image
-                    Downloader downloader;
-                    if (IsMy)
-                    {
-                        downloader = new Downloader(FileFolderUrl.SplatNet + Weapon.SpecialWeapon.Image1, image3, Downloader.SourceType.Weapon, Depot.Proxy);
-                    }
-                    else
-                    {
-                        downloader = new Downloader(FileFolderUrl.SplatNet + Weapon.SpecialWeapon.Image2, image3, Downloader.SourceType.Weapon, Depot.Proxy);
-                    }
-                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                    {
-                        if (Weapon != null)
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
                             if (IsMy)
                             {
-                                if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Weapon.SpecialWeapon.Image1))
+                                if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Weapon.SubWeapon.Image1))
                                 {
-                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
+                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                                     brush.Stretch = Stretch.Uniform;
-                                    bdSpecialWeapon.Background = brush;
-                                    ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeapon);
+                                    bdSubWeapon.Background = brush;
+                                    ((Storyboard)FindResource("fade_in")).Begin(bdSubWeapon);
                                 }
                             }
                             else
                             {
-                                if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Weapon.SpecialWeapon.Image2))
+                                if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Weapon.SubWeapon.Image2))
                                 {
-                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
+                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                                     brush.Stretch = Stretch.Uniform;
-                                    bdSpecialWeapon.Background = brush;
-                                    ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeapon);
+                                    bdSubWeapon.Background = brush;
+                                    ((Storyboard)FindResource("fade_in")).Begin(bdSubWeapon);
                                 }
                             }
+                        }));
+                    }
+                }
+                if (Weapon.SubWeapon != null)
+                {
+                    string image3;
+                    if (isMy)
+                    {
+                        image3 = FileFolderUrl.ApplicationData + Weapon.SpecialWeapon.Image1;
+                    }
+                    else
+                    {
+                        image3 = FileFolderUrl.ApplicationData + Weapon.SpecialWeapon.Image2;
+                    }
+                    try
+                    {
+                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
+                        brush.Stretch = Stretch.Uniform;
+                        bdSpecialWeapon.Background = brush;
+                        ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeapon);
+                    }
+                    catch
+                    {
+                        // Download the image
+                        Downloader downloader;
+                        if (IsMy)
+                        {
+                            downloader = new Downloader(FileFolderUrl.SplatNet + Weapon.SpecialWeapon.Image1, image3, Downloader.SourceType.Weapon, Depot.Proxy);
                         }
-                    }));
+                        else
+                        {
+                            downloader = new Downloader(FileFolderUrl.SplatNet + Weapon.SpecialWeapon.Image2, image3, Downloader.SourceType.Weapon, Depot.Proxy);
+                        }
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        {
+                            if (Weapon != null)
+                            {
+                                if (IsMy)
+                                {
+                                    if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Weapon.SpecialWeapon.Image1))
+                                    {
+                                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
+                                        brush.Stretch = Stretch.Uniform;
+                                        bdSpecialWeapon.Background = brush;
+                                        ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeapon);
+                                    }
+                                }
+                                else
+                                {
+                                    if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Weapon.SpecialWeapon.Image2))
+                                    {
+                                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
+                                        brush.Stretch = Stretch.Uniform;
+                                        bdSpecialWeapon.Background = brush;
+                                        ((Storyboard)FindResource("fade_in")).Begin(bdSpecialWeapon);
+                                    }
+                                }
+                            }
+                        }));
+                    }
                 }
             }
         }

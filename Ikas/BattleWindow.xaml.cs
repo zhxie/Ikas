@@ -65,7 +65,7 @@ namespace Ikas
             Depot.BattleFound += new ContentFoundEventHandler(BattleFound);
             Depot.BattleUpdated += new ContentUpdatedEventHandler(BattleUpdated);
             Depot.BattleNotifying += new ContentNotifyingHandler(BattleNotifying);
-            // Prepare Icon and Weapon window
+            // Prepare icon and weapon window
             playerWindow = new PlayerWindow();
             playerWindow.KeepAliveWindow = this;
             playerWindow.Opacity = 0;

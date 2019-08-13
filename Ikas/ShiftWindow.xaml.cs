@@ -24,9 +24,6 @@ namespace Ikas
     /// </summary>
     public partial class ShiftWindow : Window
     {
-        private DispatcherTimer tmLoading;
-        private int loadingRotationAngle;
-
         public string OrangeForeground
         {
             get
@@ -34,6 +31,11 @@ namespace Ikas
                 return "#FF" + Design.NeonOrange;
             }
         }
+
+        private WeaponWindow weaponWindow;
+
+        private DispatcherTimer tmLoading;
+        private int loadingRotationAngle;
 
         public ShiftWindow()
         {
@@ -56,20 +58,17 @@ namespace Ikas
             // Set properties for controls
             RenderOptions.SetBitmapScalingMode(imgMode, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(stg1, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdWeapon11, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdWeapon12, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdWeapon13, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdWeapon14, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(stg2, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdWeapon21, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdWeapon22, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdWeapon23, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(bdWeapon24, BitmapScalingMode.HighQuality);
             // Add handler for global member
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
             Depot.ShiftChanged += new ContentChangedEventHandler(ShiftChanged);
             Depot.ShiftUpdated += new ContentUpdatedEventHandler(ShiftUpdated);
             Depot.CookieUpdated += new CookieUpdatedEventHandler(CookieUpdated);
+            // Prepare weapon window
+            weaponWindow = new WeaponWindow();
+            weaponWindow.KeepAliveWindow = this;
+            weaponWindow.Opacity = 0;
+            weaponWindow.Visibility = Visibility.Hidden;
             // Create timers
             loadingRotationAngle = 0;
             tmLoading = new DispatcherTimer();
@@ -96,17 +95,17 @@ namespace Ikas
 
         #region Control Event
 
-        private void Window_LocationChanged(object sender, EventArgs e)
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
             ((Storyboard)FindResource("window_fade_in")).Begin(this);
         }
 
-        private void Window_MouseEnter(object sender, MouseEventArgs e)
+        private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
             ((Storyboard)FindResource("window_delay_fade_out")).Begin(this);
         }
 
-        private void Window_MouseLeave(object sender, MouseEventArgs e)
+        private void Window_LocationChanged(object sender, EventArgs e)
         {
             /*
             if (Top < 0)
@@ -118,6 +117,40 @@ namespace Ikas
                 Top = WpfScreen.GetScreenFrom(this).DeviceBounds.Height - Height;
             }
             */
+        }
+
+        private void Weapon_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Weapon weapon = (sender as WeaponControl).Weapon;
+            if (weapon != null)
+            {
+                weaponWindow.Top = e.GetPosition(this).Y + Top - weaponWindow.Height / 2;
+                weaponWindow.Left = e.GetPosition(this).X + Left - 10 - weaponWindow.Width;
+                // Restrict in this window
+                if (Top - weaponWindow.Top > 30)
+                {
+                    weaponWindow.Top = Top - 30;
+                }
+                if (Left - weaponWindow.Left > 40)
+                {
+                    weaponWindow.Left = Left - 40;
+                }
+                if (weaponWindow.Top + weaponWindow.Height - (Top + Height) > 30)
+                {
+                    weaponWindow.Top = Top + Height - weaponWindow.Height + 30;
+                }
+                if (weaponWindow.Left + weaponWindow.Width - (Left + Width) > 30)
+                {
+                    weaponWindow.Left = Left + Width - weaponWindow.Width + 30;
+                }
+                weaponWindow.SetWeapon(weapon, false);
+                ((Storyboard)FindResource("window_fade_in")).Begin(weaponWindow);
+            }
+        }
+
+        private void Weapon_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Storyboard)FindResource("window_fade_out")).Begin(weaponWindow);
         }
 
         #endregion
@@ -144,18 +177,18 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(lbTime1);
             ((Storyboard)FindResource("fade_out")).Begin(stg1);
             ((Storyboard)FindResource("fade_out")).Begin(lbWeapon1);
-            ((Storyboard)FindResource("fade_out")).Begin(bdWeapon11);
-            ((Storyboard)FindResource("fade_out")).Begin(bdWeapon12);
-            ((Storyboard)FindResource("fade_out")).Begin(bdWeapon13);
-            ((Storyboard)FindResource("fade_out")).Begin(bdWeapon14);
             ((Storyboard)FindResource("fade_out")).Begin(tagStatus2);
             ((Storyboard)FindResource("fade_out")).Begin(lbTime2);
             ((Storyboard)FindResource("fade_out")).Begin(stg2);
             ((Storyboard)FindResource("fade_out")).Begin(lbWeapon2);
-            ((Storyboard)FindResource("fade_out")).Begin(bdWeapon21);
-            ((Storyboard)FindResource("fade_out")).Begin(bdWeapon22);
-            ((Storyboard)FindResource("fade_out")).Begin(bdWeapon23);
-            ((Storyboard)FindResource("fade_out")).Begin(bdWeapon24);
+            wp11.SetWeapon(null);
+            wp12.SetWeapon(null);
+            wp13.SetWeapon(null);
+            wp14.SetWeapon(null);
+            wp21.SetWeapon(null);
+            wp22.SetWeapon(null);
+            wp23.SetWeapon(null);
+            wp24.SetWeapon(null);
         }
 
         private void ShiftUpdated()
@@ -211,100 +244,17 @@ namespace Ikas
             }
             if (stage.Weapons.Count > 0)
             {
-                // Update weapon
-                Weapon weapon11 = stage.Weapons[0];
-                string image2 = FileFolderUrl.ApplicationData + weapon11.Image;
-                try
-                {
-                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
-                    brush.Stretch = Stretch.UniformToFill;
-                    bdWeapon11.Background = brush;
-                    ((Storyboard)FindResource("fade_in")).Begin(bdWeapon11);
-                }
-                catch
-                {
-                    // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + weapon11.Image, image2, Downloader.SourceType.Shift, Depot.Proxy);
-                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                    {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
-                        brush.Stretch = Stretch.UniformToFill;
-                        bdWeapon11.Background = brush;
-                        ((Storyboard)FindResource("fade_in")).Begin(bdWeapon11);
-                    }));
-                }
+                // Update weapons
+                wp11.SetWeapon(stage.Weapons[0]);
                 if (stage.Weapons.Count > 1)
                 {
-                    // Update weapon 2
-                    Weapon weapon12 = stage.Weapons[1];
-                    string image3 = FileFolderUrl.ApplicationData + weapon12.Image;
-                    try
-                    {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
-                        brush.Stretch = Stretch.UniformToFill;
-                        bdWeapon12.Background = brush;
-                        ((Storyboard)FindResource("fade_in")).Begin(bdWeapon12);
-                    }
-                    catch
-                    {
-                        // Download the image
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + weapon12.Image, image3, Downloader.SourceType.Shift, Depot.Proxy);
-                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                        {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
-                            brush.Stretch = Stretch.UniformToFill;
-                            bdWeapon12.Background = brush;
-                            ((Storyboard)FindResource("fade_in")).Begin(bdWeapon12);
-                        }));
-                    }
+                    wp12.SetWeapon(stage.Weapons[1]);
                     if (stage.Weapons.Count > 2)
                     {
-                        // Update weapon 3
-                        Weapon weapon13 = stage.Weapons[2];
-                        string image4 = FileFolderUrl.ApplicationData + weapon13.Image;
-                        try
-                        {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image4)));
-                            brush.Stretch = Stretch.UniformToFill;
-                            bdWeapon13.Background = brush;
-                            ((Storyboard)FindResource("fade_in")).Begin(bdWeapon13);
-                        }
-                        catch
-                        {
-                            // Download the image
-                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + weapon13.Image, image4, Downloader.SourceType.Shift, Depot.Proxy);
-                            DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                            {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image4)));
-                                brush.Stretch = Stretch.UniformToFill;
-                                bdWeapon14.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(bdWeapon14);
-                            }));
-                        }
+                        wp13.SetWeapon(stage.Weapons[2]);
                         if (stage.Weapons.Count > 3)
                         {
-                            // Update weapon 4
-                            Weapon weapon14 = stage.Weapons[3];
-                            string image5 = FileFolderUrl.ApplicationData + weapon14.Image;
-                            try
-                            {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image5)));
-                                brush.Stretch = Stretch.UniformToFill;
-                                bdWeapon14.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(bdWeapon14);
-                            }
-                            catch
-                            {
-                                // Download the image
-                                Downloader downloader = new Downloader(FileFolderUrl.SplatNet + weapon14.Image, image5, Downloader.SourceType.Shift, Depot.Proxy);
-                                DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                                {
-                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image5)));
-                                    brush.Stretch = Stretch.UniformToFill;
-                                    bdWeapon14.Background = brush;
-                                    ((Storyboard)FindResource("fade_in")).Begin(bdWeapon14);
-                                }));
-                            }
+                            wp14.SetWeapon(stage.Weapons[3]);
                         }
                     }
                 }
@@ -343,100 +293,17 @@ namespace Ikas
                 }
                 if (stage2.Weapons.Count > 0)
                 {
-                    // Update next weapon
-                    Weapon weapon21 = stage2.Weapons[0];
-                    string image7 = FileFolderUrl.ApplicationData + weapon21.Image;
-                    try
-                    {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image7)));
-                        brush.Stretch = Stretch.UniformToFill;
-                        bdWeapon21.Background = brush;
-                        ((Storyboard)FindResource("fade_in")).Begin(bdWeapon21);
-                    }
-                    catch
-                    {
-                        // Download the image
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + weapon21.Image, image7, Downloader.SourceType.Shift, Depot.Proxy);
-                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                        {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image7)));
-                            brush.Stretch = Stretch.UniformToFill;
-                            bdWeapon21.Background = brush;
-                            ((Storyboard)FindResource("fade_in")).Begin(bdWeapon21);
-                        }));
-                    }
+                    // Update weapons
+                    wp21.SetWeapon(stage2.Weapons[0]);
                     if (stage2.Weapons.Count > 1)
                     {
-                        // Update next weapon 2
-                        Weapon weapon22 = stage2.Weapons[1];
-                        string image8 = FileFolderUrl.ApplicationData + weapon22.Image;
-                        try
-                        {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image8)));
-                            brush.Stretch = Stretch.UniformToFill;
-                            bdWeapon22.Background = brush;
-                            ((Storyboard)FindResource("fade_in")).Begin(bdWeapon22);
-                        }
-                        catch
-                        {
-                            // Download the image
-                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + weapon22.Image, image8, Downloader.SourceType.Shift, Depot.Proxy);
-                            DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                            {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image8)));
-                                brush.Stretch = Stretch.UniformToFill;
-                                bdWeapon22.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(bdWeapon22);
-                            }));
-                        }
+                        wp22.SetWeapon(stage2.Weapons[1]);
                         if (stage2.Weapons.Count > 2)
                         {
-                            // Update next weapon 3
-                            Weapon weapon23 = stage2.Weapons[2];
-                            string image9 = FileFolderUrl.ApplicationData + weapon23.Image;
-                            try
-                            {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image9)));
-                                brush.Stretch = Stretch.UniformToFill;
-                                bdWeapon23.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(bdWeapon23);
-                            }
-                            catch
-                            {
-                                // Download the image
-                                Downloader downloader = new Downloader(FileFolderUrl.SplatNet + weapon23.Image, image9, Downloader.SourceType.Shift, Depot.Proxy);
-                                DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                                {
-                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image9)));
-                                    brush.Stretch = Stretch.UniformToFill;
-                                    bdWeapon23.Background = brush;
-                                    ((Storyboard)FindResource("fade_in")).Begin(bdWeapon23);
-                                }));
-                            }
+                            wp23.SetWeapon(stage2.Weapons[2]);
                             if (stage2.Weapons.Count > 3)
                             {
-                                // Update next weapon 4
-                                Weapon weapon24 = stage2.Weapons[3];
-                                string image10 = FileFolderUrl.ApplicationData + weapon24.Image;
-                                try
-                                {
-                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image10)));
-                                    brush.Stretch = Stretch.UniformToFill;
-                                    bdWeapon24.Background = brush;
-                                    ((Storyboard)FindResource("fade_in")).Begin(bdWeapon24);
-                                }
-                                catch
-                                {
-                                    // Download the image
-                                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + weapon24.Image, image10, Downloader.SourceType.Shift, Depot.Proxy);
-                                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
-                                    {
-                                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image10)));
-                                        brush.Stretch = Stretch.UniformToFill;
-                                        bdWeapon24.Background = brush;
-                                        ((Storyboard)FindResource("fade_in")).Begin(bdWeapon24);
-                                    }));
-                                }
+                                wp24.SetWeapon(stage2.Weapons[3]);
                             }
                         }
                     }
