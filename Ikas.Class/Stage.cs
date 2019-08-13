@@ -64,64 +64,6 @@ namespace Ikas.Class
             salmonid_smokeyard,
             ruins_of_ark_polaris
         }
-        public enum ShortName
-        {
-            stage_unknown = -1,
-            reef,
-            fitness,
-            mainstage,
-            shipyard,
-            academy,
-            track,
-            manta,
-            port,
-            towers,
-            canal,
-            dome,
-            skatepark,
-            institute,
-            mart,
-            warehouse,
-            mall,
-            camp,
-            pit,
-            arena,
-            hotel,
-            world,
-            games,
-            pavilion,
-            shifty_04 = 100,    // shifty_windmill
-            shifty_01,          // shifty_wayslide
-            shifty_02,          // shifty_splat
-            shifty_03,          // shifty_goosponge
-            shifty_07 = 105,    // shifty_cannon
-            shifty_06,          // shifty_glass
-            shifty_05,          // shifty_spew
-            shifty_09,          // shifty_grapplink
-            shifty_10,          // shifty_longshocking
-            shifty_08,          // shifty_bunker
-            shifty_11,          // shifty_balance
-            shifty_13,          // shifty_switches
-            shifty_12,          // shifty_tentacles
-            shifty_14,          // shifty_bouncey
-            shifty_15,          // shifty_railway
-            shifty_16,          // shifty_gusher
-            shifty_17,          // shifty_dasher
-            shifty_18,          // shifty_flooders
-            shifty_19,          // shifty_zones
-            shifty_20,          // shifty_spreading
-            shifty_21,          // shifty_tentaswitchia
-            shifty_22,          // shifty_rolonium
-            shifty_23,          // shifty_furler
-            shifty_24,          // shifty_diaries
-            shifty = 9999,
-            shift_stage_unknown = -2,
-            grounds = 10000,
-            bay,
-            outpost,
-            smokeyard,
-            ark
-        }
 
         public Key Id { get; }
         public string Image { get; }
