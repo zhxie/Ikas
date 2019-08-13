@@ -143,15 +143,15 @@ namespace Ikas
                 }
                 lbGrade.Content = Translate(job.Grade.ToString());
                 lbGradePoint.Content = job.GradePoint.ToString();
-                if (job.DangerRate == 200)
+                if (job.HazardLevel == 200)
                 {
                     lbHazardLevel.Content = Translate("max", true);
                 }
                 else
                 {
-                    lbHazardLevel.Content = string.Format("{0}{1}", job.DangerRate.ToString("0.0"), Translate("%", true));
+                    lbHazardLevel.Content = string.Format("{0}{1}", job.HazardLevel.ToString("0.0"), Translate("%", true));
                 }
-                lbGrizzcoPoints.Content = string.Format(Translate("{0}_X_{1}_=_{2}", true), job.Score, string.Format("{0}{1}", job.Rate, Translate("%", true)), job.GrizzcoPoints);
+                lbGrizzcoPoints.Content = string.Format(Translate("{0}_X_{1}_=_{2}", true), job.Score, string.Format("{0}{1}", job.Rate, Translate("%", true)), job.GrizzcoPoint);
                 ((Storyboard)FindResource("fade_in")).Begin(imgMode);
                 ((Storyboard)FindResource("fade_in")).Begin(lbMode);
                 ((Storyboard)FindResource("fade_in")).Begin(tagResult);

@@ -1644,7 +1644,7 @@ namespace Ikas
                     try
                     {
                         DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)).AddSeconds(long.Parse(jObject["play_time"].ToString()));
-                        double dangerRate = double.Parse(jObject["danger_rate"].ToString());
+                        double hazardLevel = double.Parse(jObject["danger_rate"].ToString());
                         ShiftStage stage = parseShiftStage(jObject["schedule"]);
                         List<Wave> waves = new List<Wave>();
                         foreach (JToken node in jObject["wave_details"])
@@ -1683,7 +1683,7 @@ namespace Ikas
                         {
                             result = Job.ParseResultType(jObject["job_result"]["failure_reason"].ToString());
                         }                       
-                        UpdateJob(new Job(battleNumber, startTime, dangerRate, stage, waves, myPlayer, otherPlayers,
+                        UpdateJob(new Job(battleNumber, startTime, hazardLevel, stage, waves, myPlayer, otherPlayers,
                             steelheadCount, flyfishCount, steelEelCount, drizzlerCount, stingerCount, scrapperCount, mawsCount, grillerCount, goldieCount,
                             score, gradePointDelta, result));
                     }

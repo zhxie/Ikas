@@ -15,7 +15,7 @@ namespace Ikas.Class
 
         public int Number { get; }
         public DateTime StartTime { get; }
-        public double DangerRate { get; }
+        public double HazardLevel { get; }
         public ShiftStage Stage { get; }
         public List<Wave> Waves { get; }
         public JobPlayer MyPlayer { get; }
@@ -61,11 +61,18 @@ namespace Ikas.Class
                 return MyPlayer.Rate;
             }
         }
-        public int GrizzcoPoints
+        public double PayGrade
         {
             get
             {
-                return Rate / 100 * Score;
+                return Rate * 1.0 / 100;
+            }
+        }
+        public int GrizzcoPoint
+        {
+            get
+            {
+                return (int)Math.Round(PayGrade * Score, MidpointRounding.AwayFromZero);
             }
         }
         public int FailureWave
@@ -83,13 +90,13 @@ namespace Ikas.Class
             }
         }
 
-        public Job(int number, DateTime startTime, double dangerRate, ShiftStage stage, List<Wave> waves, JobPlayer myPlayer, List<JobPlayer> otherPlayers,
+        public Job(int number, DateTime startTime, double hazardLevel, ShiftStage stage, List<Wave> waves, JobPlayer myPlayer, List<JobPlayer> otherPlayers,
             int steelheadCount, int flyfishCount, int steelEelCount, int drizzlerCount, int stingerCount, int scrapperCount, int mawsCount, int grillerCount, int goldieCount,
             int score, int gradePointDelta, ResultType result)
         {
             Number = number;
             StartTime = startTime;
-            DangerRate = dangerRate;
+            HazardLevel = hazardLevel;
             Stage = stage;
             Waves = waves;
             MyPlayer = myPlayer;
@@ -111,7 +118,7 @@ namespace Ikas.Class
         {
             Number = -1;
             StartTime = new DateTime(0);
-            DangerRate = -1;
+            HazardLevel = -1;
             Waves = new List<Wave>();
             OtherPlayers = new List<JobPlayer>();
             SteelheadCount = -1;
@@ -131,7 +138,7 @@ namespace Ikas.Class
         {
             Number = -1;
             StartTime = new DateTime(0);
-            DangerRate = -1;
+            HazardLevel = -1;
             Waves = new List<Wave>();
             OtherPlayers = new List<JobPlayer>();
             SteelheadCount = -1;
