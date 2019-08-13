@@ -61,7 +61,7 @@ namespace Ikas.Class
                 return MyPlayer.Rate;
             }
         }
-        public int BearPoint
+        public int GrizzcoPoints
         {
             get
             {

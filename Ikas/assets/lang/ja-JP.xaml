@@ -842,7 +842,7 @@
     <sys:String x:Key="null_boots_replica">ネルブーツ レプリカ</sys:String>
     <sys:String x:Key="old_timey_shoes">グランパなクツ</sys:String>
     <!-- Job -->
-    <sys:String x:Key="clear">Clear</sys:String>
+    <sys:String x:Key="clear">Clear!!</sys:String>
     <sys:String x:Key="time_limit">時間切れ</sys:String>
     <sys:String x:Key="wipe_out">ゼンメツ!</sys:String>
     <!-- Errors -->
@@ -932,6 +932,15 @@
     <sys:String x:Key="battle_window-knock_out">ノックアウト!</sys:String>
     <sys:String x:Key="battle_window-{0}_(No._{1})">{0} (No. {1})</sys:String>
     <sys:String x:Key="battle_window-{0}_-_{1}">{0} - {1}</sys:String>
+    <!-- JobWindow -->
+    <sys:String x:Key="job_window-salmon_run">サーモンラン</sys:String>
+    <sys:String x:Key="job_window-hazard_level">キケン度</sys:String>
+    <sys:String x:Key="job_window-grizzco_points">クマサンポイント</sys:String>
+    <sys:String x:Key="job_window-clear">Clear!!</sys:String>
+    <sys:String x:Key="job_window-defeat">Failure</sys:String>
+    <sys:String x:Key="job_window-max">MAX!!</sys:String>
+    <sys:String x:Key="job_window-%">%</sys:String>
+    <sys:String x:Key="job_window-{0}_X_{1}_=_{2}">{0} X {1} = {2}</sys:String>
     <!-- WeaponWindow -->
     <!-- GearWindow -->
     <!-- PlayerWindow -->

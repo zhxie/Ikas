@@ -36,7 +36,7 @@ namespace Ikas
         private ScheduleWindow scheduleWindow;
         private ShiftWindow shiftWindow;
         private BattleWindow battleWindow;
-        // TODO: private JobWindow jobWindow;
+        private JobWindow jobWindow;
         private SettingsWindow settingsWindow;
 
         private DispatcherTimer tmScheduleAndShift;
@@ -91,10 +91,9 @@ namespace Ikas
             battleWindow = new BattleWindow();
             battleWindow.Opacity = 0;
             battleWindow.Visibility = Visibility.Hidden;
-            // TODO: job window
-            // jobWindow = new JobWindow();
-            // jobWindow.Opacity = 0;
-            // jobWindow.Visibility = Visibility.Hidden;
+            jobWindow = new JobWindow();
+            jobWindow.Opacity = 0;
+            jobWindow.Visibility = Visibility.Hidden;
             settingsWindow = new SettingsWindow();
             settingsWindow.Opacity = 0;
             settingsWindow.Visibility = Visibility.Hidden;
@@ -118,8 +117,10 @@ namespace Ikas
             tmJob = new DispatcherTimer();
             tmJob.Tick += new EventHandler((object source, EventArgs e) =>
             {
-                // TODO: Stop updating job automatically if jobWindow is visible
-                Depot.GetLastJob();
+                if (jobWindow.Visibility == Visibility.Hidden)
+                {
+                    Depot.GetLastJob();
+                }
             });
             tmJob.Interval = new TimeSpan(0, 0, 15);
             // Initialize notification
@@ -185,7 +186,7 @@ namespace Ikas
             ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
             ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
             ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
-            // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
+            ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
             DragMove();
         }
 
@@ -233,7 +234,7 @@ namespace Ikas
             shiftWindow.Top = Top + Height + 10;
             shiftWindow.Left = Left;
             ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
-            // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
+            ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
             if (Depot.CurrentMode != Depot.Mode.salmon_run)
             {
                 ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
@@ -256,21 +257,21 @@ namespace Ikas
         {
             battleWindow.Top = Top + Height + 10;
             battleWindow.Left = Left;
-            // TODO: jobWindow.Top = Top + Height + 10;
-            // TODO: jobWindow.Left = Left;
+            jobWindow.Top = Top + Height + 10;
+            jobWindow.Left = Left;
             ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
             ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
             if (Depot.CurrentMode != Depot.Mode.salmon_run)
             {
                 Depot.GetLastBattle();
-                // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
+                ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
                 ((Storyboard)FindResource("window_fade_in")).Begin(battleWindow);
             }
             else
             {
                 Depot.GetLastJob();
                 ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
-                // TODO: ((Storyboard)FindResource("window_fade_in")).Begin(jobWindow);
+                ((Storyboard)FindResource("window_fade_in")).Begin(jobWindow);
             }
             // Automatica Battle update
             tmBattle.Start();
@@ -279,7 +280,7 @@ namespace Ikas
         private void LbLevel_MouseLeave(object sender, MouseEventArgs e)
         {
             ((Storyboard)FindResource("window_delay_fade_out")).Begin(battleWindow);
-            // TODO: ((Storyboard)FindResource("window_delay_fade_out")).Begin(jobWindow);
+            ((Storyboard)FindResource("window_delay_fade_out")).Begin(jobWindow);
         }
 
         private void MenuItemSettings_Click(object sender, RoutedEventArgs e)

@@ -1,0 +1,99 @@
+﻿<Window x:Class="Ikas.JobWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ikas"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        LocationChanged="Window_LocationChanged"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave"
+        Title="Ikas - Job" Width="495" SizeToContent="Height" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True" ShowInTaskbar="False">
+    <Window.Resources>
+        <Storyboard x:Key="fade_out">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="2"/>
+        </Storyboard>
+        <Storyboard x:Key="fade_in">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="2"/>
+        </Storyboard>
+        <Storyboard x:Key="window_fade_out">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="4"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="window_delay_fade_out">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.5" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="4"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:1.0" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="window_fade_in">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
+        </Storyboard>
+    </Window.Resources>
+    <Grid>
+        <Border CornerRadius="27">
+            <Border.Background>
+                <SolidColorBrush Color="#FF221F22"/>
+            </Border.Background>
+            <Border x:Name="bdBackgroundStrip" CornerRadius="27,27,27,27">
+                <Border.Background>
+                    <ImageBrush ImageSource="assets/img/bg-strips-dark.png" Stretch="None" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
+                </Border.Background>
+            </Border>
+        </Border>
+        <StackPanel Orientation="Vertical" Margin="0,20">
+            <Grid Height="48" Margin="20,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image x:Name="imgMode" Width="48" Height="48" Source="assets/img/salmon-run.png" Opacity="0"/>
+                    <Label x:Name="lbMode" Content="{DynamicResource job_window-salmon_run}" FontFamily="{StaticResource splatfont}" Foreground="White" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="36" Height="90" VerticalContentAlignment="Center" Opacity="0"/>
+                </StackPanel>
+                <local:TagControl x:Name="tagResult" FontFamily="{StaticResource splatfont}" FontSize="22" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Background="#FF19D719" Content="[Result]" Opacity="0"/>
+            </Grid>
+            <Grid Margin="25,10,25,0">
+                <Border Width="208" Height="117" HorizontalAlignment="Left" CornerRadius="8" Background="Black">
+                    <local:StageControl x:Name="stg" FontFamily="{StaticResource splatfont_2}" FontSize="16" Opacity="0"/>
+                </Border>
+                <StackPanel Width ="222" Height="117" Orientation="Vertical" HorizontalAlignment="Right">
+                    <Label x:Name="lbGrade" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="24" Content="[Grade]" Opacity="0"/>
+                    <Label x:Name="lbGradePoint" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-10,0,0" Content="[GradePoint]" Opacity="0"/>
+                </StackPanel>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Margin="25,10,25,0">
+                <Grid>
+                    <Border Width="182" Height="80" Background="#7F000000" CornerRadius="8"/>
+                    <StackPanel Height="80" Orientation="Vertical">
+                        <Label x:Name="lbHazardLevelName" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="20" HorizontalContentAlignment="Center" Content="{DynamicResource job_window-hazard_level}" Padding="0" Opacity="0"/>
+                        <Label x:Name="lbHazardLevel" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="24" HorizontalContentAlignment="Center" Margin="0,-8,0,0" Padding="0" Content="[Level]" Opacity="0"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="10,0,0,0">
+                    <Border Width="252" Height="80" Background="#7F000000" CornerRadius="8"/>
+                    <StackPanel Height="80" Orientation="Vertical">
+                        <Label x:Name="lbGrizzcoPointsName" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="20" HorizontalContentAlignment="Center" Content="{DynamicResource job_window-grizzco_points}" Padding="0" Opacity="0"/>
+                        <Label x:Name="lbGrizzcoPoints" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="24" HorizontalContentAlignment="Center" Margin="0,-8,0,0" Padding="0" Content="[P] X [R] = [GP]" Opacity="0"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+            <Grid Margin="25,15,25,0">
+                <StackPanel Orientation="Horizontal">
+                    <!-- TODO: Waves -->
+                </StackPanel>
+            </Grid>
+            <StackPanel Orientation="Vertical" Margin="25,15,25,0">
+                <!-- TODO: JobPlayer -->
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

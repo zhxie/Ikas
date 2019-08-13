@@ -226,13 +226,13 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(imgMode);
             ((Storyboard)FindResource("fade_out")).Begin(lbRule);
             ((Storyboard)FindResource("fade_out")).Begin(tagResult);
+            ((Storyboard)FindResource("fade_out")).Begin(stg);
             ((Storyboard)FindResource("fade_out")).Begin(lbPowerName);
             ((Storyboard)FindResource("fade_out")).Begin(lbPower);
             ((Storyboard)FindResource("fade_out")).Begin(tagWin);
             ((Storyboard)FindResource("fade_out")).Begin(lbWinEstimatedPower);
             ((Storyboard)FindResource("fade_out")).Begin(tagLose);
             ((Storyboard)FindResource("fade_out")).Begin(lbLoseEstimatedPower);
-            ((Storyboard)FindResource("fade_out")).Begin(stg);
             plWin1.SetPlayer(null, true);
             plWin2.SetPlayer(null, true);
             plWin3.SetPlayer(null, true);
@@ -514,7 +514,7 @@ namespace Ikas
                 ((Storyboard)FindResource("fade_in")).Begin(lbWinEstimatedPower);
                 ((Storyboard)FindResource("fade_in")).Begin(tagLose);
                 ((Storyboard)FindResource("fade_in")).Begin(lbLoseEstimatedPower);
-                // Update Stage
+                // Update stage
                 Stage stage = battle.Stage;
                 string image = FileFolderUrl.ApplicationData + stage.Image;
                 try
@@ -538,7 +538,7 @@ namespace Ikas
                         ((Storyboard)FindResource("fade_in")).Begin(stg);
                     }));
                 }
-                // Update Players
+                // Update players
                 if (battle.IsWin)
                 {
                     if (battle.MyPlayers.Count > 0)

@@ -99,6 +99,9 @@
     <Compile Include="GearWindow.xaml.cs">
       <DependentUpon>GearWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="JobWindow.xaml.cs">
+      <DependentUpon>JobWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GearWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JobWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
