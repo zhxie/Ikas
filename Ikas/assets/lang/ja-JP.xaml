@@ -911,6 +911,13 @@
     <sys:String x:Key="schedule_window-{0}_-_{1}">{0} - {1}</sys:String>
     <sys:String x:Key="schedule_window-in_{0}_hour_{1}_min">{0} 時間 {1} 分後</sys:String>
     <sys:String x:Key="schedule_window-in_{0}_min">{0} 分後</sys:String>
+    <!-- ShiftWindow -->
+    <sys:String x:Key="shift_window-salmon_run">サーモンラン</sys:String>
+    <sys:String x:Key="shift_window-supplied_weapons">支給ブキ</sys:String>
+    <sys:String x:Key="shift_window-open">オープン!</sys:String>
+    <sys:String x:Key="shift_window-next">つき</sys:String>
+    <sys:String x:Key="shift_window-future">そのつき</sys:String>
+    <sys:String x:Key="shift_window-{0}_-_{1}">{0} - {1}</sys:String>
     <!-- BattleWindow -->
     <sys:String x:Key="battle_window-win">Win!</sys:String>
     <sys:String x:Key="battle_window-lose">Lose..</sys:String>

@@ -189,7 +189,7 @@ namespace Ikas
                 ((Storyboard)FindResource("fade_in")).Begin(lbRule);
                 ((Storyboard)FindResource("fade_in")).Begin(lbTime);
                 ((Storyboard)FindResource("fade_in")).Begin(tagNext);
-                // Update Stages
+                // Update stages
                 Stage stage = scheduledStages[0];
                 string image = FileFolderUrl.ApplicationData + stage.Image;
                 try
@@ -199,7 +199,6 @@ namespace Ikas
                     stg1.Background = brush;
                     stg1.Content = Translate((stage.Id).ToString());
                     ((Storyboard)FindResource("fade_in")).Begin(stg1);
-                    //((Storyboard)FindResource("fade_in")).Begin(lbStage1Name);
                 }
                 catch
                 {
@@ -240,7 +239,7 @@ namespace Ikas
                     }
                 }
             }
-            // Update next Schedule
+            // Update next schedule
             List<ScheduledStage> nextScheduledStages = schedule.GetNextStages(mode);
             if (nextScheduledStages.Count > 0)
             {

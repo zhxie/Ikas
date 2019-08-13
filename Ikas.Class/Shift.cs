@@ -8,6 +8,29 @@ namespace Ikas.Class
     {
         public List<ShiftStage> Stages { get; }
 
+        public bool IsOpen
+        {
+            get
+            {
+                if (Stages.Count > 0)
+                {
+                    DateTime dateTime = DateTime.Now;
+                    if (dateTime >= Stages[0].StartTime.ToLocalTime() && dateTime <= Stages[0].EndTime.ToLocalTime())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         public Shift(List<ShiftStage> stages)
         {
             Stages = stages;

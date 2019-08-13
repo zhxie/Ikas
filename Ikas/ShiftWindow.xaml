@@ -1,0 +1,130 @@
+﻿<Window x:Class="Ikas.ShiftWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ikas"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        LocationChanged="Window_LocationChanged"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave"
+        Title="Ikas - Shift" Width="495" SizeToContent="Height" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True" ShowInTaskbar="False">
+    <Window.Resources>
+        <Storyboard x:Key="fade_out">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="2"/>
+        </Storyboard>
+        <Storyboard x:Key="fade_in">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="2"/>
+        </Storyboard>
+        <Storyboard x:Key="window_delay_fade_out">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.5" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="4"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:1.0" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="window_fade_in">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
+        </Storyboard>
+    </Window.Resources>
+    <Grid>
+        <Border CornerRadius="27">
+            <Border.Background>
+                <SolidColorBrush Color="#FF221F22"/>
+            </Border.Background>
+            <Border x:Name="bdBackgroundStrip" CornerRadius="27,27,27,27">
+                <Border.Background>
+                    <ImageBrush ImageSource="assets/img/bg-strips-dark.png" Stretch="None" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
+                </Border.Background>
+            </Border>
+        </Border>
+        <StackPanel Orientation="Vertical" Margin="0,20">
+            <StackPanel Orientation="Horizontal" Height="48" Margin="20,0,20,0">
+                <Image x:Name="imgMode" Width="48" Height="48" Source="assets/img/salmon-run.png" Opacity="0"/>
+                <Label x:Name="lbMode" Content="{DynamicResource shift_window-salmon_run}" FontFamily="{StaticResource splatfont}" Foreground="White" FontSize="36" Height="80" Margin="15,0,0,0" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                <Grid>
+                    <local:TagControl x:Name="tagStatus1" Height="30" FontFamily="{StaticResource splatfont_2}" FontSize="22" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeForeground}" Content="[Open]" Opacity="0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,25,0" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Vertical">
+                            <Grid VerticalAlignment="Top" Height="30" Width="345">
+                                <Label x:Name="lbTime1" Content="00/00 00:00 - 00/00 00:00" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="24" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="5,0" Padding="0" Opacity="0"/>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <Border Width="144" Height="81" HorizontalAlignment="Left" CornerRadius="8" Background="Black">
+                                    <local:StageControl x:Name="stg1" FontFamily="{StaticResource splatfont_2}" FontSize="16" Opacity="0"/>
+                                </Border>
+                                <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                                    <Border>
+                                        <Label x:Name="lbWeapon1" Content="{DynamicResource shift_window-supplied_weapons}" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="20" Height="41" Padding="0" VerticalAlignment="Center" Opacity="0"/>
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000">
+                                            <Border x:Name="bdWeapon11" Background="Transparent" Opacity="0"/>
+                                        </Border>
+                                        <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
+                                            <Border x:Name="bdWeapon12" Background="Transparent" Opacity="0"/>
+                                        </Border>
+                                        <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
+                                            <Border x:Name="bdWeapon13" Background="Transparent" Opacity="0"/>
+                                        </Border>
+                                        <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
+                                            <Border x:Name="bdWeapon14" Background="Transparent" Opacity="0"/>
+                                        </Border>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="0,20,0,0">
+                    <local:TagControl x:Name="tagStatus2" Height="30" FontFamily="{StaticResource splatfont_2}" FontSize="22" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeForeground}" Content="[Open]" Opacity="0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,25,0" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Vertical">
+                            <Grid VerticalAlignment="Top" Height="30" Width="345">
+                                <Label x:Name="lbTime2" Content="00/00 00:00 - 00/00 00:00" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="24" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="5,0" Padding="0" Opacity="0"/>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <Border Width="144" Height="81" HorizontalAlignment="Left" CornerRadius="8" Background="Black">
+                                    <local:StageControl x:Name="stg2" FontFamily="{StaticResource splatfont_2}" FontSize="16" Opacity="0"/>
+                                </Border>
+                                <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                                    <Border>
+                                        <Label x:Name="lbWeapon2" Content="{DynamicResource shift_window-supplied_weapons}" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="20" Height="41" Padding="0" VerticalAlignment="Center" Opacity="0"/>
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000">
+                                            <Border x:Name="bdWeapon21" Background="Transparent" Opacity="0"/>
+                                        </Border>
+                                        <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
+                                            <Border x:Name="bdWeapon22" Background="Transparent" Opacity="0"/>
+                                        </Border>
+                                        <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
+                                            <Border x:Name="bdWeapon23" Background="Transparent" Opacity="0"/>
+                                        </Border>
+                                        <Border Width="40" Height="40" CornerRadius="20" Background="#7F000000" Margin="10,0,0,0">
+                                            <Border x:Name="bdWeapon24" Background="Transparent" Opacity="0"/>
+                                        </Border>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+        <Border x:Name="bdLoading" CornerRadius="27" IsHitTestVisible="False" Opacity="0">
+            <Border.Background>
+                <SolidColorBrush Color="#7F000000"/>
+            </Border.Background>
+            <Image x:Name="imgLoading" Source="assets/img/bg-respawn-2x.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+    </Grid>
+</Window>

@@ -911,6 +911,13 @@
     <sys:String x:Key="schedule_window-{0}_-_{1}">{0} - {1}</sys:String>
     <sys:String x:Key="schedule_window-in_{0}_hour_{1}_min">in {0} hour {1} min</sys:String>
     <sys:String x:Key="schedule_window-in_{0}_min">in {0} min</sys:String>
+    <!-- ShiftWindow -->
+    <sys:String x:Key="shift_window-salmon_run">Salmon Run</sys:String>
+    <sys:String x:Key="shift_window-supplied_weapons">Supplied Weapons</sys:String>
+    <sys:String x:Key="shift_window-open">Open!</sys:String>
+    <sys:String x:Key="shift_window-next">Next</sys:String>
+    <sys:String x:Key="shift_window-future">Future</sys:String>
+    <sys:String x:Key="shift_window-{0}_-_{1}">{0} - {1}</sys:String>
     <!-- BattleWindow -->
     <sys:String x:Key="battle_window-win">Win!</sys:String>
     <sys:String x:Key="battle_window-lose">Lose..</sys:String>

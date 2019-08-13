@@ -34,7 +34,7 @@ namespace Ikas
         }
 
         private ScheduleWindow scheduleWindow;
-        // TODO: private ShiftWindow shiftWindow;
+        private ShiftWindow shiftWindow;
         private BattleWindow battleWindow;
         // TODO: private JobWindow jobWindow;
         private SettingsWindow settingsWindow;
@@ -85,10 +85,9 @@ namespace Ikas
             scheduleWindow = new ScheduleWindow();
             scheduleWindow.Opacity = 0;
             scheduleWindow.Visibility = Visibility.Hidden;
-            // TODO: shift window
-            // shiftWindow = new ShiftWindow();
-            // shiftWindow.Opacity = 0;
-            // shiftWindow.Visibility = Visibility.Hidden;
+            shiftWindow = new ShiftWindow();
+            shiftWindow.Opacity = 0;
+            shiftWindow.Visibility = Visibility.Hidden;
             battleWindow = new BattleWindow();
             battleWindow.Opacity = 0;
             battleWindow.Visibility = Visibility.Hidden;
@@ -184,7 +183,7 @@ namespace Ikas
         private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
-            // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
+            ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
             ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
             // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
             DragMove();
@@ -231,39 +230,45 @@ namespace Ikas
         {
             scheduleWindow.Top = Top + Height + 10;
             scheduleWindow.Left = Left;
+            shiftWindow.Top = Top + Height + 10;
+            shiftWindow.Left = Left;
             ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
             // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
             if (Depot.CurrentMode != Depot.Mode.salmon_run)
             {
-                // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
+                ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
                 ((Storyboard)FindResource("window_fade_in")).Begin(scheduleWindow);
             }
             else
             {
                 ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
-                // TODO: ((Storyboard)FindResource("window_fade_in")).Begin(shiftWindow);
+                ((Storyboard)FindResource("window_fade_in")).Begin(shiftWindow);
             }
         }
 
         private void BdStage_MouseLeave(object sender, MouseEventArgs e)
         {
             ((Storyboard)FindResource("window_delay_fade_out")).Begin(scheduleWindow);
+            ((Storyboard)FindResource("window_delay_fade_out")).Begin(shiftWindow);
         }
 
         private void LbLevel_MouseEnter(object sender, MouseEventArgs e)
         {
-            Depot.GetLastBattle();
             battleWindow.Top = Top + Height + 10;
             battleWindow.Left = Left;
+            // TODO: jobWindow.Top = Top + Height + 10;
+            // TODO: jobWindow.Left = Left;
             ((Storyboard)FindResource("window_fade_out")).Begin(scheduleWindow);
-            // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
+            ((Storyboard)FindResource("window_fade_out")).Begin(shiftWindow);
             if (Depot.CurrentMode != Depot.Mode.salmon_run)
             {
+                Depot.GetLastBattle();
                 // TODO: ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
                 ((Storyboard)FindResource("window_fade_in")).Begin(battleWindow);
             }
             else
             {
+                Depot.GetLastJob();
                 ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
                 // TODO: ((Storyboard)FindResource("window_fade_in")).Begin(jobWindow);
             }
@@ -274,6 +279,7 @@ namespace Ikas
         private void LbLevel_MouseLeave(object sender, MouseEventArgs e)
         {
             ((Storyboard)FindResource("window_delay_fade_out")).Begin(battleWindow);
+            // TODO: ((Storyboard)FindResource("window_delay_fade_out")).Begin(jobWindow);
         }
 
         private void MenuItemSettings_Click(object sender, RoutedEventArgs e)
