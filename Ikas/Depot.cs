@@ -1646,11 +1646,7 @@ namespace Ikas
                         DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)).AddSeconds(long.Parse(jObject["play_time"].ToString()));
                         double hazardLevel = double.Parse(jObject["danger_rate"].ToString());
                         ShiftStage stage = parseShiftStage(jObject["schedule"]);
-                        List<Wave> waves = new List<Wave>();
-                        foreach (JToken node in jObject["wave_details"])
-                        {
-                            waves.Add(parseWave(node));
-                        }
+                        // Player should be parsed first to acquire specials used in wave
                         JobPlayer myPlayer = await parseJobPlayer(jObject["my_result"], true, (JobPlayer.GradeType)int.Parse(jObject["grade"]["id"].ToString()), int.Parse(jObject["grade_point"].ToString()));
                         List<JobPlayer> otherPlayers = new List<JobPlayer>();
                         List<Task<JobPlayer>> otherPlayerTasks = new List<Task<JobPlayer>>();
@@ -1666,6 +1662,31 @@ namespace Ikas
                         foreach (Task<JobPlayer> playerTask in otherPlayerTasks)
                         {
                             otherPlayers.Add(playerTask.Result);
+                        }
+                        int waveCount = 0;
+                        List<Wave> waves = new List<Wave>();
+                        foreach (JToken node in jObject["wave_details"])
+                        {
+                            List<SpecialWeapon> specials = new List<SpecialWeapon>();
+                            if (myPlayer.SpecialWeaponCount[waveCount] != 0)
+                            {
+                                for (int i = 0; i < myPlayer.SpecialWeaponCount[waveCount]; ++i)
+                                {
+                                    specials.Add(myPlayer.Weapons[waveCount].SpecialWeapon);
+                                }
+                            }
+                            foreach (JobPlayer player in otherPlayers)
+                            {
+                                if (player.SpecialWeaponCount[waveCount] != 0)
+                                {
+                                    for (int i = 0; i < player.SpecialWeaponCount[waveCount]; ++i)
+                                    {
+                                        specials.Add(player.Weapons[waveCount].SpecialWeapon);
+                                    }
+                                }
+                            }
+                            waves.Add(parseWave(node, specials));
+                            ++waveCount;
                         }
                         int steelheadCount = int.Parse(jObject["boss_counts"]["6"]["count"].ToString());
                         int flyfishCount = int.Parse(jObject["boss_counts"]["9"]["count"].ToString());
@@ -2448,8 +2469,9 @@ namespace Ikas
         /// Parse wave from JToken
         /// </summary>
         /// <param name="node">JToken of a wave</param>
+        /// <param name="specials">Special weapons used in the wave</param>
         /// <returns></returns>
-        private static Wave parseWave(JToken node)
+        private static Wave parseWave(JToken node, List<SpecialWeapon> specials)
         {
             try
             {
@@ -2459,7 +2481,7 @@ namespace Ikas
                 int powerEgg = int.Parse(node["ikura_num"].ToString());
                 int goldenEgg = int.Parse(node["golden_ikura_num"].ToString());
                 int goldenEggPop = int.Parse(node["golden_ikura_pop_num"].ToString());
-                return new Wave(waterLevel, eventType, quota, powerEgg, goldenEgg, goldenEggPop);
+                return new Wave(waterLevel, eventType, quota, powerEgg, goldenEgg, goldenEggPop, specials);
             }
             catch
             {
