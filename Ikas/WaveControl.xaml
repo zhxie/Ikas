@@ -64,35 +64,35 @@
                                 <Label x:Name="lbEvent" Height="50" FontFamily="{StaticResource splatfont_2}" Foreground="Black" FontSize="20" Content="[Event]" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
                                 <StackPanel x:Name="spSpecial" Orientation="Horizontal" HorizontalAlignment="Center" Opacity="0">
                                     <Grid x:Name="gridSpecial1" Opacity="0">
-                                        <Border Width="30" Height="30" Background="#7F000000" CornerRadius="15"/>
+                                        <Border Width="30" Height="30" Background="#FF2A270B" CornerRadius="15"/>
                                         <Border x:Name="bdSpecial1" Width="30" Height="30" Background="Transparent"/>
                                     </Grid>
                                     <Grid x:Name="gridSpecial2" Margin="5,0,0,0" Opacity="0">
-                                        <Border Width="30" Height="30" Background="#7F000000" CornerRadius="15"/>
+                                        <Border Width="30" Height="30" Background="#FF2A270B" CornerRadius="15"/>
                                         <Border x:Name="bdSpecial2" Width="30" Height="30" Background="Transparent"/>
                                     </Grid>
                                     <Grid x:Name="gridSpecial3" Margin="5,0,0,0" Opacity="0">
-                                        <Border Width="30" Height="30" Background="#7F000000" CornerRadius="15"/>
+                                        <Border Width="30" Height="30" Background="#FF2A270B" CornerRadius="15"/>
                                         <Border x:Name="bdSpecial3" Width="30" Height="30" Background="Transparent"/>
                                     </Grid>
                                     <Grid x:Name="gridSpecial4" Margin="5,0,0,0" Opacity="0">
-                                        <Border Width="30" Height="30" Background="#7F000000" CornerRadius="15"/>
+                                        <Border Width="30" Height="30" Background="#FF2A270B" CornerRadius="15"/>
                                         <Border x:Name="bdSpecial4" Width="30" Height="30" Background="Transparent"/>
                                     </Grid>
                                     <Grid x:Name="gridSpecial5" Margin="5,0,0,0" Opacity="0">
-                                        <Border Width="30" Height="30" Background="#7F000000" CornerRadius="15"/>
+                                        <Border Width="30" Height="30" Background="#FF2A270B" CornerRadius="15"/>
                                         <Border x:Name="bdSpecial5" Width="30" Height="30" Background="Transparent"/>
                                     </Grid>
                                     <Grid x:Name="gridSpecial6" Margin="5,0,0,0" Opacity="0">
-                                        <Border Width="30" Height="30" Background="#7F000000" CornerRadius="15"/>
+                                        <Border Width="30" Height="30" Background="#FF2A270B" CornerRadius="15"/>
                                         <Border x:Name="bdSpecial6" Width="30" Height="30" Background="Transparent"/>
                                     </Grid>
                                     <Grid x:Name="gridSpecial7" Margin="5,0,0,0" Opacity="0">
-                                        <Border Width="30" Height="30" Background="#7F000000" CornerRadius="15"/>
+                                        <Border Width="30" Height="30" Background="#FF2A270B" CornerRadius="15"/>
                                         <Border x:Name="bdSpecial7" Width="30" Height="30" Background="Transparent"/>
                                     </Grid>
                                     <Grid x:Name="gridSpecial8" Margin="5,0,0,0" Opacity="0">
-                                        <Border Width="30" Height="30" Background="#7F000000" CornerRadius="15"/>
+                                        <Border Width="30" Height="30" Background="#FF2A270B" CornerRadius="15"/>
                                         <Border x:Name="bdSpecial8" Width="30" Height="30" Background="Transparent"/>
                                     </Grid>
                                 </StackPanel>
