@@ -277,6 +277,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\img\salmon-run.png" />
+    <Resource Include="assets\img\golden-egg.png" />
     <Content Include="Ikas.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

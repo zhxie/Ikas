@@ -51,7 +51,7 @@
     <sys:String x:Key="s_plus_8">S+</sys:String>
     <sys:String x:Key="s_plus_9">S+</sys:String>
     <sys:String x:Key="x">X</sys:String>
-    <!-- Salmon Run Grade -->
+    <!-- Grade -->
     <sys:String x:Key="grade_unknown">不明</sys:String>
     <sys:String x:Key="intern">けんしゅう</sys:String>
     <sys:String x:Key="apprentice">かけだし</sys:String>
@@ -841,11 +841,11 @@
     <sys:String x:Key="neo_octoling_boots">タコゾネスブーツネオ</sys:String>
     <sys:String x:Key="null_boots_replica">ネルブーツ レプリカ</sys:String>
     <sys:String x:Key="old_timey_shoes">グランパなクツ</sys:String>
-    <!-- Salmon Run Result -->
+    <!-- Result -->
     <sys:String x:Key="clear">Clear!!</sys:String>
     <sys:String x:Key="time_limit">時間切れ</sys:String>
     <sys:String x:Key="wipe_out">ゼンメツ!</sys:String>
-    <!-- Salmon Run Event -->
+    <!-- Event -->
     <sys:String x:Key="water_levels">-</sys:String>
     <sys:String x:Key="rush">ラッシュ</sys:String>
     <sys:String x:Key="fog">霧</sys:String>
@@ -853,6 +853,10 @@
     <sys:String x:Key="griller">グリル発進</sys:String>
     <sys:String x:Key="cohock_charge">ドスコイ大量発生</sys:String>
     <sys:String x:Key="the_mothership">ハコビヤ襲来</sys:String>
+    <!-- Water Level -->
+    <sys:String x:Key="normal">普通</sys:String>
+    <sys:String x:Key="low">干潮</sys:String>
+    <sys:String x:Key="high">満潮</sys:String>
     <!-- Errors -->
     <sys:String x:Key="ikas_meets_an_unhandled_exception">Ikas で処理できない例外が発生しました</sys:String>
     <sys:String x:Key="ikas_has_started,_or_ikas_failed_to_exit_normally">Ikas が起動したか、Ikas が前回正常に終了できませんでした</sys:String>
@@ -1006,6 +1010,7 @@
     <!-- WaveControl -->
     <sys:String x:Key="wave_control-wave_{0}">Wave {0}</sys:String>
     <sys:String x:Key="wave_control-{0}/{1}">{0}/{1}</sys:String>
+    <sys:String x:Key="wave_control-x{0}">x{0}</sys:String>
     <!-- PlayerControl -->
     <sys:String x:Key="player_control-★">★</sys:String>
     <sys:String x:Key="player_control-{0}p">{0}p</sys:String>
