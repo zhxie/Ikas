@@ -841,10 +841,18 @@
     <sys:String x:Key="neo_octoling_boots">Neo Octoling Boots</sys:String>
     <sys:String x:Key="null_boots_replica">Null Boots Replica</sys:String>
     <sys:String x:Key="old_timey_shoes">Old-Timey Shoes</sys:String>
-    <!-- Job -->
+    <!-- Salmon Run Result -->
     <sys:String x:Key="clear">Clear!</sys:String>
     <sys:String x:Key="time_limit">Time Up!</sys:String>
     <sys:String x:Key="wipe_out">DEFEAT!</sys:String>
+    <!-- Salmon Run Event -->
+    <sys:String x:Key="water_levels">-</sys:String>
+    <sys:String x:Key="rush">Rush</sys:String>
+    <sys:String x:Key="fog">Fog</sys:String>
+    <sys:String x:Key="goldie_seeking">Goldie Seeking</sys:String>
+    <sys:String x:Key="griller">The Griller</sys:String>
+    <sys:String x:Key="cohock_charge">Cohock Charge</sys:String>
+    <sys:String x:Key="the_mothership">The Mothership</sys:String>
     <!-- Errors -->
     <sys:String x:Key="ikas_meets_an_unhandled_exception">Ikas meet an unhandled exception</sys:String>
     <sys:String x:Key="ikas_has_started,_or_ikas_failed_to_exit_normally">Ikas has started, or Ikas failed to exit normally</sys:String>
@@ -995,6 +1003,9 @@
     <sys:String x:Key="settings_window-you_can_help_ikas_get_back_to_normal_operation_by_clearing_the_cached_data.">You can help Ikas get back to normal operation by clearing the cached data.</sys:String>
     <!-- StageControl -->
     <!-- TagControl -->
+    <!-- WaveControl -->
+    <sys:String x:Key="wave_control-wave_{0}">Wave {0}</sys:String>
+    <sys:String x:Key="wave_control-{0}/{1}">{0}/{1}</sys:String>
     <!-- PlayerControl -->
     <sys:String x:Key="player_control-★">★</sys:String>
     <sys:String x:Key="player_control-{0}p">{0}p</sys:String>

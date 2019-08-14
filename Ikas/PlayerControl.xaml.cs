@@ -346,6 +346,5 @@ namespace Ikas
                 return s;
             }
         }
-
     }
 }

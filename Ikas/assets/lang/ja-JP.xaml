@@ -841,10 +841,18 @@
     <sys:String x:Key="neo_octoling_boots">タコゾネスブーツネオ</sys:String>
     <sys:String x:Key="null_boots_replica">ネルブーツ レプリカ</sys:String>
     <sys:String x:Key="old_timey_shoes">グランパなクツ</sys:String>
-    <!-- Job -->
+    <!-- Salmon Run Result -->
     <sys:String x:Key="clear">Clear!!</sys:String>
     <sys:String x:Key="time_limit">時間切れ</sys:String>
     <sys:String x:Key="wipe_out">ゼンメツ!</sys:String>
+    <!-- Salmon Run Event -->
+    <sys:String x:Key="water_levels">-</sys:String>
+    <sys:String x:Key="rush">ラッシュ</sys:String>
+    <sys:String x:Key="fog">霧</sys:String>
+    <sys:String x:Key="goldie_seeking">キンシャケ探し</sys:String>
+    <sys:String x:Key="griller">グリル発進</sys:String>
+    <sys:String x:Key="cohock_charge">ドスコイ大量発生</sys:String>
+    <sys:String x:Key="the_mothership">ハコビヤ襲来</sys:String>
     <!-- Errors -->
     <sys:String x:Key="ikas_meets_an_unhandled_exception">Ikas で処理できない例外が発生しました</sys:String>
     <sys:String x:Key="ikas_has_started,_or_ikas_failed_to_exit_normally">Ikas が起動したか、Ikas が前回正常に終了できませんでした</sys:String>
@@ -995,6 +1003,9 @@
     <sys:String x:Key="settings_window-you_can_help_ikas_get_back_to_normal_operation_by_clearing_the_cached_data.">キャッシュされたデータをクリアすることで、Ikas が通常の操作に戻るのを助けることができます。</sys:String>
     <!-- StageControl -->
     <!-- TagControl -->
+    <!-- WaveControl -->
+    <sys:String x:Key="wave_control-wave_{0}">Wave {0}</sys:String>
+    <sys:String x:Key="wave_control-{0}/{1}">{0}/{1}</sys:String>
     <!-- PlayerControl -->
     <sys:String x:Key="player_control-★">★</sys:String>
     <sys:String x:Key="player_control-{0}p">{0}p</sys:String>

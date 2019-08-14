@@ -11,6 +11,7 @@ namespace Ikas.Class
         public const string NeonRed = "F02D7D";
 
         public const string NeonYellow = "CDF523";
+        public const string NeonSalmonYellow = "E5F100";
 
         public const string MeterGreen = "6FF600";
         public const string MeterBronze = "FD882C";

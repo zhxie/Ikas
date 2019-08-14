@@ -128,6 +128,9 @@
     <Compile Include="TagControl.xaml.cs">
       <DependentUpon>TagControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WaveControl.xaml.cs">
+      <DependentUpon>WaveControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WeaponControl.xaml.cs">
       <DependentUpon>WeaponControl.xaml</DependentUpon>
     </Compile>
@@ -202,6 +205,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TagControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WaveControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

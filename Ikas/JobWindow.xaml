@@ -87,8 +87,10 @@
                 </Grid>
             </StackPanel>
             <Grid Margin="25,15,25,0">
-                <StackPanel Orientation="Horizontal">
-                    <!-- TODO: Waves -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <local:WaveControl x:Name="wave1" Width="140" Opacity="0"/>
+                    <local:WaveControl x:Name="wave2" Width="140" Margin="10,0,0,0" Opacity="0"/>
+                    <local:WaveControl x:Name="wave3" Width="140" Margin="10,0,0,0" Opacity="0"/>
                 </StackPanel>
             </Grid>
             <StackPanel Orientation="Vertical" Margin="25,15,25,0">

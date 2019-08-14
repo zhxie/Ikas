@@ -125,6 +125,12 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(lbHazardLevel);
             ((Storyboard)FindResource("fade_out")).Begin(lbGrizzcoPointsName);
             ((Storyboard)FindResource("fade_out")).Begin(lbGrizzcoPoints);
+            ((Storyboard)FindResource("fade_out")).Begin(wave1);
+            ((Storyboard)FindResource("fade_out")).Begin(wave2);
+            ((Storyboard)FindResource("fade_out")).Begin(wave3);
+            wave1.SetWave(null);
+            wave2.SetWave(null);
+            wave3.SetWave(null);
         }
 
         private void JobUpdated()
@@ -184,6 +190,35 @@ namespace Ikas
                         stg.Content = Translate((stage.Id).ToString());
                         ((Storyboard)FindResource("fade_in")).Begin(stg);
                     }));
+                }
+                // Update waves
+                wave1.SetWave(job.Waves[0], 1);
+                ((Storyboard)FindResource("fade_in")).Begin(wave1);
+                if (job.Waves.Count > 1)
+                {
+                    wave2.Width = 140;
+                    wave2.Margin = new Thickness(10, 0, 0, 0);
+                    wave2.SetWave(job.Waves[1], 2);
+                    ((Storyboard)FindResource("fade_in")).Begin(wave2);
+                    if (job.Waves.Count > 2)
+                    {
+                        wave3.Width = 140;
+                        wave3.Margin = new Thickness(10, 0, 0, 0);
+                        wave3.SetWave(job.Waves[2], 3);
+                        ((Storyboard)FindResource("fade_in")).Begin(wave3);
+                    }
+                    else
+                    {
+                        wave3.Width = 0;
+                        wave3.Margin = new Thickness(0);
+                    }
+                }
+                else
+                {
+                    wave2.Width = 0;
+                    wave2.Margin = new Thickness(0);
+                    wave3.Width = 0;
+                    wave3.Margin = new Thickness(0);
                 }
             }
             // TODO: Fade out loading
