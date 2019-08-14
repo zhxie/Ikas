@@ -1663,30 +1663,42 @@ namespace Ikas
                         {
                             otherPlayers.Add(playerTask.Result);
                         }
-                        int waveCount = 0;
-                        List<Wave> waves = new List<Wave>();
-                        foreach (JToken node in jObject["wave_details"])
+                        // Result should be parsed first to acquire result of waves
+                        Job.ResultType result = Job.ResultType.clear;
+                        if (!bool.Parse(jObject["job_result"]["is_clear"].ToString()))
                         {
+                            result = Job.ParseResultType(jObject["job_result"]["failure_reason"].ToString());
+                        }
+                        List<Wave> waves = new List<Wave>();
+                        for (int i = 0; i < jObject["wave_details"].Count(); ++i)
+                        {
+                            JToken node = jObject["wave_details"][i];
                             List<SpecialWeapon> specials = new List<SpecialWeapon>();
-                            if (myPlayer.SpecialWeaponCount[waveCount] != 0)
+                            if (myPlayer.SpecialWeaponCount[i] != 0)
                             {
-                                for (int i = 0; i < myPlayer.SpecialWeaponCount[waveCount]; ++i)
+                                for (int j = 0; j < myPlayer.SpecialWeaponCount[i]; ++j)
                                 {
-                                    specials.Add(myPlayer.Weapons[waveCount].SpecialWeapon);
+                                    specials.Add(myPlayer.Weapons[i].SpecialWeapon);
                                 }
                             }
                             foreach (JobPlayer player in otherPlayers)
                             {
-                                if (player.SpecialWeaponCount[waveCount] != 0)
+                                if (player.SpecialWeaponCount[i] != 0)
                                 {
-                                    for (int i = 0; i < player.SpecialWeaponCount[waveCount]; ++i)
+                                    for (int j = 0; j < player.SpecialWeaponCount[i]; ++j)
                                     {
-                                        specials.Add(player.Weapons[waveCount].SpecialWeapon);
+                                        specials.Add(player.Weapons[i].SpecialWeapon);
                                     }
                                 }
                             }
-                            waves.Add(parseWave(node, specials));
-                            ++waveCount;
+                            if (i != jObject["wave_details"].Count() - 1)
+                            {
+                                waves.Add(parseWave(node, specials, Job.ResultType.clear));
+                            }
+                            else
+                            {
+                                waves.Add(parseWave(node, specials, result));
+                            }
                         }
                         int steelheadCount = int.Parse(jObject["boss_counts"]["6"]["count"].ToString());
                         int flyfishCount = int.Parse(jObject["boss_counts"]["9"]["count"].ToString());
@@ -1699,11 +1711,6 @@ namespace Ikas
                         int goldieCount = int.Parse(jObject["boss_counts"]["3"]["count"].ToString());
                         int score = int.Parse(jObject["job_score"].ToString());
                         int gradePointDelta = int.Parse(jObject["grade_point_delta"].ToString());
-                        Job.ResultType result = Job.ResultType.clear;
-                        if (!bool.Parse(jObject["job_result"]["is_clear"].ToString()))
-                        {
-                            result = Job.ParseResultType(jObject["job_result"]["failure_reason"].ToString());
-                        }                       
                         UpdateJob(new Job(battleNumber, startTime, hazardLevel, stage, waves, myPlayer, otherPlayers,
                             steelheadCount, flyfishCount, steelEelCount, drizzlerCount, stingerCount, scrapperCount, mawsCount, grillerCount, goldieCount,
                             score, gradePointDelta, result));
@@ -2470,8 +2477,9 @@ namespace Ikas
         /// </summary>
         /// <param name="node">JToken of a wave</param>
         /// <param name="specials">Special weapons used in the wave</param>
+        /// <param name="result">Result of the wave</param>
         /// <returns></returns>
-        private static Wave parseWave(JToken node, List<SpecialWeapon> specials)
+        private static Wave parseWave(JToken node, List<SpecialWeapon> specials, Job.ResultType result)
         {
             try
             {
@@ -2481,7 +2489,7 @@ namespace Ikas
                 int powerEgg = int.Parse(node["ikura_num"].ToString());
                 int goldenEgg = int.Parse(node["golden_ikura_num"].ToString());
                 int goldenEggPop = int.Parse(node["golden_ikura_pop_num"].ToString());
-                return new Wave(waterLevel, eventType, quota, powerEgg, goldenEgg, goldenEggPop, specials);
+                return new Wave(waterLevel, eventType, quota, powerEgg, goldenEgg, goldenEggPop, specials, result);
             }
             catch
             {
