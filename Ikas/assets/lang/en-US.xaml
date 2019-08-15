@@ -1015,4 +1015,6 @@
     <sys:String x:Key="player_control-★">★</sys:String>
     <sys:String x:Key="player_control-{0}p">{0}p</sys:String>
     <sys:String x:Key="player_control-({0})">({0})</sys:String>
+    <!-- JobPlayerControl -->
+    <sys:String x:Key="job_player_control-x{0}">x{0}</sys:String>
 </ResourceDictionary>

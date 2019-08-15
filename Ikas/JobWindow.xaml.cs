@@ -24,6 +24,8 @@ namespace Ikas
     /// </summary>
     public partial class JobWindow : Window
     {
+        private WeaponWindow weaponWindow;
+
         private DispatcherTimer tmLoading;
         private int loadingRotationAngle;
 
@@ -55,9 +57,25 @@ namespace Ikas
             Depot.JobUpdated += new ContentUpdatedEventHandler(JobUpdated);
             Depot.JobNotifying += new ContentNotifyingHandler(JobNotifying);
             // TODO: Prepare icon and weapon window
-            // TODO: Create timers
+            weaponWindow = new WeaponWindow();
+            weaponWindow.KeepAliveWindow = this;
+            weaponWindow.Opacity = 0;
+            weaponWindow.Visibility = Visibility.Hidden;
+            // Create timers
             loadingRotationAngle = 0;
             tmLoading = new DispatcherTimer();
+            tmLoading.Tick += new EventHandler((object source, EventArgs e) =>
+            {
+                imgLoading.RenderTransform = new RotateTransform(loadingRotationAngle, imgLoading.Source.Width / 2, imgLoading.Source.Height / 2);
+                if (loadingRotationAngle >= 359)
+                {
+                    loadingRotationAngle = 0;
+                }
+                else
+                {
+                    loadingRotationAngle++;
+                }
+            });
             tmLoading.Interval = new TimeSpan(0, 0, 0, 0, 10);
         }
 
@@ -93,6 +111,54 @@ namespace Ikas
             */
         }
 
+        private void Jp_MouseEnterIcon(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void Jp_MouseLeaveIcon(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void Jp_MouseEnterWeapon(object sender, MouseEventArgs e)
+        {
+            Weapon weapon = (sender as WeaponControl).Weapon;
+            if (weapon != null)
+            {
+                weaponWindow.Top = e.GetPosition(this).Y + Top - weaponWindow.Height / 2;
+                weaponWindow.Left = e.GetPosition(this).X + Left + 10;
+                // Restrict in this window
+                if (Top - weaponWindow.Top > 30)
+                {
+                    weaponWindow.Top = Top - 30;
+                }
+                if (Left - weaponWindow.Left > 90)
+                {
+                    weaponWindow.Left = Left - 90;
+                }
+                if (weaponWindow.Top + weaponWindow.Height - (Top + Height) > 30)
+                {
+                    weaponWindow.Top = Top + Height - weaponWindow.Height + 30;
+                }
+                if (weaponWindow.Left + weaponWindow.Width - (Left + Width) > 90)
+                {
+                    weaponWindow.Left = Left + Width - weaponWindow.Width + 90;
+                }
+                weaponWindow.SetWeapon(weapon, true);
+                ((Storyboard)FindResource("window_fade_in")).Begin(weaponWindow);
+            }
+        }
+
+        private void Jp_MouseLeaveWeapon(object sender, MouseEventArgs e)
+        {
+            Weapon weapon = (sender as WeaponControl).Weapon;
+            if (weapon != null)
+            {
+                ((Storyboard)FindResource("window_fade_out")).Begin(weaponWindow);
+            }
+        }
+
         #endregion
 
         private void LanguageChanged()
@@ -107,9 +173,9 @@ namespace Ikas
 
         private void JobChanged()
         {
-            // TODO: Fade in loading
-            // bdLoading.IsHitTestVisible = true;
-            // ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
+            // Fade in loading
+            bdLoading.IsHitTestVisible = true;
+            ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
         }
 
         private void JobFound()
@@ -131,6 +197,10 @@ namespace Ikas
             wave1.SetWave(null);
             wave2.SetWave(null);
             wave3.SetWave(null);
+            jp1.SetPlayer(null, false);
+            jp2.SetPlayer(null, false);
+            jp3.SetPlayer(null, false);
+            jp4.SetPlayer(null, false);
         }
 
         private void JobUpdated()
@@ -221,14 +291,27 @@ namespace Ikas
                     wave3.Margin = new Thickness(0);
                 }
             }
-            // TODO: Fade out loading
-            // ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
-            // bdLoading.IsHitTestVisible = false;
+            jp1.SetPlayer(job.MyPlayer, true);
+            if (job.OtherPlayers.Count > 0)
+            {
+                jp2.SetPlayer(job.OtherPlayers[0], false);
+                if (job.OtherPlayers.Count > 1)
+                {
+                    jp3.SetPlayer(job.OtherPlayers[1], false);
+                    if (job.OtherPlayers.Count > 2)
+                    {
+                        jp4.SetPlayer(job.OtherPlayers[2], false);
+                    }
+                }
+            }
+            // Fade out loading
+            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+            bdLoading.IsHitTestVisible = false;
         }
 
         private void JobNotifying()
         {
-
+            // TODO: notify
         }
 
         private string Translate(string s, bool isLocal = false)

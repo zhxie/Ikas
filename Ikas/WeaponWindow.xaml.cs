@@ -202,7 +202,7 @@ namespace Ikas
                 {
                     ((Storyboard)FindResource("fade_out")).Begin(bdSubWeaponBackground);
                 }
-                if (Weapon.SubWeapon != null)
+                if (Weapon.SpecialWeapon != null)
                 {
                     string image3;
                     if (isMy)

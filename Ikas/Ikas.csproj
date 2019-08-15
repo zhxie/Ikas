@@ -99,6 +99,9 @@
     <Compile Include="GearWindow.xaml.cs">
       <DependentUpon>GearWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="JobPlayerControl.xaml.cs">
+      <DependentUpon>JobPlayerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="JobWindow.xaml.cs">
       <DependentUpon>JobWindow.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GearWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JobPlayerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -278,6 +285,11 @@
   <ItemGroup>
     <Resource Include="assets\img\salmon-run.png" />
     <Resource Include="assets\img\golden-egg.png" />
+    <Resource Include="assets\img\power-egg.png" />
+    <Resource Include="assets\img\inklings-dead.png" />
+    <Resource Include="assets\img\inklings-save.png" />
+    <Resource Include="assets\img\octolings-dead.png" />
+    <Resource Include="assets\img\octolings-save.png" />
     <Content Include="Ikas.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
