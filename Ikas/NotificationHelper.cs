@@ -52,13 +52,13 @@ namespace Ikas
             }
         }
 
-        public static void SendJobNotification(string title, string scoreTitle, string goldenEgg, string quota, double scoreRatio, string icon)
+        public static void SendJobNotification(string title, string content, string scoreTitle, string goldenEgg, string quota, double scoreRatio, string icon)
         {
             if (osVersion.Major > 10 || (osVersion.Major == 10 && osVersion.Minor >= 0))
             {
                 if (osVersion.Major > 10 || (osVersion.Major == 10 && osVersion.Minor > 0) || (osVersion.Major == 10 && osVersion.Minor == 0 && osVersion.Build >= 14393))
                 {
-                    SendProgressBarNotification(title, scoreTitle, goldenEgg, scoreRatio, quota, icon, true);
+                    SendTextAndProgressBarNotification(title, content, scoreTitle, goldenEgg, scoreRatio, quota, icon, true);
                 }
                 else
                 {

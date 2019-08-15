@@ -346,8 +346,10 @@ namespace Ikas
                     {
                         title = string.Format(Translate("{0}_(No._{1})", true), Translate("defeat", true), Translate(job.Number.ToString()));
                     }
-                    // Format progressTitle
-                    string scoreTitle = Translate(job.Stage.Id.ToString());
+                    // Format content
+                    string content = Translate(job.Stage.Id.ToString());
+                    // Format scoreTitle
+                    string scoreTitle = string.Format("{0} {1}{2}", Translate("hazard_level", true), job.HazardLevel.ToString(), Translate("%", true));
                     // Format status and value string
                     string goldenEgg = job.GoldenEgg.ToString();
                     string quota = job.Quota.ToString();
@@ -380,7 +382,7 @@ namespace Ikas
                     try
                     {
                         // Show notification
-                        NotificationHelper.SendJobNotification(title, scoreTitle, goldenEgg, quota, ratio, image);
+                        NotificationHelper.SendJobNotification(title, content, scoreTitle, goldenEgg, quota, ratio, image);
                     }
                     catch
                     {
@@ -393,7 +395,7 @@ namespace Ikas
                                 if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(player.Image) + ".jpg")
                                 {
                                     // Show notification
-                                    NotificationHelper.SendJobNotification(title, scoreTitle, goldenEgg, quota, ratio, image);
+                                    NotificationHelper.SendJobNotification(title, content, scoreTitle, goldenEgg, quota, ratio, image);
                                 }
                             }
                         }));
