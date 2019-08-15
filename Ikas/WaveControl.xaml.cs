@@ -151,10 +151,16 @@ namespace Ikas
                         Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Wave.Specials[0].Image1, image, Downloader.SourceType.Job, Depot.Proxy);
                         DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                            brush.Stretch = Stretch.UniformToFill;
-                            bdSpecial1.Background = brush;
-                            ((Storyboard)FindResource("fade_in")).Begin(gridSpecial1);
+                            if (Wave != null && Wave.Specials.Count > 0)
+                            {
+                                if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Wave.Specials[0].Image1))
+                                {
+                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                                    brush.Stretch = Stretch.UniformToFill;
+                                    bdSpecial1.Background = brush;
+                                    ((Storyboard)FindResource("fade_in")).Begin(gridSpecial1);
+                                }
+                            }
                         }));
                     }
                     if (Wave.Specials.Count > 1)
@@ -174,10 +180,16 @@ namespace Ikas
                             Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Wave.Specials[1].Image1, image2, Downloader.SourceType.Job, Depot.Proxy);
                             DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                             {
-                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
-                                brush.Stretch = Stretch.UniformToFill;
-                                bdSpecial2.Background = brush;
-                                ((Storyboard)FindResource("fade_in")).Begin(gridSpecial2);
+                                if (Wave != null && Wave.Specials.Count > 1)
+                                {
+                                    if (System.IO.Path.GetFileName(image2) == System.IO.Path.GetFileName(Wave.Specials[1].Image1))
+                                    {
+                                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
+                                        brush.Stretch = Stretch.UniformToFill;
+                                        bdSpecial2.Background = brush;
+                                        ((Storyboard)FindResource("fade_in")).Begin(gridSpecial2);
+                                    }
+                                }
                             }));
                         }
                         if (Wave.Specials.Count > 2)
@@ -197,10 +209,16 @@ namespace Ikas
                                 Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Wave.Specials[2].Image1, image3, Downloader.SourceType.Job, Depot.Proxy);
                                 DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                                 {
-                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
-                                    brush.Stretch = Stretch.UniformToFill;
-                                    bdSpecial3.Background = brush;
-                                    ((Storyboard)FindResource("fade_in")).Begin(gridSpecial3);
+                                    if (Wave != null && Wave.Specials.Count > 2)
+                                    {
+                                        if (System.IO.Path.GetFileName(image3) == System.IO.Path.GetFileName(Wave.Specials[2].Image1))
+                                        {
+                                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image3)));
+                                            brush.Stretch = Stretch.UniformToFill;
+                                            bdSpecial3.Background = brush;
+                                            ((Storyboard)FindResource("fade_in")).Begin(gridSpecial3);
+                                        }
+                                    }
                                 }));
                             }
                             if (Wave.Specials.Count > 3)
@@ -220,10 +238,16 @@ namespace Ikas
                                     Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Wave.Specials[3].Image1, image4, Downloader.SourceType.Job, Depot.Proxy);
                                     DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                                     {
-                                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image4)));
-                                        brush.Stretch = Stretch.UniformToFill;
-                                        bdSpecial4.Background = brush;
-                                        ((Storyboard)FindResource("fade_in")).Begin(gridSpecial4);
+                                        if (Wave != null && Wave.Specials.Count > 3)
+                                        {
+                                            if (System.IO.Path.GetFileName(image4) == System.IO.Path.GetFileName(Wave.Specials[3].Image1))
+                                            {
+                                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image4)));
+                                                brush.Stretch = Stretch.UniformToFill;
+                                                bdSpecial4.Background = brush;
+                                                ((Storyboard)FindResource("fade_in")).Begin(gridSpecial4);
+                                            }
+                                        }
                                     }));
                                 }
                                 if (Wave.Specials.Count > 4)
@@ -243,10 +267,16 @@ namespace Ikas
                                         Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Wave.Specials[4].Image1, image5, Downloader.SourceType.Job, Depot.Proxy);
                                         DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                                         {
-                                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image5)));
-                                            brush.Stretch = Stretch.UniformToFill;
-                                            bdSpecial5.Background = brush;
-                                            ((Storyboard)FindResource("fade_in")).Begin(gridSpecial5);
+                                            if (Wave != null && Wave.Specials.Count > 4)
+                                            {
+                                                if (System.IO.Path.GetFileName(image5) == System.IO.Path.GetFileName(Wave.Specials[4].Image1))
+                                                {
+                                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image5)));
+                                                    brush.Stretch = Stretch.UniformToFill;
+                                                    bdSpecial5.Background = brush;
+                                                    ((Storyboard)FindResource("fade_in")).Begin(gridSpecial5);
+                                                }
+                                            }
                                         }));
                                     }
                                     if (Wave.Specials.Count > 5)
@@ -266,10 +296,16 @@ namespace Ikas
                                             Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Wave.Specials[5].Image1, image6, Downloader.SourceType.Job, Depot.Proxy);
                                             DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                                             {
-                                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image6)));
-                                                brush.Stretch = Stretch.UniformToFill;
-                                                bdSpecial6.Background = brush;
-                                                ((Storyboard)FindResource("fade_in")).Begin(gridSpecial6);
+                                                if (Wave != null && Wave.Specials.Count > 5)
+                                                {
+                                                    if (System.IO.Path.GetFileName(image6) == System.IO.Path.GetFileName(Wave.Specials[5].Image1))
+                                                    {
+                                                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image6)));
+                                                        brush.Stretch = Stretch.UniformToFill;
+                                                        bdSpecial6.Background = brush;
+                                                        ((Storyboard)FindResource("fade_in")).Begin(gridSpecial6);
+                                                    }
+                                                }
                                             }));
                                         }
                                         if (Wave.Specials.Count > 6)
@@ -289,10 +325,16 @@ namespace Ikas
                                                 Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Wave.Specials[6].Image1, image7, Downloader.SourceType.Job, Depot.Proxy);
                                                 DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                                                 {
-                                                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image7)));
-                                                    brush.Stretch = Stretch.UniformToFill;
-                                                    bdSpecial7.Background = brush;
-                                                    ((Storyboard)FindResource("fade_in")).Begin(gridSpecial7);
+                                                    if (Wave != null && Wave.Specials.Count > 6)
+                                                    {
+                                                        if (System.IO.Path.GetFileName(image7) == System.IO.Path.GetFileName(Wave.Specials[6].Image1))
+                                                        {
+                                                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image7)));
+                                                            brush.Stretch = Stretch.UniformToFill;
+                                                            bdSpecial7.Background = brush;
+                                                            ((Storyboard)FindResource("fade_in")).Begin(gridSpecial7);
+                                                        }
+                                                    }
                                                 }));
                                             }
                                             if (Wave.Specials.Count > 7)
@@ -312,10 +354,16 @@ namespace Ikas
                                                     Downloader downloader = new Downloader(FileFolderUrl.SplatNet + Wave.Specials[7].Image1, image8, Downloader.SourceType.Job, Depot.Proxy);
                                                     DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                                                     {
-                                                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image8)));
-                                                        brush.Stretch = Stretch.UniformToFill;
-                                                        bdSpecial8.Background = brush;
-                                                        ((Storyboard)FindResource("fade_in")).Begin(gridSpecial8);
+                                                        if (Wave != null && Wave.Specials.Count > 7)
+                                                        {
+                                                            if (System.IO.Path.GetFileName(image8) == System.IO.Path.GetFileName(Wave.Specials[7].Image1))
+                                                            {
+                                                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image8)));
+                                                                brush.Stretch = Stretch.UniformToFill;
+                                                                bdSpecial8.Background = brush;
+                                                                ((Storyboard)FindResource("fade_in")).Begin(gridSpecial8);
+                                                            }
+                                                        }
                                                     }));
                                                 }
                                                 gridSpecial2.Width = 30;
