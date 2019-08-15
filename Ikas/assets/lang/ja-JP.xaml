@@ -932,6 +932,7 @@
     <sys:String x:Key="shift_window-salmon_run">サーモンラン</sys:String>
     <sys:String x:Key="shift_window-supplied_weapons">支給ブキ</sys:String>
     <sys:String x:Key="shift_window-open">オープン!</sys:String>
+    <sys:String x:Key="shift_window-soon">もうすぐ</sys:String>
     <sys:String x:Key="shift_window-next">つき</sys:String>
     <sys:String x:Key="shift_window-future">そのつき</sys:String>
     <sys:String x:Key="shift_window-{0}_-_{1}">{0} - {1}</sys:String>

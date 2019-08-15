@@ -173,11 +173,11 @@ namespace Ikas
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(imgMode);
             ((Storyboard)FindResource("fade_out")).Begin(lbMode);
-            ((Storyboard)FindResource("fade_out")).Begin(tagStatus1);
+            ((Storyboard)FindResource("fade_out")).Begin(tagOpenOrSoon);
             ((Storyboard)FindResource("fade_out")).Begin(lbTime1);
             ((Storyboard)FindResource("fade_out")).Begin(stg1);
             ((Storyboard)FindResource("fade_out")).Begin(lbWeapon1);
-            ((Storyboard)FindResource("fade_out")).Begin(tagStatus2);
+            ((Storyboard)FindResource("fade_out")).Begin(tagNext);
             ((Storyboard)FindResource("fade_out")).Begin(lbTime2);
             ((Storyboard)FindResource("fade_out")).Begin(stg2);
             ((Storyboard)FindResource("fade_out")).Begin(lbWeapon2);
@@ -198,20 +198,18 @@ namespace Ikas
             {
                 if (shift.IsOpen)
                 {
-                    tagStatus1.Content = Translate("open", true);
-                    tagStatus2.Content = Translate("next", true);
+                    tagOpenOrSoon.Content = Translate("open", true);
                 }
                 else
                 {
-                    tagStatus1.Content = Translate("next", true);
-                    tagStatus2.Content = Translate("future", true);
+                    tagOpenOrSoon.Content = Translate("soon", true);
                 }
             }
             // Fade in labels
             ((Storyboard)FindResource("fade_in")).Begin(imgMode);
             ((Storyboard)FindResource("fade_in")).Begin(lbMode);
-            ((Storyboard)FindResource("fade_in")).Begin(tagStatus1);
-            ((Storyboard)FindResource("fade_in")).Begin(tagStatus2);
+            ((Storyboard)FindResource("fade_in")).Begin(tagOpenOrSoon);
+            ((Storyboard)FindResource("fade_in")).Begin(tagNext);
             // Update shift
             ShiftStage stage = shift.Stages[0];
             DateTime startTime = stage.StartTime.ToLocalTime();

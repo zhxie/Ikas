@@ -932,6 +932,7 @@
     <sys:String x:Key="shift_window-salmon_run">Salmon Run</sys:String>
     <sys:String x:Key="shift_window-supplied_weapons">Supplied Weapons</sys:String>
     <sys:String x:Key="shift_window-open">Open!</sys:String>
+    <sys:String x:Key="shift_window-soon">Soon!</sys:String>
     <sys:String x:Key="shift_window-next">Next</sys:String>
     <sys:String x:Key="shift_window-future">Future</sys:String>
     <sys:String x:Key="shift_window-{0}_-_{1}">{0} - {1}</sys:String>
