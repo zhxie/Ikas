@@ -72,7 +72,8 @@ namespace Ikas.Class
     {
         public enum Key
         {
-            random = -2,
+            random_gold = -2,
+            random = -1,
             // Shooter
             bold = 0,
             bold_neo = 1,

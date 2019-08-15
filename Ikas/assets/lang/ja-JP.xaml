@@ -116,6 +116,7 @@
     <sys:String x:Key="salmonid_smokeyard">トキシラズいぶし工房</sys:String>
     <sys:String x:Key="ruins_of_ark_polaris">朽ちた箱舟 ポラリス</sys:String>
     <!-- Weapon -->
+    <sys:String x:Key="random_gold">ランダム</sys:String>
     <sys:String x:Key="random">ランダム</sys:String>
     <sys:String x:Key="bold">ボールドマーカー</sys:String>
     <sys:String x:Key="bold_neo">ボールドマーカーネオ</sys:String>

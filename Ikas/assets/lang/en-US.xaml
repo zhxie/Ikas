@@ -116,6 +116,7 @@
     <sys:String x:Key="salmonid_smokeyard">Salmonid Smokeyard</sys:String>
     <sys:String x:Key="ruins_of_ark_polaris">Ruins of Ark Polaris</sys:String>
     <!-- Weapon -->
+    <sys:String x:Key="random_gold">Random</sys:String>
     <sys:String x:Key="random">Random</sys:String>
     <sys:String x:Key="bold">Sploosh-o-matic</sys:String>
     <sys:String x:Key="bold_neo">Neo Sploosh-o-matic</sys:String>
