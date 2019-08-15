@@ -108,10 +108,55 @@ namespace Ikas.Notification
         }
 
         /// <summary>
+        /// Send progress bar toast notification.
+        /// </summary>
+        /// <param name="title">Title of the toast notification</param>
+        /// <param name="progressTitle">Title of the progress of the toast notification</param>
+        /// <param name="status">Status of the progress of the toast notification</param>
+        /// <param name="value">Value of the progress of the toast notification</param>
+        /// <param name="valueString">Value string of the progress of the toast notification</param>
+        /// <param name="icon">Icon of the toast notification</param>
+        /// <param name="iconCrop">Hint crop of the icon of the toast notification</param>
+        public static void SendProgressBarNotification(string title, string progressTitle, string status, double value, string valueString, string icon, bool iconCrop = false)
+        {
+            // Construct the toast content
+            ToastContent toastContent = new ToastContent
+            {
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = title
+                            },
+                            new AdaptiveProgressBar()
+                            {
+                                Title = progressTitle,
+                                Value = value,
+                                ValueStringOverride = valueString,
+                                Status = status
+                            }
+                        },
+                        AppLogoOverride = new ToastGenericAppLogo()
+                        {
+                            Source = new Uri(Path.GetFullPath(icon)).AbsoluteUri,
+                            HintCrop = iconCrop ? ToastGenericAppLogoCrop.Circle : ToastGenericAppLogoCrop.Default
+                        }
+                    }
+                }
+            };
+            // Send the toast notification
+            SendNotification(toastContent);
+        }
+
+        /// <summary>
         /// Send text and progress bar toast notification.
         /// </summary>
         /// <param name="title">Title of the toast notification</param>
-        /// /// <param name="content">Content of the toast notification</param>
+        /// <param name="content">Content of the toast notification</param>
         /// <param name="progressTitle">Title of the progress of the toast notification</param>
         /// <param name="status">Status of the progress of the toast notification</param>
         /// <param name="value">Value of the progress of the toast notification</param>

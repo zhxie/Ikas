@@ -957,6 +957,7 @@
     <sys:String x:Key="job_window-max">MAX!!</sys:String>
     <sys:String x:Key="job_window-%">%</sys:String>
     <sys:String x:Key="job_window-{0}_X_{1}_=_{2}">{0} X {1} = {2}</sys:String>
+    <sys:String x:Key="job_window-{0}_(No._{1})">{0} (No. {1})</sys:String>
     <!-- WeaponWindow -->
     <!-- GearWindow -->
     <!-- PlayerWindow -->

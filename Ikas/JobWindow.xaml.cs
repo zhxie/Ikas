@@ -328,7 +328,78 @@ namespace Ikas
 
         private void JobNotifying()
         {
-            // TODO: notify
+            if (Depot.Notification)
+            {
+                Job job = Depot.Job;
+                // Send job notification
+                DateTime endTime = job.StartTime.AddSeconds(60 * 7);
+                double diffTime = (DateTime.Now - endTime).TotalSeconds;
+                if (diffTime <= 300)
+                {
+                    // Format title
+                    string title;
+                    if (job.IsClear)
+                    {
+                        title = string.Format(Translate("{0}_(No._{1})", true), Translate("clear", true), Translate(job.Number.ToString()));
+                    }
+                    else
+                    {
+                        title = string.Format(Translate("{0}_(No._{1})", true), Translate("defeat", true), Translate(job.Number.ToString()));
+                    }
+                    // Format progressTitle
+                    string scoreTitle = Translate(job.Stage.Id.ToString());
+                    // Format status and value string
+                    string goldenEgg = job.GoldenEgg.ToString();
+                    string quota = job.Quota.ToString();
+                    // Format ratio
+                    double ratio = 0;
+                    if (job.IsClear)
+                    {
+                        ratio = 1;
+                    }
+                    else
+                    {
+                        switch (job.FailureWave)
+                        {
+                            case 1:
+                                ratio = job.Waves[0].GoldenEgg * 1.0 / job.Waves[0].Quota;
+                                break;
+                            case 2:
+                                ratio = 1.0 / 3 + job.Waves[1].GoldenEgg * 1.0 / job.Waves[1].Quota;
+                                break;
+                            case 3:
+                                ratio = 2.0 / 3 + job.Waves[2].GoldenEgg * 1.0 / job.Waves[2].Quota;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                    // Get player icon
+                    JobPlayer player = job.MyPlayer;
+                    string image = FileFolderUrl.ApplicationData + FileFolderUrl.IconFolder + @"\" + System.IO.Path.GetFileName(player.Image) + ".jpg";
+                    try
+                    {
+                        // Show notification
+                        NotificationHelper.SendJobNotification(title, scoreTitle, goldenEgg, quota, ratio, image);
+                    }
+                    catch
+                    {
+                        // Download the image
+                        Downloader downloader = new Downloader(player.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        {
+                            if (player != null)
+                            {
+                                if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(player.Image) + ".jpg")
+                                {
+                                    // Show notification
+                                    NotificationHelper.SendJobNotification(title, scoreTitle, goldenEgg, quota, ratio, image);
+                                }
+                            }
+                        }));
+                    }
+                }
+            }
         }
 
         private string Translate(string s, bool isLocal = false)

@@ -40,6 +40,30 @@ namespace Ikas.Class
                 return Result == ResultType.clear;
             }
         }
+        public int GoldenEgg
+        {
+            get
+            {
+                int count = 0;
+                foreach (Wave wave in Waves)
+                {
+                    count += wave.GoldenEgg;
+                }
+                return count;
+            }
+        }
+        public int Quota
+        {
+            get
+            {
+                int count = 0;
+                foreach (Wave wave in Waves)
+                {
+                    count += wave.Quota;
+                }
+                return count;
+            }
+        }
         public JobPlayer.GradeType Grade
         {
             get
