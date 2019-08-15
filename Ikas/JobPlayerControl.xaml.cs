@@ -136,25 +136,7 @@ namespace Ikas
                     if (Player.Weapons.Count > 2)
                     {
                         wp3.SetWeapon(Player.Weapons[2]);
-                        wp2.Width = 36;
-                        wp3.Width = 36;
-                        wp2.Margin = new Thickness(5, 0, 0, 0);
-                        wp3.Margin = new Thickness(5, 0, 0, 0);
                     }
-                    else
-                    {
-                        wp2.Width = 36;
-                        wp3.Width = 0;
-                        wp2.Margin = new Thickness(5, 0, 0, 0);
-                        wp3.Margin = new Thickness(0);
-                    }
-                }
-                else
-                {
-                    wp2.Width = 0;
-                    wp3.Width = 0;
-                    wp2.Margin = new Thickness(0);
-                    wp3.Margin = new Thickness(0);
                 }
                 // Special
                 string image2 = FileFolderUrl.ApplicationData + Player.Weapons[0].SpecialWeapon.Image1;
