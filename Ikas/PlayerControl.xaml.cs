@@ -52,6 +52,10 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(bdIcon, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdWeapon, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdSpecial, BitmapScalingMode.HighQuality);
+            RenderOptions.SetBitmapScalingMode(imgInklingsKill, BitmapScalingMode.HighQuality);
+            RenderOptions.SetBitmapScalingMode(imgOctolingsKill, BitmapScalingMode.HighQuality);
+            RenderOptions.SetBitmapScalingMode(imgInklingsDeath, BitmapScalingMode.HighQuality);
+            RenderOptions.SetBitmapScalingMode(imgOctolingsDeath, BitmapScalingMode.HighQuality);
         }
 
         #region Control Event
