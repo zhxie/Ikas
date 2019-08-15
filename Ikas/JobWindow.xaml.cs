@@ -24,6 +24,14 @@ namespace Ikas
     /// </summary>
     public partial class JobWindow : Window
     {
+        public string SalmonYellowBackground
+        {
+            get
+            {
+                return "#7F" + Design.NeonSalmonYellow;
+            }
+        }
+
         private WeaponWindow weaponWindow;
 
         private DispatcherTimer tmLoading;
@@ -194,6 +202,10 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(wave1);
             ((Storyboard)FindResource("fade_out")).Begin(wave2);
             ((Storyboard)FindResource("fade_out")).Begin(wave3);
+            Storyboard sb = (Storyboard)FindResource("resize_width");
+            (sb.Children[0] as DoubleAnimation).To = 0;
+            sb.Begin(bdHazardLevel);
+            ((Storyboard)FindResource("fade_out")).Begin(bdHazardLevel);
             wave1.SetWave(null);
             wave2.SetWave(null);
             wave3.SetWave(null);
@@ -304,6 +316,11 @@ namespace Ikas
                     }
                 }
             }
+            double to = job.HazardLevel / 200 * gridHazardLevel.ActualWidth;
+            Storyboard sb = (Storyboard)FindResource("resize_width");
+            (sb.Children[0] as DoubleAnimation).To = to;
+            sb.Begin(bdHazardLevel);
+            ((Storyboard)FindResource("fade_in")).Begin(bdHazardLevel);
             // Fade out loading
             ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
             bdLoading.IsHitTestVisible = false;

@@ -41,6 +41,9 @@
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
         </Storyboard>
+        <Storyboard x:Key="resize_width">
+            <DoubleAnimation  BeginTime="0:0:0.0" Storyboard.TargetProperty="Width" SpeedRatio="0.75" To="0" AccelerationRatio="0.25" DecelerationRatio="0.5"/>
+        </Storyboard>
     </Window.Resources>
     <Grid>
         <Border CornerRadius="27">
@@ -71,8 +74,9 @@
                 </StackPanel>
             </Grid>
             <StackPanel Orientation="Horizontal" Margin="25,10,25,0">
-                <Grid>
+                <Grid x:Name="gridHazardLevel">
                     <Border Width="182" Height="80" Background="#7F000000" CornerRadius="8"/>
+                    <Border x:Name="bdHazardLevel" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                     <StackPanel Height="80" Orientation="Vertical">
                         <Label x:Name="lbHazardLevelName" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="20" HorizontalContentAlignment="Center" Content="{DynamicResource job_window-hazard_level}" Padding="0" Opacity="0"/>
                         <Label x:Name="lbHazardLevel" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="24" HorizontalContentAlignment="Center" Margin="0,-8,0,0" Padding="0" Content="[Level]" Opacity="0"/>
