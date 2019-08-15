@@ -24,7 +24,7 @@ namespace Ikas
     /// </summary>
     public partial class WaveControl : UserControl
     {
-        public string SalmonYellowForeground
+        public string SalmonYellowBackground
         {
             get
             {

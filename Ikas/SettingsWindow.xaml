@@ -59,7 +59,7 @@
             <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" To="White" SpeedRatio="6"/>
         </Storyboard>
         <Storyboard x:Key="border_to_green">
-            <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=BorderGreenForeground}" SpeedRatio="6"/>
+            <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=GreenBackground}" SpeedRatio="6"/>
         </Storyboard>
         <Storyboard x:Key="border_to_black">
             <ColorAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#7F000000" SpeedRatio="6"/>

@@ -26,7 +26,7 @@
     <Grid>
         <Border CornerRadius="8">
             <Border.Background>
-                <SolidColorBrush Color="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=SalmonYellowForeground}"/>
+                <SolidColorBrush Color="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=SalmonYellowBackground}"/>
             </Border.Background>
             <Border x:Name="bdBackgroundStrip" CornerRadius="8">
                 <Border.Background>

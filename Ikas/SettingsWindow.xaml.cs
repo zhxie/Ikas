@@ -47,7 +47,7 @@ namespace Ikas
             }
         }
 
-        public string BorderGreenForeground
+        public string GreenBackground
         {
             get
             {
