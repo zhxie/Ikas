@@ -222,6 +222,11 @@ namespace Ikas.Class
             spygadget = 6020,
             spygadget_sorella = 6021,
             spygadget_becchu = 6022,
+            // Salmon Run
+            kuma_blaster = 20000,
+            kuma_brella = 20010,
+            kuma_charger = 20020,
+            kuma_slosher = 20030
         }
 
         public Key Id { get; }

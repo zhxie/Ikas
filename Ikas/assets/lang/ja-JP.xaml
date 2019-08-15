@@ -256,6 +256,10 @@
     <sys:String x:Key="spygadget">スパイガジェット</sys:String>
     <sys:String x:Key="spygadget_sorella">スパイガジェットソレーラ</sys:String>
     <sys:String x:Key="spygadget_becchu">スパイガジェットベッチュー</sys:String>
+    <sys:String x:Key="kuma_blaster">クマサン印のブラスター</sys:String>
+    <sys:String x:Key="kuma_brella">クマサン印のシェルター</sys:String>
+    <sys:String x:Key="kuma_charger">クマサン印のチャージャー</sys:String>
+    <sys:String x:Key="kuma_slosher">クマサン印のスロッシャー</sys:String>
     <!-- HeadGear -->
     <sys:String x:Key="white_headband">ヘッドバンド ホワイト</sys:String>
     <sys:String x:Key="urchins_cap">ウーニーズBBキャップ</sys:String>
