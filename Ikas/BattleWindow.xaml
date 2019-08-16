@@ -66,83 +66,87 @@
                 </StackPanel>
                 <local:TagControl x:Name="tagResult" FontFamily="{StaticResource splatfont}" FontSize="22" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Background="#FF19D719" Content="[Result]" Opacity="0"/>
             </Grid>
-            <Grid Margin="25,10,25,0">
-                <Border Width="208" Height="117" HorizontalAlignment="Left" CornerRadius="8" Background="Black">
-                    <local:StageControl x:Name="stg" FontFamily="{StaticResource splatfont_2}" FontSize="16" Opacity="0"/>
-                </Border>
-                <StackPanel Width ="222" Height="117" Orientation="Vertical" HorizontalAlignment="Right">
-                    <Label x:Name="lbPowerName" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="24" Content="[PowerName]" Opacity="0"/>
-                    <Label x:Name="lbPower" FontFamily="{StaticResource splatfont_2}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-10,0,0" Opacity="0">
-                        <TextBlock>
+            <ScrollViewer Height="658" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" PanningMode="VerticalOnly" Margin="0,10,0,0">
+                <StackPanel Orientation="Vertical">
+                    <Grid Margin="25,0,25,0">
+                        <Border Width="208" Height="117" HorizontalAlignment="Left" CornerRadius="8" Background="Black">
+                            <local:StageControl x:Name="stg" FontFamily="{StaticResource splatfont_2}" FontSize="16" Opacity="0"/>
+                        </Border>
+                        <StackPanel Width ="222" Height="117" Orientation="Vertical" HorizontalAlignment="Right">
+                            <Label x:Name="lbPowerName" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="24" Content="[PowerName]" Opacity="0"/>
+                            <Label x:Name="lbPower" FontFamily="{StaticResource splatfont_2}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-10,0,0" Opacity="0">
+                                <TextBlock>
                             <Run x:Name="tbPower" Foreground="White" FontSize="28">[Power]</Run><Run x:Name="tbPowerSub" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=YellowForeground}" FontSize="24">[Sub]</Run>
-                        </TextBlock>
-                    </Label>
-                </StackPanel>
-            </Grid>
-            <StackPanel Orientation="Vertical" Margin="0,15,0,0">
-                <Grid Height="30">
-                    <local:TagControl x:Name="tagWin" FontFamily="{StaticResource splatfont_2}" FontSize="22" FontSize2="16" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF19D719" Content="[WinTag]" Opacity="0"/>
-                    <Label x:Name="lbWinEstimatedPower" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="24" Content="[WinEstimated]" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,20,0" Padding="5,0" Opacity="0"/>
-                </Grid>
-                <StackPanel Orientation="Vertical" Margin="25,15,25,0">
-                    <local:PlayerControl x:Name="plWin1"
+                                </TextBlock>
+                            </Label>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Orientation="Vertical" Margin="0,15,0,0">
+                        <Grid Height="30">
+                            <local:TagControl x:Name="tagWin" FontFamily="{StaticResource splatfont_2}" FontSize="22" FontSize2="16" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF19D719" Content="[WinTag]" Opacity="0"/>
+                            <Label x:Name="lbWinEstimatedPower" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="24" Content="[WinEstimated]" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,20,0" Padding="5,0" Opacity="0"/>
+                        </Grid>
+                        <StackPanel Orientation="Vertical" Margin="25,15,25,0">
+                            <local:PlayerControl x:Name="plWin1"
                                          MouseEnterIcon="Player_MouseEnterIcon"
                                          MouseLeaveIcon="Player_MouseLeaveIcon"
                                          MouseEnterWeapon="Player_MouseEnterWeapon"
                                          MouseLeaveWeapon="Player_MouseLeaveWeapon"
                                          />
-                    <local:PlayerControl x:Name="plWin2"
+                            <local:PlayerControl x:Name="plWin2"
                                          MouseEnterIcon="Player_MouseEnterIcon"
                                          MouseLeaveIcon="Player_MouseLeaveIcon"
                                          MouseEnterWeapon="Player_MouseEnterWeapon"
                                          MouseLeaveWeapon="Player_MouseLeaveWeapon"
                                          Margin="0,10,0,0"/>
-                    <local:PlayerControl x:Name="plWin3"
+                            <local:PlayerControl x:Name="plWin3"
                                          MouseEnterIcon="Player_MouseEnterIcon"
                                          MouseLeaveIcon="Player_MouseLeaveIcon"
                                          MouseEnterWeapon="Player_MouseEnterWeapon"
                                          MouseLeaveWeapon="Player_MouseLeaveWeapon"
                                          Margin="0,10,0,0"/>
-                    <local:PlayerControl x:Name="plWin4"
+                            <local:PlayerControl x:Name="plWin4"
                                          MouseEnterIcon="Player_MouseEnterIcon"
                                          MouseLeaveIcon="Player_MouseLeaveIcon"
                                          MouseEnterWeapon="Player_MouseEnterWeapon"
                                          MouseLeaveWeapon="Player_MouseLeaveWeapon"
                                          Margin="0,10,0,0"/>
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,15,0,0">
-                <Grid Height="30">
-                    <local:TagControl x:Name="tagLose" FontFamily="{StaticResource splatfont_2}" FontSize="22" FontSize2="16" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF19D719" Content="[LoseTag]" Opacity="0"/>
-                    <Label x:Name="lbLoseEstimatedPower" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="24" Content="[LoseEstimatetd]" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,20,0" Padding="5,0" Opacity="0"/>
-                </Grid>
-                <StackPanel Orientation="Vertical" Margin="25,15,25,0">
-                    <local:PlayerControl x:Name="plLose1"
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="0,15,0,0">
+                        <Grid Height="30">
+                            <local:TagControl x:Name="tagLose" FontFamily="{StaticResource splatfont_2}" FontSize="22" FontSize2="16" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF19D719" Content="[LoseTag]" Opacity="0"/>
+                            <Label x:Name="lbLoseEstimatedPower" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="24" Content="[LoseEstimatetd]" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,20,0" Padding="5,0" Opacity="0"/>
+                        </Grid>
+                        <StackPanel Orientation="Vertical" Margin="25,15,25,0">
+                            <local:PlayerControl x:Name="plLose1"
                                          MouseEnterIcon="Player_MouseEnterIcon"
                                          MouseLeaveIcon="Player_MouseLeaveIcon"
                                          MouseEnterWeapon="Player_MouseEnterWeapon"
                                          MouseLeaveWeapon="Player_MouseLeaveWeapon"
                                          />
-                    <local:PlayerControl x:Name="plLose2"
+                            <local:PlayerControl x:Name="plLose2"
                                          MouseEnterIcon="Player_MouseEnterIcon"
                                          MouseLeaveIcon="Player_MouseLeaveIcon"
                                          MouseEnterWeapon="Player_MouseEnterWeapon"
                                          MouseLeaveWeapon="Player_MouseLeaveWeapon"
                                          Margin="0,10,0,0"/>
-                    <local:PlayerControl x:Name="plLose3"
+                            <local:PlayerControl x:Name="plLose3"
                                          MouseEnterIcon="Player_MouseEnterIcon"
                                          MouseLeaveIcon="Player_MouseLeaveIcon"
                                          MouseEnterWeapon="Player_MouseEnterWeapon"
                                          MouseLeaveWeapon="Player_MouseLeaveWeapon"
                                          Margin="0,10,0,0"/>
-                    <local:PlayerControl x:Name="plLose4"
+                            <local:PlayerControl x:Name="plLose4"
                                          MouseEnterIcon="Player_MouseEnterIcon"
                                          MouseLeaveIcon="Player_MouseLeaveIcon"
                                          MouseEnterWeapon="Player_MouseEnterWeapon"
                                          MouseLeaveWeapon="Player_MouseLeaveWeapon"
                                          Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </ScrollViewer>
         </StackPanel>
         <Border x:Name="bdLoading" CornerRadius="27" IsHitTestVisible="False" Opacity="0">
             <Border.Background>
