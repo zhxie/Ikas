@@ -1,0 +1,278 @@
+﻿<Window x:Class="Ikas.JobPlayerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ikas"
+        mc:Ignorable="d"
+        LocationChanged="Window_LocationChanged"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave"
+        Title="Ikas - Player" Width="320" Height="462" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True" ShowInTaskbar="False">
+    <Window.Resources>
+        <Storyboard x:Key="fade_out">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="2"/>
+        </Storyboard>
+        <Storyboard x:Key="fade_in">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="2"/>
+        </Storyboard>
+        <Storyboard x:Key="quick_fade_out">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="4"/>
+        </Storyboard>
+        <Storyboard x:Key="quick_fade_in">
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
+        </Storyboard>
+        <Storyboard x:Key="window_fade_out">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="0" SpeedRatio="4"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="window_fade_in">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
+        </Storyboard>
+        <Storyboard x:Key="resize_width">
+            <DoubleAnimation  BeginTime="0:0:0.0" Storyboard.TargetProperty="Width" SpeedRatio="0.75" To="0" AccelerationRatio="0.25" DecelerationRatio="0.5"/>
+        </Storyboard>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Border CornerRadius="27">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" Opacity="0.5" ShadowDepth="0" />
+            </Border.Effect>
+            <Border.Background>
+                <SolidColorBrush Color="#FF221F22"/>
+            </Border.Background>
+            <Border x:Name="bdBackgroundStrip" CornerRadius="27">
+                <Border.Background>
+                    <ImageBrush ImageSource="assets/img/bg-strips-dark.png" Stretch="None" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
+                </Border.Background>
+            </Border>
+        </Border>
+        <StackPanel Orientation="Vertical" Margin="0,10,0,20">
+            <Border Height="60" Margin="20,0" VerticalAlignment="Top">
+                <Viewbox Height="52">
+                    <TextBlock x:Name="tbName" FontFamily="{StaticResource splatfont}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0">[Name]</TextBlock>
+                </Viewbox>
+            </Border>
+            <Border Background="#7F000000" Width="100" Height="100" CornerRadius="50" Margin="0,10,0,0">
+                <Border x:Name="bdIcon" Background="Transparent" CornerRadius="50" Opacity="0"/>
+            </Border>
+            <Grid Margin="20,20,20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border x:Name="bdGoldie" Grid.Row="0" Grid.Column="0"
+                    MouseEnter="BdGoldie_MouseEnter"
+                    MouseLeave="BdGoldie_MouseLeave"
+                    Width="127.5" Background="#7F000000" CornerRadius="8">
+                    <Grid x:Name="gridGoldie" Opacity="0">
+                        <Border x:Name="bdGoldieRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Grid Margin="5,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid HorizontalAlignment="Left">
+                                    <Border Width="32" Height="32" Background="#7F000000" CornerRadius="16"/>
+                                    <Image x:Name="imgGoldie" Height="32" Width="32" Source="assets/img/salmoniods-goldie.png"/>
+                                </Grid>
+                                <Label x:Name="lbGoldieName" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" VerticalContentAlignment="Center" Content="{DynamicResource job_player_window-goldie}" Opacity="0"/>
+                            </StackPanel>
+                            <Label x:Name="lbGoldie" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]/[T]/[A]"/>
+                            <Label x:Name="lbGoldieShort" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]" Opacity="0"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border x:Name="bdSteelhead" Grid.Row="0" Grid.Column="2"
+                        MouseEnter="BdSteelhead_MouseEnter"
+                        MouseLeave="BdSteelhead_MouseLeave"
+                        Width="127.5" Background="#7F000000" CornerRadius="8">
+                    <Grid x:Name="gridSteelhead" Opacity="0">
+                        <Border x:Name="bdSteelheadRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Grid Margin="5,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid HorizontalAlignment="Left">
+                                    <Border Width="32" Height="32" Background="#7F000000" CornerRadius="16"/>
+                                    <Image x:Name="imgSteelhead" Height="32" Width="32" Source="assets/img/salmoniods-steelhead.png"/>
+                                </Grid>
+                                <Label x:Name="lbSteelheadName" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" VerticalContentAlignment="Center" Content="{DynamicResource job_player_window-steelhead}" Opacity="0"/>
+                            </StackPanel>
+                            <Label x:Name="lbSteelhead" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]/[T]/[A]"/>
+                            <Label x:Name="lbSteelheadShort" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]" Opacity="0"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border x:Name="bdFlyfish" Grid.Row="2" Grid.Column="0"
+                        MouseEnter="BdFlyfish_MouseEnter"
+                        MouseLeave="BdFlyfish_MouseLeave"
+                        Width="127.5" Background="#7F000000" CornerRadius="8">
+                    <Grid x:Name="gridFlyfish" Opacity="0">
+                        <Border x:Name="bdFlyfishRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Grid Margin="5,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid HorizontalAlignment="Left">
+                                    <Border Width="32" Height="32" Background="#7F000000" CornerRadius="16"/>
+                                    <Image x:Name="imgFlyfish" Height="32" Width="32" Source="assets/img/salmoniods-flyfish.png"/>
+                                </Grid>
+                                <Label x:Name="lbFlyfishName" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" VerticalContentAlignment="Center" Content="{DynamicResource job_player_window-flyfish}" Opacity="0"/>
+                            </StackPanel>
+                            <Label x:Name="lbFlyfish" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]/[T]/[A]"/>
+                            <Label x:Name="lbFlyfishShort" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]" Opacity="0"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border x:Name="bdScrapper" Grid.Row="2" Grid.Column="2"
+                        MouseEnter="BdScrapper_MouseEnter"
+                        MouseLeave="BdScrapper_MouseLeave"
+                        Width="127.5" Background="#7F000000" CornerRadius="8">
+                    <Grid x:Name="gridScrapper" Opacity="0">
+                        <Border x:Name="bdScrapperRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Grid Margin="5,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid HorizontalAlignment="Left">
+                                    <Border Width="32" Height="32" Background="#7F000000" CornerRadius="16"/>
+                                    <Image x:Name="imgScrapper" Height="32" Width="32" Source="assets/img/salmoniods-scrapper.png"/>
+                                </Grid>
+                                <Label x:Name="lbScrapperName" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" VerticalContentAlignment="Center" Content="{DynamicResource job_player_window-scrapper}" Opacity="0"/>
+                            </StackPanel>
+                            <Label x:Name="lbScrapper" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]/[T]/[A]"/>
+                            <Label x:Name="lbScrapperShort" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]" Opacity="0"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border x:Name="bdSteelEel" Grid.Row="4" Grid.Column="0"
+                        MouseEnter="BdSteelEel_MouseEnter"
+                        MouseLeave="BdSteelEel_MouseLeave"
+                        Width="127.5" Background="#7F000000" CornerRadius="8">
+                    <Grid x:Name="gridSteelEel" Opacity="0">
+                        <Border x:Name="bdSteelEelRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Grid Margin="5,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid HorizontalAlignment="Left">
+                                    <Border Width="32" Height="32" Background="#7F000000" CornerRadius="16"/>
+                                    <Image x:Name="imgSteelEel" Height="32" Width="32" Source="assets/img/salmoniods-steel-eel.png"/>
+                                </Grid>
+                                <Label x:Name="lbSteelEelName" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" VerticalContentAlignment="Center" Content="{DynamicResource job_player_window-steel_eel}" Opacity="0"/>
+                            </StackPanel>
+                            <Label x:Name="lbSteelEel" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]/[T]/[A]"/>
+                            <Label x:Name="lbSteelEelShort" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]" Opacity="0"/>
+                        </Grid>    
+                    </Grid>
+                </Border>
+                <Border x:Name="bdStinger" Grid.Row="4" Grid.Column="2"
+                    MouseEnter="BdStinger_MouseEnter"
+                    MouseLeave="BdStinger_MouseLeave"
+                    Width="127.5" Background="#7F000000" CornerRadius="8">
+                    <Grid x:Name="gridStinger" Opacity="0">
+                        <Border x:Name="bdStingerRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Grid Margin="5,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid HorizontalAlignment="Left">
+                                    <Border Width="32" Height="32" Background="#7F000000" CornerRadius="16"/>
+                                    <Image x:Name="imgStinger" Height="32" Width="32" Source="assets/img/salmoniods-stinger.png"/>
+                                </Grid>
+                                <Label x:Name="lbStingerName" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" VerticalContentAlignment="Center" Content="{DynamicResource job_player_window-stinger}" Opacity="0"/>
+                            </StackPanel>
+                            <Label x:Name="lbStinger" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]/[T]/[A]"/>
+                            <Label x:Name="lbStingerShort" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]" Opacity="0"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border x:Name="bdMaws" Grid.Row="6" Grid.Column="0"
+                        MouseEnter="BdMaws_MouseEnter"
+                        MouseLeave="BdMaws_MouseLeave"
+                        Width="127.5" Background="#7F000000" CornerRadius="8">
+                    <Grid x:Name="gridMaws" Opacity="0">
+                        <Border x:Name="bdMawsRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Grid Margin="5,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid HorizontalAlignment="Left">
+                                    <Border Width="32" Height="32" Background="#7F000000" CornerRadius="16"/>
+                                    <Image x:Name="imgMaws" Height="32" Width="32" Source="assets/img/salmoniods-maws.png"/>
+                                </Grid>
+                                <Label x:Name="lbMawsName" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" VerticalContentAlignment="Center" Content="{DynamicResource job_player_window-maws}" Opacity="0"/>
+                            </StackPanel>
+                            <Label x:Name="lbMaws" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]/[T]/[A]"/>
+                            <Label x:Name="lbMawsShort" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]" Opacity="0"/>
+                        </Grid>    
+                    </Grid>
+                </Border>
+                <Border x:Name="bdGriller" Grid.Row="6" Grid.Column="2"
+                        MouseEnter="BdGriller_MouseEnter"
+                        MouseLeave="BdGriller_MouseLeave"
+                        Width="127.5" Background="#7F000000" CornerRadius="8">
+                    <Grid x:Name="gridGriller" Opacity="0">
+                        <Border x:Name="bdGrillerRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Grid Margin="5,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid HorizontalAlignment="Left">
+                                    <Border Width="32" Height="32" Background="#7F000000" CornerRadius="16"/>
+                                    <Image x:Name="imgGriller" Height="32" Width="32" Source="assets/img/salmoniods-griller.png"/>
+                                </Grid>
+                                <Label x:Name="lbGrillerName" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" VerticalContentAlignment="Center" Content="{DynamicResource job_player_window-griller}" Opacity="0"/>
+                            </StackPanel>
+                            <Label x:Name="lbGriller" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]/[T]/[A]"/>
+                            <Label x:Name="lbGrillerShort" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]" Opacity="0"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border x:Name="bdDrizzler" Grid.Row="8" Grid.Column="0"
+                        MouseEnter="BdDrizzler_MouseEnter"
+                        MouseLeave="BdDrizzler_MouseLeave"
+                        Width="127.5" Background="#7F000000" CornerRadius="8">
+                    <Grid x:Name="gridDrizzler" Opacity="0">
+                        <Border x:Name="bdDrizzlerRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Grid Margin="5,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid HorizontalAlignment="Left">
+                                    <Border Width="32" Height="32" Background="#7F000000" CornerRadius="16"/>
+                                    <Image x:Name="imgDrizzler" Height="32" Width="32" Source="assets/img/salmoniods-drizzler.png"/>
+                                </Grid>
+                                <Label x:Name="lbDrizzlerName" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" VerticalContentAlignment="Center" Content="{DynamicResource job_player_window-drizzler}" Opacity="0"/>
+                            </StackPanel>
+                            <Label x:Name="lbDrizzler" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]/[T]/[A]"/>
+                            <Label x:Name="lbDrizzlerShort" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]" Opacity="0"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border x:Name="bdTotal" Grid.Row="8" Grid.Column="2"
+                        MouseEnter="BdTotal_MouseEnter"
+                        MouseLeave="BdTotal_MouseLeave"
+                        Width="127.5" Background="#7F000000" CornerRadius="8">
+                    <Grid x:Name="gridTotal" Opacity="0">
+                        <Border x:Name="bdTotalRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Grid Margin="5,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid HorizontalAlignment="Left">
+                                    <Border Width="32" Height="32" Background="#7F000000" CornerRadius="16"/>
+                                    <Image x:Name="imgSalmonRun" Height="32" Width="32" Source="assets/img/salmon-run.png"/>
+                                </Grid>
+                                <Label x:Name="lbTotalName" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" VerticalContentAlignment="Center" Content="{DynamicResource job_player_window-defeated}" Opacity="0"/>
+                            </StackPanel>
+                            <Label x:Name="lbTotal" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]/[T]/[A]"/>
+                            <Label x:Name="lbTotalShort" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalContentAlignment="Center" Content="x[S]" Opacity="0"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+            
+        </StackPanel>
+    </Grid>
+</Window>

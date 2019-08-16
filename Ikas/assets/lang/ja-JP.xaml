@@ -963,6 +963,19 @@
     <!-- WeaponWindow -->
     <!-- GearWindow -->
     <!-- PlayerWindow -->
+    <!-- JobPlayerWindow -->
+    <sys:String x:Key="job_player_window-goldie">キンシャケ</sys:String>
+    <sys:String x:Key="job_player_window-steelhead">バクダン</sys:String>
+    <sys:String x:Key="job_player_window-flyfish">カタパッド</sys:String>
+    <sys:String x:Key="job_player_window-scrapper">テッパン</sys:String>
+    <sys:String x:Key="job_player_window-steel_eel">ヘビ</sys:String>
+    <sys:String x:Key="job_player_window-stinger">タワー</sys:String>
+    <sys:String x:Key="job_player_window-maws">モグラ</sys:String>
+    <sys:String x:Key="job_player_window-griller">グリル</sys:String>
+    <sys:String x:Key="job_player_window-drizzler">コウモリ</sys:String>
+    <sys:String x:Key="job_player_window-defeated">倒した数</sys:String>
+    <sys:String x:Key="job_player_window-x{0}/{1}/{2}">x{0}/{1}/{2}</sys:String>
+    <sys:String x:Key="job_player_window-x{0}">x{0}</sys:String>
     <!-- SettingsWindow -->
     <sys:String x:Key="settings_window-settings">設定</sys:String>
     <sys:String x:Key="settings_window-ok">OK!</sys:String>

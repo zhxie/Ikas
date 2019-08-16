@@ -963,6 +963,19 @@
     <!-- WeaponWindow -->
     <!-- GearWindow -->
     <!-- PlayerWindow -->
+    <!-- JobPlayerWindow -->
+    <sys:String x:Key="job_player_window-goldie">Goldie</sys:String>
+    <sys:String x:Key="job_player_window-steelhead">Steelhead</sys:String>
+    <sys:String x:Key="job_player_window-flyfish">Flyfish</sys:String>
+    <sys:String x:Key="job_player_window-scrapper">Scrapper</sys:String>
+    <sys:String x:Key="job_player_window-steel_eel">Steel Eel</sys:String>
+    <sys:String x:Key="job_player_window-stinger">Stinger</sys:String>
+    <sys:String x:Key="job_player_window-maws">Maws</sys:String>
+    <sys:String x:Key="job_player_window-griller">Griller</sys:String>
+    <sys:String x:Key="job_player_window-drizzler">Drizzler</sys:String>
+    <sys:String x:Key="job_player_window-defeated">Defeated</sys:String>
+    <sys:String x:Key="job_player_window-x{0}/{1}/{2}">x{0}/{1}/{2}</sys:String>
+    <sys:String x:Key="job_player_window-x{0}">x{0}</sys:String>
     <!-- SettingsWindow -->
     <sys:String x:Key="settings_window-settings">Settings</sys:String>
     <sys:String x:Key="settings_window-ok">OK!</sys:String>

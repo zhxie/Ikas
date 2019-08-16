@@ -261,6 +261,13 @@ namespace Ikas.Class
                 return 2 - use;
             }
         }
+        public int BossKill
+        {
+            get
+            {
+                return SteelheadKill + FlyfishKill + SteelEelKill + DrizzlerKill + StingerKill + ScrapperKill + MawsKill + GrillerKill + GoldieKill;
+            }
+        }
 
         public JobPlayer(string id, string nickname, SpeciesType species, StyleType style, GradeType grade, int gradePoint, List<Weapon> weapons, List<int> specialWeaponCount,
             int steelHeadKill, int flyFishKill, int steelEelKill, int drizzlerKill, int stingerKill, int mawsKill, int grillerKill, int goldieKill, int help, int dead, int powerEgg, int goldenEgg, string image, bool isSelf = false)

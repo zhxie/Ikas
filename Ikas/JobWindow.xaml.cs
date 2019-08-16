@@ -32,6 +32,7 @@ namespace Ikas
             }
         }
 
+        private JobPlayerWindow jobPlayerWindow;
         private WeaponWindow weaponWindow;
 
         private DispatcherTimer tmLoading;
@@ -64,7 +65,11 @@ namespace Ikas
             Depot.JobFound += new ContentFoundEventHandler(JobFound);
             Depot.JobUpdated += new ContentUpdatedEventHandler(JobUpdated);
             Depot.JobNotifying += new ContentNotifyingHandler(JobNotifying);
-            // TODO: Prepare icon and weapon window
+            // Prepare icon and weapon window
+            jobPlayerWindow = new JobPlayerWindow();
+            jobPlayerWindow.KeepAliveWindow = this;
+            jobPlayerWindow.Opacity = 0;
+            jobPlayerWindow.Visibility = Visibility.Hidden;
             weaponWindow = new WeaponWindow();
             weaponWindow.KeepAliveWindow = this;
             weaponWindow.Opacity = 0;
@@ -121,12 +126,40 @@ namespace Ikas
 
         private void Jp_MouseEnterIcon(object sender, MouseEventArgs e)
         {
-
+            JobPlayer player = (sender as JobPlayerControl).Player;
+            if (player != null)
+            {
+                jobPlayerWindow.Top = e.GetPosition(this).Y + Top - jobPlayerWindow.Height / 2;
+                jobPlayerWindow.Left = e.GetPosition(this).X + Left + 10;
+                // Restrict in this window
+                if (Top - jobPlayerWindow.Top > 30)
+                {
+                    jobPlayerWindow.Top = Top - 30;
+                }
+                if (Left - jobPlayerWindow.Left > 30)
+                {
+                    jobPlayerWindow.Left = Left - 30;
+                }
+                if (jobPlayerWindow.Top + jobPlayerWindow.Height - (Top + Height) > 30)
+                {
+                    jobPlayerWindow.Top = Top + Height - jobPlayerWindow.Height + 30;
+                }
+                if (jobPlayerWindow.Left + jobPlayerWindow.Width - (Left + Width) > 30)
+                {
+                    jobPlayerWindow.Left = Left + Width - jobPlayerWindow.Width + 30;
+                }
+                jobPlayerWindow.SetPlayer(player, Depot.Job);
+                ((Storyboard)FindResource("window_fade_in")).Begin(jobPlayerWindow);
+            }
         }
 
         private void Jp_MouseLeaveIcon(object sender, MouseEventArgs e)
         {
-
+            JobPlayer player = (sender as JobPlayerControl).Player;
+            if (player != null)
+            {
+                ((Storyboard)FindResource("window_fade_out")).Begin(jobPlayerWindow);
+            }
         }
 
         private void Jp_MouseEnterWeapon(object sender, MouseEventArgs e)
@@ -316,7 +349,7 @@ namespace Ikas
                     }
                 }
             }
-            double to = job.HazardLevel / 200 * gridHazardLevel.ActualWidth;
+            double to = (job.HazardLevel / 200 * 0.95 + 0.05) * gridHazardLevel.ActualWidth;
             Storyboard sb = (Storyboard)FindResource("resize_width");
             (sb.Children[0] as DoubleAnimation).To = to;
             sb.Begin(bdHazardLevel);

@@ -121,35 +121,38 @@ namespace Ikas
             gearHead.SetGear(null);
             gearClothes.SetGear(null);
             gearShoes.SetGear(null);
-            // Update player
-            tbName.Text = Player.Nickname;
-            ((Storyboard)FindResource("fade_in")).Begin(tbName);
-            string image = FileFolderUrl.ApplicationData + FileFolderUrl.IconFolder + @"\" + System.IO.Path.GetFileName(Player.Image) + ".jpg";
-            try
+            if (Player != null)
             {
-                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                brush.Stretch = Stretch.UniformToFill;
-                bdIcon.Background = brush;
-                ((Storyboard)FindResource("fade_in")).Begin(bdIcon);
-            }
-            catch
-            {
-                // Download the image
-                Downloader downloader = new Downloader(Player.Image, image, Downloader.SourceType.Player, Depot.Proxy);
-                DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                // Update player
+                tbName.Text = Player.Nickname;
+                ((Storyboard)FindResource("fade_in")).Begin(tbName);
+                string image = FileFolderUrl.ApplicationData + FileFolderUrl.IconFolder + @"\" + System.IO.Path.GetFileName(Player.Image) + ".jpg";
+                try
                 {
-                    if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Player.Image) + ".jpg")
+                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                    brush.Stretch = Stretch.UniformToFill;
+                    bdIcon.Background = brush;
+                    ((Storyboard)FindResource("fade_in")).Begin(bdIcon);
+                }
+                catch
+                {
+                    // Download the image
+                    Downloader downloader = new Downloader(Player.Image, image, Downloader.SourceType.Player, Depot.Proxy);
+                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                     {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                        brush.Stretch = Stretch.UniformToFill;
-                        bdIcon.Background = brush;
-                        ((Storyboard)FindResource("fade_in")).Begin(bdIcon);
-                    }
-                }));
+                        if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(Player.Image) + ".jpg")
+                        {
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                            brush.Stretch = Stretch.UniformToFill;
+                            bdIcon.Background = brush;
+                            ((Storyboard)FindResource("fade_in")).Begin(bdIcon);
+                        }
+                    }));
+                }
+                gearHead.SetGear(Player.HeadGear);
+                gearClothes.SetGear(Player.ClothesGear);
+                gearShoes.SetGear(Player.ShoesGear);
             }
-            gearHead.SetGear(Player.HeadGear);
-            gearClothes.SetGear(Player.ClothesGear);
-            gearShoes.SetGear(Player.ShoesGear);
         }
     }
 }

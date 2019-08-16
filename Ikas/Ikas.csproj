@@ -102,6 +102,9 @@
     <Compile Include="JobPlayerControl.xaml.cs">
       <DependentUpon>JobPlayerControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="JobPlayerWindow.xaml.cs">
+      <DependentUpon>JobPlayerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="JobWindow.xaml.cs">
       <DependentUpon>JobWindow.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="JobPlayerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JobPlayerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -290,6 +297,15 @@
     <Resource Include="assets\img\inklings-save.png" />
     <Resource Include="assets\img\octolings-dead.png" />
     <Resource Include="assets\img\octolings-save.png" />
+    <Resource Include="assets\img\salmoniods-drizzler.png" />
+    <Resource Include="assets\img\salmoniods-flyfish.png" />
+    <Resource Include="assets\img\salmoniods-goldie.png" />
+    <Resource Include="assets\img\salmoniods-griller.png" />
+    <Resource Include="assets\img\salmoniods-maws.png" />
+    <Resource Include="assets\img\salmoniods-scrapper.png" />
+    <Resource Include="assets\img\salmoniods-steel-eel.png" />
+    <Resource Include="assets\img\salmoniods-steelhead.png" />
+    <Resource Include="assets\img\salmoniods-stinger.png" />
     <Content Include="Ikas.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
