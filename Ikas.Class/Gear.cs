@@ -130,15 +130,17 @@ namespace Ikas.Class
 
         public KindType Kind { get; }
         public int Id { get; }
+        public string Name { get; }
         public Brand Brand { get; }
         public PrimaryAbility PrimaryAbility { get; }
         public List<SecondaryAbility> SecondaryAbilities { get; }
         public string Image { get; }
 
-        public Gear(KindType kind, int id, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image)
+        public Gear(KindType kind, int id, string name, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image)
         {
             Kind = kind;
             Id = id;
+            Name = name;
             Brand = brand;
             PrimaryAbility = primaryAbility;
             SecondaryAbilities = secondaryAbilities;
@@ -313,7 +315,7 @@ namespace Ikas.Class
             golden_toothpick = 27108,
         }
 
-        public HeadGear(Key id, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image) : base(KindType.Head, (int)id, brand, primaryAbility, secondaryAbilities, image)
+        public HeadGear(Key id, string name, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image) : base(KindType.Head, (int)id, name, brand, primaryAbility, secondaryAbilities, image)
         {
 
         }
@@ -581,7 +583,7 @@ namespace Ikas.Class
             old_timey_clothes = 27106
         }
 
-        public ClothesGear(Key id, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image) : base(KindType.Clothes, (int)id, brand, primaryAbility, secondaryAbilities, image)
+        public ClothesGear(Key id, string name, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image) : base(KindType.Clothes, (int)id, name, brand, primaryAbility, secondaryAbilities, image)
         {
 
         }
@@ -758,7 +760,7 @@ namespace Ikas.Class
             old_timey_shoes = 27106
         }
 
-        public ShoesGear(Key id, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image) : base(KindType.Shoes, (int)id, brand, primaryAbility, secondaryAbilities, image)
+        public ShoesGear(Key id, string name, Brand brand, PrimaryAbility primaryAbility, List<SecondaryAbility> secondaryAbilities, string image) : base(KindType.Shoes, (int)id, name, brand, primaryAbility, secondaryAbilities, image)
         {
 
         }

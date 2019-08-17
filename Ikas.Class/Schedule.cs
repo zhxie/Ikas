@@ -34,7 +34,7 @@ namespace Ikas.Class
             List<ScheduledStage> stages = new List<ScheduledStage>();
             foreach (ScheduledStage stage in Stages)
             {
-                if (stage.Mode == mode)
+                if (stage.Mode.Id == mode)
                 {
                     stages.Add(stage);
                 }
@@ -46,7 +46,7 @@ namespace Ikas.Class
             List<ScheduledStage> stages = new List<ScheduledStage>();
             foreach (ScheduledStage stage in NextStages)
             {
-                if (stage.Mode == mode)
+                if (stage.Mode.Id == mode)
                 {
                     stages.Add(stage);
                 }

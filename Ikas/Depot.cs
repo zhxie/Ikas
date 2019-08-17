@@ -576,6 +576,13 @@ namespace Ikas
                 }
             }
         }
+        public static bool TranslateProperNoun
+        {
+            get
+            {
+                return true;
+            }
+        }
         public static bool InUse
         {
             get
@@ -1099,9 +1106,9 @@ namespace Ikas
                         DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)).AddSeconds(long.Parse(jObject["start_time"].ToString()));
                         double elapsedTime;
                         Class.Mode.Key type = Class.Mode.ParseKey(jObject["type"].ToString());
-                        Class.Mode.Key mode = Class.Mode.ParseGameModeKey(jObject["game_mode"]["key"].ToString());
-                        Rule.Key rule = Rule.ParseKey(jObject["rule"]["key"].ToString());
-                        switch (rule)
+                        Class.Mode mode = new Class.Mode(Class.Mode.ParseGameModeKey(jObject["game_mode"]["key"].ToString()), jObject["game_mode"]["name"].ToString());
+                        Rule rule = new Rule(Rule.ParseKey(jObject["rule"]["key"].ToString()), jObject["rule"]["name"].ToString());
+                        switch (rule.Id)
                         {
                             case Rule.Key.turf_war:
                                 elapsedTime = 180;
@@ -1115,7 +1122,7 @@ namespace Ikas
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
-                        Stage stage = new Stage((Stage.Key)int.Parse(jObject["stage"]["id"].ToString()), jObject["stage"]["image"].ToString());
+                        Stage stage = new Stage((Stage.Key)int.Parse(jObject["stage"]["id"].ToString()), jObject["stage"]["name"].ToString(), jObject["stage"]["image"].ToString());
                         switch (type)
                         {
                             case Class.Mode.Key.regular_battle:
@@ -1140,7 +1147,7 @@ namespace Ikas
                                         myPlayers.Add(playerTask.Result);
                                     }
                                     myPlayers.Add(selfPlayer);
-                                    myPlayers = sortPlayer(myPlayers, rule);
+                                    myPlayers = sortPlayer(myPlayers, rule.Id);
                                     // Other team players
                                     List<Player> otherPlayers = new List<Player>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
@@ -1158,7 +1165,7 @@ namespace Ikas
                                     {
                                         otherPlayers.Add(playerTask.Result);
                                     }
-                                    otherPlayers = sortPlayer(otherPlayers, rule);
+                                    otherPlayers = sortPlayer(otherPlayers, rule.Id);
                                     // Other battle data
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     if (levelAfter != Level)
@@ -1194,7 +1201,7 @@ namespace Ikas
                                         myPlayers.Add(playerTask.Result);
                                     }
                                     myPlayers.Add(selfPlayer);
-                                    myPlayers = sortPlayer(myPlayers, rule);
+                                    myPlayers = sortPlayer(myPlayers, rule.Id);
                                     // Other team players
                                     List<RankedPlayer> otherPlayers = new List<RankedPlayer>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
@@ -1212,7 +1219,7 @@ namespace Ikas
                                     {
                                         otherPlayers.Add(playerTask.Result);
                                     }
-                                    otherPlayers = sortPlayer(otherPlayers, rule);
+                                    otherPlayers = sortPlayer(otherPlayers, rule.Id);
                                     // Other battle data
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     if (levelAfter != Level)
@@ -1236,7 +1243,7 @@ namespace Ikas
                                         {
                                             rankAfter = Rank.ParseKey(jObject["udemae"]["name"].ToString());
                                         }
-                                        switch (rule)
+                                        switch (rule.Id)
                                         {
                                             case Rule.Key.splat_zones:
                                                 if (rankAfter != SplatZonesRank)
@@ -1273,7 +1280,7 @@ namespace Ikas
                                         // Ranked X Battle
                                         int estimatedXPower = int.Parse(jObject["estimate_x_power"].ToString());
                                         double xPowerAfter = double.Parse(jObject["x_power"].ToString());
-                                        switch (rule)
+                                        switch (rule.Id)
                                         {
                                             case Rule.Key.splat_zones:
                                                 if (SplatZonesRank != Rank.Key.x)
@@ -1329,7 +1336,7 @@ namespace Ikas
                                         myPlayers.Add(playerTask.Result);
                                     }
                                     myPlayers.Add(selfPlayer);
-                                    myPlayers = sortPlayer(myPlayers, rule);
+                                    myPlayers = sortPlayer(myPlayers, rule.Id);
                                     // Other team players
                                     List<RankedPlayer> otherPlayers = new List<RankedPlayer>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
@@ -1347,7 +1354,7 @@ namespace Ikas
                                     {
                                         otherPlayers.Add(playerTask.Result);
                                     }
-                                    otherPlayers = sortPlayer(otherPlayers, rule);
+                                    otherPlayers = sortPlayer(otherPlayers, rule.Id);
                                     // Other battle data
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     if (levelAfter != Level)
@@ -1379,7 +1386,7 @@ namespace Ikas
                                     {
                                         rankAfter = Rank.ParseKey(jObject["udemae"]["name"].ToString());
                                     }
-                                    switch (rule)
+                                    switch (rule.Id)
                                     {
                                         case Rule.Key.splat_zones:
                                             if (rankAfter != SplatZonesRank)
@@ -1434,7 +1441,7 @@ namespace Ikas
                                         myPlayers.Add(playerTask.Result);
                                     }
                                     myPlayers.Add(selfPlayer);
-                                    myPlayers = sortPlayer(myPlayers, rule);
+                                    myPlayers = sortPlayer(myPlayers, rule.Id);
                                     // Other team players
                                     List<Player> otherPlayers = new List<Player>();
                                     JToken otherPlayersNode = jObject["other_team_members"];
@@ -1452,7 +1459,7 @@ namespace Ikas
                                     {
                                         otherPlayers.Add(playerTask.Result);
                                     }
-                                    otherPlayers = sortPlayer(otherPlayers, rule);
+                                    otherPlayers = sortPlayer(otherPlayers, rule.Id);
                                     // Other battle data
                                     int levelAfter = int.Parse(jObject["star_rank"].ToString()) * 100 + int.Parse(jObject["player_rank"].ToString());
                                     if (levelAfter != Level)
@@ -2410,13 +2417,15 @@ namespace Ikas
             try
             {
                 List<ScheduledStage> stages = new List<ScheduledStage>();
-                Class.Mode.Key mode = Class.Mode.ParseKey(node["game_mode"]["key"].ToString());
-                Rule.Key rule = Rule.ParseKey(node["rule"]["key"].ToString());
+                Class.Mode mode = new Class.Mode(Class.Mode.ParseKey(node["game_mode"]["key"].ToString()), node["game_mode"]["name"].ToString());
+                Rule rule = new Rule(Rule.ParseKey(node["rule"]["key"].ToString()), node["rule"]["name"].ToString());
                 ScheduledStage stage1, stage2;
                 if (int.TryParse(node["stage_a"]["id"].ToString(), out int stage1Id))
                 {
+                    string name = node["stage_a"]["name"].ToString();
                     string image = node["stage_a"]["image"].ToString();
-                    stage1 = new ScheduledStage(mode, rule, (Stage.Key)stage1Id, image);
+
+                    stage1 = new ScheduledStage(mode, rule, (Stage.Key)stage1Id, name, image);
                 }
                 else
                 {
@@ -2424,8 +2433,9 @@ namespace Ikas
                 }
                 if (int.TryParse(node["stage_b"]["id"].ToString(), out int stage2Id))
                 {
+                    string name = node["stage_b"]["name"].ToString();
                     string image = node["stage_b"]["image"].ToString();
-                    stage2 = new ScheduledStage(mode, rule, (Stage.Key)stage2Id, image);
+                    stage2 = new ScheduledStage(mode, rule, (Stage.Key)stage2Id, name, image);
                 }
                 else
                 {
@@ -2449,6 +2459,7 @@ namespace Ikas
         {
             try
             {
+                string name = node["stage"]["name"].ToString();
                 string image = node["stage"]["image"].ToString();
                 DateTime startTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(int.Parse(node["start_time"].ToString()));
                 DateTime endTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(int.Parse(node["end_time"].ToString()));
@@ -2458,7 +2469,7 @@ namespace Ikas
                 {
                     weapons.Add(parseShiftWeapon(weaponNode));
                 }
-                return ShiftStage.FromUrl(image, startTime, endTime, weapons);
+                return ShiftStage.FromUrl(name, image, startTime, endTime, weapons);
             }
             catch (Exception ex)
             {
@@ -2732,7 +2743,7 @@ namespace Ikas
             {
                 SubWeapon sub = parseSubWeapon(node["sub"]);
                 SpecialWeapon special = parseSpecialWeapon(node["special"]);
-                return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), sub, special, node["image"].ToString());
+                return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), node["name"].ToString(), sub, special, node["image"].ToString());
             }
             catch (Exception ex)
             {
@@ -2759,12 +2770,12 @@ namespace Ikas
                 if (int.Parse(node["id"].ToString()) < 0)
                 {
                     weaponNode = node["coop_special_weapon"];
-                    return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), null, null, weaponNode["image"].ToString());
+                    return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), weaponNode["name"].ToString(), null, null, weaponNode["image"].ToString());
                 }
                 else
                 {
                     weaponNode = node["weapon"];
-                    return new Weapon((Weapon.Key)int.Parse(weaponNode["id"].ToString()), null, null, weaponNode["image"].ToString());
+                    return new Weapon((Weapon.Key)int.Parse(weaponNode["id"].ToString()), weaponNode["name"].ToString(), null, null, weaponNode["image"].ToString());
                 }
             }
             catch
@@ -2783,7 +2794,7 @@ namespace Ikas
             try
             {
                 SpecialWeapon special = parseSpecialWeapon(specialNode);
-                return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), null, special, node["image"].ToString());
+                return new Weapon((Weapon.Key)int.Parse(node["id"].ToString()), node["name"].ToString(), null, special, node["image"].ToString());
             }
             catch (Exception ex)
             {
@@ -2857,13 +2868,13 @@ namespace Ikas
                 switch (kind)
                 {
                     case Gear.KindType.Head:
-                        HeadGear headGear = new HeadGear((HeadGear.Key)int.Parse(gearNode["id"].ToString()), brand, primaryAbility, secondaryAbilities, gearNode["image"].ToString());
+                        HeadGear headGear = new HeadGear((HeadGear.Key)int.Parse(gearNode["id"].ToString()), gearNode["name"].ToString(), brand, primaryAbility, secondaryAbilities, gearNode["image"].ToString());
                         return headGear as Gear;
                     case Gear.KindType.Clothes:
-                        ClothesGear clothesGear = new ClothesGear((ClothesGear.Key)int.Parse(gearNode["id"].ToString()), brand, primaryAbility, secondaryAbilities, gearNode["image"].ToString());
+                        ClothesGear clothesGear = new ClothesGear((ClothesGear.Key)int.Parse(gearNode["id"].ToString()), gearNode["name"].ToString(), brand, primaryAbility, secondaryAbilities, gearNode["image"].ToString());
                         return clothesGear as Gear;
                     case Gear.KindType.Shoes:
-                        ShoesGear shoesGear = new ShoesGear((ShoesGear.Key)int.Parse(gearNode["id"].ToString()), brand, primaryAbility, secondaryAbilities, gearNode["image"].ToString());
+                        ShoesGear shoesGear = new ShoesGear((ShoesGear.Key)int.Parse(gearNode["id"].ToString()), gearNode["name"].ToString(), brand, primaryAbility, secondaryAbilities, gearNode["image"].ToString());
                         return shoesGear as Gear;
                     default:
                         throw new ArgumentOutOfRangeException(Base.ErrorType.gear_cannot_be_resolved.ToString());

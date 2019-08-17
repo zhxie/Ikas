@@ -111,19 +111,26 @@ namespace Ikas
             if (Gear != null)
             {
                 // Update weapon
-                switch (Gear.Kind)
+                if (Depot.TranslateProperNoun)
                 {
-                    case Gear.KindType.Head:
-                        tbName.Text = Translate(((HeadGear.Key)Gear.Id).ToString());
-                        break;
-                    case Gear.KindType.Clothes:
-                        tbName.Text = Translate(((ClothesGear.Key)Gear.Id).ToString());
-                        break;
-                    case Gear.KindType.Shoes:
-                        tbName.Text = Translate(((ShoesGear.Key)Gear.Id).ToString());
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    switch (Gear.Kind)
+                    {
+                        case Gear.KindType.Head:
+                            tbName.Text = Translate(((HeadGear.Key)Gear.Id).ToString());
+                            break;
+                        case Gear.KindType.Clothes:
+                            tbName.Text = Translate(((ClothesGear.Key)Gear.Id).ToString());
+                            break;
+                        case Gear.KindType.Shoes:
+                            tbName.Text = Translate(((ShoesGear.Key)Gear.Id).ToString());
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+                else
+                {
+                    tbName.Text = Gear.Name;
                 }
                 ((Storyboard)FindResource("fade_in")).Begin(tbName);
                 string image = FileFolderUrl.ApplicationData + Gear.Image;

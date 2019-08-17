@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ikas.Class
 {
-    public static class Mode
+    public class Mode
     {
         public enum Key
         {
@@ -13,6 +13,15 @@ namespace Ikas.Class
             league_battle,
             private_battle,
             splatfest
+        }
+
+        public Key Id { get; }
+        public string Name { get; }
+
+        public Mode(Key id, string name)
+        {
+            Id = id;
+            Name = name;
         }
 
         public static Key ParseKey(string s)

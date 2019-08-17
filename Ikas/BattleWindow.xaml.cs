@@ -249,7 +249,7 @@ namespace Ikas
             if (battle.Stage != null)
             {
                 // Update current Battle
-                switch (battle.Mode)
+                switch (battle.Mode.Id)
                 {
                     case Mode.Key.regular_battle:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_regular");
@@ -386,7 +386,14 @@ namespace Ikas
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                lbRule.Content = Translate(battle.Rule.ToString());
+                if (Depot.TranslateProperNoun)
+                {
+                    lbRule.Content = Translate(battle.Rule.Id.ToString());
+                }
+                else
+                {
+                    lbRule.Content = battle.Rule.Name;
+                }
                 if (battle.IsWin)
                 {
                     tagResult.Content = Translate("win", true);
@@ -522,7 +529,14 @@ namespace Ikas
                     ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                     brush.Stretch = Stretch.UniformToFill;
                     stg.Background = brush;
-                    stg.Content = Translate((stage.Id).ToString());
+                    if (Depot.TranslateProperNoun)
+                    {
+                        stg.Content = Translate(stage.Id.ToString());
+                    }
+                    else
+                    {
+                        stg.Content = stage.Name;
+                    }
                     ((Storyboard)FindResource("fade_in")).Begin(stg);
                 }
                 catch
@@ -534,7 +548,14 @@ namespace Ikas
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
                         stg.Background = brush;
-                        stg.Content = Translate((stage.Id).ToString());
+                        if (Depot.TranslateProperNoun)
+                        {
+                            stg.Content = Translate(stage.Id.ToString());
+                        }
+                        else
+                        {
+                            stg.Content = stage.Name;
+                        }
                         ((Storyboard)FindResource("fade_in")).Begin(stg);
                     }));
                 }
@@ -636,9 +657,25 @@ namespace Ikas
                         title = string.Format(Translate("{0}_(No._{1})", true), Translate("lose", true), Translate(battle.Number.ToString()));
                     }
                     // Format content
-                    string content = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Stage.Id.ToString()), battle.StartTime.ToString("yyyy/M/dd HH:mm"));
+                    string content;
+                    if (Depot.TranslateProperNoun)
+                    {
+                        content = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Stage.Id.ToString()), battle.StartTime.ToString("yyyy/M/dd HH:mm"));
+                    }
+                    else
+                    {
+                        content = string.Format(Translate("{0}_-_{1}", true), battle.Stage.Name, battle.StartTime.ToString("yyyy/M/dd HH:mm"));
+                    }
                     // Format progressTitle
-                    string scoreTitle = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Mode.ToString()), Translate(battle.Rule.ToString()));
+                    string scoreTitle;
+                    if (Depot.TranslateProperNoun)
+                    {
+                        scoreTitle = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Mode.Id.ToString()), Translate(battle.Rule.Id.ToString()));
+                    }
+                    else
+                    {
+                        scoreTitle = string.Format(Translate("{0}_-_{1}", true), battle.Mode.Name, battle.Rule.Name);
+                    }
                     // Format status and value string
                     string myScore, otherScore;
                     switch (battle.Type)

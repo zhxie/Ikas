@@ -380,8 +380,8 @@ namespace Ikas
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
-                    lbMode.Content = Translate(((Rule.ShortName)scheduledStages[0].Rule).ToString());
-                    switch (scheduledStages[0].Rule)
+                    lbMode.Content = Translate(((Rule.ShortName)scheduledStages[0].Rule.Id).ToString());
+                    switch (scheduledStages[0].Rule.Id)
                     {
                         case Rule.Key.turf_war:
                             if (Depot.Level > 0)

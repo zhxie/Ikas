@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ikas.Class
 {
-    public static class Rule
+    public class Rule
     {
         public enum Key
         {
@@ -21,6 +21,15 @@ namespace Ikas.Class
             tower,
             rain,
             clam
+        }
+
+        public Key Id { get; }
+        public string Name { get; }
+
+        public Rule(Key id, string name)
+        {
+            Id = id;
+            Name = name;
         }
 
         public static Key ParseKey(string s)

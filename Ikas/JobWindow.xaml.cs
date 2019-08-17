@@ -290,7 +290,14 @@ namespace Ikas
                     ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                     brush.Stretch = Stretch.UniformToFill;
                     stg.Background = brush;
-                    stg.Content = Translate((stage.Id).ToString());
+                    if (Depot.TranslateProperNoun)
+                    {
+                        stg.Content = Translate(stage.Id.ToString());
+                    }
+                    else
+                    {
+                        stg.Content = stage.Name;
+                    }
                     ((Storyboard)FindResource("fade_in")).Begin(stg);
                 }
                 catch
@@ -302,7 +309,14 @@ namespace Ikas
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
                         stg.Background = brush;
-                        stg.Content = Translate((stage.Id).ToString());
+                        if (Depot.TranslateProperNoun)
+                        {
+                            stg.Content = Translate(stage.Id.ToString());
+                        }
+                        else
+                        {
+                            stg.Content = stage.Name;
+                        }
                         ((Storyboard)FindResource("fade_in")).Begin(stg);
                     }));
                 }
@@ -380,7 +394,15 @@ namespace Ikas
                         title = string.Format(Translate("{0}_(No._{1})", true), Translate("defeat", true), Translate(job.Number.ToString()));
                     }
                     // Format content
-                    string content = Translate(job.Stage.Id.ToString());
+                    string content;
+                    if (Depot.TranslateProperNoun)
+                    {
+                        content = Translate(job.Stage.Id.ToString());
+                    }
+                    else
+                    {
+                        content = job.Stage.Name;
+                    }
                     // Format scoreTitle
                     string scoreTitle = string.Format("{0} {1}{2}", Translate("hazard_level", true), job.HazardLevel.ToString(), Translate("%", true));
                     // Format status and value string
