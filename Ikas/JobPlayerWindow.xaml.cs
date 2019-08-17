@@ -323,24 +323,144 @@ namespace Ikas
                 // Update salmoniods
                 lbGoldie.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.GoldieKill, Job.GoldieKill, Job.GoldieCount);
                 lbGoldieShort.Content = string.Format(Translate("x{0}", true), Player.GoldieKill);
+                if (Job.GoldieKill == Job.GoldieCount)
+                {
+                    lbGoldieName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbGoldie.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbGoldieShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                }
+                else
+                {
+                    lbGoldieName.Foreground = new SolidColorBrush(Colors.White);
+                    lbGoldie.Foreground = new SolidColorBrush(Colors.White);
+                    lbGoldieShort.Foreground = new SolidColorBrush(Colors.White);
+                }
                 lbSteelhead.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.SteelheadKill, Job.SteelheadKill, Job.SteelheadCount);
                 lbSteelheadShort.Content = string.Format(Translate("x{0}", true), Player.SteelheadKill);
+                if (Job.SteelheadKill == Job.SteelheadCount)
+                {
+                    lbSteelheadName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbSteelhead.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbSteelheadShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                }
+                else
+                {
+                    lbSteelheadName.Foreground = new SolidColorBrush(Colors.White);
+                    lbSteelhead.Foreground = new SolidColorBrush(Colors.White);
+                    lbSteelheadShort.Foreground = new SolidColorBrush(Colors.White);
+                }
                 lbFlyfish.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.FlyfishKill, Job.FlyfishKill, Job.FlyfishCount);
                 lbFlyfishShort.Content = string.Format(Translate("x{0}", true), Player.FlyfishKill);
+                if (Job.FlyfishKill == Job.FlyfishCount)
+                {
+                    lbFlyfishName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbFlyfish.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbFlyfishShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                }
+                else
+                {
+                    lbFlyfishName.Foreground = new SolidColorBrush(Colors.White);
+                    lbFlyfish.Foreground = new SolidColorBrush(Colors.White);
+                    lbFlyfishShort.Foreground = new SolidColorBrush(Colors.White);
+                }
                 lbScrapper.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.ScrapperKill, Job.ScrapperKill, Job.ScrapperCount);
                 lbScrapperShort.Content = string.Format(Translate("x{0}", true), Player.ScrapperKill);
+                if (Job.ScrapperKill == Job.ScrapperCount)
+                {
+                    lbScrapperName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbScrapper.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbScrapperShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                }
+                else
+                {
+                    lbScrapperName.Foreground = new SolidColorBrush(Colors.White);
+                    lbScrapper.Foreground = new SolidColorBrush(Colors.White);
+                    lbScrapperShort.Foreground = new SolidColorBrush(Colors.White);
+                }
                 lbSteelEel.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.SteelEelKill, Job.SteelEelKill, Job.SteelEelCount);
                 lbSteelEelShort.Content = string.Format(Translate("x{0}", true), Player.SteelEelKill);
+                if (Job.SteelEelKill == Job.SteelEelCount)
+                {
+                    lbSteelEelName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbSteelEel.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbSteelEelShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                }
+                else
+                {
+                    lbSteelEelName.Foreground = new SolidColorBrush(Colors.White);
+                    lbSteelEel.Foreground = new SolidColorBrush(Colors.White);
+                    lbSteelEelShort.Foreground = new SolidColorBrush(Colors.White);
+                }
                 lbStinger.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.StingerKill, Job.StingerKill, Job.StingerCount);
                 lbStingerShort.Content = string.Format(Translate("x{0}", true), Player.StingerKill);
+                if (Job.StingerKill == Job.StingerCount)
+                {
+                    lbStingerName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbStinger.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbStingerShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                }
+                else
+                {
+                    lbStingerName.Foreground = new SolidColorBrush(Colors.White);
+                    lbStinger.Foreground = new SolidColorBrush(Colors.White);
+                    lbStingerShort.Foreground = new SolidColorBrush(Colors.White);
+                }
                 lbMaws.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.MawsKill, Job.MawsKill, Job.MawsCount);
                 lbMawsShort.Content = string.Format(Translate("x{0}", true), Player.MawsKill);
+                if (Job.MawsKill == Job.MawsCount)
+                {
+                    lbMawsName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbMaws.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbMawsShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                }
+                else
+                {
+                    lbMawsName.Foreground = new SolidColorBrush(Colors.White);
+                    lbMaws.Foreground = new SolidColorBrush(Colors.White);
+                    lbMawsShort.Foreground = new SolidColorBrush(Colors.White);
+                }
                 lbGriller.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.GrillerKill, Job.GrillerKill, Job.GrillerCount);
                 lbGrillerShort.Content = string.Format(Translate("x{0}", true), Player.GrillerKill);
+                if (Job.GrillerKill == Job.GrillerCount)
+                {
+                    lbGrillerName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbGriller.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbGrillerShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                }
+                else
+                {
+                    lbGrillerName.Foreground = new SolidColorBrush(Colors.White);
+                    lbGriller.Foreground = new SolidColorBrush(Colors.White);
+                    lbGrillerShort.Foreground = new SolidColorBrush(Colors.White);
+                }
                 lbDrizzler.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.DrizzlerKill, Job.DrizzlerKill, Job.DrizzlerCount);
                 lbDrizzlerShort.Content = string.Format(Translate("x{0}", true), Player.DrizzlerKill);
+                if (Job.DrizzlerKill == Job.DrizzlerCount)
+                {
+                    lbDrizzlerName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbDrizzler.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbDrizzlerShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                }
+                else
+                {
+                    lbDrizzlerName.Foreground = new SolidColorBrush(Colors.White);
+                    lbDrizzler.Foreground = new SolidColorBrush(Colors.White);
+                    lbDrizzlerShort.Foreground = new SolidColorBrush(Colors.White);
+                }
                 lbTotal.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.BossKill, Job.BossKill, Job.BossCount);
                 lbTotalShort.Content = string.Format(Translate("x{0}", true), Player.BossKill);
+                if (Job.BossKill == Job.BossCount)
+                {
+                    lbTotalName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbTotal.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                    lbTotalShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
+                }
+                else
+                {
+                    lbTotalName.Foreground = new SolidColorBrush(Colors.White);
+                    lbTotal.Foreground = new SolidColorBrush(Colors.White);
+                    lbTotalShort.Foreground = new SolidColorBrush(Colors.White);
+                }
                 ((Storyboard)FindResource("fade_in")).Begin(gridGoldie);
                 ((Storyboard)FindResource("fade_in")).Begin(gridSteelhead);
                 ((Storyboard)FindResource("fade_in")).Begin(gridFlyfish);
