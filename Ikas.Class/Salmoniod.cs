@@ -8,14 +8,15 @@ namespace Ikas.Class
     {
         public enum Key
         {
+            salmoniod_unknown = -1,
             goldie = 3,
             steelhead = 6,
             flyfish = 9,
             scrapper = 12,
-            steelEel = 13,
+            steel_eel = 13,
             stinger = 14,
             maws = 15,
-            griller = 16,
+            griller2 = 16,  // griller was used by event of salmon run, use griller2 instead
             drizzler = 21
         }
 

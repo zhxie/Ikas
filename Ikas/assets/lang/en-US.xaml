@@ -862,6 +862,17 @@
     <sys:String x:Key="griller">The Griller</sys:String>
     <sys:String x:Key="cohock_charge">Cohock Charge</sys:String>
     <sys:String x:Key="the_mothership">The Mothership</sys:String>
+    <!-- Salmoniod -->
+    <sys:String x:Key="salmoniod_unknown">Unknown</sys:String>
+    <sys:String x:Key="goldie">Goldie</sys:String>
+    <sys:String x:Key="steelhead">Steelhead</sys:String>
+    <sys:String x:Key="flyfish">Flyfish</sys:String>
+    <sys:String x:Key="scrapper">Scrapper</sys:String>
+    <sys:String x:Key="steel_eel">Steel Eel</sys:String>
+    <sys:String x:Key="stinger">Stinger</sys:String>
+    <sys:String x:Key="maws">Maws</sys:String>
+    <sys:String x:Key="griller2">Griller</sys:String>
+    <sys:String x:Key="drizzler">Drizzler</sys:String>
     <!-- Errors -->
     <sys:String x:Key="ikas_meets_an_unhandled_exception">Ikas meet an unhandled exception</sys:String>
     <sys:String x:Key="ikas_has_started,_or_ikas_failed_to_exit_normally">Ikas has started, or Ikas failed to exit normally</sys:String>
@@ -965,18 +976,6 @@
     <!-- GearWindow -->
     <!-- PlayerWindow -->
     <!-- JobPlayerWindow -->
-    <sys:String x:Key="job_player_window-goldie">Goldie</sys:String>
-    <sys:String x:Key="job_player_window-steelhead">Steelhead</sys:String>
-    <sys:String x:Key="job_player_window-flyfish">Flyfish</sys:String>
-    <sys:String x:Key="job_player_window-scrapper">Scrapper</sys:String>
-    <sys:String x:Key="job_player_window-steel_eel">Steel Eel</sys:String>
-    <sys:String x:Key="job_player_window-stinger">Stinger</sys:String>
-    <sys:String x:Key="job_player_window-maws">Maws</sys:String>
-    <sys:String x:Key="job_player_window-griller">Griller</sys:String>
-    <sys:String x:Key="job_player_window-drizzler">Drizzler</sys:String>
-    <sys:String x:Key="job_player_window-defeated">Defeated</sys:String>
-    <sys:String x:Key="job_player_window-x{0}/{1}/{2}">x{0}/{1}/{2}</sys:String>
-    <sys:String x:Key="job_player_window-x{0}">x{0}</sys:String>
     <!-- SettingsWindow -->
     <sys:String x:Key="settings_window-settings">Settings</sys:String>
     <sys:String x:Key="settings_window-ok">OK!</sys:String>
@@ -1038,4 +1037,7 @@
     <sys:String x:Key="player_control-({0})">({0})</sys:String>
     <!-- JobPlayerControl -->
     <sys:String x:Key="job_player_control-x{0}">x{0}</sys:String>
+    <!-- SalmoniodControl -->
+    <sys:String x:Key="salmoniod_control-x{0}/{1}/{2}">x{0}/{1}/{2}</sys:String>
+    <sys:String x:Key="salmoniod_control-x{0}">x{0}</sys:String>
 </ResourceDictionary>

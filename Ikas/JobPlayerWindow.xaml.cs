@@ -24,14 +24,6 @@ namespace Ikas
     /// </summary>
     public partial class JobPlayerWindow : Window
     {
-        public string OrangeBackground
-        {
-            get
-            {
-                return "#3F" + Design.NeonOrange;
-            }
-        }
-
         public Window KeepAliveWindow { get; set; }
 
         public volatile JobPlayer Player;
@@ -57,16 +49,15 @@ namespace Ikas
             InitializeComponent();
             // Set properties for controls
             RenderOptions.SetBitmapScalingMode(bdIcon, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(imgGoldie, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(imgSteelhead, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(imgFlyfish, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(imgScrapper, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(imgSteelEel, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(imgStinger, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(imgMaws, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(imgGriller, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(imgDrizzler, BitmapScalingMode.HighQuality);
-            RenderOptions.SetBitmapScalingMode(imgSalmonRun, BitmapScalingMode.HighQuality);
+            salGoldie.SetSalmoniod(Salmoniod.Key.goldie);
+            salSteelhead.SetSalmoniod(Salmoniod.Key.steelhead);
+            salFlyfish.SetSalmoniod(Salmoniod.Key.flyfish);
+            salScrapper.SetSalmoniod(Salmoniod.Key.scrapper);
+            salSteelEel.SetSalmoniod(Salmoniod.Key.steel_eel);
+            salStinger.SetSalmoniod(Salmoniod.Key.stinger);
+            salMaws.SetSalmoniod(Salmoniod.Key.maws);
+            salGriller.SetSalmoniod(Salmoniod.Key.griller2);
+            salDrizzler.SetSalmoniod(Salmoniod.Key.drizzler);
             // Add handler for global member
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
         }
@@ -101,146 +92,6 @@ namespace Ikas
             */
         }
 
-        private void BdGoldie_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbGoldie);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbGoldieName);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbGoldieShort);
-        }
-
-        private void BdGoldie_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbGoldie);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbGoldieName);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbGoldieShort);
-        }
-
-        private void BdSteelhead_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbSteelhead);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbSteelheadName);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbSteelheadShort);
-        }
-
-        private void BdSteelhead_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbSteelhead);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbSteelheadName);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbSteelheadShort);
-        }
-
-        private void BdFlyfish_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbFlyfish);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbFlyfishName);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbFlyfishShort);
-        }
-
-        private void BdFlyfish_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbFlyfish);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbFlyfishName);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbFlyfishShort);
-        }
-
-        private void BdScrapper_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbScrapper);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbScrapperName);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbScrapperShort);
-        }
-
-        private void BdScrapper_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbScrapper);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbScrapperName);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbScrapperShort);
-        }
-
-        private void BdSteelEel_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbSteelEel);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbSteelEelName);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbSteelEelShort);
-        }
-
-        private void BdSteelEel_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbSteelEel);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbSteelEelName);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbSteelEelShort);
-        }
-
-        private void BdStinger_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbStinger);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbStingerName);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbStingerShort);
-        }
-
-        private void BdStinger_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbStinger);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbStingerName);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbStingerShort);
-        }
-
-        private void BdMaws_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbMaws);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbMawsName);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbMawsShort);
-        }
-
-        private void BdMaws_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbMaws);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbMawsName);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbMawsShort);
-        }
-
-        private void BdGriller_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbGriller);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbGrillerName);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbGrillerShort);
-        }
-
-        private void BdGriller_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbGriller);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbGrillerName);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbGrillerShort);
-        }
-
-        private void BdDrizzler_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbDrizzler);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbDrizzlerName);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbDrizzlerShort);
-        }
-
-        private void BdDrizzler_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbDrizzler);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbDrizzlerName);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbDrizzlerShort);
-        }
-
-        private void BdTotal_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbTotal);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbTotalName);
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbTotalShort);
-        }
-
-        private void BdTotal_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ((Storyboard)FindResource("quick_fade_in")).Begin(lbTotal);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbTotalName);
-            ((Storyboard)FindResource("quick_fade_out")).Begin(lbTotalShort);
-        }
-
         #endregion
 
         private void LanguageChanged()
@@ -260,38 +111,15 @@ namespace Ikas
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(tbName);
             ((Storyboard)FindResource("fade_out")).Begin(bdIcon);
-            ((Storyboard)FindResource("fade_out")).Begin(gridGoldie);
-            ((Storyboard)FindResource("fade_out")).Begin(gridSteelhead);
-            ((Storyboard)FindResource("fade_out")).Begin(gridFlyfish);
-            ((Storyboard)FindResource("fade_out")).Begin(gridScrapper);
-            ((Storyboard)FindResource("fade_out")).Begin(gridSteelEel);
-            ((Storyboard)FindResource("fade_out")).Begin(gridStinger);
-            ((Storyboard)FindResource("fade_out")).Begin(gridMaws);
-            ((Storyboard)FindResource("fade_out")).Begin(gridGriller);
-            ((Storyboard)FindResource("fade_out")).Begin(gridDrizzler);
-            ((Storyboard)FindResource("fade_out")).Begin(gridTotal);
-            Storyboard sb = (Storyboard)FindResource("resize_width");
-            (sb.Children[0] as DoubleAnimation).To = 0;
-            sb.Begin(bdGoldieRatio);
-            sb.Begin(bdSteelheadRatio);
-            sb.Begin(bdFlyfishRatio);
-            sb.Begin(bdScrapperRatio);
-            sb.Begin(bdSteelEelRatio);
-            sb.Begin(bdStingerRatio);
-            sb.Begin(bdMawsRatio);
-            sb.Begin(bdGrillerRatio);
-            sb.Begin(bdDrizzlerRatio);
-            sb.Begin(bdTotalRatio);
-            ((Storyboard)FindResource("fade_out")).Begin(bdGoldieRatio);
-            ((Storyboard)FindResource("fade_out")).Begin(bdSteelheadRatio);
-            ((Storyboard)FindResource("fade_out")).Begin(bdFlyfishRatio);
-            ((Storyboard)FindResource("fade_out")).Begin(bdScrapperRatio);
-            ((Storyboard)FindResource("fade_out")).Begin(bdSteelEelRatio);
-            ((Storyboard)FindResource("fade_out")).Begin(bdStingerRatio);
-            ((Storyboard)FindResource("fade_out")).Begin(bdMawsRatio);
-            ((Storyboard)FindResource("fade_out")).Begin(bdGrillerRatio);
-            ((Storyboard)FindResource("fade_out")).Begin(bdDrizzlerRatio);
-            ((Storyboard)FindResource("fade_out")).Begin(bdTotalRatio);
+            salGoldie.SetKill();
+            salSteelhead.SetKill();
+            salFlyfish.SetKill();
+            salScrapper.SetKill();
+            salSteelEel.SetKill();
+            salStinger.SetKill();
+            salMaws.SetKill();
+            salGriller.SetKill();
+            salDrizzler.SetKill();
             if (Player != null && Job != null)
             {
                 // Update player
@@ -321,298 +149,15 @@ namespace Ikas
                     }));
                 }
                 // Update salmoniods
-                lbGoldie.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.GoldieKill, Job.GoldieKill, Job.GoldieCount);
-                lbGoldieShort.Content = string.Format(Translate("x{0}", true), Player.GoldieKill);
-                if (Job.GoldieKill == Job.GoldieCount && Job.GoldieCount != 0)
-                {
-                    lbGoldieName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbGoldie.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbGoldieShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                }
-                else
-                {
-                    lbGoldieName.Foreground = new SolidColorBrush(Colors.White);
-                    lbGoldie.Foreground = new SolidColorBrush(Colors.White);
-                    lbGoldieShort.Foreground = new SolidColorBrush(Colors.White);
-                }
-                lbSteelhead.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.SteelheadKill, Job.SteelheadKill, Job.SteelheadCount);
-                lbSteelheadShort.Content = string.Format(Translate("x{0}", true), Player.SteelheadKill);
-                if (Job.SteelheadKill == Job.SteelheadCount && Job.SteelheadCount != 0)
-                {
-                    lbSteelheadName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbSteelhead.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbSteelheadShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                }
-                else
-                {
-                    lbSteelheadName.Foreground = new SolidColorBrush(Colors.White);
-                    lbSteelhead.Foreground = new SolidColorBrush(Colors.White);
-                    lbSteelheadShort.Foreground = new SolidColorBrush(Colors.White);
-                }
-                lbFlyfish.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.FlyfishKill, Job.FlyfishKill, Job.FlyfishCount);
-                lbFlyfishShort.Content = string.Format(Translate("x{0}", true), Player.FlyfishKill);
-                if (Job.FlyfishKill == Job.FlyfishCount && Job.FlyfishCount != 0)
-                {
-                    lbFlyfishName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbFlyfish.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbFlyfishShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                }
-                else
-                {
-                    lbFlyfishName.Foreground = new SolidColorBrush(Colors.White);
-                    lbFlyfish.Foreground = new SolidColorBrush(Colors.White);
-                    lbFlyfishShort.Foreground = new SolidColorBrush(Colors.White);
-                }
-                lbScrapper.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.ScrapperKill, Job.ScrapperKill, Job.ScrapperCount);
-                lbScrapperShort.Content = string.Format(Translate("x{0}", true), Player.ScrapperKill);
-                if (Job.ScrapperKill == Job.ScrapperCount && Job.ScrapperCount != 0)
-                {
-                    lbScrapperName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbScrapper.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbScrapperShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                }
-                else
-                {
-                    lbScrapperName.Foreground = new SolidColorBrush(Colors.White);
-                    lbScrapper.Foreground = new SolidColorBrush(Colors.White);
-                    lbScrapperShort.Foreground = new SolidColorBrush(Colors.White);
-                }
-                lbSteelEel.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.SteelEelKill, Job.SteelEelKill, Job.SteelEelCount);
-                lbSteelEelShort.Content = string.Format(Translate("x{0}", true), Player.SteelEelKill);
-                if (Job.SteelEelKill == Job.SteelEelCount && Job.SteelEelCount != 0)
-                {
-                    lbSteelEelName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbSteelEel.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbSteelEelShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                }
-                else
-                {
-                    lbSteelEelName.Foreground = new SolidColorBrush(Colors.White);
-                    lbSteelEel.Foreground = new SolidColorBrush(Colors.White);
-                    lbSteelEelShort.Foreground = new SolidColorBrush(Colors.White);
-                }
-                lbStinger.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.StingerKill, Job.StingerKill, Job.StingerCount);
-                lbStingerShort.Content = string.Format(Translate("x{0}", true), Player.StingerKill);
-                if (Job.StingerKill == Job.StingerCount && Job.StingerCount != 0)
-                {
-                    lbStingerName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbStinger.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbStingerShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                }
-                else
-                {
-                    lbStingerName.Foreground = new SolidColorBrush(Colors.White);
-                    lbStinger.Foreground = new SolidColorBrush(Colors.White);
-                    lbStingerShort.Foreground = new SolidColorBrush(Colors.White);
-                }
-                lbMaws.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.MawsKill, Job.MawsKill, Job.MawsCount);
-                lbMawsShort.Content = string.Format(Translate("x{0}", true), Player.MawsKill);
-                if (Job.MawsKill == Job.MawsCount && Job.MawsCount != 0)
-                {
-                    lbMawsName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbMaws.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbMawsShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                }
-                else
-                {
-                    lbMawsName.Foreground = new SolidColorBrush(Colors.White);
-                    lbMaws.Foreground = new SolidColorBrush(Colors.White);
-                    lbMawsShort.Foreground = new SolidColorBrush(Colors.White);
-                }
-                lbGriller.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.GrillerKill, Job.GrillerKill, Job.GrillerCount);
-                lbGrillerShort.Content = string.Format(Translate("x{0}", true), Player.GrillerKill);
-                if (Job.GrillerKill == Job.GrillerCount && Job.GrillerCount != 0)
-                {
-                    lbGrillerName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbGriller.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbGrillerShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                }
-                else
-                {
-                    lbGrillerName.Foreground = new SolidColorBrush(Colors.White);
-                    lbGriller.Foreground = new SolidColorBrush(Colors.White);
-                    lbGrillerShort.Foreground = new SolidColorBrush(Colors.White);
-                }
-                lbDrizzler.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.DrizzlerKill, Job.DrizzlerKill, Job.DrizzlerCount);
-                lbDrizzlerShort.Content = string.Format(Translate("x{0}", true), Player.DrizzlerKill);
-                if (Job.DrizzlerKill == Job.DrizzlerCount && Job.DrizzlerCount != 0)
-                {
-                    lbDrizzlerName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbDrizzler.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbDrizzlerShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                }
-                else
-                {
-                    lbDrizzlerName.Foreground = new SolidColorBrush(Colors.White);
-                    lbDrizzler.Foreground = new SolidColorBrush(Colors.White);
-                    lbDrizzlerShort.Foreground = new SolidColorBrush(Colors.White);
-                }
-                lbTotal.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.BossKill, Job.BossKill, Job.BossCount);
-                lbTotalShort.Content = string.Format(Translate("x{0}", true), Player.BossKill);
-                if (Job.BossKill == Job.BossCount && Job.BossCount != 0)
-                {
-                    lbTotalName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbTotal.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                    lbTotalShort.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
-                }
-                else
-                {
-                    lbTotalName.Foreground = new SolidColorBrush(Colors.White);
-                    lbTotal.Foreground = new SolidColorBrush(Colors.White);
-                    lbTotalShort.Foreground = new SolidColorBrush(Colors.White);
-                }
-                ((Storyboard)FindResource("fade_in")).Begin(gridGoldie);
-                ((Storyboard)FindResource("fade_in")).Begin(gridSteelhead);
-                ((Storyboard)FindResource("fade_in")).Begin(gridFlyfish);
-                ((Storyboard)FindResource("fade_in")).Begin(gridScrapper);
-                ((Storyboard)FindResource("fade_in")).Begin(gridSteelEel);
-                ((Storyboard)FindResource("fade_in")).Begin(gridStinger);
-                ((Storyboard)FindResource("fade_in")).Begin(gridMaws);
-                ((Storyboard)FindResource("fade_in")).Begin(gridGriller);
-                ((Storyboard)FindResource("fade_in")).Begin(gridDrizzler);
-                ((Storyboard)FindResource("fade_in")).Begin(gridTotal);
-                double to;
-                if (Job.GoldieKill != 0)
-                {
-                    to = (Player.GoldieKill * 0.9 / Job.GoldieKill + 0.1) * bdGoldie.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdGoldieRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdGoldieRatio);
-                }
-                else
-                {
-                    to = 0.1 * bdGoldie.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdGoldieRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdGoldieRatio);
-                }
-                if (Job.SteelheadKill != 0)
-                {
-                    to = (Player.SteelheadKill * 0.9 / Job.SteelheadKill + 0.1) * bdSteelhead.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdSteelheadRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdSteelheadRatio);
-                }
-                else
-                {
-                    to = 0.1 * bdSteelhead.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdSteelheadRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdSteelheadRatio);
-                }
-                if (Job.FlyfishKill != 0)
-                {
-                    to = (Player.FlyfishKill * 0.9 / Job.FlyfishKill + 0.1) * bdFlyfish.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdFlyfishRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdFlyfishRatio);
-                }
-                else
-                {
-                    to = 0.1 * bdFlyfish.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdFlyfishRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdFlyfishRatio);
-                }
-                if (Job.ScrapperKill != 0)
-                {
-                    to = (Player.ScrapperKill * 0.9 / Job.ScrapperKill + 0.1) * bdScrapper.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdScrapperRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdScrapperRatio);
-                }
-                else
-                {
-                    to = 0.1 * bdScrapper.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdScrapperRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdScrapperRatio);
-                }
-
-                if (Job.SteelEelKill != 0)
-                {
-                    to = (Player.SteelEelKill * 0.9 / Job.SteelEelKill + 0.1) * bdSteelEel.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdSteelEelRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdSteelEelRatio);
-                }
-                else
-                {
-                    to = 0.1 * bdSteelEel.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdSteelEelRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdSteelEelRatio);
-                }
-                if (Job.StingerKill != 0)
-                {
-                    to = (Player.StingerKill * 0.9 / Job.StingerKill + 0.1) * bdStinger.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdStingerRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdStingerRatio);
-                }
-                else
-                {
-                    to = 0.1 * bdStinger.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdStingerRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdStingerRatio);
-                }
-                if (Job.MawsKill != 0)
-                {
-                    to = (Player.MawsKill * 0.9 / Job.MawsKill + 0.1) * bdMaws.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdMawsRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdMawsRatio);
-                }
-                else
-                {
-                    to = 0.1 * bdMaws.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdMawsRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdMawsRatio);
-                }
-                if (Job.GrillerKill != 0)
-                {
-                    to = (Player.GrillerKill * 0.9 / Job.GrillerKill + 0.1) * bdGriller.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdGrillerRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdGrillerRatio);
-                }
-                else
-                {
-                    to = 0.1 * bdGriller.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdGrillerRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdGrillerRatio);
-                }
-                if (Job.DrizzlerKill != 0)
-                {
-                    to = (Player.DrizzlerKill * 0.9 / Job.DrizzlerKill + 0.1) * bdDrizzler.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdDrizzlerRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdDrizzlerRatio);
-                }
-                else
-                {
-                    to = 0.1 * bdDrizzler.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdDrizzlerRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdDrizzlerRatio);
-                }
-                if (Job.BossKill != 0)
-                {
-                    to = (Player.BossKill * 0.9 / Job.BossKill + 0.1) * bdTotal.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdTotalRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdTotalRatio);
-                }
-                else
-                {
-                    to = 0.1 * bdTotal.Width;
-                    (sb.Children[0] as DoubleAnimation).To = to;
-                    sb.Begin(bdTotalRatio);
-                    ((Storyboard)FindResource("fade_in")).Begin(bdTotalRatio);
-                }
+                salGoldie.SetKill(Player.GoldieKill, Job.GoldieKill, Job.GoldieCount);
+                salSteelhead.SetKill(Player.SteelheadKill, Job.SteelheadKill, Job.SteelheadCount);
+                salFlyfish.SetKill(Player.FlyfishKill, Job.FlyfishKill, Job.FlyfishCount);
+                salScrapper.SetKill(Player.ScrapperKill, Job.ScrapperKill, Job.ScrapperCount);
+                salSteelEel.SetKill(Player.SteelEelKill, Job.SteelEelKill, Job.SteelEelCount);
+                salStinger.SetKill(Player.StingerKill, Job.StingerKill, Job.StingerCount);
+                salMaws.SetKill(Player.MawsKill, Job.MawsKill, Job.MawsCount);
+                salGriller.SetKill(Player.GrillerKill, Job.GrillerKill, Job.GrillerCount);
+                salDrizzler.SetKill(Player.DrizzlerKill, Job.DrizzlerKill, Job.DrizzlerCount);
             }
         }
 

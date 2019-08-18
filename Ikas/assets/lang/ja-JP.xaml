@@ -862,6 +862,17 @@
     <sys:String x:Key="normal">普通</sys:String>
     <sys:String x:Key="low">干潮</sys:String>
     <sys:String x:Key="high">満潮</sys:String>
+    <!-- Salmoniod -->
+    <sys:String x:Key="salmoniod_unknown">不明</sys:String>
+    <sys:String x:Key="goldie">キンシャケ</sys:String>
+    <sys:String x:Key="steelhead">バクダン</sys:String>
+    <sys:String x:Key="flyfish">カタパッド</sys:String>
+    <sys:String x:Key="scrapper">テッパン</sys:String>
+    <sys:String x:Key="steel_eel">ヘビ</sys:String>
+    <sys:String x:Key="stinger">タワー</sys:String>
+    <sys:String x:Key="maws">モグラ</sys:String>
+    <sys:String x:Key="griller2">グリル</sys:String>
+    <sys:String x:Key="drizzler">コウモリ</sys:String>
     <!-- Errors -->
     <sys:String x:Key="ikas_meets_an_unhandled_exception">Ikas で処理できない例外が発生しました</sys:String>
     <sys:String x:Key="ikas_has_started,_or_ikas_failed_to_exit_normally">Ikas が起動したか、Ikas が前回正常に終了できませんでした</sys:String>
@@ -965,18 +976,6 @@
     <!-- GearWindow -->
     <!-- PlayerWindow -->
     <!-- JobPlayerWindow -->
-    <sys:String x:Key="job_player_window-goldie">キンシャケ</sys:String>
-    <sys:String x:Key="job_player_window-steelhead">バクダン</sys:String>
-    <sys:String x:Key="job_player_window-flyfish">カタパッド</sys:String>
-    <sys:String x:Key="job_player_window-scrapper">テッパン</sys:String>
-    <sys:String x:Key="job_player_window-steel_eel">ヘビ</sys:String>
-    <sys:String x:Key="job_player_window-stinger">タワー</sys:String>
-    <sys:String x:Key="job_player_window-maws">モグラ</sys:String>
-    <sys:String x:Key="job_player_window-griller">グリル</sys:String>
-    <sys:String x:Key="job_player_window-drizzler">コウモリ</sys:String>
-    <sys:String x:Key="job_player_window-defeated">倒した数</sys:String>
-    <sys:String x:Key="job_player_window-x{0}/{1}/{2}">x{0}/{1}/{2}</sys:String>
-    <sys:String x:Key="job_player_window-x{0}">x{0}</sys:String>
     <!-- SettingsWindow -->
     <sys:String x:Key="settings_window-settings">設定</sys:String>
     <sys:String x:Key="settings_window-ok">OK!</sys:String>
@@ -1038,4 +1037,7 @@
     <sys:String x:Key="player_control-({0})">({0})</sys:String>
     <!-- JobPlayerControl -->
     <sys:String x:Key="job_player_control-x{0}">x{0}</sys:String>
+    <!-- SalmoniodControl -->
+    <sys:String x:Key="salmoniod_control-x{0}/{1}/{2}">x{0}/{1}/{2}</sys:String>
+    <sys:String x:Key="salmoniod_control-x{0}">x{0}</sys:String>
 </ResourceDictionary>
