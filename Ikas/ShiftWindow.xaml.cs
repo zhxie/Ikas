@@ -194,6 +194,7 @@ namespace Ikas
         private void ShiftUpdated()
         {
             Shift shift = Depot.Shift;
+            // Update shift
             if (shift.Stages.Count > 0)
             {
                 if (shift.IsOpen)
@@ -204,41 +205,20 @@ namespace Ikas
                 {
                     tagOpenOrSoon.Content = Translate("soon", true);
                 }
-            }
-            // Fade in labels
-            ((Storyboard)FindResource("fade_in")).Begin(imgMode);
-            ((Storyboard)FindResource("fade_in")).Begin(lbMode);
-            ((Storyboard)FindResource("fade_in")).Begin(tagOpenOrSoon);
-            ((Storyboard)FindResource("fade_in")).Begin(tagNext);
-            // Update shift
-            ShiftStage stage = shift.Stages[0];
-            DateTime startTime = stage.StartTime.ToLocalTime();
-            DateTime endTime = stage.EndTime.ToLocalTime();
-            lbTime1.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("M/dd HH:mm"), endTime.ToString("M/dd HH:mm"));
-            ((Storyboard)FindResource("fade_in")).Begin(lbTime1);
-            ((Storyboard)FindResource("fade_in")).Begin(lbWeapon1);
-            // Update stage
-            string image = FileFolderUrl.ApplicationData + stage.Image;
-            try
-            {
-                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                brush.Stretch = Stretch.UniformToFill;
-                stg1.Background = brush;
-                if (Depot.TranslateProperNoun)
-                {
-                    stg1.Content = Translate(stage.Id.ToString());
-                }
-                else
-                {
-                    stg1.Content = stage.Name;
-                }
-                ((Storyboard)FindResource("fade_in")).Begin(stg1);
-            }
-            catch
-            {
-                // Download the image
-                Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Shift, Depot.Proxy);
-                DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                // Fade in labels
+                ((Storyboard)FindResource("fade_in")).Begin(imgMode);
+                ((Storyboard)FindResource("fade_in")).Begin(lbMode);
+                ((Storyboard)FindResource("fade_in")).Begin(tagOpenOrSoon);
+                ((Storyboard)FindResource("fade_in")).Begin(tagNext);
+                ShiftStage stage = shift.Stages[0];
+                DateTime startTime = stage.StartTime.ToLocalTime();
+                DateTime endTime = stage.EndTime.ToLocalTime();
+                lbTime1.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("M/dd HH:mm"), endTime.ToString("M/dd HH:mm"));
+                ((Storyboard)FindResource("fade_in")).Begin(lbTime1);
+                ((Storyboard)FindResource("fade_in")).Begin(lbWeapon1);
+                // Update stage
+                string image = FileFolderUrl.ApplicationData + stage.Image;
+                try
                 {
                     ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                     brush.Stretch = Stretch.UniformToFill;
@@ -252,56 +232,56 @@ namespace Ikas
                         stg1.Content = stage.Name;
                     }
                     ((Storyboard)FindResource("fade_in")).Begin(stg1);
-                }));
-            }
-            if (stage.Weapons.Count > 0)
-            {
-                // Update weapons
-                wp11.SetWeapon(stage.Weapons[0]);
-                if (stage.Weapons.Count > 1)
-                {
-                    wp12.SetWeapon(stage.Weapons[1]);
-                    if (stage.Weapons.Count > 2)
-                    {
-                        wp13.SetWeapon(stage.Weapons[2]);
-                        if (stage.Weapons.Count > 3)
-                        {
-                            wp14.SetWeapon(stage.Weapons[3]);
-                        }
-                    }
-                }
-            }
-            if (shift.Stages.Count > 1)
-            {
-                // Update next shift
-                ShiftStage stage2 = shift.Stages[1];
-                startTime = stage2.StartTime.ToLocalTime();
-                endTime = stage2.EndTime.ToLocalTime();
-                lbTime2.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("M/dd HH:mm"), endTime.ToString("M/dd HH:mm"));
-                ((Storyboard)FindResource("fade_in")).Begin(lbTime2);
-                ((Storyboard)FindResource("fade_in")).Begin(lbWeapon2);
-                // Update next stage
-                string image6 = FileFolderUrl.ApplicationData + stage2.Image;
-                try
-                {
-                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image6)));
-                    brush.Stretch = Stretch.UniformToFill;
-                    stg2.Background = brush;
-                    if (Depot.TranslateProperNoun)
-                    {
-                        stg2.Content = Translate(stage2.Id.ToString());
-                    }
-                    else
-                    {
-                        stg2.Content = stage2.Name;
-                    }
-                    ((Storyboard)FindResource("fade_in")).Begin(stg2);
                 }
                 catch
                 {
                     // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image6, Downloader.SourceType.Shift, Depot.Proxy);
+                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Shift, Depot.Proxy);
                     DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    {
+                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                        brush.Stretch = Stretch.UniformToFill;
+                        stg1.Background = brush;
+                        if (Depot.TranslateProperNoun)
+                        {
+                            stg1.Content = Translate(stage.Id.ToString());
+                        }
+                        else
+                        {
+                            stg1.Content = stage.Name;
+                        }
+                        ((Storyboard)FindResource("fade_in")).Begin(stg1);
+                    }));
+                }
+                if (stage.Weapons.Count > 0)
+                {
+                    // Update weapons
+                    wp11.SetWeapon(stage.Weapons[0]);
+                    if (stage.Weapons.Count > 1)
+                    {
+                        wp12.SetWeapon(stage.Weapons[1]);
+                        if (stage.Weapons.Count > 2)
+                        {
+                            wp13.SetWeapon(stage.Weapons[2]);
+                            if (stage.Weapons.Count > 3)
+                            {
+                                wp14.SetWeapon(stage.Weapons[3]);
+                            }
+                        }
+                    }
+                }
+                if (shift.Stages.Count > 1)
+                {
+                    // Update next shift
+                    ShiftStage stage2 = shift.Stages[1];
+                    startTime = stage2.StartTime.ToLocalTime();
+                    endTime = stage2.EndTime.ToLocalTime();
+                    lbTime2.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("M/dd HH:mm"), endTime.ToString("M/dd HH:mm"));
+                    ((Storyboard)FindResource("fade_in")).Begin(lbTime2);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbWeapon2);
+                    // Update next stage
+                    string image6 = FileFolderUrl.ApplicationData + stage2.Image;
+                    try
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image6)));
                         brush.Stretch = Stretch.UniformToFill;
@@ -315,21 +295,41 @@ namespace Ikas
                             stg2.Content = stage2.Name;
                         }
                         ((Storyboard)FindResource("fade_in")).Begin(stg2);
-                    }));
-                }
-                if (stage2.Weapons.Count > 0)
-                {
-                    // Update weapons
-                    wp21.SetWeapon(stage2.Weapons[0]);
-                    if (stage2.Weapons.Count > 1)
+                    }
+                    catch
                     {
-                        wp22.SetWeapon(stage2.Weapons[1]);
-                        if (stage2.Weapons.Count > 2)
+                        // Download the image
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image6, Downloader.SourceType.Shift, Depot.Proxy);
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            wp23.SetWeapon(stage2.Weapons[2]);
-                            if (stage2.Weapons.Count > 3)
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image6)));
+                            brush.Stretch = Stretch.UniformToFill;
+                            stg2.Background = brush;
+                            if (Depot.TranslateProperNoun)
                             {
-                                wp24.SetWeapon(stage2.Weapons[3]);
+                                stg2.Content = Translate(stage2.Id.ToString());
+                            }
+                            else
+                            {
+                                stg2.Content = stage2.Name;
+                            }
+                            ((Storyboard)FindResource("fade_in")).Begin(stg2);
+                        }));
+                    }
+                    if (stage2.Weapons.Count > 0)
+                    {
+                        // Update weapons
+                        wp21.SetWeapon(stage2.Weapons[0]);
+                        if (stage2.Weapons.Count > 1)
+                        {
+                            wp22.SetWeapon(stage2.Weapons[1]);
+                            if (stage2.Weapons.Count > 2)
+                            {
+                                wp23.SetWeapon(stage2.Weapons[2]);
+                                if (stage2.Weapons.Count > 3)
+                                {
+                                    wp24.SetWeapon(stage2.Weapons[3]);
+                                }
                             }
                         }
                     }
