@@ -941,6 +941,7 @@
     <sys:String x:Key="battle_window-lose">Lose..</sys:String>
     <sys:String x:Key="battle_window-rank">ウデマエ</sys:String>
     <sys:String x:Key="battle_window-league_power">リーグパワー</sys:String>
+    <sys:String x:Key="battle_window-x_power">Xパワー</sys:String>
     <sys:String x:Key="battle_window-splatfest_power">フェスパワー</sys:String>
     <sys:String x:Key="battle_window-estimated_{0}">推定 {0}</sys:String>
     <sys:String x:Key="battle_window-calculating">計測中..</sys:String>

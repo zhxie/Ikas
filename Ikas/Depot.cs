@@ -1228,8 +1228,7 @@ namespace Ikas
                                     }
                                     int myScore = int.Parse(jObject["my_team_count"].ToString());
                                     int otherScore = int.Parse(jObject["other_team_count"].ToString());
-                                    bool isXPower = double.TryParse(jObject["x_power"].ToString(), out _);
-                                    if (!isXPower)
+                                    if (selfPlayer.Rank != Rank.Key.x)
                                     {
                                         // Ranked Battle
                                         int estimatedRankPower = int.Parse(jObject["estimate_gachi_power"].ToString());
@@ -1279,7 +1278,11 @@ namespace Ikas
                                     {
                                         // Ranked X Battle
                                         int estimatedXPower = int.Parse(jObject["estimate_x_power"].ToString());
-                                        double xPowerAfter = double.Parse(jObject["x_power"].ToString());
+                                        double xPowerAfter = -1;
+                                        if (double.TryParse(jObject["x_power"].ToString(), out _))
+                                        {
+                                            xPowerAfter = double.Parse(jObject["x_power"].ToString());
+                                        }
                                         switch (rule.Id)
                                         {
                                             case Rule.Key.splat_zones:

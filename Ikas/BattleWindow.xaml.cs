@@ -286,19 +286,38 @@ namespace Ikas
                         break;
                     case Mode.Key.ranked_battle:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_ranked");
-                        lbPowerName.Content = Translate("rank", true);
-                        lbPower.FontFamily = FindResource("splatfont") as FontFamily;
                         lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
-                        lbPower.Margin = new Thickness(0, -20, 0, 0);
-                        tbPower.FontSize = 36;
-                        tbPower.Text = Translate((battle as RankedBattle).RankAfter.ToString());
-                        if ((battle as RankedBattle).RankAfter > Rank.Key.s && (battle as RankedBattle).RankAfter < Rank.Key.x)
+                        if (battle is RankedXBattle)
                         {
-                            tbPowerSub.Text = ((battle as RankedBattle).RankAfter - Rank.Key.s_plus_0).ToString();
+                            lbPowerName.Content = Translate("x_power", true);
+                            lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                            lbPower.Margin = new Thickness(0, -10, 0, 0);
+                            tbPower.FontSize = 28;
+                            if ((battle as RankedXBattle).XPowerAfter >= 0)
+                            {
+                                tbPower.Text = ((battle as RankedXBattle).XPowerAfter).ToString();
+                            }
+                            else
+                            {
+                                tbPower.Text = Translate("calculating", true);
+                            }
+                            tbPowerSub.Text = "";
                         }
                         else
                         {
-                            tbPowerSub.Text = "";
+                            lbPowerName.Content = Translate("rank", true);
+                            lbPower.Margin = new Thickness(0, -20, 0, 0);
+                            tbPower.FontSize = 36;
+                            lbPower.FontFamily = FindResource("splatfont") as FontFamily;
+                            tbPower.Text = Translate((battle as RankedBattle).RankAfter.ToString());
+                            if ((battle as RankedBattle).RankAfter > Rank.Key.s && (battle as RankedBattle).RankAfter < Rank.Key.x)
+                            {
+                                tbPowerSub.Text = ((battle as RankedBattle).RankAfter - Rank.Key.s_plus_0).ToString();
+                            }
+                            else
+                            {
+                                tbPowerSub.Text = "";
+                            }
                         }
                         lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (battle as RankedBattle).EstimatedRankPower);
                         lbLoseEstimatedPower.Content = "";

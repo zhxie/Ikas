@@ -940,6 +940,7 @@
     <sys:String x:Key="battle_window-win">Win!</sys:String>
     <sys:String x:Key="battle_window-lose">Lose..</sys:String>
     <sys:String x:Key="battle_window-rank">Rank</sys:String>
+    <sys:String x:Key="battle_window-x_power">X Power</sys:String>
     <sys:String x:Key="battle_window-league_power">League Power</sys:String>
     <sys:String x:Key="battle_window-splatfest_power">Splatfest Power</sys:String>
     <sys:String x:Key="battle_window-estimated_{0}">Estimated {0}</sys:String>
