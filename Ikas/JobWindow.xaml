@@ -78,7 +78,7 @@
                     <StackPanel Orientation="Horizontal" Margin="25,10,25,0">
                         <Grid x:Name="gridHazardLevel">
                             <Border Width="182" Height="80" Background="#7F000000" CornerRadius="8"/>
-                            <Border x:Name="bdHazardLevel" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                            <Border x:Name="bdHazardLevel" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                             <StackPanel Height="80" Orientation="Vertical">
                                 <Label x:Name="lbHazardLevelName" FontFamily="{StaticResource splatfont_2}" Foreground="#FFDBDBDB" FontSize="20" HorizontalContentAlignment="Center" Content="{DynamicResource job_window-hazard_level}" Padding="0" Opacity="0"/>
                                 <Label x:Name="lbHazardLevel" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="24" HorizontalContentAlignment="Center" Margin="0,-8,0,0" Padding="0" Content="[Level]" Opacity="0"/>

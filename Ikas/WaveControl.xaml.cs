@@ -24,11 +24,11 @@ namespace Ikas
     /// </summary>
     public partial class WaveControl : UserControl
     {
-        public string SalmonYellowBackground
+        public string OrangeBackground
         {
             get
             {
-                return "#FF" + Design.NeonSalmonYellow;
+                return "#3F" + Design.NeonOrange;
             }
         }
 

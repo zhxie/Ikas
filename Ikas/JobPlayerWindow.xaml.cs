@@ -24,11 +24,11 @@ namespace Ikas
     /// </summary>
     public partial class JobPlayerWindow : Window
     {
-        public string SalmonYellowBackground
+        public string OrangeBackground
         {
             get
             {
-                return "#7F" + Design.NeonSalmonYellow;
+                return "#3F" + Design.NeonOrange;
             }
         }
 

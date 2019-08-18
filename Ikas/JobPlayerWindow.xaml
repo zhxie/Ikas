@@ -86,7 +86,7 @@
                     MouseLeave="BdGoldie_MouseLeave"
                     Width="127.5" Background="#7F000000" CornerRadius="8">
                     <Grid x:Name="gridGoldie" Opacity="0">
-                        <Border x:Name="bdGoldieRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Border x:Name="bdGoldieRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                         <Grid Margin="5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Grid HorizontalAlignment="Left">
@@ -105,7 +105,7 @@
                         MouseLeave="BdSteelhead_MouseLeave"
                         Width="127.5" Background="#7F000000" CornerRadius="8">
                     <Grid x:Name="gridSteelhead" Opacity="0">
-                        <Border x:Name="bdSteelheadRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Border x:Name="bdSteelheadRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                         <Grid Margin="5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Grid HorizontalAlignment="Left">
@@ -124,7 +124,7 @@
                         MouseLeave="BdFlyfish_MouseLeave"
                         Width="127.5" Background="#7F000000" CornerRadius="8">
                     <Grid x:Name="gridFlyfish" Opacity="0">
-                        <Border x:Name="bdFlyfishRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Border x:Name="bdFlyfishRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                         <Grid Margin="5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Grid HorizontalAlignment="Left">
@@ -143,7 +143,7 @@
                         MouseLeave="BdScrapper_MouseLeave"
                         Width="127.5" Background="#7F000000" CornerRadius="8">
                     <Grid x:Name="gridScrapper" Opacity="0">
-                        <Border x:Name="bdScrapperRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Border x:Name="bdScrapperRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                         <Grid Margin="5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Grid HorizontalAlignment="Left">
@@ -162,7 +162,7 @@
                         MouseLeave="BdSteelEel_MouseLeave"
                         Width="127.5" Background="#7F000000" CornerRadius="8">
                     <Grid x:Name="gridSteelEel" Opacity="0">
-                        <Border x:Name="bdSteelEelRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Border x:Name="bdSteelEelRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                         <Grid Margin="5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Grid HorizontalAlignment="Left">
@@ -181,7 +181,7 @@
                     MouseLeave="BdStinger_MouseLeave"
                     Width="127.5" Background="#7F000000" CornerRadius="8">
                     <Grid x:Name="gridStinger" Opacity="0">
-                        <Border x:Name="bdStingerRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Border x:Name="bdStingerRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                         <Grid Margin="5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Grid HorizontalAlignment="Left">
@@ -200,7 +200,7 @@
                         MouseLeave="BdMaws_MouseLeave"
                         Width="127.5" Background="#7F000000" CornerRadius="8">
                     <Grid x:Name="gridMaws" Opacity="0">
-                        <Border x:Name="bdMawsRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Border x:Name="bdMawsRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                         <Grid Margin="5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Grid HorizontalAlignment="Left">
@@ -219,7 +219,7 @@
                         MouseLeave="BdGriller_MouseLeave"
                         Width="127.5" Background="#7F000000" CornerRadius="8">
                     <Grid x:Name="gridGriller" Opacity="0">
-                        <Border x:Name="bdGrillerRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Border x:Name="bdGrillerRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                         <Grid Margin="5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Grid HorizontalAlignment="Left">
@@ -238,7 +238,7 @@
                         MouseLeave="BdDrizzler_MouseLeave"
                         Width="127.5" Background="#7F000000" CornerRadius="8">
                     <Grid x:Name="gridDrizzler" Opacity="0">
-                        <Border x:Name="bdDrizzlerRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Border x:Name="bdDrizzlerRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                         <Grid Margin="5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Grid HorizontalAlignment="Left">
@@ -257,7 +257,7 @@
                         MouseLeave="BdTotal_MouseLeave"
                         Width="127.5" Background="#7F000000" CornerRadius="8">
                     <Grid x:Name="gridTotal" Opacity="0">
-                        <Border x:Name="bdTotalRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SalmonYellowBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                        <Border x:Name="bdTotalRatio" Width="0" CornerRadius="8" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OrangeBackground}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                         <Grid Margin="5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Grid HorizontalAlignment="Left">

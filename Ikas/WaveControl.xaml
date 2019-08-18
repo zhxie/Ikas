@@ -24,45 +24,36 @@
         </Storyboard>
     </UserControl.Resources>
     <Grid>
-        <Border CornerRadius="8">
-            <Border.Background>
-                <SolidColorBrush Color="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=SalmonYellowBackground}"/>
-            </Border.Background>
-            <Border x:Name="bdBackgroundStrip" CornerRadius="8">
-                <Border.Background>
-                    <ImageBrush ImageSource="assets/img/bg-strips-small.png" Stretch="None" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,150,150"/>
-                </Border.Background>
-            </Border>
-        </Border>
+        <Border CornerRadius="8" Background="#7F000000"/>
         <Border x:Name="bdMain"
                 MouseEnter="BdMain_MouseEnter"
                 MouseLeave="BdMain_MouseLeave">
             <Grid>
                 <Border Background="Transparent" Opacity="0"/>
                 <Grid x:Name="gridBasic" Opacity="1">
-                    <Border x:Name="bdTide" Height="0" CornerRadius="0,0,8,8" Background="#33000000" VerticalAlignment="Bottom" IsHitTestVisible="False"/>
+                    <Border x:Name="bdTide" Height="0" CornerRadius="0,0,8,8" Background="{Binding RelativeSource={RelativeSource AncestorType=Control}, Path=OrangeBackground}" VerticalAlignment="Bottom" IsHitTestVisible="False"/>
                     <StackPanel Orientation="Vertical" Margin="0,10">
                         <Border Height="30">
                             <Grid>
-                                <Label x:Name="lbWave" Height="50" FontFamily="{StaticResource splatfont_2}" Foreground="Black" FontSize="20" Content="[Wave]" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
-                                <Label x:Name="lbResult" Height="50" FontFamily="{StaticResource splatfont_2}" Foreground="Black" FontSize="20" Content="[Event]" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
+                                <Label x:Name="lbWave" Height="50" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="20" Content="[Wave]" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
+                                <Label x:Name="lbResult" Height="50" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="20" Content="[Event]" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
                             </Grid>
                         </Border>
-                        <Border Height="40" Background="#FF2A270B" Margin="0,5,0,0">
+                        <Border Height="40" Background="#7F000000" Margin="0,5,0,0">
                             <Label x:Name="lbGoldenEgg" Height="80" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="28" Content="00/00" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
                         </Border>
                         <Border Height="30" Margin="0,10,0,0">
                             <Grid>
-                                <Label x:Name="lbTide" Height="50" FontFamily="{StaticResource splatfont_2}" Foreground="Black" FontSize="20" Content="[Tide]" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
+                                <Label x:Name="lbTide" Height="50" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="20" Content="[Tide]" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
                                 <StackPanel x:Name="spGoldenEggPop" Height="30" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0">
                                     <Image x:Name="imgGoldenEgg" Width="25" Height="25" Source="assets/img/golden-egg.png"/>
-                                    <Label x:Name="lbGolderEggPop" Height="50" FontFamily="{StaticResource splatfont_2}" Foreground="Black" FontSize="20" Content="[Pop]" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                    <Label x:Name="lbGolderEggPop" Height="50" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="20" Content="[Pop]" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
                         <Border Height="30" Margin="0,5,0,0">
                             <Grid>
-                                <Label x:Name="lbEvent" Height="50" FontFamily="{StaticResource splatfont_2}" Foreground="Black" FontSize="20" Content="[Event]" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
+                                <Label x:Name="lbEvent" Height="50" FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="20" Content="[Event]" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"/>
                                 <StackPanel x:Name="spSpecial" Orientation="Horizontal" HorizontalAlignment="Center" Opacity="0">
                                     <Grid x:Name="gridSpecial1" Opacity="0">
                                         <Border Width="30" Height="30" Background="#FF2A270B" CornerRadius="15"/>
