@@ -323,7 +323,7 @@ namespace Ikas
                 // Update salmoniods
                 lbGoldie.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.GoldieKill, Job.GoldieKill, Job.GoldieCount);
                 lbGoldieShort.Content = string.Format(Translate("x{0}", true), Player.GoldieKill);
-                if (Job.GoldieKill == Job.GoldieCount)
+                if (Job.GoldieKill == Job.GoldieCount && Job.GoldieCount != 0)
                 {
                     lbGoldieName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
                     lbGoldie.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
@@ -337,7 +337,7 @@ namespace Ikas
                 }
                 lbSteelhead.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.SteelheadKill, Job.SteelheadKill, Job.SteelheadCount);
                 lbSteelheadShort.Content = string.Format(Translate("x{0}", true), Player.SteelheadKill);
-                if (Job.SteelheadKill == Job.SteelheadCount)
+                if (Job.SteelheadKill == Job.SteelheadCount && Job.SteelheadCount != 0)
                 {
                     lbSteelheadName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
                     lbSteelhead.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
@@ -351,7 +351,7 @@ namespace Ikas
                 }
                 lbFlyfish.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.FlyfishKill, Job.FlyfishKill, Job.FlyfishCount);
                 lbFlyfishShort.Content = string.Format(Translate("x{0}", true), Player.FlyfishKill);
-                if (Job.FlyfishKill == Job.FlyfishCount)
+                if (Job.FlyfishKill == Job.FlyfishCount && Job.FlyfishCount != 0)
                 {
                     lbFlyfishName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
                     lbFlyfish.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
@@ -365,7 +365,7 @@ namespace Ikas
                 }
                 lbScrapper.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.ScrapperKill, Job.ScrapperKill, Job.ScrapperCount);
                 lbScrapperShort.Content = string.Format(Translate("x{0}", true), Player.ScrapperKill);
-                if (Job.ScrapperKill == Job.ScrapperCount)
+                if (Job.ScrapperKill == Job.ScrapperCount && Job.ScrapperCount != 0)
                 {
                     lbScrapperName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
                     lbScrapper.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
@@ -379,7 +379,7 @@ namespace Ikas
                 }
                 lbSteelEel.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.SteelEelKill, Job.SteelEelKill, Job.SteelEelCount);
                 lbSteelEelShort.Content = string.Format(Translate("x{0}", true), Player.SteelEelKill);
-                if (Job.SteelEelKill == Job.SteelEelCount)
+                if (Job.SteelEelKill == Job.SteelEelCount && Job.SteelEelCount != 0)
                 {
                     lbSteelEelName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
                     lbSteelEel.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
@@ -393,7 +393,7 @@ namespace Ikas
                 }
                 lbStinger.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.StingerKill, Job.StingerKill, Job.StingerCount);
                 lbStingerShort.Content = string.Format(Translate("x{0}", true), Player.StingerKill);
-                if (Job.StingerKill == Job.StingerCount)
+                if (Job.StingerKill == Job.StingerCount && Job.StingerCount != 0)
                 {
                     lbStingerName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
                     lbStinger.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
@@ -407,7 +407,7 @@ namespace Ikas
                 }
                 lbMaws.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.MawsKill, Job.MawsKill, Job.MawsCount);
                 lbMawsShort.Content = string.Format(Translate("x{0}", true), Player.MawsKill);
-                if (Job.MawsKill == Job.MawsCount)
+                if (Job.MawsKill == Job.MawsCount && Job.MawsCount != 0)
                 {
                     lbMawsName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
                     lbMaws.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
@@ -421,7 +421,7 @@ namespace Ikas
                 }
                 lbGriller.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.GrillerKill, Job.GrillerKill, Job.GrillerCount);
                 lbGrillerShort.Content = string.Format(Translate("x{0}", true), Player.GrillerKill);
-                if (Job.GrillerKill == Job.GrillerCount)
+                if (Job.GrillerKill == Job.GrillerCount && Job.GrillerCount != 0)
                 {
                     lbGrillerName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
                     lbGriller.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
@@ -435,7 +435,7 @@ namespace Ikas
                 }
                 lbDrizzler.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.DrizzlerKill, Job.DrizzlerKill, Job.DrizzlerCount);
                 lbDrizzlerShort.Content = string.Format(Translate("x{0}", true), Player.DrizzlerKill);
-                if (Job.DrizzlerKill == Job.DrizzlerCount)
+                if (Job.DrizzlerKill == Job.DrizzlerCount && Job.DrizzlerCount != 0)
                 {
                     lbDrizzlerName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
                     lbDrizzler.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
@@ -449,7 +449,7 @@ namespace Ikas
                 }
                 lbTotal.Content = string.Format(Translate("x{0}/{1}/{2}", true), Player.BossKill, Job.BossKill, Job.BossCount);
                 lbTotalShort.Content = string.Format(Translate("x{0}", true), Player.BossKill);
-                if (Job.BossKill == Job.BossCount)
+                if (Job.BossKill == Job.BossCount && Job.BossCount != 0)
                 {
                     lbTotalName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
                     lbTotal.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
