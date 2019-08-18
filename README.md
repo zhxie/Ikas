@@ -11,9 +11,11 @@
 ## Features
 
 - Automatic cookie generation of SplatNet
-- Update current and coming schedules and display in a *fancy* way
-- Get the latest battle including details of players' gears and weapons and display in a *fancy* way
-- Receive notifications of the latest battles
+- Get current and coming schedules and shifts
+- Get the latest battle including details of players' gears and weapons
+- Get the latest salmon run including details of players' weapons and defeated boss salmoniods
+- ... and display all of them in a *fancy* way
+- Receive notifications of the latest battle and salmon run
 - Japanese and English (North America)
 
 ## Configuration
