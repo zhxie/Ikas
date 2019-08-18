@@ -58,30 +58,46 @@
                 </Border.Background>
             </Border>
         </Border>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Margin="25,0">
             <Label x:Name="lbMode"
                    PreviewMouseLeftButtonDown="LbMode_PreviewMouseLeftButtonDown"
-                   Content="Ikas" FontFamily="{StaticResource splatfont_2}" Foreground="#FF19D719" FontSize="26" Width="100" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="25,0,0,0" Padding="5,0" Cursor="Hand" Opacity="0"/>
-            <Label x:Name="lbLevel"
-                   MouseEnter="LbLevel_MouseEnter"
-                   MouseLeave="LbLevel_MouseLeave"
-                  FontFamily="{StaticResource splatfont}" Foreground="White" Width="70" Height="80" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,0,0,0" Padding="0" Opacity="0">
-                <TextBlock>
-                    <Run x:Name="tbLevel" FontSize="38">--</Run><Run x:Name="tbStar" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=YellowForeground}" FontSize="16"></Run>
-                </TextBlock>
-            </Label>
-            <Border x:Name="bdStage1Border" Width="110" Height="44" Padding="0" Margin="18,0,0,0" CornerRadius="8" Background="Black">
-                <Border x:Name="bdStage1"
+                   Content="Ikas" FontFamily="{StaticResource splatfont_2}" Foreground="#FF19D719" FontSize="26" Width="100" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0" Cursor="Hand" Opacity="0"/>
+            <Grid Margin="10,0,0,0">
+                <StackPanel x:Name="spBattle" Orientation="Horizontal" Opacity="0">
+                    <Label x:Name="lbLevel"
+                    MouseEnter="LbLevel_MouseEnter"
+                    MouseLeave="LbLevel_MouseLeave"
+                    FontFamily="{StaticResource splatfont}" Foreground="White" Width="70" Height="80" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Opacity="0">
+                        <TextBlock>
+                            <Run x:Name="tbLevel" FontSize="38">--</Run><Run x:Name="tbStar" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=YellowForeground}" FontSize="16"></Run>
+                        </TextBlock>
+                    </Label>
+                    <Border Width="110" Height="44" Padding="0" Margin="18,0,0,0" CornerRadius="8" Background="Black">
+                        <Border x:Name="bdStage1"
                         MouseEnter="BdStage_MouseEnter"
                         MouseLeave="BdStage_MouseLeave"
                         Width="110" Height="44" CornerRadius="8" Background="Green" Opacity="0"/>
-            </Border>
-            <Border Width="110" Height="44" Padding="0" Margin="10,0,0,0" CornerRadius="8" Background="Black">
-                <Border x:Name="bdStage2"
+                    </Border>
+                    <Border Width="110" Height="44" Padding="0" Margin="10,0,0,0" CornerRadius="8" Background="Black">
+                        <Border x:Name="bdStage2"
                         MouseEnter="BdStage_MouseEnter"
                         MouseLeave="BdStage_MouseLeave"
                         Width="110" Height="44" CornerRadius="8" Background="Green" Opacity="0"/>
-            </Border>
+                    </Border>
+                </StackPanel>
+                <StackPanel x:Name="spJob" Orientation="Horizontal" Opacity="0">
+                    <Label x:Name="lbGrade"
+                    MouseEnter="LbGrade_MouseEnter"
+                    MouseLeave="LbGrade_MouseLeave"
+                    FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="26" Width="198" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Content="--" Opacity="0"/>
+                    <Border Width="110" Height="44" Padding="0" Margin="10,0,0,0" CornerRadius="8" Background="Black">
+                        <Border x:Name="bdShiftStage"
+                        MouseEnter="BdShiftStage_MouseEnter"
+                        MouseLeave="BdShiftStage_MouseLeave"
+                        Width="110" Height="44" CornerRadius="8" Background="Green" Opacity="0"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
         </StackPanel>
     </Grid>
 </Window>
