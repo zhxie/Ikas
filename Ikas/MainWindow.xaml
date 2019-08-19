@@ -90,7 +90,7 @@
                     MouseEnter="LbGrade_MouseEnter"
                     MouseLeave="LbGrade_MouseLeave"
                     FontFamily="{StaticResource splatfont_2}" Foreground="White" FontSize="26" Width="198" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Content="--" Opacity="0"/>
-                    <Border Width="110" Height="44" Padding="0" Margin="10,0,0,0" CornerRadius="8" Background="Black">
+                    <Border x:Name="bdShiftStageBackground" Width="110" Height="44" Padding="0" Margin="10,0,0,0" CornerRadius="8" Background="Black">
                         <Border x:Name="bdShiftStage"
                         MouseEnter="BdShiftStage_MouseEnter"
                         MouseLeave="BdShiftStage_MouseLeave"

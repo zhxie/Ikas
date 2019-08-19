@@ -350,7 +350,7 @@ namespace Ikas
             if (Depot.CurrentMode != Depot.Mode.salmon_run)
             {
                 lbGrade.IsHitTestVisible = false;
-                bdShiftStage.IsHitTestVisible = false;
+                bdShiftStageBackground.IsHitTestVisible = false;
                 ((Storyboard)FindResource("fade_out")).Begin(spJob);
                 ((Storyboard)FindResource("fade_out")).Begin(lbMode);
             }
@@ -572,7 +572,7 @@ namespace Ikas
             {
                 ((Storyboard)FindResource("fade_in")).Begin(spJob);
                 lbGrade.IsHitTestVisible = true;
-                bdShiftStage.IsHitTestVisible = true;
+                bdShiftStageBackground.IsHitTestVisible = true;
             }
             Shift shift = Depot.Shift;
             if (shift.Stages.Count > 0)
