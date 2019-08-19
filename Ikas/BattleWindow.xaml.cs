@@ -415,7 +415,14 @@ namespace Ikas
                 }
                 if (battle.IsWin)
                 {
-                    tagResult.Content = Translate("win", true);
+                    if (Depot.TranslateProperNoun)
+                    {
+                        tagResult.Content = Translate("win", true);
+                    }
+                    else
+                    {
+                        tagResult.Content = battle.Result;
+                    }
                     tagResult.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                     switch (battle.Type)
                     {
@@ -474,7 +481,14 @@ namespace Ikas
                 }
                 else
                 {
-                    tagResult.Content = Translate("lose", true);
+                    if (Depot.TranslateProperNoun)
+                    {
+                        tagResult.Content = Translate("lose", true);
+                    }
+                    else
+                    {
+                        tagResult.Content = battle.Result;
+                    }
                     tagResult.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                     switch (battle.Type)
                     {
