@@ -2499,8 +2499,8 @@ namespace Ikas
         {
             try
             {
-                WaterLevel waterLevel = new WaterLevel(WaterLevel.ParseWaterLevel(node["water_level"]["key"].ToString()), node["water_level"]["name"].ToString());
-                EventType eventType = new EventType(EventType.ParseEventType(node["event_type"]["key"].ToString()), node["event_type"]["name"].ToString());
+                WaterLevel waterLevel = new WaterLevel(WaterLevel.ParseKey(node["water_level"]["key"].ToString()), node["water_level"]["name"].ToString());
+                EventType eventType = new EventType(EventType.ParseKey(node["event_type"]["key"].ToString()), node["event_type"]["name"].ToString());
                 int quota = int.Parse(node["quota_num"].ToString());
                 int powerEgg = int.Parse(node["ikura_num"].ToString());
                 int goldenEgg = int.Parse(node["golden_ikura_num"].ToString());

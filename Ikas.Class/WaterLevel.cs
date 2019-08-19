@@ -22,7 +22,7 @@ namespace Ikas.Class
             Name = name;
         }
 
-        public static Key ParseWaterLevel(string s)
+        public static Key ParseKey(string s)
         {
             return (Key)Enum.Parse(typeof(Key), s);
         }
