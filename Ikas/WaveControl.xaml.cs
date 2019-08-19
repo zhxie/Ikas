@@ -113,7 +113,7 @@ namespace Ikas
                 else
                 {
                     lbTide.Content = Wave.WaterLevel.Name;
-                    lbTide.Content = Wave.EventType.Name;
+                    lbEvent.Content = Wave.EventType.Name;
                 }
                 if (wave.IsClear)
                 {

@@ -28,5 +28,44 @@ namespace Ikas.Class
             Id = id;
             Name = name;
         }
+
+        public static Key ParseKey(string s)
+        {
+            switch (s)
+            {
+                case "sakelien-golden":
+                    return Key.goldie;
+                case "sakelien-bomber":
+                    return Key.steelhead;
+                case "sakelien-cup-twins":
+                    return Key.flyfish;
+                case "sakelien-shield":
+                    return Key.scrapper;
+                case "sakelien-snake":
+                    return Key.steel_eel;
+                case "sakelien-tower":
+                    return Key.stinger;
+                case "sakediver":
+                    return Key.maws;
+                case "sakedozer":
+                    return Key.griller2;
+                case "sakerocket":
+                    return Key.drizzler;
+                default:
+                    throw new FormatException();
+            }
+        }
+    }
+
+    public class SalmoniodCount
+    {
+        public Salmoniod Salmoniod;
+        public int Count;
+
+        public SalmoniodCount(Salmoniod salmoniod, int count)
+        {
+            Salmoniod = salmoniod;
+            Count = count;
+        }
     }
 }

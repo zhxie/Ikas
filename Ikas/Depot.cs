@@ -1712,20 +1712,16 @@ namespace Ikas
                                 waves.Add(parseWave(node, specials, result));
                             }
                         }
-                        int steelheadCount = int.Parse(jObject["boss_counts"]["6"]["count"].ToString());
-                        int flyfishCount = int.Parse(jObject["boss_counts"]["9"]["count"].ToString());
-                        int steelEelCount = int.Parse(jObject["boss_counts"]["13"]["count"].ToString());
-                        int drizzlerCount = int.Parse(jObject["boss_counts"]["21"]["count"].ToString());
-                        int stingerCount = int.Parse(jObject["boss_counts"]["14"]["count"].ToString());
-                        int scrapperCount = int.Parse(jObject["boss_counts"]["12"]["count"].ToString());
-                        int mawsCount = int.Parse(jObject["boss_counts"]["15"]["count"].ToString());
-                        int grillerCount = int.Parse(jObject["boss_counts"]["16"]["count"].ToString());
-                        int goldieCount = int.Parse(jObject["boss_counts"]["3"]["count"].ToString());
+                        List<SalmoniodCount> salmoniodAppearances = new List<SalmoniodCount>();
+                        foreach (JToken node in jObject["boss_counts"])
+                        {
+                            Salmoniod salmoniod = new Salmoniod(Salmoniod.ParseKey(node.First["boss"]["key"].ToString()), node.First["boss"]["name"].ToString());
+                            SalmoniodCount salmoniodAppearance = new SalmoniodCount(salmoniod, int.Parse(node.First["count"].ToString()));
+                            salmoniodAppearances.Add(salmoniodAppearance);
+                        }
                         int score = int.Parse(jObject["job_score"].ToString());
                         int gradePointDelta = int.Parse(jObject["grade_point_delta"].ToString());
-                        UpdateJob(new Job(battleNumber, startTime, hazardLevel, stage, waves, myPlayer, otherPlayers,
-                            steelheadCount, flyfishCount, steelEelCount, drizzlerCount, stingerCount, scrapperCount, mawsCount, grillerCount, goldieCount,
-                            score, gradePointDelta, result));
+                        UpdateJob(new Job(battleNumber, startTime, hazardLevel, stage, waves, myPlayer, otherPlayers, salmoniodAppearances, score, gradePointDelta, result));
                     }
                     catch (Exception ex)
                     {
@@ -2681,21 +2677,18 @@ namespace Ikas
                 {
                     specialWeaponCount.Add(int.Parse(count.ToString()));
                 }
-                int steelheadKill = int.Parse(node["boss_kill_counts"]["6"]["count"].ToString());
-                int flyfishKill = int.Parse(node["boss_kill_counts"]["9"]["count"].ToString());
-                int steelEelKill = int.Parse(node["boss_kill_counts"]["13"]["count"].ToString());
-                int drizzlerKill = int.Parse(node["boss_kill_counts"]["21"]["count"].ToString());
-                int stingerKill = int.Parse(node["boss_kill_counts"]["14"]["count"].ToString());
-                int scrapperKill = int.Parse(node["boss_kill_counts"]["12"]["count"].ToString());
-                int mawsKill = int.Parse(node["boss_kill_counts"]["15"]["count"].ToString());
-                int grillerKill = int.Parse(node["boss_kill_counts"]["16"]["count"].ToString());
-                int goldieKill = int.Parse(node["boss_kill_counts"]["3"]["count"].ToString());
+                List<SalmoniodCount> salmoniodKills = new List<SalmoniodCount>();
+                foreach (JToken bossNode in node["boss_kill_counts"])
+                {
+                    Salmoniod salmoniod = new Salmoniod(Salmoniod.ParseKey(bossNode.First["boss"]["key"].ToString()), bossNode.First["boss"]["name"].ToString());
+                    SalmoniodCount salmoniodKill = new SalmoniodCount(salmoniod, int.Parse(bossNode.First["count"].ToString()));
+                    salmoniodKills.Add(salmoniodKill);
+                }
                 int help = int.Parse(node["help_count"].ToString());
                 int dead = int.Parse(node["dead_count"].ToString());
                 int powerEgg = int.Parse(node["ikura_num"].ToString());
                 int goldenEgg = int.Parse(node["golden_ikura_num"].ToString());
-                return new JobPlayer(id, nickname, species, style, grade, gradePoint, weapons, specialWeaponCount,
-                    steelheadKill, flyfishKill, steelEelKill, drizzlerKill, stingerKill, mawsKill, grillerKill, goldieKill, help, dead, powerEgg, goldenEgg, image, isSelf);
+                return new JobPlayer(id, nickname, species, style, grade, gradePoint, weapons, specialWeaponCount, salmoniodKills, help, dead, powerEgg, goldenEgg, image, isSelf);
             }
             catch (Exception ex)
             {

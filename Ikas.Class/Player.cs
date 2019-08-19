@@ -209,15 +209,7 @@ namespace Ikas.Class
         public int GradePoint { get; }
         public List<Weapon> Weapons { get; }
         public List<int> SpecialWeaponCount { get; }
-        public int SteelheadKill { get; }
-        public int FlyfishKill { get; }
-        public int SteelEelKill { get; }
-        public int DrizzlerKill { get; }
-        public int StingerKill { get; }
-        public int ScrapperKill { get; }
-        public int MawsKill { get; }
-        public int GrillerKill { get; }
-        public int GoldieKill { get; }
+        public List<SalmoniodCount> SalmoniodKills { get; }
         public int Help { get; }
         public int Dead { get; }
         public int PowerEgg { get; }
@@ -250,16 +242,20 @@ namespace Ikas.Class
                 return 2 - use;
             }
         }
-        public int BossKill
+        public int Kill
         {
             get
             {
-                return SteelheadKill + FlyfishKill + SteelEelKill + DrizzlerKill + StingerKill + ScrapperKill + MawsKill + GrillerKill + GoldieKill;
+                int count = 0;
+                foreach (SalmoniodCount salmoniod in SalmoniodKills)
+                {
+                    count = count + salmoniod.Count;
+                }
+                return count;
             }
         }
 
-        public JobPlayer(string id, string nickname, SpeciesType species, StyleType style, Grade grade, int gradePoint, List<Weapon> weapons, List<int> specialWeaponCount,
-            int steelHeadKill, int flyFishKill, int steelEelKill, int drizzlerKill, int stingerKill, int mawsKill, int grillerKill, int goldieKill, int help, int dead, int powerEgg, int goldenEgg, string image, bool isSelf = false)
+        public JobPlayer(string id, string nickname, SpeciesType species, StyleType style, Grade grade, int gradePoint, List<Weapon> weapons, List<int> specialWeaponCount, List<SalmoniodCount> salmoniodsKill, int help, int dead, int powerEgg, int goldenEgg, string image, bool isSelf = false)
         {
             Id = id;
             Nickname = nickname;
@@ -270,14 +266,7 @@ namespace Ikas.Class
             GradePoint = gradePoint;
             Weapons = weapons;
             SpecialWeaponCount = specialWeaponCount;
-            SteelheadKill = steelHeadKill;
-            FlyfishKill = flyFishKill;
-            SteelEelKill = steelEelKill;
-            DrizzlerKill = drizzlerKill;
-            StingerKill = stingerKill;
-            MawsKill = mawsKill;
-            GrillerKill = grillerKill;
-            GoldieKill = goldieKill;
+            SalmoniodKills = salmoniodsKill;
             Help = help;
             Dead = dead;
             PowerEgg = powerEgg;

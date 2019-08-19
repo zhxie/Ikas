@@ -86,13 +86,15 @@ namespace Ikas
             }
             Resources.MergedDictionaries.Add(lang);
             // Force refresh label
-            SetSalmoniod(Salmoniod);
+            if (Depot.TranslateProperNoun)
+            {
+                lbName.Content = Translate(Salmoniod.ToString());
+            }
         }
 
-        public void SetSalmoniod(Salmoniod.Key id)
+        public void SetImage(Salmoniod.Key id)
         {
             Salmoniod = id;
-            lbName.Content = Translate(Salmoniod.ToString());
             switch (Salmoniod)
             {
                 case Class.Salmoniod.Key.goldie:
@@ -127,15 +129,26 @@ namespace Ikas
             }
         }
 
-        public void SetKill(int kill = -1, int jobKill = -1, int jobCount = -1)
+        public void SetKill(Salmoniod.Key id, JobPlayer player = null, Job job = null)
         {
             ((Storyboard)FindResource("fade_out")).Begin(gridMain);
             Storyboard sb = (Storyboard)FindResource("resize_width");
             (sb.Children[0] as DoubleAnimation).To = 0;
             sb.Begin(bdRatio);
             ((Storyboard)FindResource("fade_out")).Begin(bdRatio);
-            if (kill >= 0 && jobKill >= 0 && jobCount >= 0)
+            if (player != null && job != null)
             {
+                if (Depot.TranslateProperNoun)
+                {
+                    lbName.Content = Translate(Salmoniod.ToString());
+                }
+                else
+                {
+                    lbName.Content = player.SalmoniodKills.Find(p => p.Salmoniod.Id == id).Salmoniod.Name;
+                }
+                int kill = player.SalmoniodKills.Find(p => p.Salmoniod.Id == id).Count;
+                int jobKill = job.GetSalmoniodKill(id);
+                int jobCount = job.SalmoniodAppearances.Find(p => p.Salmoniod.Id == id).Count;
                 if (jobKill == jobCount && jobKill != 0)
                 {
                     lbName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));

@@ -20,15 +20,7 @@ namespace Ikas.Class
         public List<Wave> Waves { get; }
         public JobPlayer MyPlayer { get; }
         public List<JobPlayer> OtherPlayers { get; }
-        public int SteelheadCount { get; }
-        public int FlyfishCount { get; }
-        public int SteelEelCount { get; }
-        public int DrizzlerCount { get; }
-        public int StingerCount { get; }
-        public int ScrapperCount { get; }
-        public int MawsCount { get; }
-        public int GrillerCount { get; }
-        public int GoldieCount { get; }
+        public List<SalmoniodCount> SalmoniodAppearances { get; }
         public int Score { get; }
         public int GradePointDelta { get; }
         public ResultType Result { get; }
@@ -113,141 +105,33 @@ namespace Ikas.Class
                 }
             }
         }
-        public int BossCount
-        {
-            get
-            {
-                return SteelheadCount + FlyfishCount + SteelEelCount + DrizzlerCount + StingerCount + ScrapperCount + MawsCount + GrillerCount + GoldieCount;
-            }
-        }
-        public int SteelheadKill
+        public int Appearance
         {
             get
             {
                 int count = 0;
-                count += MyPlayer.SteelheadKill;
-                foreach (JobPlayer player in OtherPlayers)
+                foreach (SalmoniodCount salmoniod in SalmoniodAppearances)
                 {
-                    count += player.SteelheadKill;
+                    count = count + salmoniod.Count;
                 }
                 return count;
             }
         }
-        public int FlyfishKill
+        public int Kill
         {
             get
             {
                 int count = 0;
-                count += MyPlayer.FlyfishKill;
+                count = count + MyPlayer.Kill;
                 foreach (JobPlayer player in OtherPlayers)
                 {
-                    count += player.FlyfishKill;
+                    count = count + player.Kill;
                 }
                 return count;
-            }
-        }
-        public int SteelEelKill
-        {
-            get
-            {
-                int count = 0;
-                count += MyPlayer.SteelEelKill;
-                foreach (JobPlayer player in OtherPlayers)
-                {
-                    count += player.SteelEelKill;
-                }
-                return count;
-            }
-        }
-        public int DrizzlerKill
-        {
-            get
-            {
-                int count = 0;
-                count += MyPlayer.DrizzlerKill;
-                foreach (JobPlayer player in OtherPlayers)
-                {
-                    count += player.DrizzlerKill;
-                }
-                return count;
-            }
-        }
-        public int StingerKill
-        {
-            get
-            {
-                int count = 0;
-                count += MyPlayer.StingerKill;
-                foreach (JobPlayer player in OtherPlayers)
-                {
-                    count += player.StingerKill;
-                }
-                return count;
-            }
-        }
-        public int ScrapperKill
-        {
-            get
-            {
-                int count = 0;
-                count += MyPlayer.ScrapperKill;
-                foreach (JobPlayer player in OtherPlayers)
-                {
-                    count += player.ScrapperKill;
-                }
-                return count;
-            }
-        }
-        public int MawsKill
-        {
-            get
-            {
-                int count = 0;
-                count += MyPlayer.MawsKill;
-                foreach (JobPlayer player in OtherPlayers)
-                {
-                    count += player.MawsKill;
-                }
-                return count;
-            }
-        }
-        public int GrillerKill
-        {
-            get
-            {
-                int count = 0;
-                count += MyPlayer.GrillerKill;
-                foreach (JobPlayer player in OtherPlayers)
-                {
-                    count += player.GrillerKill;
-                }
-                return count;
-            }
-        }
-        public int GoldieKill
-        {
-            get
-            {
-                int count = 0;
-                count += MyPlayer.GoldieKill;
-                foreach (JobPlayer player in OtherPlayers)
-                {
-                    count += player.GoldieKill;
-                }
-                return count;
-            }
-        }
-        public int BossKill
-        {
-            get
-            {
-                return SteelheadKill + FlyfishKill + SteelEelKill + DrizzlerKill + StingerKill + ScrapperKill + MawsKill + GrillerKill + GoldieKill;
             }
         }
 
-        public Job(int number, DateTime startTime, double hazardLevel, ShiftStage stage, List<Wave> waves, JobPlayer myPlayer, List<JobPlayer> otherPlayers,
-            int steelheadCount, int flyfishCount, int steelEelCount, int drizzlerCount, int stingerCount, int scrapperCount, int mawsCount, int grillerCount, int goldieCount,
-            int score, int gradePointDelta, ResultType result)
+        public Job(int number, DateTime startTime, double hazardLevel, ShiftStage stage, List<Wave> waves, JobPlayer myPlayer, List<JobPlayer> otherPlayers, List<SalmoniodCount> salmoniodAppearances, int score, int gradePointDelta, ResultType result)
         {
             Number = number;
             StartTime = startTime;
@@ -256,15 +140,7 @@ namespace Ikas.Class
             Waves = waves;
             MyPlayer = myPlayer;
             OtherPlayers = otherPlayers;
-            SteelheadCount = steelheadCount;
-            FlyfishCount = flyfishCount;
-            SteelEelCount = steelEelCount;
-            DrizzlerCount = drizzlerCount;
-            StingerCount = stingerCount;
-            ScrapperCount = scrapperCount;
-            MawsCount = mawsCount;
-            GrillerCount = grillerCount;
-            GoldieCount = goldieCount;
+            SalmoniodAppearances = salmoniodAppearances;
             Score = score;
             GradePointDelta = gradePointDelta;
             Result = result;
@@ -276,15 +152,7 @@ namespace Ikas.Class
             HazardLevel = -1;
             Waves = new List<Wave>();
             OtherPlayers = new List<JobPlayer>();
-            SteelheadCount = -1;
-            FlyfishCount = -1;
-            SteelEelCount = -1;
-            DrizzlerCount = -1;
-            StingerCount = -1;
-            ScrapperCount = -1;
-            MawsCount = -1;
-            GrillerCount = -1;
-            GoldieCount = -1;
+            SalmoniodAppearances = new List<SalmoniodCount>();
             Score = -1;
             GradePointDelta = -1;
             Result = ResultType.clear;
@@ -296,18 +164,21 @@ namespace Ikas.Class
             HazardLevel = -1;
             Waves = new List<Wave>();
             OtherPlayers = new List<JobPlayer>();
-            SteelheadCount = -1;
-            FlyfishCount = -1;
-            SteelEelCount = -1;
-            DrizzlerCount = -1;
-            StingerCount = -1;
-            ScrapperCount = -1;
-            MawsCount = -1;
-            GrillerCount = -1;
-            GoldieCount = -1;
+            SalmoniodAppearances = new List<SalmoniodCount>();
             Score = -1;
             GradePointDelta = -1;
             Result = ResultType.clear;
+        }
+
+        public int GetSalmoniodKill(Salmoniod.Key id)
+        {
+            int count = 0;
+            count = count + MyPlayer.SalmoniodKills.Find(p => p.Salmoniod.Id == id).Count;
+            foreach (JobPlayer player in OtherPlayers)
+            {
+                count = count + player.SalmoniodKills.Find(p => p.Salmoniod.Id == id).Count;
+            }
+            return count;
         }
 
         public static ResultType ParseResultType(string s)
