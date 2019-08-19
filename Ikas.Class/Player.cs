@@ -200,23 +200,12 @@ namespace Ikas.Class
 
     public class JobPlayer : BasePlayer
     {
-        public enum GradeType
-        {
-            grade_unknown = -1,
-            intern,
-            apprentice,
-            part_timer,
-            go_getter,
-            overachiever,
-            profeshional
-        }
-
         public string Id { get; }
         public string Nickname { get; }
         public SpeciesType Species { get; }
         public StyleType Style { get; }
         public bool IsSelf { get; }
-        public GradeType Grade { get; }
+        public Grade Grade { get; }
         public int GradePoint { get; }
         public List<Weapon> Weapons { get; }
         public List<int> SpecialWeaponCount { get; }
@@ -239,13 +228,13 @@ namespace Ikas.Class
         {
             get
             {
-                if (Grade == GradeType.intern)
+                if (Grade.Id == Grade.Key.intern)
                 {
                     return 90;
                 }
                 else
                 {
-                    return 65 + 25 * (int)Grade + 5 * (GradePoint / 20);
+                    return 65 + 25 * (int)Grade.Id + 5 * (GradePoint / 20);
                 }
             }
         }
@@ -269,7 +258,7 @@ namespace Ikas.Class
             }
         }
 
-        public JobPlayer(string id, string nickname, SpeciesType species, StyleType style, GradeType grade, int gradePoint, List<Weapon> weapons, List<int> specialWeaponCount,
+        public JobPlayer(string id, string nickname, SpeciesType species, StyleType style, Grade grade, int gradePoint, List<Weapon> weapons, List<int> specialWeaponCount,
             int steelHeadKill, int flyFishKill, int steelEelKill, int drizzlerKill, int stingerKill, int mawsKill, int grillerKill, int goldieKill, int help, int dead, int powerEgg, int goldenEgg, string image, bool isSelf = false)
         {
             Id = id;

@@ -262,7 +262,14 @@ namespace Ikas
                 {
                     tagResult.Content = Translate("defeat", true);
                 }
-                lbGrade.Content = Translate(job.Grade.ToString());
+                if (Depot.TranslateProperNoun)
+                {
+                    lbGrade.Content = Translate(job.Grade.Id.ToString());
+                }
+                else
+                {
+                    lbGrade.Content = job.Grade.Name;
+                }
                 lbGradePoint.Content = job.GradePoint.ToString();
                 if (job.HazardLevel == 200)
                 {

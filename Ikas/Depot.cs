@@ -246,7 +246,7 @@ namespace Ikas
                 }
             }
         }
-        private static JobPlayer.GradeType salmonRunGrade
+        private static Grade.Key salmonRunGrade
         {
             set
             {
@@ -262,17 +262,17 @@ namespace Ikas
                 }
             }
         }
-        public static JobPlayer.GradeType SalmonRunGrade
+        public static Grade.Key SalmonRunGrade
         {
             get
             {
                 try
                 {
-                    return (JobPlayer.GradeType)int.Parse(userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSalmonRunGrade]);
+                    return (Grade.Key)int.Parse(userIniData[FileFolderUrl.UserConfigurationStatisticsSection][FileFolderUrl.UserConfigurationSalmonRunGrade]);
                 }
                 catch
                 {
-                    return JobPlayer.GradeType.grade_unknown;
+                    return Grade.Key.grade_unknown;
                 }
             }
         }
@@ -1600,7 +1600,7 @@ namespace Ikas
                 try
                 {
                     battleNumber = int.Parse(jObject["results"][0]["job_id"].ToString());
-                    JobPlayer.GradeType grade = (JobPlayer.GradeType)int.Parse(jObject["results"][0]["grade"]["id"].ToString());
+                    Grade.Key grade = (Grade.Key)int.Parse(jObject["results"][0]["grade"]["id"].ToString());
                     if (grade != SalmonRunGrade)
                     {
                         salmonRunGrade = grade;
@@ -1658,7 +1658,8 @@ namespace Ikas
                         double hazardLevel = double.Parse(jObject["danger_rate"].ToString());
                         ShiftStage stage = parseShiftStage(jObject["schedule"]);
                         // Player should be parsed first to acquire specials used in wave
-                        JobPlayer myPlayer = await parseJobPlayer(jObject["my_result"], true, (JobPlayer.GradeType)int.Parse(jObject["grade"]["id"].ToString()), int.Parse(jObject["grade_point"].ToString()));
+                        JobPlayer myPlayer = await parseJobPlayer(jObject["my_result"], true,
+                            new Grade((Grade.Key)int.Parse(jObject["grade"]["id"].ToString()), jObject["grade"]["name"].ToString()), int.Parse(jObject["grade_point"].ToString()));
                         List<JobPlayer> otherPlayers = new List<JobPlayer>();
                         List<Task<JobPlayer>> otherPlayerTasks = new List<Task<JobPlayer>>();
                         foreach (JToken node in jObject["other_results"])
@@ -2498,8 +2499,8 @@ namespace Ikas
         {
             try
             {
-                Wave.WaterLevelType waterLevel = Wave.ParseWaterLevel(node["water_level"]["key"].ToString());
-                Wave.EventTypeType eventType = Wave.ParseEventType(node["event_type"]["key"].ToString());
+                WaterLevel waterLevel = new WaterLevel(WaterLevel.ParseWaterLevel(node["water_level"]["key"].ToString()), node["water_level"]["name"].ToString());
+                EventType eventType = new EventType(EventType.ParseEventType(node["event_type"]["key"].ToString()), node["event_type"]["name"].ToString());
                 int quota = int.Parse(node["quota_num"].ToString());
                 int powerEgg = int.Parse(node["ikura_num"].ToString());
                 int goldenEgg = int.Parse(node["golden_ikura_num"].ToString());
@@ -2658,7 +2659,7 @@ namespace Ikas
         /// <param name="grade">Grade of the player</param>
         /// <param name="gradePoint">Grade point of the player</param>
         /// <returns></returns>
-        private static JobPlayer parseJobPlayer(JToken node, string image, bool isSelf = false, JobPlayer.GradeType grade = JobPlayer.GradeType.intern, int gradePoint = 0)
+        private static JobPlayer parseJobPlayer(JToken node, string image, bool isSelf = false, Grade grade = null, int gradePoint = 0)
         {
             try
             {
@@ -2716,7 +2717,7 @@ namespace Ikas
         /// <param name="grade">Grade of the player</param>
         /// <param name="gradePoint">Grade point of the player</param>
         /// <returns></returns>
-        private static async Task<JobPlayer> parseJobPlayer(JToken node, bool isSelf = false, JobPlayer.GradeType grade = JobPlayer.GradeType.intern, int gradePoint = 0)
+        private static async Task<JobPlayer> parseJobPlayer(JToken node, bool isSelf = false, Grade grade = null, int gradePoint = 0)
         {
             try
             {

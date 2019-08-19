@@ -64,7 +64,7 @@ namespace Ikas.Class
                 return count;
             }
         }
-        public JobPlayer.GradeType Grade
+        public Grade Grade
         {
             get
             {
