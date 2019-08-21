@@ -39,7 +39,8 @@ namespace Ikas
         private JobWindow jobWindow;
         private SettingsWindow settingsWindow;
 
-        private DispatcherTimer tmScheduleAndShift;
+        private DispatcherTimer tmSchedule;
+        private DispatcherTimer tmShift;
         private DispatcherTimer tmBattle;
         private DispatcherTimer tmJob;
 
@@ -98,13 +99,18 @@ namespace Ikas
             settingsWindow.Opacity = 0;
             settingsWindow.Visibility = Visibility.Hidden;
             // Create timers
-            tmScheduleAndShift = new DispatcherTimer();
-            tmScheduleAndShift.Tick += new EventHandler((object source, EventArgs e) =>
+            tmSchedule = new DispatcherTimer();
+            tmSchedule.Tick += new EventHandler((object source, EventArgs e) =>
             {
                 Depot.GetSchedule();
+            });
+            tmSchedule.Interval = new TimeSpan(0, 0, 15);
+            tmShift = new DispatcherTimer();
+            tmShift.Tick += new EventHandler((object source, EventArgs e) =>
+            {
                 Depot.GetShift();
             });
-            tmScheduleAndShift.Interval = new TimeSpan(0, 0, 15);
+            tmShift.Interval = new TimeSpan(0, 0, 15);
             tmBattle = new DispatcherTimer();
             tmBattle.Tick += new EventHandler((object source, EventArgs e) =>
             {
@@ -162,7 +168,8 @@ namespace Ikas
                 MenuItemSettings_Click(null, null);
             }
             // Automatic schedule and shift, battle, and job update
-            tmScheduleAndShift.Start();
+            tmSchedule.Start();
+            tmShift.Start();
             tmBattle.Start();
             tmJob.Start();
             // Update schedule or shift
@@ -199,32 +206,32 @@ namespace Ikas
                     // Update schedule
                     Depot.ForceGetSchedule();
                     ((Storyboard)FindResource("fade_out")).Begin(spJob);
-                    // Automatic schedule and shift update
-                    tmScheduleAndShift.Start();
+                    // Automatic schedule update
+                    tmSchedule.Start();
                     break;
                 case Depot.Mode.ranked_battle:
                     Depot.CurrentMode = Depot.Mode.league_battle;
                     // Update schedule
                     Depot.ForceGetSchedule();
                     ((Storyboard)FindResource("fade_out")).Begin(spJob);
-                    // Automatic schedule and shift update
-                    tmScheduleAndShift.Start();
+                    // Automatic schedule update
+                    tmSchedule.Start();
                     break;
                 case Depot.Mode.league_battle:
                     Depot.CurrentMode = Depot.Mode.salmon_run;
                     // Update shift
                     Depot.ForceGetShift();
                     ((Storyboard)FindResource("fade_out")).Begin(spBattle);
-                    // Automatic schedule and shift update
-                    tmScheduleAndShift.Start();
+                    // Automatic shift update
+                    tmShift.Start();
                     break;
                 case Depot.Mode.salmon_run:
                     Depot.CurrentMode = Depot.Mode.regular_battle;
                     // Update schedule
                     Depot.ForceGetSchedule();
                     ((Storyboard)FindResource("fade_out")).Begin(spJob);
-                    // Automatic schedule and shift update
-                    tmScheduleAndShift.Start();
+                    // Automatic schedule update
+                    tmSchedule.Start();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -558,7 +565,7 @@ namespace Ikas
                 // Fade in label
                 ((Storyboard)FindResource("fade_in")).Begin(lbMode);
             }
-            tmScheduleAndShift.Stop();
+            tmSchedule.Stop();
             MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
                 Translate("ikas_cannot_get_schdule"),
                 Translate(error.ToString()),
@@ -628,7 +635,7 @@ namespace Ikas
                 // Fade in label
                 ((Storyboard)FindResource("fade_in")).Begin(lbMode);
             }
-            tmScheduleAndShift.Stop();
+            tmShift.Stop();
             MessageBox.Show(string.Format(Translate("{0},_because_{1}._{2}", true),
                 Translate("ikas_cannot_get_shift"),
                 Translate(error.ToString()),
@@ -659,8 +666,10 @@ namespace Ikas
         private void CookieUpdated()
         {
             // Automatic schedule and bsattle update
-            tmScheduleAndShift.Start();
+            tmSchedule.Start();
+            tmShift.Start();
             tmBattle.Start();
+            tmJob.Start();
         }
 
         private string Translate(string s, bool isLocal = false)
