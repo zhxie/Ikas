@@ -69,10 +69,10 @@ namespace Ikas.Class
         public const string NintendoSessionToken = @"https://accounts.nintendo.com/connect/1.0.0/api/session_token";
         public const string NintendoToken = @"https://accounts.nintendo.com/connect/1.0.0/api/token";
         public const string NintendoUserInfo = @"https://api.accounts.nintendo.com/2.0.0/users/me";
-        public const string eliFesslerApi = @"https://elifessler.com/s2s/api/gen2";
-        public const string FlapgApi = @"https://flapg.com/ika2/api/login";
-        public const string NintendoAccessToken = @"https://api-lp1.znc.srv.nintendo.net/v1/Account/Login";
-        public const string NintendoSplatoonAccessToken = @"https://api-lp1.znc.srv.nintendo.net/v2/Game/GetWebServiceToken";
+        public const string eliFesslerGen2 = @"https://elifessler.com/s2s/api/gen2";
+        public const string FlapgLogin = @"https://flapg.com/ika2/api/login";
+        public const string NintendoLogin = @"https://api-lp1.znc.srv.nintendo.net/v1/Account/Login";
+        public const string NintendoWebServiceToken = @"https://api-lp1.znc.srv.nintendo.net/v2/Game/GetWebServiceToken";
 
         public const string MitmInstruction = @"https://github.com/frozenpandaman/splatnet2statink/wiki/mitmproxy-instructions";
 

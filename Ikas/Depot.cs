@@ -2116,7 +2116,7 @@ namespace Ikas
                     }
                     // Send 3rd Party HTTP POST
                     long timestamp = (long)(DateTime.Now - TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1))).TotalSeconds;
-                    HttpRequestMessage requestHash = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.eliFesslerApi);
+                    HttpRequestMessage requestHash = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.eliFesslerGen2);
                     requestHash.Headers.Add("User-Agent", "Ikas/0.3.0");
                     List<KeyValuePair<string, string>> requestHashContent = new List<KeyValuePair<string, string>>();
                     requestHashContent.Add(new KeyValuePair<string, string>("naIdToken", idToken));
@@ -2175,7 +2175,7 @@ namespace Ikas
                             }
                         }
                         string iid = new string(iisChar);
-                        HttpRequestMessage request3rd = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.FlapgApi);
+                        HttpRequestMessage request3rd = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.FlapgLogin);
                         request3rd.Headers.Add("x-token", idToken);
                         request3rd.Headers.Add("x-time", timestamp.ToString());
                         request3rd.Headers.Add("x-guid", guid);
@@ -2224,7 +2224,7 @@ namespace Ikas
                                 return;
                             }
                             // Send HTTP POST
-                            HttpRequestMessage requestAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoAccessToken);
+                            HttpRequestMessage requestAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoLogin);
                             requestAccessToken.Headers.Add("Authorization", "Bearer");
                             requestAccessToken.Headers.Add("X-ProductVersion", "1.5.2");
                             requestAccessToken.Headers.Add("X-Platform", "Android");
@@ -2261,7 +2261,7 @@ namespace Ikas
                                     return;
                                 }
                                 // Send HTTP POST
-                                HttpRequestMessage requestSplatoonAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoSplatoonAccessToken);
+                                HttpRequestMessage requestSplatoonAccessToken = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.NintendoWebServiceToken);
                                 requestSplatoonAccessToken.Headers.Add("Authorization", string.Format("Bearer {0}", accessToken));
                                 requestSplatoonAccessToken.Content = new StringContent("{\"parameter\":{\"id\":\"5741031244955648" +
                                 "\",\"f\":\"" + loginAppF +
