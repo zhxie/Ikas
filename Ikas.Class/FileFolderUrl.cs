@@ -57,13 +57,13 @@ namespace Ikas.Class
         #region URL
 
         public const string SplatNet = @"https://app.splatoon2.nintendo.net";
-        public const string SplatNetScheduleApi = @"/api/schedules";
-        public const string SplatNetSalmonRunScheduleApi = @"/api/coop_schedules";
-        public const string SplatNetBattleApi = @"/api/results";
-        public const string SplatNetIndividualBattleApi = @"/api/results/{0}";
-        public const string SplatNetSalmonRunBattleApi = @"/api/coop_results";
-        public const string SplatNetSalmonRunIndividualBattleApi = @"/api/coop_results/{0}";
-        public const string SplatNetNicknameAndIconApi = @"/api/nickname_and_icon?id={0}";
+        public const string SplatNetSchedules = @"/api/schedules";
+        public const string SplatNetCoopSchedules = @"/api/coop_schedules";
+        public const string SplatNetResults = @"/api/results";
+        public const string SplatNetResult = @"/api/results/{0}";
+        public const string SplatNetCoopResults = @"/api/coop_results";
+        public const string SplatNetCoopResult = @"/api/coop_results/{0}";
+        public const string SplatNetNicknameAndIcon = @"/api/nickname_and_icon?id={0}";
 
         public const string NintendoAuthorize = @"https://accounts.nintendo.com/connect/1.0.0/authorize?state={0}&redirect_uri=npf71b963c1b7b6d119%3A%2F%2Fauth&client_id=71b963c1b7b6d119&scope=openid+user+user.birthday+user.mii+user.screenName&response_type=session_token_code&session_token_code_challenge={1}&session_token_code_challenge_method=S256&theme=login_form";
         public const string NintendoSessionToken = @"https://accounts.nintendo.com/connect/1.0.0/api/session_token";

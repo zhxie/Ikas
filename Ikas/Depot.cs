@@ -712,7 +712,7 @@ namespace Ikas
                 handler.Proxy = Proxy;
             }
             HttpClient client = new HttpClient(handler);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetScheduleApi);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetSchedules);
             try
             {
                 request.Headers.Add("Cookie", "iksm_session=" + Cookie);
@@ -842,7 +842,7 @@ namespace Ikas
                 handler.Proxy = Proxy;
             }
             HttpClient client = new HttpClient(handler);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetSalmonRunScheduleApi);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetCoopSchedules);
             try
             {
                 request.Headers.Add("Cookie", "iksm_session=" + Cookie);
@@ -961,7 +961,7 @@ namespace Ikas
                 handler.Proxy = Proxy;
             }
             HttpClient client = new HttpClient(handler);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetBattleApi);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetResults);
             try
             {
                 request.Headers.Add("Cookie", "iksm_session=" + Cookie);
@@ -1075,7 +1075,7 @@ namespace Ikas
                     BattleFound?.Invoke();
                 }
                 // Send HTTP GET
-                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetIndividualBattleApi, battleNumber));
+                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetResult, battleNumber));
                 try
                 {
                     request.Headers.Add("Cookie", "iksm_session=" + Cookie);
@@ -1569,7 +1569,7 @@ namespace Ikas
                 handler.Proxy = Proxy;
             }
             HttpClient client = new HttpClient(handler);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetSalmonRunBattleApi);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetCoopResults);
             try
             {
                 request.Headers.Add("Cookie", "iksm_session=" + Cookie);
@@ -1626,7 +1626,7 @@ namespace Ikas
                     JobFound?.Invoke();
                 }
                 // Send HTTP GET
-                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetSalmonRunIndividualBattleApi, battleNumber));
+                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetCoopResult, battleNumber));
                 try
                 {
                     request.Headers.Add("Cookie", "iksm_session=" + Cookie);
@@ -1909,7 +1909,7 @@ namespace Ikas
                 handler.Proxy = Proxy;
             }
             HttpClient client = new HttpClient(handler);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetNicknameAndIconApi, id));
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + string.Format(FileFolderUrl.SplatNetNicknameAndIcon, id));
             try
             {
                 request.Headers.Add("Cookie", "iksm_session=" + Cookie);
