@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ikas.Class
 {
-    public class EventType
+    public static class EventType
     {
         public enum Key
         {
@@ -15,15 +15,6 @@ namespace Ikas.Class
             griller,
             cohock_charge,
             the_mothership
-        }
-
-        public Key Id { get; }
-        public string Name { get; }
-
-        public EventType(Key id, string name)
-        {
-            Id = id;
-            Name = name;
         }
 
         public static Key ParseKey(string s)

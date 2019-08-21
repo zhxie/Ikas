@@ -105,16 +105,8 @@ namespace Ikas
                 lbResult.Content = Translate(Wave.Result.ToString());
                 lbGoldenEgg.Content = string.Format(Translate("{0}/{1}", true), Wave.GoldenEgg, Wave.Quota);
                 lbGolderEggPop.Content = string.Format(Translate("x{0}", true), Wave.GoldenEggPop);
-                if (Depot.TranslateProperNoun)
-                {
-                    lbTide.Content = Translate(Wave.WaterLevel.Id.ToString());
-                    lbEvent.Content = Translate(Wave.EventType.Id.ToString());
-                }
-                else
-                {
-                    lbTide.Content = Wave.WaterLevel.Name;
-                    lbEvent.Content = Wave.EventType.Name;
-                }
+                lbTide.Content = Translate(Wave.WaterLevel.ToString());
+                lbEvent.Content = Translate(Wave.EventType.ToString());
                 if (wave.IsClear)
                 {
                     lbResult.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
@@ -123,13 +115,12 @@ namespace Ikas
                 {
                     lbResult.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
                 }
-                
                 ((Storyboard)FindResource("fade_in")).Begin(lbWave);
                 ((Storyboard)FindResource("fade_in")).Begin(lbGoldenEgg);
                 ((Storyboard)FindResource("fade_in")).Begin(lbTide);
                 ((Storyboard)FindResource("fade_in")).Begin(lbEvent);
                 double to;
-                switch (wave.WaterLevel.Id)
+                switch (wave.WaterLevel)
                 {
                     case WaterLevel.Key.low:
                         to = 10;

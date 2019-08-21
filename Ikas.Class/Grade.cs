@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ikas.Class
 {
-    public class Grade
+    public static class Grade
     {
         public enum Key
         {
@@ -15,15 +15,6 @@ namespace Ikas.Class
             go_getter,
             overachiever,
             profeshional
-        }
-
-        public Key Id { get; }
-        public string Name { get; }
-
-        public Grade(Key id, string name)
-        {
-            Id = id;
-            Name = name;
         }
     }
 }

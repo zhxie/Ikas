@@ -423,11 +423,11 @@ namespace Ikas
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
-                    lbMode.Content = Translate(((Rule.ShortName)scheduledStages[0].Rule.Id).ToString());
+                    lbMode.Content = Translate(((Rule.ShortName)scheduledStages[0].Rule).ToString());
                     // Fade in label
                     ((Storyboard)FindResource("fade_in")).Begin(lbMode);
                 }
-                switch (scheduledStages[0].Rule.Id)
+                switch (scheduledStages[0].Rule)
                 {
                     case Rule.Key.turf_war:
                         if (Depot.Level > 0)

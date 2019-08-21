@@ -231,15 +231,13 @@ namespace Ikas.Class
         }
 
         public Key Id { get; }
-        public string Name { get; }
         public SubWeapon SubWeapon { get; }
         public SpecialWeapon SpecialWeapon { get; }
         public string Image { get; }
 
-        public Weapon(Key id, string name, SubWeapon subWeapon, SpecialWeapon specialWeapon, string image)
+        public Weapon(Key id, SubWeapon subWeapon, SpecialWeapon specialWeapon, string image)
         {
             Id = id;
-            Name = name;
             SubWeapon = subWeapon;
             SpecialWeapon = specialWeapon;
             Image = image;

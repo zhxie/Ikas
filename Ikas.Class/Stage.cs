@@ -66,34 +66,31 @@ namespace Ikas.Class
         }
 
         public Key Id { get; }
-        public string Name { get; }
         public string Image { get; }
 
-        public Stage(Key key, string name, string image)
+        public Stage(Key key, string image)
         {
             Id = key;
-            Name = name;
             Image = image;
         }
         public Stage()
         {
             Id = (Key)(-1);
-            Name = "";
             Image = "";
         }
     }
 
     public class ScheduledStage : Stage
     {
-        public Mode Mode { get; }
-        public Rule Rule { get; }
+        public Mode.Key Mode { get; }
+        public Rule.Key Rule { get; }
 
-        public ScheduledStage(Mode mode, Rule rule, Key key, string name, string image) : base(key, name, image)
+        public ScheduledStage(Mode.Key mode, Rule.Key rule, Key key, string image) : base(key, image)
         {
             Mode = mode;
             Rule = rule;
         }
-        public ScheduledStage(Mode mode, Rule rule) : base()
+        public ScheduledStage(Mode.Key mode, Rule.Key rule) : base()
         {
             Mode = mode;
             Rule = rule;
@@ -106,29 +103,29 @@ namespace Ikas.Class
         public DateTime EndTime { get; }
         public List<Weapon> Weapons { get; }
 
-        public ShiftStage(Key key, string name, string image, DateTime startTime, DateTime endTime, List<Weapon> weapons) : base(key, name, image)
+        public ShiftStage(Key key, string image, DateTime startTime, DateTime endTime, List<Weapon> weapons) : base(key, image)
         {
             StartTime = startTime;
             EndTime = endTime;
             Weapons = weapons;
         }
 
-        public static ShiftStage FromUrl(string name, string image, DateTime startTime, DateTime endTime, List<Weapon> weapons)
+        public static ShiftStage FromUrl(string image, DateTime startTime, DateTime endTime, List<Weapon> weapons)
         {
             switch (image)
             {
                 case "/images/coop_stage/65c68c6f0641cc5654434b78a6f10b0ad32ccdee.png":
-                    return new ShiftStage(Key.spawning_grounds, name, image, startTime, endTime, weapons);
+                    return new ShiftStage(Key.spawning_grounds, image, startTime, endTime, weapons);
                 case "/images/coop_stage/e07d73b7d9f0c64e552b34a2e6c29b8564c63388.png":
-                    return new ShiftStage(Key.marooners_bay, name, image, startTime, endTime, weapons);
+                    return new ShiftStage(Key.marooners_bay, image, startTime, endTime, weapons);
                 case "/images/coop_stage/6d68f5baa75f3a94e5e9bfb89b82e7377e3ecd2c.png":
-                    return new ShiftStage(Key.lost_outpost, name, image, startTime, endTime, weapons);
+                    return new ShiftStage(Key.lost_outpost, image, startTime, endTime, weapons);
                 case "/images/coop_stage/e9f7c7b35e6d46778cd3cbc0d89bd7e1bc3be493.png":
-                    return new ShiftStage(Key.salmonid_smokeyard, name, image, startTime, endTime, weapons);
+                    return new ShiftStage(Key.salmonid_smokeyard, image, startTime, endTime, weapons);
                 case "/images/coop_stage/50064ec6e97aac91e70df5fc2cfecf61ad8615fd.png":
-                    return new ShiftStage(Key.ruins_of_ark_polaris, name, image, startTime, endTime, weapons);
+                    return new ShiftStage(Key.ruins_of_ark_polaris, image, startTime, endTime, weapons);
                 default:
-                    return new ShiftStage((Key)(-2), name, image, startTime, endTime, weapons);
+                    return new ShiftStage((Key)(-2), image, startTime, endTime, weapons);
             }
         }
     }

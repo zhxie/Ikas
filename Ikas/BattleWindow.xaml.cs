@@ -249,7 +249,7 @@ namespace Ikas
             if (battle.Stage != null)
             {
                 // Update current Battle
-                switch (battle.Mode.Id)
+                switch (battle.Mode)
                 {
                     case Mode.Key.regular_battle:
                         imgMode.Source = (BitmapImage)FindResource("image_battle_regular");
@@ -405,24 +405,10 @@ namespace Ikas
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                if (Depot.TranslateProperNoun)
-                {
-                    lbRule.Content = Translate(battle.Rule.Id.ToString());
-                }
-                else
-                {
-                    lbRule.Content = battle.Rule.Name;
-                }
+                lbRule.Content = Translate(battle.Rule.ToString());
                 if (battle.IsWin)
                 {
-                    if (Depot.TranslateProperNoun)
-                    {
-                        tagResult.Content = Translate("win", true);
-                    }
-                    else
-                    {
-                        tagResult.Content = battle.Result;
-                    }
+                    tagResult.Content = Translate("win", true);
                     tagResult.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
                     switch (battle.Type)
                     {
@@ -481,14 +467,7 @@ namespace Ikas
                 }
                 else
                 {
-                    if (Depot.TranslateProperNoun)
-                    {
-                        tagResult.Content = Translate("lose", true);
-                    }
-                    else
-                    {
-                        tagResult.Content = battle.Result;
-                    }
+                    tagResult.Content = Translate("lose", true);
                     tagResult.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                     switch (battle.Type)
                     {
@@ -562,14 +541,7 @@ namespace Ikas
                     ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                     brush.Stretch = Stretch.UniformToFill;
                     stg.Background = brush;
-                    if (Depot.TranslateProperNoun)
-                    {
-                        stg.Content = Translate(stage.Id.ToString());
-                    }
-                    else
-                    {
-                        stg.Content = stage.Name;
-                    }
+                    stg.Content = Translate(stage.Id.ToString());
                     ((Storyboard)FindResource("fade_in")).Begin(stg);
                 }
                 catch
@@ -581,14 +553,7 @@ namespace Ikas
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
                         stg.Background = brush;
-                        if (Depot.TranslateProperNoun)
-                        {
-                            stg.Content = Translate(stage.Id.ToString());
-                        }
-                        else
-                        {
-                            stg.Content = stage.Name;
-                        }
+                        stg.Content = Translate(stage.Id.ToString());
                         ((Storyboard)FindResource("fade_in")).Begin(stg);
                     }));
                 }
@@ -690,25 +655,9 @@ namespace Ikas
                         title = string.Format(Translate("{0}_(No._{1})", true), Translate("lose", true), Translate(battle.Number.ToString()));
                     }
                     // Format content
-                    string content;
-                    if (Depot.TranslateProperNoun)
-                    {
-                        content = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Stage.Id.ToString()), battle.StartTime.ToString("yyyy/M/dd HH:mm"));
-                    }
-                    else
-                    {
-                        content = string.Format(Translate("{0}_-_{1}", true), battle.Stage.Name, battle.StartTime.ToString("yyyy/M/dd HH:mm"));
-                    }
+                    string content = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Stage.Id.ToString()), battle.StartTime.ToString("yyyy/M/dd HH:mm"));
                     // Format progressTitle
-                    string scoreTitle;
-                    if (Depot.TranslateProperNoun)
-                    {
-                        scoreTitle = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Mode.Id.ToString()), Translate(battle.Rule.Id.ToString()));
-                    }
-                    else
-                    {
-                        scoreTitle = string.Format(Translate("{0}_-_{1}", true), battle.Mode.Name, battle.Rule.Name);
-                    }
+                    string scoreTitle = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Mode.ToString()), Translate(battle.Rule.ToString()));
                     // Format status and value string
                     string myScore, otherScore;
                     switch (battle.Type)

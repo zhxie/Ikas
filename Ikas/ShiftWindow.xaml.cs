@@ -223,14 +223,7 @@ namespace Ikas
                     ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                     brush.Stretch = Stretch.UniformToFill;
                     stg1.Background = brush;
-                    if (Depot.TranslateProperNoun)
-                    {
-                        stg1.Content = Translate(stage.Id.ToString());
-                    }
-                    else
-                    {
-                        stg1.Content = stage.Name;
-                    }
+                    stg1.Content = Translate(stage.Id.ToString());
                     ((Storyboard)FindResource("fade_in")).Begin(stg1);
                 }
                 catch
@@ -242,14 +235,7 @@ namespace Ikas
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
                         stg1.Background = brush;
-                        if (Depot.TranslateProperNoun)
-                        {
-                            stg1.Content = Translate(stage.Id.ToString());
-                        }
-                        else
-                        {
-                            stg1.Content = stage.Name;
-                        }
+                        stg1.Content = Translate(stage.Id.ToString());
                         ((Storyboard)FindResource("fade_in")).Begin(stg1);
                     }));
                 }
@@ -286,14 +272,7 @@ namespace Ikas
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image6)));
                         brush.Stretch = Stretch.UniformToFill;
                         stg2.Background = brush;
-                        if (Depot.TranslateProperNoun)
-                        {
-                            stg2.Content = Translate(stage2.Id.ToString());
-                        }
-                        else
-                        {
-                            stg2.Content = stage2.Name;
-                        }
+                        stg2.Content = Translate(stage2.Id.ToString());
                         ((Storyboard)FindResource("fade_in")).Begin(stg2);
                     }
                     catch
@@ -305,14 +284,7 @@ namespace Ikas
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image6)));
                             brush.Stretch = Stretch.UniformToFill;
                             stg2.Background = brush;
-                            if (Depot.TranslateProperNoun)
-                            {
-                                stg2.Content = Translate(stage2.Id.ToString());
-                            }
-                            else
-                            {
-                                stg2.Content = stage2.Name;
-                            }
+                            stg2.Content = Translate(stage2.Id.ToString());
                             ((Storyboard)FindResource("fade_in")).Begin(stg2);
                         }));
                     }

@@ -11,15 +11,14 @@ namespace Ikas.Class
         public DateTime StartTime { get; }
         public double ElapsedTime { get; }
         public Mode.Key Type { get; }
-        public Mode Mode { get; }
-        public Rule Rule { get; }
+        public Mode.Key Mode { get; }
+        public Rule.Key Rule { get; }
         public Stage Stage { get; }
         public List<Player> MyPlayers { get; }
         public List<Player> OtherPlayers { get; }
         public int LevelAfter { get; }
         public double MyScore { get; }
         public double OtherScore { get; }
-        public string Result { get; }
 
         public Player SelfPlayer
         {
@@ -241,7 +240,7 @@ namespace Ikas.Class
             }
         }
 
-        public Battle(int number, DateTime startTime, double elapsedTime, Mode.Key type, Mode mode, Rule rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, int levelAfter, double myScore, double otherScore, string result)
+        public Battle(int number, DateTime startTime, double elapsedTime, Mode.Key type, Mode.Key mode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, int levelAfter, double myScore, double otherScore)
         {
             Number = number;
             StartTime = startTime;
@@ -255,7 +254,6 @@ namespace Ikas.Class
             LevelAfter = levelAfter;
             MyScore = myScore;
             OtherScore = otherScore;
-            Result = result;
         }
         public Battle()
         {
@@ -325,9 +323,9 @@ namespace Ikas.Class
             }
         }
 
-        public RegularBattle(int number, DateTime startTime, double elapsedTime, Mode mode, Rule rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, int levelAfter,
-            double winMeter, double myScore, double otherScore, string result)
-            : base(number, startTime, elapsedTime, Class.Mode.Key.regular_battle, mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore, result)
+        public RegularBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, int levelAfter,
+            double winMeter, double myScore, double otherScore)
+            : base(number, startTime, elapsedTime, Class.Mode.Key.regular_battle, mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore)
         {
             WinMeter = winMeter;
         }
@@ -353,9 +351,9 @@ namespace Ikas.Class
             }
         }
 
-        public RankedBattle(int number, DateTime startTime, double elapsedTime, Mode mode, Rule rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, int levelAfter,
-            double estimatedRankPower, Rank.Key rankAfter, double myScore, double otherScore, string result)
-            : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.ranked_battle, mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), levelAfter, myScore, otherScore, result)
+        public RankedBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, int levelAfter,
+            double estimatedRankPower, Rank.Key rankAfter, double myScore, double otherScore)
+            : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.ranked_battle, mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), levelAfter, myScore, otherScore)
         {
             EstimatedRankPower = estimatedRankPower;
             RankAfter = rankAfter;
@@ -373,9 +371,9 @@ namespace Ikas.Class
         }
         public double XPowerAfter { get; }
 
-        public RankedXBattle(int number, DateTime startTime, double elapsedTime, Mode mode, Rule rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, int levelAfter,
-            double estimatedXPower, double xPowerAfter, double myScore, double otherScore, string result)
-            : base(number, startTime, elapsedTime, mode, rule, stage, myPlayers.Cast<RankedPlayer>().ToList(), otherPlayers.Cast<RankedPlayer>().ToList(), levelAfter, estimatedXPower, Rank.Key.x, myScore, otherScore, result)
+        public RankedXBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, int levelAfter,
+            double estimatedXPower, double xPowerAfter, double myScore, double otherScore)
+            : base(number, startTime, elapsedTime, mode, rule, stage, myPlayers.Cast<RankedPlayer>().ToList(), otherPlayers.Cast<RankedPlayer>().ToList(), levelAfter, estimatedXPower, Rank.Key.x, myScore, otherScore)
         {
             XPowerAfter = xPowerAfter;
         }
@@ -410,9 +408,9 @@ namespace Ikas.Class
             }
         }
 
-        public LeagueBattle(int number, DateTime startTime, double elapsedTime, Mode mode, Rule rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, int levelAfter,
-            int myEstimatedLeaguePower, int otherEstimatedLeaguePower, double leaguePoint, double maxLeaguePoint, double myScore, double otherScore, string result)
-            : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.league_battle, mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), levelAfter, myScore, otherScore, result)
+        public LeagueBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Rule.Key rule, Stage stage, List<RankedPlayer> myPlayers, List<RankedPlayer> otherPlayers, int levelAfter,
+            int myEstimatedLeaguePower, int otherEstimatedLeaguePower, double leaguePoint, double maxLeaguePoint, double myScore, double otherScore)
+            : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.league_battle, mode, rule, stage, myPlayers.Cast<Player>().ToList(), otherPlayers.Cast<Player>().ToList(), levelAfter, myScore, otherScore)
         {
             MyEstimatedLeaguePower = myEstimatedLeaguePower;
             OtherEstimatedLeaguePower = otherEstimatedLeaguePower;
@@ -444,9 +442,9 @@ namespace Ikas.Class
             }
         }
 
-        public SplatfestBattle(int number, DateTime startTime, double elapsedTime, Mode mode, Key splatfestMode, Rule rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, int levelAfter,
-            int myEstimatedSplatfestPower, int otherEstimatedSplatfestPower, double splatfestPower, double maxSplatfestPower, int contributionPoint, int totalContributionPoint, double myScore, double otherScore, string result)
-            : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.splatfest, mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore, result)
+        public SplatfestBattle(int number, DateTime startTime, double elapsedTime, Mode.Key mode, Key splatfestMode, Rule.Key rule, Stage stage, List<Player> myPlayers, List<Player> otherPlayers, int levelAfter,
+            int myEstimatedSplatfestPower, int otherEstimatedSplatfestPower, double splatfestPower, double maxSplatfestPower, int contributionPoint, int totalContributionPoint, double myScore, double otherScore)
+            : base(number, startTime, elapsedTime, Ikas.Class.Mode.Key.splatfest, mode, rule, stage, myPlayers, otherPlayers, levelAfter, myScore, otherScore)
         {
             SplatfestMode = splatfestMode;
             MyEstimatedSplatfestPower = myEstimatedSplatfestPower;

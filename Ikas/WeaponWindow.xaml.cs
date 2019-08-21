@@ -115,14 +115,7 @@ namespace Ikas
             if (Weapon != null)
             {
                 // Update weapon
-                if (Depot.TranslateProperNoun)
-                {
-                    tbName.Text = Translate(Weapon.Id.ToString());
-                }
-                else
-                {
-                    tbName.Text = Weapon.Name;
-                }
+                tbName.Text = Translate(Weapon.Id.ToString());
                 ((Storyboard)FindResource("fade_in")).Begin(tbName);
                 string image = FileFolderUrl.ApplicationData + Weapon.Image;
                 try

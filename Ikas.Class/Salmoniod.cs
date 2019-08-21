@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ikas.Class
 {
-    public class Salmoniod
+    public static class Salmoniod
     {
         public enum Key
         {
@@ -18,15 +18,6 @@ namespace Ikas.Class
             maws = 15,
             griller2 = 16,  // griller was used by event of salmon run, use griller2 instead
             drizzler = 21
-        }
-
-        public Key Id { get; }
-        public string Name { get; }
-
-        public Salmoniod(Key id, string name)
-        {
-            Id = id;
-            Name = name;
         }
 
         public static Key ParseKey(string s)
@@ -59,10 +50,10 @@ namespace Ikas.Class
 
     public class SalmoniodCount
     {
-        public Salmoniod Salmoniod;
+        public Salmoniod.Key Salmoniod;
         public int Count;
 
-        public SalmoniodCount(Salmoniod salmoniod, int count)
+        public SalmoniodCount(Salmoniod.Key salmoniod, int count)
         {
             Salmoniod = salmoniod;
             Count = count;

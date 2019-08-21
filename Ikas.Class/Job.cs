@@ -56,7 +56,7 @@ namespace Ikas.Class
                 return count;
             }
         }
-        public Grade Grade
+        public Grade.Key Grade
         {
             get
             {
@@ -173,10 +173,10 @@ namespace Ikas.Class
         public int GetSalmoniodKill(Salmoniod.Key id)
         {
             int count = 0;
-            count = count + MyPlayer.SalmoniodKills.Find(p => p.Salmoniod.Id == id).Count;
+            count = count + MyPlayer.SalmoniodKills.Find(p => p.Salmoniod == id).Count;
             foreach (JobPlayer player in OtherPlayers)
             {
-                count = count + player.SalmoniodKills.Find(p => p.Salmoniod.Id == id).Count;
+                count = count + player.SalmoniodKills.Find(p => p.Salmoniod == id).Count;
             }
             return count;
         }

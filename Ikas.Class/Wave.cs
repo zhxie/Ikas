@@ -6,8 +6,8 @@ namespace Ikas.Class
 {
     public class Wave
     {
-        public WaterLevel WaterLevel { get; }
-        public EventType EventType { get; }
+        public WaterLevel.Key WaterLevel { get; }
+        public EventType.Key EventType { get; }
         public int Quota { get; }
         public int PowerEgg { get; }
         public int GoldenEgg { get; }
@@ -23,7 +23,7 @@ namespace Ikas.Class
             }
         }
 
-        public Wave(WaterLevel waterLevel, EventType eventType, int quota, int powerEgg, int goldenEgg, int goldenEggPop, List<SpecialWeapon> specials, Job.ResultType result)
+        public Wave(WaterLevel.Key waterLevel, EventType.Key eventType, int quota, int powerEgg, int goldenEgg, int goldenEggPop, List<SpecialWeapon> specials, Job.ResultType result)
         {
             WaterLevel = waterLevel;
             EventType = eventType;

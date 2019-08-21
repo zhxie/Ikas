@@ -86,10 +86,7 @@ namespace Ikas
             }
             Resources.MergedDictionaries.Add(lang);
             // Force refresh label
-            if (Depot.TranslateProperNoun)
-            {
-                lbName.Content = Translate(Salmoniod.ToString());
-            }
+            lbName.Content = Translate(Salmoniod.ToString());
         }
 
         public void SetImage(Salmoniod.Key id)
@@ -138,17 +135,10 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(bdRatio);
             if (player != null && job != null)
             {
-                if (Depot.TranslateProperNoun)
-                {
-                    lbName.Content = Translate(Salmoniod.ToString());
-                }
-                else
-                {
-                    lbName.Content = player.SalmoniodKills.Find(p => p.Salmoniod.Id == id).Salmoniod.Name;
-                }
-                int kill = player.SalmoniodKills.Find(p => p.Salmoniod.Id == id).Count;
+                lbName.Content = Translate(Salmoniod.ToString());
+                int kill = player.SalmoniodKills.Find(p => p.Salmoniod == id).Count;
                 int jobKill = job.GetSalmoniodKill(id);
-                int jobCount = job.SalmoniodAppearances.Find(p => p.Salmoniod.Id == id).Count;
+                int jobCount = job.SalmoniodAppearances.Find(p => p.Salmoniod == id).Count;
                 if (jobKill == jobCount && jobKill != 0)
                 {
                     lbName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
