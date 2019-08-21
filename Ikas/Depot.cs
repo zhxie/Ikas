@@ -712,16 +712,25 @@ namespace Ikas
                 handler.Proxy = Proxy;
             }
             HttpClient client = new HttpClient(handler);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetSchedules);
-            try
+            HttpRequestMessage request;
+            if (UseSplatoon2InkApi)
             {
-                request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.Splatoon2Ink + FileFolderUrl.Splatoon2InkSchedules);
+                request.Headers.Add("User-Agent", "Ikas/0.3.0");
             }
-            catch
+            else
             {
-                // Update schedule on error
-                UpdateSchedule(new Schedule(Base.ErrorType.cookie_is_empty));
-                return;
+                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetSchedules);
+                try
+                {
+                    request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+                }
+                catch
+                {
+                    // Update schedule on error
+                    UpdateSchedule(new Schedule(Base.ErrorType.cookie_is_empty));
+                    return;
+                }
             }
             HttpResponseMessage response;
             try
@@ -781,7 +790,14 @@ namespace Ikas
             else
             {
                 // Update schedule on error
-                UpdateSchedule(new Schedule(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                if (UseSplatoon2InkApi)
+                {
+                    UpdateSchedule(new Schedule(Base.ErrorType.network_cannot_be_reached));
+                }
+                else
+                {
+                    UpdateSchedule(new Schedule(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                }
             }
         }
         /// <summary>
@@ -842,16 +858,25 @@ namespace Ikas
                 handler.Proxy = Proxy;
             }
             HttpClient client = new HttpClient(handler);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetCoopSchedules);
-            try
+            HttpRequestMessage request;
+            if (UseSplatoon2InkApi)
             {
-                request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.Splatoon2Ink + FileFolderUrl.Splatoon2InkCoopSchedules);
+                request.Headers.Add("User-Agent", "Ikas/0.3.0");
             }
-            catch
+            else
             {
-                // Update shift on error
-                UpdateShift(new Shift(Base.ErrorType.cookie_is_empty));
-                return;
+                request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.SplatNet + FileFolderUrl.SplatNetCoopSchedules);
+                try
+                {
+                    request.Headers.Add("Cookie", "iksm_session=" + Cookie);
+                }
+                catch
+                {
+                    // Update shift on error
+                    UpdateShift(new Shift(Base.ErrorType.cookie_is_empty));
+                    return;
+                }
             }
             HttpResponseMessage response;
             try
@@ -898,7 +923,14 @@ namespace Ikas
             else
             {
                 // Update shift on error
-                UpdateShift(new Shift(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                if (UseSplatoon2InkApi)
+                {
+                    UpdateShift(new Shift(Base.ErrorType.network_cannot_be_reached));
+                }
+                else
+                {
+                    UpdateShift(new Shift(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                }
             }
         }
         /// <summary>
