@@ -716,7 +716,8 @@ namespace Ikas
             if (UseSplatoon2InkApi)
             {
                 request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.Splatoon2Ink + FileFolderUrl.Splatoon2InkSchedules);
-                request.Headers.Add("User-Agent", "Ikas/0.3.0");
+                request.Headers.Add("User-Agent",
+                    string.Format("Ikas/{0}.{1}.{2}", Assembly.GetExecutingAssembly().GetName().Version.Major, Assembly.GetExecutingAssembly().GetName().Version.Minor, Assembly.GetExecutingAssembly().GetName().Version.Build));
             }
             else
             {
@@ -862,7 +863,8 @@ namespace Ikas
             if (UseSplatoon2InkApi)
             {
                 request = new HttpRequestMessage(HttpMethod.Get, FileFolderUrl.Splatoon2Ink + FileFolderUrl.Splatoon2InkCoopSchedules);
-                request.Headers.Add("User-Agent", "Ikas/0.3.0");
+                request.Headers.Add("User-Agent",
+                    string.Format("Ikas/{0}.{1}.{2}", Assembly.GetExecutingAssembly().GetName().Version.Major, Assembly.GetExecutingAssembly().GetName().Version.Minor, Assembly.GetExecutingAssembly().GetName().Version.Build));
             }
             else
             {
@@ -2148,7 +2150,8 @@ namespace Ikas
                     // Send 3rd Party HTTP POST
                     long timestamp = (long)(DateTime.Now - TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1))).TotalSeconds;
                     HttpRequestMessage requestHash = new HttpRequestMessage(HttpMethod.Post, FileFolderUrl.eliFesslerGen2);
-                    requestHash.Headers.Add("User-Agent", "Ikas/0.3.0");
+                    requestHash.Headers.Add("User-Agent",
+                        string.Format("Ikas/{0}.{1}.{2}", Assembly.GetExecutingAssembly().GetName().Version.Major, Assembly.GetExecutingAssembly().GetName().Version.Minor, Assembly.GetExecutingAssembly().GetName().Version.Build));
                     List<KeyValuePair<string, string>> requestHashContent = new List<KeyValuePair<string, string>>();
                     requestHashContent.Add(new KeyValuePair<string, string>("naIdToken", idToken));
                     requestHashContent.Add(new KeyValuePair<string, string>("timestamp", timestamp.ToString()));
