@@ -103,12 +103,78 @@ namespace Ikas
             tmSchedule.Tick += new EventHandler((object source, EventArgs e) =>
             {
                 Depot.GetSchedule();
+                // Change interval to mitigate server load
+                if (Depot.Schedule.Error == Base.ErrorType.no_error)
+                {
+                    if ((Depot.Schedule.EndTime - DateTime.UtcNow).TotalMinutes > 5)
+                    {
+                        tmSchedule.Interval = new TimeSpan(0, 5, 0);
+                    }
+                    else if ((Depot.Schedule.EndTime - DateTime.UtcNow).TotalMinutes > 1)
+                    {
+                        tmSchedule.Interval = new TimeSpan(0, 1, 0);
+                    }
+                    else
+                    {
+                        tmSchedule.Interval = new TimeSpan(0, 0, 15);
+                    }
+                }
+                else
+                {
+                    tmSchedule.Interval = new TimeSpan(0, 0, 15);
+                }
             });
             tmSchedule.Interval = new TimeSpan(0, 0, 15);
             tmShift = new DispatcherTimer();
             tmShift.Tick += new EventHandler((object source, EventArgs e) =>
             {
                 Depot.GetShift();
+                // Change interval to mitigate server load
+                if (Depot.Shift.Error == Base.ErrorType.no_error)
+                {
+                    if (Depot.Shift.Stages.Count > 0)
+                    {
+                        bool isStart = (DateTime.UtcNow - Depot.Shift.Stages[0].StartTime).TotalSeconds > 0;
+                        if (isStart)
+                        {
+                            if ((DateTime.UtcNow - Depot.Shift.Stages[0].StartTime).TotalMinutes > 5)
+                            {
+                                tmShift.Interval = new TimeSpan(0, 5, 0);
+                            }
+                            else if ((DateTime.UtcNow - Depot.Shift.Stages[0].StartTime).TotalMinutes > 1)
+                            {
+                                tmShift.Interval = new TimeSpan(0, 1, 0);
+                            }
+                            else
+                            {
+                                tmShift.Interval = new TimeSpan(0, 0, 15);
+                            }
+                        }
+                        else
+                        {
+                            if ((Depot.Shift.Stages[0].EndTime - DateTime.UtcNow).TotalMinutes > 5)
+                            {
+                                tmShift.Interval = new TimeSpan(0, 5, 0);
+                            }
+                            else if ((Depot.Shift.Stages[0].EndTime - DateTime.UtcNow).TotalMinutes > 1)
+                            {
+                                tmShift.Interval = new TimeSpan(0, 1, 0);
+                            }
+                            else
+                            {
+                                tmShift.Interval = new TimeSpan(0, 0, 15);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        tmShift.Interval = new TimeSpan(0, 0, 15);
+                    }
+                }
+                else
+                {
+                    tmShift.Interval = new TimeSpan(0, 0, 15);
+                }
             });
             tmShift.Interval = new TimeSpan(0, 0, 15);
             tmBattle = new DispatcherTimer();
@@ -128,7 +194,7 @@ namespace Ikas
                     Depot.GetLastJob();
                 }
             });
-            tmJob.Interval = new TimeSpan(0, 0, 15);
+            tmJob.Interval = new TimeSpan(0, 0, 30);
             // Initialize notification
             NotificationHelper.InitializeNotification();
         }
