@@ -320,7 +320,7 @@ namespace Ikas
             }
         }
 
-        public void SetScheduleFailed()
+        public void StopLoading()
         {
             // Fade out loading
             ((Storyboard)FindResource("fade_out")).Begin(bdLoading);

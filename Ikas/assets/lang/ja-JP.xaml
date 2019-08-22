@@ -932,6 +932,13 @@
     <sys:String x:Key="main_window-★">★</sys:String>
     <sys:String x:Key="main_window-settings">設定</sys:String>
     <sys:String x:Key="main_window-exit">終了</sys:String>
+    <sys:String x:Key="main_window-{0}_(No._{1})">{0} (No. {1})</sys:String>
+    <sys:String x:Key="main_window-{0}_-_{1}">{0} - {1}</sys:String>
+    <sys:String x:Key="main_window-win">Win!</sys:String>
+    <sys:String x:Key="main_window-lose">Lose..</sys:String>
+    <sys:String x:Key="main_window-%">%</sys:String>
+    <sys:String x:Key="main_window-{0}_count">{0} カウント</sys:String>
+    <sys:String x:Key="main_window-knock_out">ノックアウト!</sys:String>
     <sys:String x:Key="main_window-{0}._{1}">{0}。{1}</sys:String>
     <sys:String x:Key="main_window-{0},_because_{1}._{2}">{1}ため、{0}。{2}</sys:String>
     <!-- ScheduleWindow -->
@@ -960,8 +967,6 @@
     <sys:String x:Key="battle_window-%">%</sys:String>
     <sys:String x:Key="battle_window-{0}_count">{0} カウント</sys:String>
     <sys:String x:Key="battle_window-knock_out">ノックアウト!</sys:String>
-    <sys:String x:Key="battle_window-{0}_(No._{1})">{0} (No. {1})</sys:String>
-    <sys:String x:Key="battle_window-{0}_-_{1}">{0} - {1}</sys:String>
     <!-- JobWindow -->
     <sys:String x:Key="job_window-salmon_run">サーモンラン</sys:String>
     <sys:String x:Key="job_window-hazard_level">キケン度</sys:String>

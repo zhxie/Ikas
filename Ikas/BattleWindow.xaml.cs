@@ -32,6 +32,8 @@ namespace Ikas
             }
         }
 
+        public Battle Battle;
+
         private PlayerWindow playerWindow;
         private WeaponWindow weaponWindow;
 
@@ -61,10 +63,6 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(stg, BitmapScalingMode.HighQuality);
             // Add handler for global member
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
-            Depot.BattleChanged += new ContentChangedEventHandler(BattleChanged);
-            Depot.BattleFound += new ContentFoundEventHandler(BattleFound);
-            Depot.BattleUpdated += new ContentUpdatedEventHandler(BattleUpdated);
-            Depot.BattleNotifying += new ContentNotifyingHandler(BattleNotifying);
             // Prepare icon and weapon window
             playerWindow = new PlayerWindow();
             playerWindow.KeepAliveWindow = this;
@@ -211,17 +209,137 @@ namespace Ikas
                 Resources.MergedDictionaries.Clear();
             }
             Resources.MergedDictionaries.Add(lang);
+            // Force refresh labels
+            if (Battle != null)
+            {
+                if (Battle.Stage != null)
+                {
+                    switch (Battle.Mode)
+                    {
+                        case Mode.Key.regular_battle:
+                            break;
+                        case Mode.Key.ranked_battle:
+                            lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as RankedBattle).EstimatedRankPower);
+                            break;
+                        case Mode.Key.league_battle:
+                            if (!(Battle as LeagueBattle).IsCalculating)
+                            {
+                                tbPower.Text = string.Format(Translate("{0:0.0}/{1:0.0}", true), (Battle as LeagueBattle).LeaguePoint, (Battle as LeagueBattle).MaxLeaguePoint);
+                            }
+                            if (Battle.IsWin)
+                            {
+                                lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as LeagueBattle).MyEstimatedLeaguePower);
+                                lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as LeagueBattle).OtherEstimatedLeaguePower);
+                            }
+                            else
+                            {
+                                lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as LeagueBattle).OtherEstimatedLeaguePower);
+                                lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as LeagueBattle).MyEstimatedLeaguePower);
+                            }
+                            break;
+                        case Mode.Key.private_battle:
+                            break;
+                        case Mode.Key.splatfest:
+                            switch ((Battle as SplatfestBattle).SplatfestMode)
+                            {
+                                case SplatfestBattle.Key.regular:
+                                    break;
+                                case SplatfestBattle.Key.challenge:
+                                    if (!(Battle as SplatfestBattle).IsCalculating)
+                                    {
+                                        tbPower.Text = string.Format(Translate("{0:0.0}/{1:0.0}", true), (Battle as SplatfestBattle).SplatfestPower, (Battle as SplatfestBattle).MaxSplatfestPower);
+                                    }
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                            if (Battle.IsWin)
+                            {
+                                lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as SplatfestBattle).MyEstimatedSplatfestPower);
+                                lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as SplatfestBattle).OtherEstimatedSplatfestPower);
+                            }
+                            else
+                            {
+                                lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as SplatfestBattle).OtherEstimatedSplatfestPower);
+                                lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as SplatfestBattle).MyEstimatedSplatfestPower);
+                            }
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    if (Battle.IsWin)
+                    {
+                        switch (Battle.Type)
+                        {
+                            case Mode.Key.regular_battle:
+                            case Mode.Key.splatfest:
+                                break;
+                            case Mode.Key.ranked_battle:
+                                if ((Battle as RankedBattle).IsKo)
+                                {
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                }
+                                else
+                                {
+                                    tagWin.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                }
+                                break;
+                            case Mode.Key.league_battle:
+                                if ((Battle as LeagueBattle).IsKo)
+                                {
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                }
+                                else
+                                {
+                                    tagWin.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                }
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                    else
+                    {
+                        switch (Battle.Type)
+                        {
+                            case Mode.Key.regular_battle:
+                            case Mode.Key.splatfest:
+                                break;
+                            case Mode.Key.ranked_battle:
+                                if ((Battle as RankedBattle).IsBeKoed)
+                                {
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                }
+                                else
+                                {
+                                    tagWin.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                }
+                                break;
+                            case Mode.Key.league_battle:
+                                if ((Battle as LeagueBattle).IsBeKoed)
+                                {
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                }
+                                else
+                                {
+                                    tagWin.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                }
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+            }
         }
 
-        private void BattleChanged()
+        public void SetBattle(Battle battle)
         {
-            // Fade in loading
-            bdLoading.IsHitTestVisible = true;
-            ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
-        }
-
-        private void BattleFound()
-        {
+            Battle = battle;
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(imgMode);
             ((Storyboard)FindResource("fade_out")).Begin(lbRule);
@@ -241,495 +359,410 @@ namespace Ikas
             plLose2.SetPlayer(null, false);
             plLose3.SetPlayer(null, false);
             plLose4.SetPlayer(null, false);
-        }
-
-        private void BattleUpdated()
-        {
-            Battle battle = Depot.Battle;
-            if (battle.Stage != null)
+            if (Battle != null)
             {
-                // Update current Battle
-                switch (battle.Mode)
+                if (Battle.Stage != null)
                 {
-                    case Mode.Key.regular_battle:
-                        imgMode.Source = (BitmapImage)FindResource("image_battle_regular");
-                        lbPowerName.Content = Translate((battle as RegularBattle).Freshness.ToString());
-                        lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
-                        switch ((battle as RegularBattle).Freshness)
-                        {
-                            case RegularBattle.FreshnessKey.raw:
-                                lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
-                                break;
-                            case RegularBattle.FreshnessKey.dry:
-                                lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterGreen));
-                                break;
-                            case RegularBattle.FreshnessKey.fresh:
-                                lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterBronze));
-                                break;
-                            case RegularBattle.FreshnessKey.superfresh:
-                            case RegularBattle.FreshnessKey.superfresh2:
-                                lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterSilver));
-                                break;
-                            case RegularBattle.FreshnessKey.superfresh3:
-                                lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterGold));
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                        lbPower.Margin = new Thickness(0, -20, 0, 0);
-                        tbPower.Foreground = new SolidColorBrush();
-                        tbPower.FontSize = 36;
-                        tbPower.Text = (battle as RegularBattle).WinMeter.ToString("0.0");
-                        tbPowerSub.Text = "";
-                        lbWinEstimatedPower.Content = "";
-                        lbLoseEstimatedPower.Content = "";
-                        break;
-                    case Mode.Key.ranked_battle:
-                        imgMode.Source = (BitmapImage)FindResource("image_battle_ranked");
-                        lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
-                        if (battle is RankedXBattle)
-                        {
-                            lbPowerName.Content = Translate("x_power", true);
+                    // Update current Battle
+                    switch (Battle.Mode)
+                    {
+                        case Mode.Key.regular_battle:
+                            imgMode.Source = (BitmapImage)FindResource("image_battle_regular");
+                            lbPowerName.SetResourceReference(ContentProperty, (Battle as RegularBattle).Freshness.ToString());
                             lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
-                            lbPower.Margin = new Thickness(0, -10, 0, 0);
-                            tbPower.FontSize = 28;
-                            if ((battle as RankedXBattle).XPowerAfter >= 0)
+                            switch ((Battle as RegularBattle).Freshness)
                             {
-                                tbPower.Text = ((battle as RankedXBattle).XPowerAfter).ToString();
+                                case RegularBattle.FreshnessKey.raw:
+                                    lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
+                                    break;
+                                case RegularBattle.FreshnessKey.dry:
+                                    lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterGreen));
+                                    break;
+                                case RegularBattle.FreshnessKey.fresh:
+                                    lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterBronze));
+                                    break;
+                                case RegularBattle.FreshnessKey.superfresh:
+                                case RegularBattle.FreshnessKey.superfresh2:
+                                    lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterSilver));
+                                    break;
+                                case RegularBattle.FreshnessKey.superfresh3:
+                                    lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.MeterGold));
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
                             }
-                            else
-                            {
-                                tbPower.Text = Translate("calculating", true);
-                            }
-                            tbPowerSub.Text = "";
-                        }
-                        else
-                        {
-                            lbPowerName.Content = Translate("rank", true);
                             lbPower.Margin = new Thickness(0, -20, 0, 0);
+                            tbPower.Foreground = new SolidColorBrush();
                             tbPower.FontSize = 36;
-                            lbPower.FontFamily = FindResource("splatfont") as FontFamily;
-                            tbPower.Text = Translate((battle as RankedBattle).RankAfter.ToString());
-                            if ((battle as RankedBattle).RankAfter > Rank.Key.s && (battle as RankedBattle).RankAfter < Rank.Key.x)
-                            {
-                                tbPowerSub.Text = ((battle as RankedBattle).RankAfter - Rank.Key.s_plus_0).ToString();
-                            }
-                            else
-                            {
-                                tbPowerSub.Text = "";
-                            }
-                        }
-                        lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (battle as RankedBattle).EstimatedRankPower);
-                        lbLoseEstimatedPower.Content = "";
-                        break;
-                    case Mode.Key.league_battle:
-                        imgMode.Source = (BitmapImage)FindResource("image_battle_league");
-                        lbPowerName.Content = Translate("league_power", true);
-                        lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
-                        lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
-                        lbPower.Margin = new Thickness(0, -10, 0, 0);
-                        tbPower.FontSize = 28;
-                        if ((battle as LeagueBattle).IsCalculating)
-                        {
-                            tbPower.Text = Translate("calculating", true);
+                            tbPower.Text = (Battle as RegularBattle).WinMeter.ToString("0.0");
                             tbPowerSub.Text = "";
-                        }
-                        else
-                        {
-                            tbPower.Text = string.Format(Translate("{0:0.0}/{1:0.0}", true), (battle as LeagueBattle).LeaguePoint, (battle as LeagueBattle).MaxLeaguePoint);
-                            tbPowerSub.Text = "";
-                        }
-                        if (battle.IsWin)
-                        {
-                            lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (battle as LeagueBattle).MyEstimatedLeaguePower);
-                            lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (battle as LeagueBattle).OtherEstimatedLeaguePower);
-                        }
-                        else
-                        {
-                            lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (battle as LeagueBattle).OtherEstimatedLeaguePower);
-                            lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (battle as LeagueBattle).MyEstimatedLeaguePower);
-                        }
-                        break;
-                    case Mode.Key.private_battle:
-                        imgMode.Source = (BitmapImage)FindResource("image_battle_private");
-                        lbPowerName.Content = "";
-                        lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
-                        lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
-                        lbPower.Margin = new Thickness(0, -10, 0, 0);
-                        tbPower.FontSize = 28;
-                        tbPower.Text = "";
-                        tbPowerSub.Text = "";
-                        lbWinEstimatedPower.Content = "";
-                        lbLoseEstimatedPower.Content = "";
-                        break;
-                    case Mode.Key.splatfest:
-                        imgMode.Source = (BitmapImage)FindResource("image_battle_splatfest");
-                        lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
-                        lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
-                        lbPower.Margin = new Thickness(0, -10, 0, 0);
-                        tbPower.FontSize = 28;
-                        switch ((battle as SplatfestBattle).SplatfestMode)
-                        {
-                            case SplatfestBattle.Key.regular:
-                                lbPowerName.Content = "";
-                                tbPower.Text = "";
-                                tbPowerSub.Text = "";
-                                break;
-                            case SplatfestBattle.Key.challenge:
-                                lbPowerName.Content = Translate("splatfest_power", true);
-                                if ((battle as SplatfestBattle).IsCalculating)
+                            lbWinEstimatedPower.Content = "";
+                            lbLoseEstimatedPower.Content = "";
+                            break;
+                        case Mode.Key.ranked_battle:
+                            imgMode.Source = (BitmapImage)FindResource("image_battle_ranked");
+                            lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
+                            if (Battle is RankedXBattle)
+                            {
+                                lbPowerName.SetResourceReference(ContentProperty, "battle_window-x_power");
+                                lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                                lbPower.Margin = new Thickness(0, -10, 0, 0);
+                                tbPower.FontSize = 28;
+                                if ((Battle as RankedXBattle).XPowerAfter >= 0)
                                 {
-                                    tbPower.Text = Translate("calculating", true);
-                                    tbPowerSub.Text = "";
+                                    tbPower.Text = (Battle as RankedXBattle).XPowerAfter.ToString();
                                 }
                                 else
                                 {
-                                    tbPower.Text = string.Format(Translate("{0:0.0}/{1:0.0}", true), (battle as SplatfestBattle).SplatfestPower, (battle as SplatfestBattle).MaxSplatfestPower);
+                                    tbPower.SetResourceReference(Run.TextProperty, "battle_window-calculating");
+                                }
+                                tbPowerSub.Text = "";
+                            }
+                            else
+                            {
+                                lbPowerName.SetResourceReference(ContentProperty, "battle_window-rank");
+                                lbPower.Margin = new Thickness(0, -20, 0, 0);
+                                tbPower.FontSize = 36;
+                                lbPower.FontFamily = FindResource("splatfont") as FontFamily;
+                                var a = (Battle as RankedBattle).RankAfter.ToString();
+                                tbPower.SetResourceReference(Run.TextProperty, (Battle as RankedBattle).RankAfter.ToString());
+                                if ((Battle as RankedBattle).RankAfter > Rank.Key.s && (Battle as RankedBattle).RankAfter < Rank.Key.x)
+                                {
+                                    tbPowerSub.Text = ((Battle as RankedBattle).RankAfter - Rank.Key.s_plus_0).ToString();
+                                }
+                                else
+                                {
                                     tbPowerSub.Text = "";
+                                }
+                            }
+                            lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as RankedBattle).EstimatedRankPower);
+                            lbLoseEstimatedPower.Content = "";
+                            break;
+                        case Mode.Key.league_battle:
+                            imgMode.Source = (BitmapImage)FindResource("image_battle_league");
+                            lbPowerName.SetResourceReference(ContentProperty, "battle_window-league_power");
+                            lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                            lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
+                            lbPower.Margin = new Thickness(0, -10, 0, 0);
+                            tbPower.FontSize = 28;
+                            if ((Battle as LeagueBattle).IsCalculating)
+                            {
+                                tbPower.SetResourceReference(Run.TextProperty, "battle_window-calculating");
+                                tbPowerSub.Text = "";
+                            }
+                            else
+                            {
+                                tbPower.Text = string.Format(Translate("{0:0.0}/{1:0.0}", true), (Battle as LeagueBattle).LeaguePoint, (Battle as LeagueBattle).MaxLeaguePoint);
+                                tbPowerSub.Text = "";
+                            }
+                            if (Battle.IsWin)
+                            {
+                                lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as LeagueBattle).MyEstimatedLeaguePower);
+                                lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as LeagueBattle).OtherEstimatedLeaguePower);
+                            }
+                            else
+                            {
+                                lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as LeagueBattle).OtherEstimatedLeaguePower);
+                                lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as LeagueBattle).MyEstimatedLeaguePower);
+                            }
+                            break;
+                        case Mode.Key.private_battle:
+                            imgMode.Source = (BitmapImage)FindResource("image_battle_private");
+                            lbPowerName.Content = "";
+                            lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                            lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
+                            lbPower.Margin = new Thickness(0, -10, 0, 0);
+                            tbPower.FontSize = 28;
+                            tbPower.Text = "";
+                            tbPowerSub.Text = "";
+                            lbWinEstimatedPower.Content = "";
+                            lbLoseEstimatedPower.Content = "";
+                            break;
+                        case Mode.Key.splatfest:
+                            imgMode.Source = (BitmapImage)FindResource("image_battle_splatfest");
+                            lbPower.FontFamily = FindResource("splatfont_2") as FontFamily;
+                            lbPower.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDBDBDB"));
+                            lbPower.Margin = new Thickness(0, -10, 0, 0);
+                            tbPower.FontSize = 28;
+                            switch ((Battle as SplatfestBattle).SplatfestMode)
+                            {
+                                case SplatfestBattle.Key.regular:
+                                    lbPowerName.Content = "";
+                                    tbPower.Text = "";
+                                    tbPowerSub.Text = "";
+                                    break;
+                                case SplatfestBattle.Key.challenge:
+                                    lbPowerName.SetResourceReference(ContentProperty, "battle_window-splatfest_power");
+                                    if ((Battle as SplatfestBattle).IsCalculating)
+                                    {
+                                        tbPower.SetResourceReference(Run.TextProperty, "battle_window-calculating");
+                                        tbPowerSub.Text = "";
+                                    }
+                                    else
+                                    {
+                                        tbPower.Text = string.Format(Translate("{0:0.0}/{1:0.0}", true), (Battle as SplatfestBattle).SplatfestPower, (Battle as SplatfestBattle).MaxSplatfestPower);
+                                        tbPowerSub.Text = "";
+                                    }
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                            if (Battle.IsWin)
+                            {
+                                lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as SplatfestBattle).MyEstimatedSplatfestPower);
+                                lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as SplatfestBattle).OtherEstimatedSplatfestPower);
+                            }
+                            else
+                            {
+                                lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as SplatfestBattle).OtherEstimatedSplatfestPower);
+                                lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (Battle as SplatfestBattle).MyEstimatedSplatfestPower);
+                            }
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    lbRule.SetResourceReference(ContentProperty, Battle.Rule.ToString());
+                    if (Battle.IsWin)
+                    {
+                        tagResult.SetResourceReference(TagControl.ContentProperty, "battle_window-win");
+                        tagResult.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                        switch (Battle.Type)
+                        {
+                            case Mode.Key.regular_battle:
+                            case Mode.Key.splatfest:
+                                tagWin.Content = Battle.MyScore.ToString("0.0");
+                                tagWin.SetResourceReference(TagControl.Content2Property, "battle_window-%");
+                                tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                                tagLose.Content = Battle.OtherScore.ToString("0.0");
+                                tagLose.SetResourceReference(TagControl.Content2Property, "battle_window-%");
+                                tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                                break;
+                            case Mode.Key.ranked_battle:
+                                if ((Battle as RankedBattle).IsKo)
+                                {
+                                    tagWin.SetResourceReference(TagControl.ContentProperty, "battle_window-knock_out");
+                                    tagWin.Content2 = "";
+                                    tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                    tagLose.Content2 = "";
+                                    tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                                }
+                                else
+                                {
+                                    tagWin.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                    tagWin.Content2 = "";
+                                    tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                    tagLose.Content2 = "";
+                                    tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                                }
+                                break;
+                            case Mode.Key.league_battle:
+                                if ((Battle as LeagueBattle).IsKo)
+                                {
+                                    tagWin.SetResourceReference(TagControl.ContentProperty, "battle_window-knock_out");
+                                    tagWin.Content2 = "";
+                                    tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                    tagLose.Content2 = "";
+                                    tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                                }
+                                else
+                                {
+                                    tagWin.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                    tagWin.Content2 = "";
+                                    tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                    tagLose.Content2 = "";
+                                    tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
                                 }
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
-                        if (battle.IsWin)
-                        {
-                            lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (battle as SplatfestBattle).MyEstimatedSplatfestPower);
-                            lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (battle as SplatfestBattle).OtherEstimatedSplatfestPower);
-                        }
-                        else
-                        {
-                            lbWinEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (battle as SplatfestBattle).OtherEstimatedSplatfestPower);
-                            lbLoseEstimatedPower.Content = string.Format(Translate("estimated_{0}", true), (battle as SplatfestBattle).MyEstimatedSplatfestPower);
-                        }
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-                lbRule.Content = Translate(battle.Rule.ToString());
-                if (battle.IsWin)
-                {
-                    tagResult.Content = Translate("win", true);
-                    tagResult.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                    switch (battle.Type)
-                    {
-                        case Mode.Key.regular_battle:
-                        case Mode.Key.splatfest:
-                            tagWin.Content = battle.MyScore.ToString("0.0");
-                            tagWin.Content2 = Translate("%", true);
-                            tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            tagLose.Content = battle.OtherScore.ToString("0.0");
-                            tagLose.Content2 = Translate("%", true);
-                            tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            break;
-                        case Mode.Key.ranked_battle:
-                            if ((battle as RankedBattle).IsKo)
-                            {
-                                tagWin.Content = Translate("knock_out", true);
-                                tagWin.Content2 = "";
-                                tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                                tagLose.Content = string.Format(Translate("{0}_count", true), battle.OtherScore.ToString());
-                                tagLose.Content2 = "";
-                                tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            }
-                            else
-                            {
-                                tagWin.Content = string.Format(Translate("{0}_count", true), battle.MyScore.ToString());
-                                tagWin.Content2 = "";
-                                tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                                tagLose.Content = string.Format(Translate("{0}_count", true), battle.OtherScore.ToString());
-                                tagLose.Content2 = "";
-                                tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            }
-                            break;
-                        case Mode.Key.league_battle:
-                            if ((battle as LeagueBattle).IsKo)
-                            {
-                                tagWin.Content = Translate("knock_out", true);
-                                tagWin.Content2 = "";
-                                tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                                tagLose.Content = string.Format(Translate("{0}_count", true), battle.OtherScore.ToString());
-                                tagLose.Content2 = "";
-                                tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            }
-                            else
-                            {
-                                tagWin.Content = string.Format(Translate("{0}_count", true), battle.MyScore.ToString());
-                                tagWin.Content2 = "";
-                                tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                                tagLose.Content = string.Format(Translate("{0}_count", true), battle.OtherScore.ToString());
-                                tagLose.Content2 = "";
-                                tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            }
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
                     }
-                }
-                else
-                {
-                    tagResult.Content = Translate("lose", true);
-                    tagResult.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                    switch (battle.Type)
+                    else
                     {
-                        case Mode.Key.regular_battle:
-                        case Mode.Key.splatfest:
-                            tagWin.Content = battle.OtherScore.ToString("0.0");
-                            tagWin.Content2 = Translate("%", true);
-                            tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            tagLose.Content = battle.MyScore.ToString("0.0");
-                            tagLose.Content2 = Translate("%", true);
-                            tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            break;
-                        case Mode.Key.ranked_battle:
-                            if ((battle as RankedBattle).IsBeKoed)
-                            {
-                                tagWin.Content = Translate("knock_out", true);
-                                tagWin.Content2 = "";
+                        tagResult.SetResourceReference(TagControl.ContentProperty, "battle_window-lose");
+                        tagResult.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                        switch (Battle.Type)
+                        {
+                            case Mode.Key.regular_battle:
+                            case Mode.Key.splatfest:
+                                tagWin.Content = Battle.OtherScore.ToString("0.0");
+                                tagWin.SetResourceReference(TagControl.Content2Property, "battle_window-%");
                                 tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                                tagLose.Content = string.Format(Translate("{0}_count", true), battle.MyScore.ToString());
-                                tagLose.Content2 = "";
+                                tagLose.Content = Battle.MyScore.ToString("0.0");
+                                tagLose.SetResourceReference(TagControl.Content2Property, "battle_window-%");
                                 tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            }
-                            else
-                            {
-                                tagWin.Content = string.Format(Translate("{0}_count", true), battle.OtherScore.ToString());
-                                tagWin.Content2 = "";
-                                tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                                tagLose.Content = string.Format(Translate("{0}_count", true), battle.MyScore.ToString());
-                                tagLose.Content2 = "";
-                                tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            }
-                            break;
-                        case Mode.Key.league_battle:
-                            if ((battle as LeagueBattle).IsBeKoed)
-                            {
-                                tagWin.Content = Translate("knock_out", true);
-                                tagWin.Content2 = "";
-                                tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                                tagLose.Content = string.Format(Translate("{0}_count", true), battle.MyScore.ToString());
-                                tagLose.Content2 = "";
-                                tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                            }
-                            else
-                            {
-                                tagWin.Content = string.Format(Translate("{0}_count", true), battle.OtherScore.ToString());
-                                tagWin.Content2 = "";
-                                tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                                tagLose.Content = string.Format(Translate("{0}_count", true), battle.MyScore.ToString());
-                                tagLose.Content2 = "";
-                                tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                            }
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
+                                break;
+                            case Mode.Key.ranked_battle:
+                                if ((Battle as RankedBattle).IsBeKoed)
+                                {
+                                    tagWin.SetResourceReference(TagControl.ContentProperty, "battle_window-knock_out");
+                                    tagWin.Content2 = "";
+                                    tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                    tagLose.Content2 = "";
+                                    tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                                }
+                                else
+                                {
+                                    tagWin.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                    tagWin.Content2 = "";
+                                    tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                    tagLose.Content2 = "";
+                                    tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                                }
+                                break;
+                            case Mode.Key.league_battle:
+                                if ((Battle as LeagueBattle).IsBeKoed)
+                                {
+                                    tagWin.SetResourceReference(TagControl.ContentProperty, "battle_window-knock_out");
+                                    tagWin.Content2 = "";
+                                    tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                    tagLose.Content2 = "";
+                                    tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                                }
+                                else
+                                {
+                                    tagWin.Content = string.Format(Translate("{0}_count", true), Battle.OtherScore.ToString());
+                                    tagWin.Content2 = "";
+                                    tagWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                                    tagLose.Content = string.Format(Translate("{0}_count", true), Battle.MyScore.ToString());
+                                    tagLose.Content2 = "";
+                                    tagLose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                                }
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
                     }
-                }
-                ((Storyboard)FindResource("fade_in")).Begin(imgMode);
-                ((Storyboard)FindResource("fade_in")).Begin(lbRule);
-                ((Storyboard)FindResource("fade_in")).Begin(tagResult);
-                ((Storyboard)FindResource("fade_in")).Begin(lbPowerName);
-                ((Storyboard)FindResource("fade_in")).Begin(lbPower);
-                ((Storyboard)FindResource("fade_in")).Begin(tagWin);
-                ((Storyboard)FindResource("fade_in")).Begin(lbWinEstimatedPower);
-                ((Storyboard)FindResource("fade_in")).Begin(tagLose);
-                ((Storyboard)FindResource("fade_in")).Begin(lbLoseEstimatedPower);
-                // Update stage
-                Stage stage = battle.Stage;
-                string image = FileFolderUrl.ApplicationData + stage.Image;
-                try
-                {
-                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                    brush.Stretch = Stretch.UniformToFill;
-                    stg.Background = brush;
-                    stg.Content = Translate(stage.Id.ToString());
-                    ((Storyboard)FindResource("fade_in")).Begin(stg);
-                }
-                catch
-                {
-                    // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
-                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    ((Storyboard)FindResource("fade_in")).Begin(imgMode);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbRule);
+                    ((Storyboard)FindResource("fade_in")).Begin(tagResult);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbPowerName);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbPower);
+                    ((Storyboard)FindResource("fade_in")).Begin(tagWin);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbWinEstimatedPower);
+                    ((Storyboard)FindResource("fade_in")).Begin(tagLose);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbLoseEstimatedPower);
+                    // Update stage
+                    Stage stage = Battle.Stage;
+                    string image = FileFolderUrl.ApplicationData + stage.Image;
+                    try
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
                         stg.Background = brush;
-                        stg.Content = Translate(stage.Id.ToString());
+                        stg.SetResourceReference(StageControl.ContentProperty, stage.Id.ToString());
                         ((Storyboard)FindResource("fade_in")).Begin(stg);
-                    }));
-                }
-                // Update players
-                if (battle.IsWin)
-                {
-                    if (battle.MyPlayers.Count > 0)
-                    {
-                        plWin1.SetPlayer(battle.MyPlayers[0], true);
-                        if (battle.MyPlayers.Count > 1)
-                        {
-                            plWin2.SetPlayer(battle.MyPlayers[1], true);
-                            if (battle.MyPlayers.Count > 2)
-                            {
-                                plWin3.SetPlayer(battle.MyPlayers[2], true);
-                                if (battle.MyPlayers.Count > 3)
-                                {
-                                    plWin4.SetPlayer(battle.MyPlayers[3], true);
-                                }
-                            }
-                        }
-                    }
-                    if (battle.OtherPlayers.Count > 0)
-                    {
-                        plLose1.SetPlayer(battle.OtherPlayers[0], false);
-                        if (battle.OtherPlayers.Count > 1)
-                        {
-                            plLose2.SetPlayer(battle.OtherPlayers[1], false);
-                            if (battle.OtherPlayers.Count > 2)
-                            {
-                                plLose3.SetPlayer(battle.OtherPlayers[2], false);
-                                if (battle.OtherPlayers.Count > 3)
-                                {
-                                    plLose4.SetPlayer(battle.OtherPlayers[3], false);
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (battle.OtherPlayers.Count > 0)
-                    {
-                        plWin1.SetPlayer(battle.OtherPlayers[0], false);
-                        if (battle.OtherPlayers.Count > 1)
-                        {
-                            plWin2.SetPlayer(battle.OtherPlayers[1], false);
-                            if (battle.OtherPlayers.Count > 2)
-                            {
-                                plWin3.SetPlayer(battle.OtherPlayers[2], false);
-                                if (battle.OtherPlayers.Count > 3)
-                                {
-                                    plWin4.SetPlayer(battle.OtherPlayers[3], false);
-                                }
-                            }
-                        }
-                    }
-                    if (battle.MyPlayers.Count > 0)
-                    {
-                        plLose1.SetPlayer(battle.MyPlayers[0], true);
-                        if (battle.MyPlayers.Count > 1)
-                        {
-                            plLose2.SetPlayer(battle.MyPlayers[1], true);
-                            if (battle.MyPlayers.Count > 2)
-                            {
-                                plLose3.SetPlayer(battle.MyPlayers[2], true);
-                                if (battle.MyPlayers.Count > 3)
-                                {
-                                    plLose4.SetPlayer(battle.MyPlayers[3], true);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            // Fade out loading
-            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
-            bdLoading.IsHitTestVisible = false;
-        }
-
-        private void BattleNotifying()
-        {
-            if (Depot.Notification)
-            {
-                Battle battle = Depot.Battle;
-                // Send battle notification
-                DateTime endTime = battle.StartTime.AddSeconds(battle.ElapsedTime);
-                double diffTime = (DateTime.Now - endTime).TotalSeconds;
-                if (diffTime <= 300)
-                {
-                    // Format title
-                    string title;
-                    if (battle.IsWin)
-                    {
-                        title = string.Format(Translate("{0}_(No._{1})", true), Translate("win", true), Translate(battle.Number.ToString()));
-                    }
-                    else
-                    {
-                        title = string.Format(Translate("{0}_(No._{1})", true), Translate("lose", true), Translate(battle.Number.ToString()));
-                    }
-                    // Format content
-                    string content = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Stage.Id.ToString()), battle.StartTime.ToString("yyyy/M/dd HH:mm"));
-                    // Format progressTitle
-                    string scoreTitle = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Mode.ToString()), Translate(battle.Rule.ToString()));
-                    // Format status and value string
-                    string myScore, otherScore;
-                    switch (battle.Type)
-                    {
-                        case Mode.Key.regular_battle:
-                        case Mode.Key.splatfest:
-                            myScore = string.Format("{0}{1}", battle.MyScore, Translate("%", true));
-                            otherScore = string.Format("{0}{1}", battle.OtherScore, Translate("%", true));
-                            break;
-                        case Mode.Key.ranked_battle:
-                            if ((battle as RankedBattle).IsKo)
-                            {
-                                myScore = Translate("knock_out", true);
-                                otherScore = string.Format(Translate("{0}_count", true), battle.OtherScore);
-                            }
-                            else if ((battle as RankedBattle).IsBeKoed)
-                            {
-                                myScore = string.Format(Translate("{0}_count", true), battle.MyScore);
-                                otherScore = Translate("knock_out", true);
-                            }
-                            else
-                            {
-                                myScore = string.Format(Translate("{0}_count", true), battle.MyScore);
-                                otherScore = string.Format(Translate("{0}_count", true), battle.OtherScore);
-                            }
-                            break;
-                        case Mode.Key.league_battle:
-                            if ((battle as LeagueBattle).IsKo)
-                            {
-                                myScore = Translate("knock_out", true);
-                                otherScore = string.Format(Translate("{0}_count", true), battle.OtherScore);
-                            }
-                            else if ((battle as LeagueBattle).IsBeKoed)
-                            {
-                                myScore = string.Format(Translate("{0}_count", true), battle.MyScore);
-                                otherScore = Translate("knock_out", true);
-                            }
-                            else
-                            {
-                                myScore = string.Format(Translate("{0}_count", true), battle.MyScore);
-                                otherScore = string.Format(Translate("{0}_count", true), battle.OtherScore);
-                            }
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                    // Get player icon
-                    Player player = battle.SelfPlayer;
-                    string image = FileFolderUrl.ApplicationData + FileFolderUrl.IconFolder + @"\" + System.IO.Path.GetFileName(player.Image) + ".jpg";
-                    try
-                    {
-                        // Show notification
-                        NotificationHelper.SendBattleNotification(title, content, scoreTitle, myScore, otherScore, battle.ScoreRatio, image);
                     }
                     catch
                     {
                         // Download the image
-                        Downloader downloader = new Downloader(player.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
                         DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            if (player != null)
-                            {
-                                if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(player.Image) + ".jpg")
-                                {
-                                    // Show notification
-                                    NotificationHelper.SendBattleNotification(title, content, scoreTitle, myScore, otherScore, battle.ScoreRatio, image);
-                                }
-                            }
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                            brush.Stretch = Stretch.UniformToFill;
+                            stg.Background = brush;
+                            stg.SetResourceReference(StageControl.ContentProperty, stage.Id.ToString());
+                            ((Storyboard)FindResource("fade_in")).Begin(stg);
                         }));
                     }
+                    // Update players
+                    if (Battle.IsWin)
+                    {
+                        if (Battle.MyPlayers.Count > 0)
+                        {
+                            plWin1.SetPlayer(Battle.MyPlayers[0], true);
+                            if (Battle.MyPlayers.Count > 1)
+                            {
+                                plWin2.SetPlayer(Battle.MyPlayers[1], true);
+                                if (Battle.MyPlayers.Count > 2)
+                                {
+                                    plWin3.SetPlayer(Battle.MyPlayers[2], true);
+                                    if (Battle.MyPlayers.Count > 3)
+                                    {
+                                        plWin4.SetPlayer(Battle.MyPlayers[3], true);
+                                    }
+                                }
+                            }
+                        }
+                        if (Battle.OtherPlayers.Count > 0)
+                        {
+                            plLose1.SetPlayer(Battle.OtherPlayers[0], false);
+                            if (Battle.OtherPlayers.Count > 1)
+                            {
+                                plLose2.SetPlayer(Battle.OtherPlayers[1], false);
+                                if (Battle.OtherPlayers.Count > 2)
+                                {
+                                    plLose3.SetPlayer(Battle.OtherPlayers[2], false);
+                                    if (Battle.OtherPlayers.Count > 3)
+                                    {
+                                        plLose4.SetPlayer(Battle.OtherPlayers[3], false);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (Battle.OtherPlayers.Count > 0)
+                        {
+                            plWin1.SetPlayer(Battle.OtherPlayers[0], false);
+                            if (Battle.OtherPlayers.Count > 1)
+                            {
+                                plWin2.SetPlayer(Battle.OtherPlayers[1], false);
+                                if (Battle.OtherPlayers.Count > 2)
+                                {
+                                    plWin3.SetPlayer(Battle.OtherPlayers[2], false);
+                                    if (Battle.OtherPlayers.Count > 3)
+                                    {
+                                        plWin4.SetPlayer(Battle.OtherPlayers[3], false);
+                                    }
+                                }
+                            }
+                        }
+                        if (Battle.MyPlayers.Count > 0)
+                        {
+                            plLose1.SetPlayer(Battle.MyPlayers[0], true);
+                            if (Battle.MyPlayers.Count > 1)
+                            {
+                                plLose2.SetPlayer(Battle.MyPlayers[1], true);
+                                if (Battle.MyPlayers.Count > 2)
+                                {
+                                    plLose3.SetPlayer(Battle.MyPlayers[2], true);
+                                    if (Battle.MyPlayers.Count > 3)
+                                    {
+                                        plLose4.SetPlayer(Battle.MyPlayers[3], true);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
+                // Fade out loading
+                ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+                bdLoading.IsHitTestVisible = false;
             }
+        }
+
+        public void StartLoading()
+        {
+            // Fade in loading
+            bdLoading.IsHitTestVisible = true;
+            ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
+        }
+
+        public void StopLoading()
+        {
+            // Fade out loading
+            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+            bdLoading.IsHitTestVisible = false;
         }
 
         private string Translate(string s, bool isLocal = false)

@@ -32,7 +32,7 @@ namespace Ikas
             }
         }
 
-        public Shift ShiftLocal;
+        public Shift Shift;
 
         private WeaponWindow weaponWindow;
 
@@ -163,17 +163,17 @@ namespace Ikas
             }
             Resources.MergedDictionaries.Add(lang);
             // Force refresh labels
-            if (ShiftLocal != null)
+            if (Shift != null)
             {
-                if (ShiftLocal.Stages.Count > 0)
+                if (Shift.Stages.Count > 0)
                 {
-                    ShiftStage stage = ShiftLocal.Stages[0];
+                    ShiftStage stage = Shift.Stages[0];
                     DateTime startTime = stage.StartTime.ToLocalTime();
                     DateTime endTime = stage.EndTime.ToLocalTime();
                     lbTime1.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("M/dd HH:mm"), endTime.ToString("M/dd HH:mm"));
-                    if (ShiftLocal.Stages.Count > 1)
+                    if (Shift.Stages.Count > 1)
                     {
-                        ShiftStage stage2 = ShiftLocal.Stages[1];
+                        ShiftStage stage2 = Shift.Stages[1];
                         startTime = stage2.StartTime.ToLocalTime();
                         endTime = stage2.EndTime.ToLocalTime();
                         lbTime2.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("M/dd HH:mm"), endTime.ToString("M/dd HH:mm"));
@@ -184,7 +184,7 @@ namespace Ikas
 
         public void SetShift(Shift shift)
         {
-            ShiftLocal = shift;
+            Shift = shift;
             // Fade in loading
             bdLoading.IsHitTestVisible = true;
             ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
@@ -207,12 +207,12 @@ namespace Ikas
             wp22.SetWeapon(null);
             wp23.SetWeapon(null);
             wp24.SetWeapon(null);
-            if (ShiftLocal != null)
+            if (Shift != null)
             {
                 // Update shift
-                if (ShiftLocal.Stages.Count > 0)
+                if (Shift.Stages.Count > 0)
                 {
-                    if (ShiftLocal.IsOpen)
+                    if (Shift.IsOpen)
                     {
                         tagOpenOrSoon.SetResourceReference(TagControl.ContentProperty, "shift_window-open");
                     }
@@ -225,7 +225,7 @@ namespace Ikas
                     ((Storyboard)FindResource("fade_in")).Begin(lbMode);
                     ((Storyboard)FindResource("fade_in")).Begin(tagOpenOrSoon);
                     ((Storyboard)FindResource("fade_in")).Begin(tagNext);
-                    ShiftStage stage = ShiftLocal.Stages[0];
+                    ShiftStage stage = Shift.Stages[0];
                     DateTime startTime = stage.StartTime.ToLocalTime();
                     DateTime endTime = stage.EndTime.ToLocalTime();
                     lbTime1.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("M/dd HH:mm"), endTime.ToString("M/dd HH:mm"));
@@ -271,10 +271,10 @@ namespace Ikas
                             }
                         }
                     }
-                    if (ShiftLocal.Stages.Count > 1)
+                    if (Shift.Stages.Count > 1)
                     {
                         // Update next shift
-                        ShiftStage stage2 = ShiftLocal.Stages[1];
+                        ShiftStage stage2 = Shift.Stages[1];
                         startTime = stage2.StartTime.ToLocalTime();
                         endTime = stage2.EndTime.ToLocalTime();
                         lbTime2.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("M/dd HH:mm"), endTime.ToString("M/dd HH:mm"));
@@ -328,7 +328,7 @@ namespace Ikas
             }
         }
 
-        public void SetShiftFailed()
+        public void StopLoading()
         {
             // Fade out loading
             ((Storyboard)FindResource("fade_out")).Begin(bdLoading);

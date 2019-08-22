@@ -79,7 +79,11 @@ namespace Ikas
             Depot.ShiftChanged += new ContentChangedEventHandler(ShiftChanged);
             Depot.ShiftUpdated += new ContentUpdatedEventHandler(ShiftUpdated);
             Depot.ShiftFailed += new ContentFailedEventHandler(ShiftFailed);
+            Depot.BattleChanged += new ContentChangedEventHandler(BattleChanged);
+            Depot.BattleFound += new ContentFoundEventHandler(BattleFound);
+            Depot.BattleUpdated += new ContentUpdatedEventHandler(BattleUpdated);
             Depot.BattleFailed += new ContentFailedEventHandler(BattleFailed);
+            Depot.BattleNotifying += new ContentNotifyingHandler(BattleNotifying);
             Depot.JobFailed += new ContentFailedEventHandler(JobFailed);
             Depot.CookieUpdated += new CookieUpdatedEventHandler(CookieUpdated);
             // Prepare windows
@@ -596,8 +600,8 @@ namespace Ikas
                 Translate(error.ToString()),
                 Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ),"Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-            // Set schedule
-            scheduleWindow.SetScheduleFailed();
+            // Stop loading
+            scheduleWindow.StopLoading();
         }
 
         private void ShiftChanged()
@@ -733,8 +737,26 @@ namespace Ikas
                 Translate(error.ToString()),
                 Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
-            // Set shift
-            shiftWindow.SetShiftFailed();
+            // Stop loading
+            shiftWindow.StopLoading();
+        }
+
+        private void BattleChanged()
+        {
+            // Start loading
+            battleWindow.StartLoading();
+        }
+
+        private void BattleFound()
+        {
+            // Set battle
+            battleWindow.SetBattle(null);
+        }
+
+        private void BattleUpdated()
+        {
+            // Set battle
+            battleWindow.SetBattle(Depot.Battle);
         }
 
         private void BattleFailed(Base.ErrorType error)
@@ -745,6 +767,106 @@ namespace Ikas
                 Translate(error.ToString()),
                 Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+            // Stop loading
+            battleWindow.StopLoading();
+        }
+
+        private void BattleNotifying()
+        {
+            if (Depot.Notification)
+            {
+                Battle battle = Depot.Battle;
+                // Send battle notification
+                DateTime endTime = battle.StartTime.AddSeconds(battle.ElapsedTime);
+                double diffTime = (DateTime.Now - endTime).TotalSeconds;
+                if (diffTime <= 300)
+                {
+                    // Format title
+                    string title;
+                    if (battle.IsWin)
+                    {
+                        title = string.Format(Translate("{0}_(No._{1})", true), Translate("win", true), Translate(battle.Number.ToString()));
+                    }
+                    else
+                    {
+                        title = string.Format(Translate("{0}_(No._{1})", true), Translate("lose", true), Translate(battle.Number.ToString()));
+                    }
+                    // Format content
+                    string content = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Stage.Id.ToString()), battle.StartTime.ToString("yyyy/M/dd HH:mm"));
+                    // Format progressTitle
+                    string scoreTitle = string.Format(Translate("{0}_-_{1}", true), Translate(battle.Mode.ToString()), Translate(battle.Rule.ToString()));
+                    // Format status and value string
+                    string myScore, otherScore;
+                    switch (battle.Type)
+                    {
+                        case Mode.Key.regular_battle:
+                        case Mode.Key.splatfest:
+                            myScore = string.Format("{0}{1}", battle.MyScore, Translate("%", true));
+                            otherScore = string.Format("{0}{1}", battle.OtherScore, Translate("%", true));
+                            break;
+                        case Mode.Key.ranked_battle:
+                            if ((battle as RankedBattle).IsKo)
+                            {
+                                myScore = Translate("knock_out", true);
+                                otherScore = string.Format(Translate("{0}_count", true), battle.OtherScore);
+                            }
+                            else if ((battle as RankedBattle).IsBeKoed)
+                            {
+                                myScore = string.Format(Translate("{0}_count", true), battle.MyScore);
+                                otherScore = Translate("knock_out", true);
+                            }
+                            else
+                            {
+                                myScore = string.Format(Translate("{0}_count", true), battle.MyScore);
+                                otherScore = string.Format(Translate("{0}_count", true), battle.OtherScore);
+                            }
+                            break;
+                        case Mode.Key.league_battle:
+                            if ((battle as LeagueBattle).IsKo)
+                            {
+                                myScore = Translate("knock_out", true);
+                                otherScore = string.Format(Translate("{0}_count", true), battle.OtherScore);
+                            }
+                            else if ((battle as LeagueBattle).IsBeKoed)
+                            {
+                                myScore = string.Format(Translate("{0}_count", true), battle.MyScore);
+                                otherScore = Translate("knock_out", true);
+                            }
+                            else
+                            {
+                                myScore = string.Format(Translate("{0}_count", true), battle.MyScore);
+                                otherScore = string.Format(Translate("{0}_count", true), battle.OtherScore);
+                            }
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    // Get player icon
+                    Player player = battle.SelfPlayer;
+                    string image = FileFolderUrl.ApplicationData + FileFolderUrl.IconFolder + @"\" + System.IO.Path.GetFileName(player.Image) + ".jpg";
+                    try
+                    {
+                        // Show notification
+                        NotificationHelper.SendBattleNotification(title, content, scoreTitle, myScore, otherScore, battle.ScoreRatio, image);
+                    }
+                    catch
+                    {
+                        // Download the image
+                        Downloader downloader = new Downloader(player.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        {
+                            if (player != null)
+                            {
+                                if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(player.Image) + ".jpg")
+                                {
+                                    // Show notification
+                                    NotificationHelper.SendBattleNotification(title, content, scoreTitle, myScore, otherScore, battle.ScoreRatio, image);
+                                }
+                            }
+                        }));
+                    }
+                }
+            }
         }
 
         private void JobFailed(Base.ErrorType error)
