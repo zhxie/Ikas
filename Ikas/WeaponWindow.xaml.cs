@@ -99,6 +99,8 @@ namespace Ikas
                 Resources.MergedDictionaries.Clear();
             }
             Resources.MergedDictionaries.Add(lang);
+            // Force refresh labels
+            SetWeapon(Weapon, IsMy);
         }
 
         public void SetWeapon(Weapon weapon, bool isMy)

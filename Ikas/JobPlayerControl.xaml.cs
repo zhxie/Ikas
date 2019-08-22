@@ -45,6 +45,8 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(imgOctolingsSave, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(imgInklingsDead, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(imgOctolingsDead, BitmapScalingMode.HighQuality);
+            // Add handler for global member
+            Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
         }
 
         #region Control Event
@@ -80,6 +82,18 @@ namespace Ikas
         }
 
         #endregion
+
+        private void LanguageChanged()
+        {
+            ResourceDictionary lang = (ResourceDictionary)Application.LoadComponent(new Uri(@"assets/lang/" + Depot.Language + ".xaml", UriKind.Relative));
+            if (Resources.MergedDictionaries.Count > 0)
+            {
+                Resources.MergedDictionaries.Clear();
+            }
+            Resources.MergedDictionaries.Add(lang);
+            // Force refresh labels
+            SetPlayer(Player, IsMy);
+        }
 
         public void SetPlayer(JobPlayer player, bool isMy)
         {

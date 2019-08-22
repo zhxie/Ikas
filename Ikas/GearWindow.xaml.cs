@@ -97,6 +97,8 @@ namespace Ikas
                 Resources.MergedDictionaries.Clear();
             }
             Resources.MergedDictionaries.Add(lang);
+            // Force refresh labels
+            SetGear(Gear);
         }
 
         public void SetGear(Gear gear)

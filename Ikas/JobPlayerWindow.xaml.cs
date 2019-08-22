@@ -102,6 +102,8 @@ namespace Ikas
                 Resources.MergedDictionaries.Clear();
             }
             Resources.MergedDictionaries.Add(lang);
+            // Force refresh labels
+            SetPlayer(Player, Job);
         }
 
         public void SetPlayer(JobPlayer player, Job job)
@@ -111,15 +113,15 @@ namespace Ikas
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(tbName);
             ((Storyboard)FindResource("fade_out")).Begin(bdIcon);
-            salGoldie.SetKill(Salmoniod.Key.goldie);
-            salSteelhead.SetKill(Salmoniod.Key.steelhead);
-            salFlyfish.SetKill(Salmoniod.Key.flyfish);
-            salScrapper.SetKill(Salmoniod.Key.scrapper);
-            salSteelEel.SetKill(Salmoniod.Key.steel_eel);
-            salStinger.SetKill(Salmoniod.Key.stinger);
-            salMaws.SetKill(Salmoniod.Key.maws);
-            salGriller.SetKill(Salmoniod.Key.griller2);
-            salDrizzler.SetKill(Salmoniod.Key.drizzler);
+            salGoldie.SetSalmoniod(Salmoniod.Key.goldie);
+            salSteelhead.SetSalmoniod(Salmoniod.Key.steelhead);
+            salFlyfish.SetSalmoniod(Salmoniod.Key.flyfish);
+            salScrapper.SetSalmoniod(Salmoniod.Key.scrapper);
+            salSteelEel.SetSalmoniod(Salmoniod.Key.steel_eel);
+            salStinger.SetSalmoniod(Salmoniod.Key.stinger);
+            salMaws.SetSalmoniod(Salmoniod.Key.maws);
+            salGriller.SetSalmoniod(Salmoniod.Key.griller2);
+            salDrizzler.SetSalmoniod(Salmoniod.Key.drizzler);
             if (Player != null && Job != null)
             {
                 // Update player
@@ -149,15 +151,15 @@ namespace Ikas
                     }));
                 }
                 // Update salmoniods
-                salGoldie.SetKill(Salmoniod.Key.goldie, Player, Job);
-                salSteelhead.SetKill(Salmoniod.Key.steelhead, Player, Job);
-                salFlyfish.SetKill(Salmoniod.Key.flyfish, Player, Job);
-                salScrapper.SetKill(Salmoniod.Key.scrapper, Player, Job);
-                salSteelEel.SetKill(Salmoniod.Key.steel_eel, Player, Job);
-                salStinger.SetKill(Salmoniod.Key.stinger, Player, Job);
-                salMaws.SetKill(Salmoniod.Key.maws, Player, Job);
-                salGriller.SetKill(Salmoniod.Key.griller2, Player, Job);
-                salDrizzler.SetKill(Salmoniod.Key.drizzler, Player, Job);
+                salGoldie.SetSalmoniod(Salmoniod.Key.goldie, Player, Job);
+                salSteelhead.SetSalmoniod(Salmoniod.Key.steelhead, Player, Job);
+                salFlyfish.SetSalmoniod(Salmoniod.Key.flyfish, Player, Job);
+                salScrapper.SetSalmoniod(Salmoniod.Key.scrapper, Player, Job);
+                salSteelEel.SetSalmoniod(Salmoniod.Key.steel_eel, Player, Job);
+                salStinger.SetSalmoniod(Salmoniod.Key.stinger, Player, Job);
+                salMaws.SetSalmoniod(Salmoniod.Key.maws, Player, Job);
+                salGriller.SetSalmoniod(Salmoniod.Key.griller2, Player, Job);
+                salDrizzler.SetSalmoniod(Salmoniod.Key.drizzler, Player, Job);
             }
         }
 

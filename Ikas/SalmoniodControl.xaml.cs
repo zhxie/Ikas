@@ -34,6 +34,8 @@ namespace Ikas
         }
 
         public Salmoniod.Key Salmoniod = Class.Salmoniod.Key.salmoniod_unknown;
+        public JobPlayer Player;
+        public Job Job;
 
         public SalmoniodControl()
         {
@@ -85,8 +87,8 @@ namespace Ikas
                 Resources.MergedDictionaries.Clear();
             }
             Resources.MergedDictionaries.Add(lang);
-            // Force refresh label
-            lbName.Content = Translate(Salmoniod.ToString());
+            // Force refresh labels
+            SetSalmoniod(Salmoniod, Player, Job);
         }
 
         public void SetImage(Salmoniod.Key id)
@@ -126,19 +128,22 @@ namespace Ikas
             }
         }
 
-        public void SetKill(Salmoniod.Key id, JobPlayer player = null, Job job = null)
+        public void SetSalmoniod(Salmoniod.Key salmoniod, JobPlayer player = null, Job job = null)
         {
+            Salmoniod = salmoniod;
+            Player = player;
+            Job = job;
             ((Storyboard)FindResource("fade_out")).Begin(gridMain);
             Storyboard sb = (Storyboard)FindResource("resize_width");
             (sb.Children[0] as DoubleAnimation).To = 0;
             sb.Begin(bdRatio);
             ((Storyboard)FindResource("fade_out")).Begin(bdRatio);
-            if (player != null && job != null)
+            if (Salmoniod != Class.Salmoniod.Key.salmoniod_unknown && Player != null && Job != null)
             {
                 lbName.Content = Translate(Salmoniod.ToString());
-                int kill = player.SalmoniodKills.Find(p => p.Salmoniod == id).Count;
-                int jobKill = job.GetSalmoniodKill(id);
-                int jobCount = job.SalmoniodAppearances.Find(p => p.Salmoniod == id).Count;
+                int kill = Player.SalmoniodKills.Find(p => p.Salmoniod == Salmoniod).Count;
+                int jobKill = Job.GetSalmoniodKill(Salmoniod);
+                int jobCount = Job.SalmoniodAppearances.Find(p => p.Salmoniod == Salmoniod).Count;
                 if (jobKill == jobCount && jobKill != 0)
                 {
                     lbName.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonYellow));
