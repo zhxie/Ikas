@@ -156,7 +156,7 @@ namespace Ikas
                 if (Player.Level >= 100)
                 {
                     tbLevel.Text = (Player.Level - 100 * Player.Star).ToString();
-                    tbStar.SetResourceReference(TextBlock.TextProperty, "player_control-★");
+                    tbStar.SetResourceReference(Run.TextProperty, "player_control-★");
                     tbRank.Text = "";
                 }
                 else
