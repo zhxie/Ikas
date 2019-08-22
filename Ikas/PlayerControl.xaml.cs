@@ -161,7 +161,7 @@ namespace Ikas
                 }
                 else
                 {
-                    tbLevel.SetResourceReference(TextBlock.TextProperty, Player.Level.ToString());
+                    tbLevel.Text = Player.Level.ToString();
                     tbStar.Text = "";
                     tbRank.Text = "";
                 }
@@ -169,7 +169,7 @@ namespace Ikas
                 ((Storyboard)FindResource("fade_out")).Begin(lbRank);
                 if (Player is RankedPlayer)
                 {
-                    tbRank.Text = Translate((Player as RankedPlayer).Rank.ToString());
+                    tbRank.SetResourceReference(TextBlock.TextProperty, (Player as RankedPlayer).Rank.ToString());
                     ((Storyboard)FindResource("fade_in")).Begin(lbRank);
                     ((Storyboard)FindResource("fade_out")).Begin(lbLevel);
                 }
