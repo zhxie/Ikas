@@ -24,6 +24,9 @@ namespace Ikas
     /// </summary>
     public partial class ScheduleWindow : Window
     {
+        public Schedule Schedule;
+        public Mode.Key Mode;
+
         private DispatcherTimer tmLoading;
         private int loadingRotationAngle;
 
@@ -53,9 +56,6 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(stgNext2, BitmapScalingMode.HighQuality);
             // Add handler for global member
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
-            Depot.ScheduleChanged += new ContentChangedEventHandler(ScheduleChanged);
-            Depot.ScheduleUpdated += new ContentUpdatedEventHandler(ScheduleUpdated);
-            Depot.CookieUpdated += new CookieUpdatedEventHandler(CookieUpdated);
             // Create timers
             loadingRotationAngle = 0;
             tmLoading = new DispatcherTimer();
@@ -116,10 +116,36 @@ namespace Ikas
                 Resources.MergedDictionaries.Clear();
             }
             Resources.MergedDictionaries.Add(lang);
+            // Force refresh labels
+            if (Schedule != null)
+            {
+                List<ScheduledStage> scheduledStages = Schedule.GetStages(Mode);
+                if (scheduledStages.Count > 0)
+                {
+                    DateTime startTime = Schedule.EndTime.AddHours(-2).ToLocalTime();
+                    DateTime endTime = Schedule.EndTime.ToLocalTime();
+                    lbTime.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("HH:mm"), endTime.ToString("HH:mm"));
+                }
+                List<ScheduledStage> nextScheduledStages = Schedule.GetNextStages(Mode);
+                if (nextScheduledStages.Count > 0)
+                {
+                    TimeSpan dTime = Schedule.EndTime - DateTime.UtcNow;
+                    if (dTime.Hours > 0)
+                    {
+                        lbNextTime.Content = string.Format(Translate("in_{0}_hour_{1}_min", true), dTime.Hours, dTime.Minutes);
+                    }
+                    else
+                    {
+                        lbNextTime.Content = string.Format(Translate("in_{0}_min", true), dTime.Minutes);
+                    }
+                }
+            }
         }
 
-        private void ScheduleChanged()
+        public void SetSchedule(Schedule schedule, Mode.Key mode)
         {
+            Schedule = schedule;
+            Mode = mode;
             // Fade in loading
             bdLoading.IsHitTestVisible = true;
             ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
@@ -135,187 +161,170 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(lbNextTime);
             ((Storyboard)FindResource("fade_out")).Begin(stgNext1);
             ((Storyboard)FindResource("fade_out")).Begin(stgNext2);
-        }
-
-        private void ScheduleUpdated()
-        {
-            Schedule schedule = Depot.Schedule;
-            Mode.Key mode = Mode.Key.regular_battle;
-            switch (Depot.CurrentMode)
+            if (Schedule != null)
             {
-                case Depot.Mode.regular_battle:
-                case Depot.Mode.salmon_run:
-                    mode = Mode.Key.regular_battle;
-                    break;
-                case Depot.Mode.ranked_battle:
-                    mode = Mode.Key.ranked_battle;
-                    break;
-                case Depot.Mode.league_battle:
-                    mode = Mode.Key.league_battle;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            // Update current Schedule
-            List<ScheduledStage> scheduledStages = schedule.GetStages(mode);
-            if (scheduledStages.Count > 0)
-            {
-                // Change UI
-                switch (mode)
+                // Update current Schedule
+                List<ScheduledStage> scheduledStages = Schedule.GetStages(Mode);
+                if (scheduledStages.Count > 0)
                 {
-                    case Mode.Key.regular_battle:
-                        imgMode.Source = (BitmapImage)FindResource("image_battle_regular");
-                        tagNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
-                        break;
-                    case Mode.Key.ranked_battle:
-                        imgMode.Source = (BitmapImage)FindResource("image_battle_ranked");
-                        tagNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
-                        break;
-                    case Mode.Key.league_battle:
-                        imgMode.Source = (BitmapImage)FindResource("image_battle_league");
-                        tagNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-                lbMode.Content = Translate(scheduledStages[0].Mode.ToString());
-                lbRule.Content = Translate(scheduledStages[0].Rule.ToString());
-                DateTime startTime = schedule.EndTime.AddHours(-2).ToLocalTime();
-                DateTime endTime = schedule.EndTime.ToLocalTime();
-                lbTime.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("HH:mm"), endTime.ToString("HH:mm"));
-                // Fade in labels
-                ((Storyboard)FindResource("fade_in")).Begin(imgMode);
-                ((Storyboard)FindResource("fade_in")).Begin(lbMode);
-                ((Storyboard)FindResource("fade_in")).Begin(lbRule);
-                ((Storyboard)FindResource("fade_in")).Begin(lbTime);
-                ((Storyboard)FindResource("fade_in")).Begin(tagNext);
-                // Update stages
-                Stage stage = scheduledStages[0];
-                string image = FileFolderUrl.ApplicationData + stage.Image;
-                try
-                {
-                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                    brush.Stretch = Stretch.UniformToFill;
-                    stg1.Background = brush;
-                    stg1.Content = Translate(stage.Id.ToString());
-                    ((Storyboard)FindResource("fade_in")).Begin(stg1);
-                }
-                catch
-                {
-                    // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
-                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    // Change UI
+                    switch (Mode)
+                    {
+                        case Class.Mode.Key.regular_battle:
+                            imgMode.Source = (BitmapImage)FindResource("image_battle_regular");
+                            tagNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));
+                            break;
+                        case Class.Mode.Key.ranked_battle:
+                            imgMode.Source = (BitmapImage)FindResource("image_battle_ranked");
+                            tagNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonOrange));
+                            break;
+                        case Class.Mode.Key.league_battle:
+                            imgMode.Source = (BitmapImage)FindResource("image_battle_league");
+                            tagNext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonRed));
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    lbMode.SetResourceReference(ContentProperty, scheduledStages[0].Mode.ToString());
+                    lbRule.SetResourceReference(ContentProperty, scheduledStages[0].Rule.ToString());
+                    DateTime startTime = Schedule.EndTime.AddHours(-2).ToLocalTime();
+                    DateTime endTime = Schedule.EndTime.ToLocalTime();
+                    lbTime.Content = string.Format(Translate("{0}_-_{1}", true), startTime.ToString("HH:mm"), endTime.ToString("HH:mm"));
+                    // Fade in labels
+                    ((Storyboard)FindResource("fade_in")).Begin(imgMode);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbMode);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbRule);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbTime);
+                    ((Storyboard)FindResource("fade_in")).Begin(tagNext);
+                    // Update stages
+                    Stage stage = scheduledStages[0];
+                    string image = FileFolderUrl.ApplicationData + stage.Image;
+                    try
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
                         stg1.Background = brush;
-                        stg1.Content = Translate(stage.Id.ToString());
+                        stg1.SetResourceReference(StageControl.ContentProperty, stage.Id.ToString());
                         ((Storyboard)FindResource("fade_in")).Begin(stg1);
-                    }));
-                }
-                if (scheduledStages.Count > 1)
-                {
-                    Stage stage2 = scheduledStages[1];
-                    string image2 = FileFolderUrl.ApplicationData + stage2.Image;
-                    try
-                    {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
-                        brush.Stretch = Stretch.UniformToFill;
-                        stg2.Background = brush;
-                        stg2.Content = Translate(stage2.Id.ToString());
-                        ((Storyboard)FindResource("fade_in")).Begin(stg2);
                     }
                     catch
                     {
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
+                        // Download the image
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
                         DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        {
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                            brush.Stretch = Stretch.UniformToFill;
+                            stg1.Background = brush;
+                            stg1.SetResourceReference(StageControl.ContentProperty, stage.Id.ToString());
+                            ((Storyboard)FindResource("fade_in")).Begin(stg1);
+                        }));
+                    }
+                    if (scheduledStages.Count > 1)
+                    {
+                        Stage stage2 = scheduledStages[1];
+                        string image2 = FileFolderUrl.ApplicationData + stage2.Image;
+                        try
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                             brush.Stretch = Stretch.UniformToFill;
                             stg2.Background = brush;
-                            stg2.Content = Translate(stage2.Id.ToString());
+                            stg2.SetResourceReference(StageControl.ContentProperty, stage2.Id.ToString());
                             ((Storyboard)FindResource("fade_in")).Begin(stg2);
-                        }));
+                        }
+                        catch
+                        {
+                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
+                            DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                            {
+                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
+                                brush.Stretch = Stretch.UniformToFill;
+                                stg2.Background = brush;
+                                stg2.SetResourceReference(StageControl.ContentProperty, stage2.Id.ToString());
+                                ((Storyboard)FindResource("fade_in")).Begin(stg2);
+                            }));
+                        }
                     }
                 }
-            }
-            // Update next schedule
-            List<ScheduledStage> nextScheduledStages = schedule.GetNextStages(mode);
-            if (nextScheduledStages.Count > 0)
-            {
-                // Change UI
-                lbNextRule.Content = Translate(nextScheduledStages[0].Rule.ToString());
-                TimeSpan dTime = schedule.EndTime - DateTime.UtcNow;
-                if (dTime.Hours > 0)
+                // Update next schedule
+                List<ScheduledStage> nextScheduledStages = Schedule.GetNextStages(Mode);
+                if (nextScheduledStages.Count > 0)
                 {
-                    lbNextTime.Content = string.Format(Translate("in_{0}_hour_{1}_min", true), dTime.Hours, dTime.Minutes);
-                }
-                else
-                {
-                    lbNextTime.Content = string.Format(Translate("in_{0}_min", true), dTime.Minutes);
-                }
-                // Fade in labels
-                ((Storyboard)FindResource("fade_in")).Begin(lbNextRule);
-                ((Storyboard)FindResource("fade_in")).Begin(lbNextTime);
-                // Update Stages
-                Stage stage = nextScheduledStages[0];
-                string image = FileFolderUrl.ApplicationData + stage.Image;
-                try
-                {
-                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                    brush.Stretch = Stretch.UniformToFill;
-                    stgNext1.Background = brush;
-                    stgNext1.Content = Translate(stage.Id.ToString());
-                    ((Storyboard)FindResource("fade_in")).Begin(stgNext1);
-                }
-                catch
-                {
-                    // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
-                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    // Change UI
+                    lbNextRule.SetResourceReference(ContentProperty, nextScheduledStages[0].Rule.ToString());
+                    TimeSpan dTime = Schedule.EndTime - DateTime.UtcNow;
+                    if (dTime.Hours > 0)
+                    {
+                        lbNextTime.Content = string.Format(Translate("in_{0}_hour_{1}_min", true), dTime.Hours, dTime.Minutes);
+                    }
+                    else
+                    {
+                        lbNextTime.Content = string.Format(Translate("in_{0}_min", true), dTime.Minutes);
+                    }
+                    // Fade in labels
+                    ((Storyboard)FindResource("fade_in")).Begin(lbNextRule);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbNextTime);
+                    // Update Stages
+                    Stage stage = nextScheduledStages[0];
+                    string image = FileFolderUrl.ApplicationData + stage.Image;
+                    try
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
                         stgNext1.Background = brush;
-                        stgNext1.Content = Translate(stage.Id.ToString());
+                        stgNext1.SetResourceReference(StageControl.ContentProperty, stage.Id.ToString());
                         ((Storyboard)FindResource("fade_in")).Begin(stgNext1);
-                    }));
-                }
-                if (nextScheduledStages.Count > 1)
-                {
-                    Stage stage2 = nextScheduledStages[1];
-                    string image2 = FileFolderUrl.ApplicationData + stage2.Image;
-                    try
-                    {
-                        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
-                        brush.Stretch = Stretch.UniformToFill;
-                        stgNext2.Background = brush;
-                        stgNext2.Content = Translate(stage2.Id.ToString());
-                        ((Storyboard)FindResource("fade_in")).Begin(stgNext2);
                     }
                     catch
                     {
-                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
+                        // Download the image
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Schedule, Depot.Proxy);
                         DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        {
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                            brush.Stretch = Stretch.UniformToFill;
+                            stgNext1.Background = brush;
+                            stgNext1.SetResourceReference(StageControl.ContentProperty, stage.Id.ToString());
+                            ((Storyboard)FindResource("fade_in")).Begin(stgNext1);
+                        }));
+                    }
+                    if (nextScheduledStages.Count > 1)
+                    {
+                        Stage stage2 = nextScheduledStages[1];
+                        string image2 = FileFolderUrl.ApplicationData + stage2.Image;
+                        try
                         {
                             ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
                             brush.Stretch = Stretch.UniformToFill;
                             stgNext2.Background = brush;
-                            stgNext2.Content = Translate(stage2.Id.ToString());
+                            stgNext2.SetResourceReference(StageControl.ContentProperty, stage2.Id.ToString());
                             ((Storyboard)FindResource("fade_in")).Begin(stgNext2);
-                        }));
+                        }
+                        catch
+                        {
+                            Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage2.Image, image2, Downloader.SourceType.Schedule, Depot.Proxy);
+                            DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                            {
+                                ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image2)));
+                                brush.Stretch = Stretch.UniformToFill;
+                                stgNext2.Background = brush;
+                                stgNext2.SetResourceReference(StageControl.ContentProperty, stage2.Id.ToString());
+                                ((Storyboard)FindResource("fade_in")).Begin(stgNext2);
+                            }));
+                        }
                     }
                 }
+                // Fade out loading
+                ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+                bdLoading.IsHitTestVisible = false;
             }
+        }
+
+        public void SetScheduleFailed()
+        {
             // Fade out loading
             ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
             bdLoading.IsHitTestVisible = false;
-        }
-
-        private void CookieUpdated()
-        {
-            // Update schedule
-            Depot.ForceGetSchedule();
         }
 
         private string Translate(string s, bool isLocal = false)

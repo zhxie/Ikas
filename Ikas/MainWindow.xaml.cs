@@ -364,21 +364,24 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(lbLevel);
             ((Storyboard)FindResource("fade_out")).Begin(bdStage1);
             ((Storyboard)FindResource("fade_out")).Begin(bdStage2);
-        }
-
-        private void ShiftChanged()
-        {
-            // Fade out labels and images
-            if (Depot.CurrentMode == Depot.Mode.salmon_run)
+            // Set schedule
+            Mode.Key mode = Mode.Key.regular_battle;
+            switch (Depot.CurrentMode)
             {
-                lbLevel.IsHitTestVisible = false;
-                bdStage1.IsHitTestVisible = false;
-                bdStage2.IsHitTestVisible = false;
-                ((Storyboard)FindResource("fade_out")).Begin(spBattle);
-                ((Storyboard)FindResource("fade_out")).Begin(lbMode);
+                case Depot.Mode.regular_battle:
+                case Depot.Mode.salmon_run:
+                    mode = Mode.Key.regular_battle;
+                    break;
+                case Depot.Mode.ranked_battle:
+                    mode = Mode.Key.ranked_battle;
+                    break;
+                case Depot.Mode.league_battle:
+                    mode = Mode.Key.league_battle;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-            ((Storyboard)FindResource("fade_out")).Begin(lbGrade);
-            ((Storyboard)FindResource("fade_out")).Begin(bdShiftStage);
+            scheduleWindow.SetSchedule(null, mode);
         }
 
         private void ScheduleUpdated()
@@ -575,6 +578,8 @@ namespace Ikas
             {
                 tmSchedule.Interval = new TimeSpan(0, 0, 15);
             }
+            // Set schedule
+            scheduleWindow.SetSchedule(Depot.Schedule, mode);
         }
 
         private void ScheduleFailed(Base.ErrorType error)
@@ -591,6 +596,25 @@ namespace Ikas
                 Translate(error.ToString()),
                 Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ),"Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+            // Set schedule
+            scheduleWindow.SetScheduleFailed();
+        }
+
+        private void ShiftChanged()
+        {
+            // Fade out labels and images
+            if (Depot.CurrentMode == Depot.Mode.salmon_run)
+            {
+                lbLevel.IsHitTestVisible = false;
+                bdStage1.IsHitTestVisible = false;
+                bdStage2.IsHitTestVisible = false;
+                ((Storyboard)FindResource("fade_out")).Begin(spBattle);
+                ((Storyboard)FindResource("fade_out")).Begin(lbMode);
+            }
+            ((Storyboard)FindResource("fade_out")).Begin(lbGrade);
+            ((Storyboard)FindResource("fade_out")).Begin(bdShiftStage);
+            // Set shift
+            shiftWindow.SetShift(null);
         }
 
         private void ShiftUpdated()
@@ -691,6 +715,8 @@ namespace Ikas
             {
                 tmShift.Interval = new TimeSpan(0, 0, 15);
             }
+            // Set shift
+            shiftWindow.SetShift(Depot.Shift);
         }
 
         private void ShiftFailed(Base.ErrorType error)
@@ -707,6 +733,8 @@ namespace Ikas
                 Translate(error.ToString()),
                 Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+            // Set shift
+            shiftWindow.SetShiftFailed();
         }
 
         private void BattleFailed(Base.ErrorType error)
@@ -731,11 +759,14 @@ namespace Ikas
 
         private void CookieUpdated()
         {
-            // Automatic schedule and bsattle update
+            // Automatic schedule and battle update
             tmSchedule.Start();
             tmShift.Start();
             tmBattle.Start();
             tmJob.Start();
+            // Force update
+            Depot.ForceGetSchedule();
+            Depot.ForceGetShift();
         }
 
         private string Translate(string s, bool isLocal = false)
