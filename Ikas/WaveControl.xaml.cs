@@ -86,7 +86,12 @@ namespace Ikas
             }
             Resources.MergedDictionaries.Add(lang);
             // Force refresh labels
-            SetWave(Wave, Number);
+            if (Wave != null && Number > 0)
+            {
+                lbWave.Content = string.Format(Translate("wave_{0}", true), Number);
+                lbGoldenEgg.Content = string.Format(Translate("{0}/{1}", true), Wave.GoldenEgg, Wave.Quota);
+                lbGolderEggPop.Content = string.Format(Translate("x{0}", true), Wave.GoldenEggPop);
+            }
         }
 
         public void SetWave(Wave wave, int number = 0)
@@ -116,11 +121,11 @@ namespace Ikas
             if (Wave != null && Number > 0)
             {
                 lbWave.Content = string.Format(Translate("wave_{0}", true), Number);
-                lbResult.Content = Translate(Wave.Result.ToString());
+                lbResult.SetResourceReference(ContentProperty, Wave.Result.ToString());
                 lbGoldenEgg.Content = string.Format(Translate("{0}/{1}", true), Wave.GoldenEgg, Wave.Quota);
                 lbGolderEggPop.Content = string.Format(Translate("x{0}", true), Wave.GoldenEggPop);
-                lbTide.Content = Translate(Wave.WaterLevel.ToString());
-                lbEvent.Content = Translate(Wave.EventType.ToString());
+                lbTide.SetResourceReference(ContentProperty, Wave.WaterLevel.ToString());
+                lbEvent.SetResourceReference(ContentProperty, Wave.EventType.ToString());
                 if (wave.IsClear)
                 {
                     lbResult.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF" + Design.NeonGreen));

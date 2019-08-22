@@ -88,7 +88,14 @@ namespace Ikas
             }
             Resources.MergedDictionaries.Add(lang);
             // Force refresh labels
-            SetSalmoniod(Salmoniod, Player, Job);
+            if (Salmoniod != Class.Salmoniod.Key.salmoniod_unknown && Player != null && Job != null)
+            {
+                int kill = Player.SalmoniodKills.Find(p => p.Salmoniod == Salmoniod).Count;
+                int jobKill = Job.GetSalmoniodKill(Salmoniod);
+                int jobCount = Job.SalmoniodAppearances.Find(p => p.Salmoniod == Salmoniod).Count;
+                lbKill.Content = string.Format(Translate("x{0}/{1}/{2}", true), kill, jobKill, jobCount);
+                lbKillShort.Content = string.Format(Translate("x{0}", true), kill);
+            }
         }
 
         public void SetImage(Salmoniod.Key id)
@@ -140,7 +147,7 @@ namespace Ikas
             ((Storyboard)FindResource("fade_out")).Begin(bdRatio);
             if (Salmoniod != Class.Salmoniod.Key.salmoniod_unknown && Player != null && Job != null)
             {
-                lbName.Content = Translate(Salmoniod.ToString());
+                lbName.SetResourceReference(ContentProperty, Salmoniod.ToString());
                 int kill = Player.SalmoniodKills.Find(p => p.Salmoniod == Salmoniod).Count;
                 int jobKill = Job.GetSalmoniodKill(Salmoniod);
                 int jobCount = Job.SalmoniodAppearances.Find(p => p.Salmoniod == Salmoniod).Count;

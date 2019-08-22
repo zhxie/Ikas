@@ -117,7 +117,14 @@ namespace Ikas
             }
             Resources.MergedDictionaries.Add(lang);
             // Force refresh labels
-            SetPlayer(Player, IsMy);
+            if (Player != null)
+            {
+                lbPaint.Content = string.Format(Translate("{0}p", true), Player.Paint.ToString());
+                if (Player.Assist > 0)
+                {
+                    tbAssist.Text = string.Format(Translate("({0})", true), Player.Assist);
+                }
+            }
         }
 
         public void SetPlayer(Player player, bool isMy)
@@ -149,12 +156,12 @@ namespace Ikas
                 if (Player.Level >= 100)
                 {
                     tbLevel.Text = (Player.Level - 100 * Player.Star).ToString();
-                    tbStar.Text = Translate("★", true);
+                    tbStar.SetResourceReference(TextBlock.TextProperty, "player_control-★");
                     tbRank.Text = "";
                 }
                 else
                 {
-                    tbLevel.Text = Player.Level.ToString();
+                    tbLevel.SetResourceReference(TextBlock.TextProperty, Player.Level.ToString());
                     tbStar.Text = "";
                     tbRank.Text = "";
                 }

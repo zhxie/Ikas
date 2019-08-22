@@ -102,8 +102,6 @@ namespace Ikas
                 Resources.MergedDictionaries.Clear();
             }
             Resources.MergedDictionaries.Add(lang);
-            // Force refresh labels
-            SetPlayer(Player, Job);
         }
 
         public void SetPlayer(JobPlayer player, Job job)

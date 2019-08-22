@@ -92,13 +92,20 @@ namespace Ikas
             }
             Resources.MergedDictionaries.Add(lang);
             // Force refresh labels
-            SetPlayer(Player, IsMy);
+            if (Player != null)
+            {
+                lbGoldenEgg.Content = string.Format(Translate("x{0}", true), Player.GoldenEgg);
+                lbPowerEgg.Content = string.Format(Translate("x{0}", true), Player.PowerEgg);
+                lbHelp.Content = string.Format(Translate("x{0}", true), Player.Help);
+                lbDead.Content = string.Format(Translate("x{0}", true), Player.Dead);
+            }
         }
 
         public void SetPlayer(JobPlayer player, bool isMy)
         {
             Player = player;
             IsMy = isMy;
+            // TODO: My gray color
             ((Storyboard)FindResource("fade_out")).Begin(gridMain);
             ((Storyboard)FindResource("fade_out")).Begin(bdIcon);
             ((Storyboard)FindResource("fade_out")).Begin(bdSpecialWeapon);

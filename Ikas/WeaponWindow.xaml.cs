@@ -99,8 +99,6 @@ namespace Ikas
                 Resources.MergedDictionaries.Clear();
             }
             Resources.MergedDictionaries.Add(lang);
-            // Force refresh labels
-            SetWeapon(Weapon, IsMy);
         }
 
         public void SetWeapon(Weapon weapon, bool isMy)
@@ -117,7 +115,7 @@ namespace Ikas
             if (Weapon != null)
             {
                 // Update weapon
-                tbName.Text = Translate(Weapon.Id.ToString());
+                tbName.SetResourceReference(TextBlock.TextProperty, Weapon.Id.ToString());
                 ((Storyboard)FindResource("fade_in")).Begin(tbName);
                 string image = FileFolderUrl.ApplicationData + Weapon.Image;
                 try

@@ -97,8 +97,6 @@ namespace Ikas
                 Resources.MergedDictionaries.Clear();
             }
             Resources.MergedDictionaries.Add(lang);
-            // Force refresh labels
-            SetGear(Gear);
         }
 
         public void SetGear(Gear gear)
@@ -116,13 +114,13 @@ namespace Ikas
                 switch (Gear.Kind)
                 {
                     case Gear.KindType.Head:
-                        tbName.Text = Translate(((HeadGear.Key)Gear.Id).ToString());
+                        tbName.SetResourceReference(TextBlock.TextProperty, ((HeadGear.Key)Gear.Id).ToString());
                         break;
                     case Gear.KindType.Clothes:
-                        tbName.Text = Translate(((ClothesGear.Key)Gear.Id).ToString());
+                        tbName.SetResourceReference(TextBlock.TextProperty, ((ClothesGear.Key)Gear.Id).ToString());
                         break;
                     case Gear.KindType.Shoes:
-                        tbName.Text = Translate(((ShoesGear.Key)Gear.Id).ToString());
+                        tbName.SetResourceReference(TextBlock.TextProperty, ((ShoesGear.Key)Gear.Id).ToString());
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
