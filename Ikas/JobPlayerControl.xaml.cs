@@ -25,7 +25,6 @@ namespace Ikas
     public partial class JobPlayerControl : UserControl
     {
         public volatile JobPlayer Player;
-        public volatile bool IsMy;
 
         public event MouseEnterIconEventHandler MouseEnterIcon;
         public event MouseLeaveIconEventHandler MouseLeaveIcon;
@@ -101,11 +100,9 @@ namespace Ikas
             }
         }
 
-        public void SetPlayer(JobPlayer player, bool isMy)
+        public void SetPlayer(JobPlayer player)
         {
             Player = player;
-            IsMy = isMy;
-            // TODO: My gray color
             ((Storyboard)FindResource("fade_out")).Begin(gridMain);
             ((Storyboard)FindResource("fade_out")).Begin(bdIcon);
             ((Storyboard)FindResource("fade_out")).Begin(bdSpecialWeapon);

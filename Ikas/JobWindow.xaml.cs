@@ -246,10 +246,10 @@ namespace Ikas
             wave1.SetWave(null);
             wave2.SetWave(null);
             wave3.SetWave(null);
-            jp1.SetPlayer(null, false);
-            jp2.SetPlayer(null, false);
-            jp3.SetPlayer(null, false);
-            jp4.SetPlayer(null, false);
+            jp1.SetPlayer(null);
+            jp2.SetPlayer(null);
+            jp3.SetPlayer(null);
+            jp4.SetPlayer(null);
             if (Job != null)
             {
                 if (Job.Stage != null)
@@ -337,16 +337,16 @@ namespace Ikas
                         wave3.Margin = new Thickness(0);
                     }
                 }
-                jp1.SetPlayer(Job.MyPlayer, true);
+                jp1.SetPlayer(Job.MyPlayer);
                 if (Job.OtherPlayers.Count > 0)
                 {
-                    jp2.SetPlayer(Job.OtherPlayers[0], false);
+                    jp2.SetPlayer(Job.OtherPlayers[0]);
                     if (Job.OtherPlayers.Count > 1)
                     {
-                        jp3.SetPlayer(Job.OtherPlayers[1], false);
+                        jp3.SetPlayer(Job.OtherPlayers[1]);
                         if (Job.OtherPlayers.Count > 2)
                         {
-                            jp4.SetPlayer(Job.OtherPlayers[2], false);
+                            jp4.SetPlayer(Job.OtherPlayers[2]);
                         }
                     }
                 }
