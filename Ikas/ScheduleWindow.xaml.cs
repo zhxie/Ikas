@@ -24,8 +24,8 @@ namespace Ikas
     /// </summary>
     public partial class ScheduleWindow : Window
     {
-        public Schedule Schedule;
-        public Mode.Key Mode;
+        private Schedule Schedule;
+        private Mode.Key Mode;
 
         private DispatcherTimer tmLoading;
         private int loadingRotationAngle;

@@ -32,7 +32,7 @@ namespace Ikas
             }
         }
 
-        public Job Job;
+        private Job Job;
 
         private JobPlayerWindow jobPlayerWindow;
         private WeaponWindow weaponWindow;

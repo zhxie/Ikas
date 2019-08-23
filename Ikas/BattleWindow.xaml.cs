@@ -32,7 +32,7 @@ namespace Ikas
             }
         }
 
-        public Battle Battle;
+        private Battle Battle;
 
         private PlayerWindow playerWindow;
         private WeaponWindow weaponWindow;

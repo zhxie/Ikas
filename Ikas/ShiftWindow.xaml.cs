@@ -32,7 +32,7 @@ namespace Ikas
             }
         }
 
-        public Shift Shift;
+        private Shift Shift;
 
         private WeaponWindow weaponWindow;
 
