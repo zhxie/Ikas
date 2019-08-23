@@ -84,7 +84,11 @@ namespace Ikas
             Depot.BattleUpdated += new ContentUpdatedEventHandler(BattleUpdated);
             Depot.BattleFailed += new ContentFailedEventHandler(BattleFailed);
             Depot.BattleNotifying += new ContentNotifyingHandler(BattleNotifying);
+            Depot.JobChanged += new ContentChangedEventHandler(JobChanged);
+            Depot.JobFound += new ContentFoundEventHandler(JobFound);
+            Depot.JobUpdated += new ContentUpdatedEventHandler(JobUpdated);
             Depot.JobFailed += new ContentFailedEventHandler(JobFailed);
+            Depot.JobNotifying += new ContentNotifyingHandler(JobNotifying);
             Depot.CookieUpdated += new CookieUpdatedEventHandler(CookieUpdated);
             // Prepare windows
             scheduleWindow = new ScheduleWindow();
@@ -599,7 +603,7 @@ namespace Ikas
                 Translate("ikas_cannot_get_schdule"),
                 Translate(error.ToString()),
                 Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
-                ),"Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+                ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
             // Stop loading
             scheduleWindow.StopLoading();
         }
@@ -869,6 +873,24 @@ namespace Ikas
             }
         }
 
+        private void JobChanged()
+        {
+            // Start loading
+            jobWindow.StartLoading();
+        }
+
+        private void JobFound()
+        {
+            // Set job
+            jobWindow.SetJob(null);
+        }
+
+        private void JobUpdated()
+        {
+            // Set job
+            jobWindow.SetJob(Depot.Job);
+        }
+
         private void JobFailed(Base.ErrorType error)
         {
             tmJob.Stop();
@@ -877,6 +899,94 @@ namespace Ikas
                 Translate(error.ToString()),
                 Translate("after_you_solve_the_problems_above,_if_this_error_message_continues_to_appear,_please_consider_submitting_the_issue.")
                 ), "Ikas", MessageBoxButton.OK, MessageBoxImage.Warning);
+            // Stop loading
+            jobWindow.StopLoading();
+        }
+
+        private void JobNotifying()
+        {
+            if (Depot.Notification)
+            {
+                Job job = Depot.Job;
+                // Send job notification
+                DateTime endTime = job.StartTime.AddSeconds(60 * 7);
+                double diffTime = (DateTime.Now - endTime).TotalSeconds;
+                if (diffTime <= 300)
+                {
+                    // Format title
+                    string title;
+                    if (job.IsClear)
+                    {
+                        title = string.Format(Translate("{0}_(No._{1})", true), Translate("clear", true), Translate(job.Number.ToString()));
+                    }
+                    else
+                    {
+                        title = string.Format(Translate("{0}_(No._{1})", true), Translate("defeat", true), Translate(job.Number.ToString()));
+                    }
+                    // Format content
+                    string content = Translate(job.Stage.Id.ToString());
+                    // Format scoreTitle
+                    string scoreTitle;
+                    if (job.HazardLevel == 200)
+                    {
+                        scoreTitle = string.Format("{0} {1}{2}", Translate("hazard_level", true), Translate("max", true), Translate("%", true));
+                    }
+                    else
+                    {
+                        scoreTitle = string.Format("{0} {1}{2}", Translate("hazard_level", true), job.HazardLevel.ToString(), Translate("%", true));
+                    }
+                    // Format status and value string
+                    string goldenEgg = job.GoldenEgg.ToString();
+                    string quota = job.Quota.ToString();
+                    // Format ratio
+                    double ratio = 0;
+                    if (job.IsClear)
+                    {
+                        ratio = 1;
+                    }
+                    else
+                    {
+                        switch (job.FailureWave)
+                        {
+                            case 1:
+                                ratio = job.Waves[0].GoldenEgg * 1.0 / job.Waves[0].Quota;
+                                break;
+                            case 2:
+                                ratio = 1.0 / 3 + job.Waves[1].GoldenEgg * 1.0 / job.Waves[1].Quota;
+                                break;
+                            case 3:
+                                ratio = 2.0 / 3 + job.Waves[2].GoldenEgg * 1.0 / job.Waves[2].Quota;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                    // Get player icon
+                    JobPlayer player = job.MyPlayer;
+                    string image = FileFolderUrl.ApplicationData + FileFolderUrl.IconFolder + @"\" + System.IO.Path.GetFileName(player.Image) + ".jpg";
+                    try
+                    {
+                        // Show notification
+                        NotificationHelper.SendJobNotification(title, content, scoreTitle, goldenEgg, quota, ratio, image);
+                    }
+                    catch
+                    {
+                        // Download the image
+                        Downloader downloader = new Downloader(player.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
+                        DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                        {
+                            if (player != null)
+                            {
+                                if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(player.Image) + ".jpg")
+                                {
+                                    // Show notification
+                                    NotificationHelper.SendJobNotification(title, content, scoreTitle, goldenEgg, quota, ratio, image);
+                                }
+                            }
+                        }));
+                    }
+                }
+            }
         }
 
         private void CookieUpdated()

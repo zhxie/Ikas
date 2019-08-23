@@ -32,6 +32,8 @@ namespace Ikas
             }
         }
 
+        public Job Job;
+
         private JobPlayerWindow jobPlayerWindow;
         private WeaponWindow weaponWindow;
 
@@ -61,10 +63,6 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(stg, BitmapScalingMode.HighQuality);
             // Add handler for global member
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
-            Depot.JobChanged += new ContentChangedEventHandler(JobChanged);
-            Depot.JobFound += new ContentFoundEventHandler(JobFound);
-            Depot.JobUpdated += new ContentUpdatedEventHandler(JobUpdated);
-            Depot.JobNotifying += new ContentNotifyingHandler(JobNotifying);
             // Prepare icon and weapon window
             jobPlayerWindow = new JobPlayerWindow();
             jobPlayerWindow.KeepAliveWindow = this;
@@ -210,17 +208,23 @@ namespace Ikas
                 Resources.MergedDictionaries.Clear();
             }
             Resources.MergedDictionaries.Add(lang);
+            // Force refresh labels
+            if (Job != null)
+            {
+                if (Job.Stage != null)
+                {
+                    if (Job.HazardLevel != 200)
+                    {
+                        lbHazardLevel.Content = string.Format("{0}{1}", Job.HazardLevel.ToString(), Translate("%", true));
+                    }
+                    lbGrizzcoPoints.Content = string.Format(Translate("{0}_X_{1}_=_{2}", true), Job.Score, string.Format("{0}{1}", Job.Rate, Translate("%", true)), Job.GrizzcoPoint);
+                }
+            }
         }
 
-        private void JobChanged()
+        public void SetJob(Job job)
         {
-            // Fade in loading
-            bdLoading.IsHitTestVisible = true;
-            ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
-        }
-
-        private void JobFound()
-        {
+            Job = job;
             // Fade out labels and images
             ((Storyboard)FindResource("fade_out")).Begin(imgMode);
             ((Storyboard)FindResource("fade_out")).Begin(lbMode);
@@ -246,195 +250,129 @@ namespace Ikas
             jp2.SetPlayer(null, false);
             jp3.SetPlayer(null, false);
             jp4.SetPlayer(null, false);
-        }
-
-        private void JobUpdated()
-        {
-            Job job = Depot.Job;
-            if (job.Stage != null)
+            if (Job != null)
             {
-                // Update current job
-                if (job.Result == Job.ResultType.clear)
+                if (Job.Stage != null)
                 {
-                    tagResult.Content = Translate("clear", true);
-                }
-                else
-                {
-                    tagResult.Content = Translate("defeat", true);
-                }
-                lbGrade.Content = Translate(job.Grade.ToString());
-                lbGradePoint.Content = job.GradePoint.ToString();
-                if (job.HazardLevel == 200)
-                {
-                    lbHazardLevel.Content = Translate("max", true);
-                }
-                else
-                {
-                    lbHazardLevel.Content = string.Format("{0}{1}", job.HazardLevel.ToString(), Translate("%", true));
-                }
-                lbGrizzcoPoints.Content = string.Format(Translate("{0}_X_{1}_=_{2}", true), job.Score, string.Format("{0}{1}", job.Rate, Translate("%", true)), job.GrizzcoPoint);
-                ((Storyboard)FindResource("fade_in")).Begin(imgMode);
-                ((Storyboard)FindResource("fade_in")).Begin(lbMode);
-                ((Storyboard)FindResource("fade_in")).Begin(tagResult);
-                ((Storyboard)FindResource("fade_in")).Begin(lbGrade);
-                ((Storyboard)FindResource("fade_in")).Begin(lbGradePoint);
-                ((Storyboard)FindResource("fade_in")).Begin(lbHazardLevelName);
-                ((Storyboard)FindResource("fade_in")).Begin(lbHazardLevel);
-                ((Storyboard)FindResource("fade_in")).Begin(lbGrizzcoPointsName);
-                ((Storyboard)FindResource("fade_in")).Begin(lbGrizzcoPoints);
-                // Update stage
-                Stage stage = job.Stage;
-                string image = FileFolderUrl.ApplicationData + stage.Image;
-                try
-                {
-                    ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
-                    brush.Stretch = Stretch.UniformToFill;
-                    stg.Background = brush;
-                    stg.Content = Translate(stage.Id.ToString());
-                    ((Storyboard)FindResource("fade_in")).Begin(stg);
-                }
-                catch
-                {
-                    // Download the image
-                    Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
-                    DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
+                    // Update current job
+                    if (Job.Result == Job.ResultType.clear)
+                    {
+                        tagResult.SetResourceReference(TagControl.ContentProperty, "job_window-clear");
+                    }
+                    else
+                    {
+                        tagResult.SetResourceReference(TagControl.ContentProperty, "job_window-defeat");
+                    }
+                    lbGrade.SetResourceReference(ContentProperty, Job.Grade.ToString());
+                    lbGradePoint.Content = Job.GradePoint.ToString();
+                    if (Job.HazardLevel == 200)
+                    {
+                        lbHazardLevel.SetResourceReference(ContentProperty, "job_window-max");
+                    }
+                    else
+                    {
+                        lbHazardLevel.Content = string.Format("{0}{1}", Job.HazardLevel.ToString(), Translate("%", true));
+                    }
+                    lbGrizzcoPoints.Content = string.Format(Translate("{0}_X_{1}_=_{2}", true), Job.Score, string.Format("{0}{1}", Job.Rate, Translate("%", true)), Job.GrizzcoPoint);
+                    ((Storyboard)FindResource("fade_in")).Begin(imgMode);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbMode);
+                    ((Storyboard)FindResource("fade_in")).Begin(tagResult);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbGrade);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbGradePoint);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbHazardLevelName);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbHazardLevel);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbGrizzcoPointsName);
+                    ((Storyboard)FindResource("fade_in")).Begin(lbGrizzcoPoints);
+                    // Update stage
+                    Stage stage = Job.Stage;
+                    string image = FileFolderUrl.ApplicationData + stage.Image;
+                    try
                     {
                         ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
                         brush.Stretch = Stretch.UniformToFill;
                         stg.Background = brush;
-                        stg.Content = Translate(stage.Id.ToString());
+                        stg.SetResourceReference(StageControl.ContentProperty, stage.Id.ToString());
                         ((Storyboard)FindResource("fade_in")).Begin(stg);
-                    }));
-                }
-                // Update waves
-                wave1.SetWave(job.Waves[0], 1);
-                ((Storyboard)FindResource("fade_in")).Begin(wave1);
-                if (job.Waves.Count > 1)
-                {
-                    wave2.Width = 140;
-                    wave2.Margin = new Thickness(10, 0, 0, 0);
-                    wave2.SetWave(job.Waves[1], 2);
-                    ((Storyboard)FindResource("fade_in")).Begin(wave2);
-                    if (job.Waves.Count > 2)
-                    {
-                        wave3.Width = 140;
-                        wave3.Margin = new Thickness(10, 0, 0, 0);
-                        wave3.SetWave(job.Waves[2], 3);
-                        ((Storyboard)FindResource("fade_in")).Begin(wave3);
-                    }
-                    else
-                    {
-                        wave3.Width = 0;
-                        wave3.Margin = new Thickness(0);
-                    }
-                }
-                else
-                {
-                    wave2.Width = 0;
-                    wave2.Margin = new Thickness(0);
-                    wave3.Width = 0;
-                    wave3.Margin = new Thickness(0);
-                }
-            }
-            jp1.SetPlayer(job.MyPlayer, true);
-            if (job.OtherPlayers.Count > 0)
-            {
-                jp2.SetPlayer(job.OtherPlayers[0], false);
-                if (job.OtherPlayers.Count > 1)
-                {
-                    jp3.SetPlayer(job.OtherPlayers[1], false);
-                    if (job.OtherPlayers.Count > 2)
-                    {
-                        jp4.SetPlayer(job.OtherPlayers[2], false);
-                    }
-                }
-            }
-            double to = (job.HazardLevel / 200 * 0.95 + 0.05) * gridHazardLevel.ActualWidth;
-            Storyboard sb = (Storyboard)FindResource("resize_width");
-            (sb.Children[0] as DoubleAnimation).To = to;
-            sb.Begin(bdHazardLevel);
-            ((Storyboard)FindResource("fade_in")).Begin(bdHazardLevel);
-            // Fade out loading
-            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
-            bdLoading.IsHitTestVisible = false;
-        }
-
-        private void JobNotifying()
-        {
-            if (Depot.Notification)
-            {
-                Job job = Depot.Job;
-                // Send job notification
-                DateTime endTime = job.StartTime.AddSeconds(60 * 7);
-                double diffTime = (DateTime.Now - endTime).TotalSeconds;
-                if (diffTime <= 300)
-                {
-                    // Format title
-                    string title;
-                    if (job.IsClear)
-                    {
-                        title = string.Format(Translate("{0}_(No._{1})", true), Translate("clear", true), Translate(job.Number.ToString()));
-                    }
-                    else
-                    {
-                        title = string.Format(Translate("{0}_(No._{1})", true), Translate("defeat", true), Translate(job.Number.ToString()));
-                    }
-                    // Format content
-                    string content = Translate(job.Stage.Id.ToString());
-                    // Format scoreTitle
-                    string scoreTitle = string.Format("{0} {1}{2}", Translate("hazard_level", true), job.HazardLevel.ToString(), Translate("%", true));
-                    // Format status and value string
-                    string goldenEgg = job.GoldenEgg.ToString();
-                    string quota = job.Quota.ToString();
-                    // Format ratio
-                    double ratio = 0;
-                    if (job.IsClear)
-                    {
-                        ratio = 1;
-                    }
-                    else
-                    {
-                        switch (job.FailureWave)
-                        {
-                            case 1:
-                                ratio = job.Waves[0].GoldenEgg * 1.0 / job.Waves[0].Quota;
-                                break;
-                            case 2:
-                                ratio = 1.0 / 3 + job.Waves[1].GoldenEgg * 1.0 / job.Waves[1].Quota;
-                                break;
-                            case 3:
-                                ratio = 2.0 / 3 + job.Waves[2].GoldenEgg * 1.0 / job.Waves[2].Quota;
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
-                    // Get player icon
-                    JobPlayer player = job.MyPlayer;
-                    string image = FileFolderUrl.ApplicationData + FileFolderUrl.IconFolder + @"\" + System.IO.Path.GetFileName(player.Image) + ".jpg";
-                    try
-                    {
-                        // Show notification
-                        NotificationHelper.SendJobNotification(title, content, scoreTitle, goldenEgg, quota, ratio, image);
                     }
                     catch
                     {
                         // Download the image
-                        Downloader downloader = new Downloader(player.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
+                        Downloader downloader = new Downloader(FileFolderUrl.SplatNet + stage.Image, image, Downloader.SourceType.Battle, Depot.Proxy);
                         DownloadHelper.AddDownloader(downloader, new DownloadCompletedEventHandler(() =>
                         {
-                            if (player != null)
-                            {
-                                if (System.IO.Path.GetFileName(image) == System.IO.Path.GetFileName(player.Image) + ".jpg")
-                                {
-                                    // Show notification
-                                    NotificationHelper.SendJobNotification(title, content, scoreTitle, goldenEgg, quota, ratio, image);
-                                }
-                            }
+                            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(image)));
+                            brush.Stretch = Stretch.UniformToFill;
+                            stg.Background = brush;
+                            stg.SetResourceReference(StageControl.ContentProperty, stage.Id.ToString());
+                            ((Storyboard)FindResource("fade_in")).Begin(stg);
                         }));
                     }
+                    // Update waves
+                    wave1.SetWave(Job.Waves[0], 1);
+                    ((Storyboard)FindResource("fade_in")).Begin(wave1);
+                    if (Job.Waves.Count > 1)
+                    {
+                        wave2.Width = 140;
+                        wave2.Margin = new Thickness(10, 0, 0, 0);
+                        wave2.SetWave(Job.Waves[1], 2);
+                        ((Storyboard)FindResource("fade_in")).Begin(wave2);
+                        if (Job.Waves.Count > 2)
+                        {
+                            wave3.Width = 140;
+                            wave3.Margin = new Thickness(10, 0, 0, 0);
+                            wave3.SetWave(Job.Waves[2], 3);
+                            ((Storyboard)FindResource("fade_in")).Begin(wave3);
+                        }
+                        else
+                        {
+                            wave3.Width = 0;
+                            wave3.Margin = new Thickness(0);
+                        }
+                    }
+                    else
+                    {
+                        wave2.Width = 0;
+                        wave2.Margin = new Thickness(0);
+                        wave3.Width = 0;
+                        wave3.Margin = new Thickness(0);
+                    }
                 }
+                jp1.SetPlayer(Job.MyPlayer, true);
+                if (Job.OtherPlayers.Count > 0)
+                {
+                    jp2.SetPlayer(Job.OtherPlayers[0], false);
+                    if (Job.OtherPlayers.Count > 1)
+                    {
+                        jp3.SetPlayer(Job.OtherPlayers[1], false);
+                        if (Job.OtherPlayers.Count > 2)
+                        {
+                            jp4.SetPlayer(Job.OtherPlayers[2], false);
+                        }
+                    }
+                }
+                double to = (Job.HazardLevel / 200 * 0.95 + 0.05) * gridHazardLevel.ActualWidth;
+                sb = (Storyboard)FindResource("resize_width");
+                (sb.Children[0] as DoubleAnimation).To = to;
+                sb.Begin(bdHazardLevel);
+                ((Storyboard)FindResource("fade_in")).Begin(bdHazardLevel);
+                // Fade out loading
+                ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+                bdLoading.IsHitTestVisible = false;
             }
+        }
+
+        public void StartLoading()
+        {
+            // Fade in loading
+            bdLoading.IsHitTestVisible = true;
+            ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
+        }
+
+        public void StopLoading()
+        {
+            // Fade out loading
+            ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
+            bdLoading.IsHitTestVisible = false;
         }
 
         private string Translate(string s, bool isLocal = false)

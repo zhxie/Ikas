@@ -939,6 +939,10 @@
     <sys:String x:Key="main_window-%">%</sys:String>
     <sys:String x:Key="main_window-{0}_count">{0} count</sys:String>
     <sys:String x:Key="main_window-knock_out">KO BONUS!</sys:String>
+    <sys:String x:Key="main_window-clear">Clear!</sys:String>
+    <sys:String x:Key="main_window-defeat">Defeat</sys:String>
+    <sys:String x:Key="main_window-hazard_level">Hazard Level</sys:String>
+    <sys:String x:Key="main_window-max">MAX!!</sys:String>
     <sys:String x:Key="main_window-{0}._{1}">{0}. {1}</sys:String>
     <sys:String x:Key="main_window-{0},_because_{1}._{2}">{0}, because {1}. {2}</sys:String>
     <!-- ScheduleWindow -->
@@ -976,7 +980,6 @@
     <sys:String x:Key="job_window-max">MAX!!</sys:String>
     <sys:String x:Key="job_window-%">%</sys:String>
     <sys:String x:Key="job_window-{0}_X_{1}_=_{2}">{0} X {1} = {2}</sys:String>
-    <sys:String x:Key="job_window-{0}_(No._{1})">{0} (No. {1})</sys:String>
     <!-- WeaponWindow -->
     <!-- GearWindow -->
     <!-- PlayerWindow -->
