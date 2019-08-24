@@ -651,6 +651,8 @@ namespace Ikas
 
         public static Mode CurrentMode { get; set; } = Mode.regular_battle;
 
+        private static volatile bool isBusy = false;
+
         /// <summary>
         /// Load user configuration from a file.
         /// </summary>
@@ -699,8 +701,18 @@ namespace Ikas
         /// <summary>
         /// Get current and next schedule in regular, ranked and league mode.
         /// </summary>
-        public static async void GetSchedule()
+        /// <param name="noExcept">Throw without attempting to update cookie</param>
+        /// <returns></returns>
+        public static async void GetSchedule(bool noExcept = false)
         {
+            if (!UseSplatoon2InkApi)
+            {
+                // Check if is busy
+                if (isBusy)
+                {
+                    return;
+                }
+            }
             // Remove previous downloader's handlers
             DownloadHelper.RemoveDownloaders(Downloader.SourceType.Schedule);
             // Send HTTP GET
@@ -790,14 +802,25 @@ namespace Ikas
             }
             else
             {
-                // Update schedule on error
                 if (UseSplatoon2InkApi)
                 {
+                    // Update schedule on error
                     UpdateSchedule(new Schedule(Base.ErrorType.network_cannot_be_reached));
                 }
                 else
                 {
-                    UpdateSchedule(new Schedule(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                    if (noExcept || SessionToken == null || SessionToken == "")
+                    {
+                        // Update schedule on error
+                        UpdateSchedule(new Schedule(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                    }
+                    else
+                    {
+                        // Attempt to update cookie
+                        await GetCookie(SessionToken);
+                        // Try again
+                        GetSchedule(true);
+                    }
                 }
             }
         }
@@ -846,8 +869,18 @@ namespace Ikas
         /// <summary>
         /// Get current and next shift.
         /// </summary>
-        public static async void GetShift()
+        /// <param name="noExcept">Throw without attempting to update cookie</param>
+        /// <returns></returns>
+        public static async void GetShift(bool noExcept = false)
         {
+            if (!UseSplatoon2InkApi)
+            {
+                // Check if is busy
+                if (isBusy)
+                {
+                    return;
+                }
+            }
             // Remove previous downloader's handlers
             DownloadHelper.RemoveDownloaders(Downloader.SourceType.Shift);
             // Send HTTP GET
@@ -924,14 +957,25 @@ namespace Ikas
             }
             else
             {
-                // Update shift on error
                 if (UseSplatoon2InkApi)
                 {
+                    // Update shift on error
                     UpdateShift(new Shift(Base.ErrorType.network_cannot_be_reached));
                 }
                 else
                 {
-                    UpdateShift(new Shift(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                    if (noExcept || SessionToken == null || SessionToken == "")
+                    {
+                        // Update shift on error
+                        UpdateShift(new Shift(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                    }
+                    else
+                    {
+                        // Attempt to update cookie
+                        await GetCookie(SessionToken);
+                        // Try again
+                        GetShift(true);
+                    }
                 }
             }
         }
@@ -980,8 +1024,15 @@ namespace Ikas
         /// <summary>
         /// Get last battle result.
         /// </summary>
-        public static async void GetLastBattle()
+        /// <param name="noExcept">Throw without attempting to update cookie</param>
+        /// <returns></returns>
+        public static async void GetLastBattle(bool noExcept = false)
         {
+            // Check if is busy
+            if (isBusy)
+            {
+                return;
+            }
             // Raise event
             BattleChanged?.Invoke();
             // Remove previous downloader's handlers
@@ -1013,7 +1064,7 @@ namespace Ikas
             }
             catch
             {
-                // Update Battle on error
+                // Update battle on error
                 UpdateBattle(new Battle(Base.ErrorType.network_cannot_be_reached));
                 return;
             }
@@ -1092,7 +1143,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    // Update Battle on error
+                    // Update battle on error
                     UpdateBattle(new Battle(Base.ErrorType.battles_cannot_be_resolved));
                     return;
                 }
@@ -1116,7 +1167,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    // Update Battle on error
+                    // Update battle on error
                     UpdateBattle(new Battle(Base.ErrorType.cookie_is_empty));
                     return;
                 }
@@ -1126,7 +1177,7 @@ namespace Ikas
                 }
                 catch
                 {
-                    // Update Battle on error
+                    // Update battle on error
                     UpdateBattle(new Battle(Base.ErrorType.network_cannot_be_reached));
                     return;
                 }
@@ -1525,26 +1576,36 @@ namespace Ikas
                     {
                         if (Base.TryParseErrorType(ex.Message, out _))
                         {
-                            // Update Battle on error
+                            // Update battle on error
                             UpdateBattle(new Battle(Base.ParseErrorType(ex.Message)));
                         }
                         else
                         {
-                            // Update Battle on error
+                            // Update battle on error
                             UpdateBattle(new Battle(Base.ErrorType.battle_cannot_be_resolved));
                         }
                     }
                 }
                 else
                 {
-                    // Update Battle on error
+                    // Update battle on error
                     UpdateBattle(new Battle(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
                 }
             }
             else
             {
-                // Update Battle on error
-                UpdateBattle(new Battle(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                if (noExcept || SessionToken == null || SessionToken == "")
+                {
+                    // Update battle on error
+                    UpdateBattle(new Battle(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                }
+                else
+                {
+                    // Attempt to update cookie
+                    await GetCookie(SessionToken);
+                    // Try again
+                    GetLastBattle(true);
+                }
             }
         }
         /// <summary>
@@ -1588,8 +1649,15 @@ namespace Ikas
         /// <summary>
         /// Get last job result.
         /// </summary>
-        public static async void GetLastJob()
+        /// <param name="noExcept">Throw without attempting to update cookie</param>
+        /// <returns></returns>
+        public static async void GetLastJob(bool noExcept = false)
         {
+            // Check if is busy
+            if (isBusy)
+            {
+                return;
+            }
             // Raise event
             JobChanged?.Invoke();
             // Remove previous downloader's handlers
@@ -1778,8 +1846,18 @@ namespace Ikas
             }
             else
             {
-                // Update job on error
-                UpdateJob(new Job(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                if (noExcept || SessionToken == null || SessionToken == "")
+                {
+                    // Update job on error
+                    UpdateJob(new Job(Base.ErrorType.network_cannot_be_reached_or_cookie_is_invalid_or_expired));
+                }
+                else
+                {
+                    // Attempt to update cookie
+                    await GetCookie(SessionToken);
+                    // Try again
+                    GetLastJob(true);
+                }
             }
         }
         /// <summary>
@@ -2011,6 +2089,11 @@ namespace Ikas
         /// <returns></returns>
         public static async void GetSessionToken(string sessionTokenCode)
         {
+            // Check if is busy
+            if (isBusy)
+            {
+                return;
+            }
             // Send HTTP GET
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseCookies = false;
@@ -2072,10 +2155,17 @@ namespace Ikas
         /// </summary>
         /// <param name="sessionToken">Session token of Nintendo (3rd party services was used)</param>
         /// <returns></returns>
-        public static async void GetCookie(string sessionToken)
+        public static async Task GetCookie(string sessionToken)
         {
             // THIS METHOD USES 3RD PARTY SERVICES, WHICH MAY EXPOSE USERS TO HARM.
             // API DOCS HERE https://github.com/frozenpandaman/splatnet2statink/wiki/api-docs
+            // Check if is busy
+            if (isBusy)
+            {
+                return;
+            }
+            // Mark as busy
+            isBusy = true;
             // Send HTTP POST
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseCookies = false;
@@ -2094,6 +2184,7 @@ namespace Ikas
             }
             catch
             {
+                isBusy = false;
                 CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                 return;
             }
@@ -2111,6 +2202,7 @@ namespace Ikas
                 }
                 catch
                 {
+                    isBusy = false;
                     CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_1_7);
                     return;
                 }
@@ -2124,6 +2216,7 @@ namespace Ikas
                 }
                 catch
                 {
+                    isBusy = false;
                     CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                     return;
                 }
@@ -2144,6 +2237,7 @@ namespace Ikas
                     }
                     catch
                     {
+                        isBusy = false;
                         CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_2_7);
                         return;
                     }
@@ -2163,6 +2257,7 @@ namespace Ikas
                     }
                     catch
                     {
+                        isBusy = false;
                         CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                         return;
                     }
@@ -2178,6 +2273,7 @@ namespace Ikas
                         }
                         catch
                         {
+                            isBusy = false;
                             CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_3_7);
                             return;
                         }
@@ -2223,6 +2319,7 @@ namespace Ikas
                         }
                         catch
                         {
+                            isBusy = false;
                             CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                             return;
                         }
@@ -2254,6 +2351,7 @@ namespace Ikas
                             }
                             catch
                             {
+                                isBusy = false;
                                 CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_4_7);
                                 return;
                             }
@@ -2276,6 +2374,7 @@ namespace Ikas
                             }
                             catch
                             {
+                                isBusy = false;
                                 CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                                 return;
                             }
@@ -2291,6 +2390,7 @@ namespace Ikas
                                 }
                                 catch
                                 {
+                                    isBusy = false;
                                     CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_5_7);
                                     return;
                                 }
@@ -2309,6 +2409,7 @@ namespace Ikas
                                 }
                                 catch
                                 {
+                                    isBusy = false;
                                     CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                                     return;
                                 }
@@ -2324,6 +2425,7 @@ namespace Ikas
                                     }
                                     catch
                                     {
+                                        isBusy = false;
                                         CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved_6_7);
                                         return;
                                     }
@@ -2346,6 +2448,7 @@ namespace Ikas
                                     }
                                     catch
                                     {
+                                        isBusy = false;
                                         CookieGet.Invoke(Base.ErrorType.network_cannot_be_reached);
                                         return;
                                     }
@@ -2359,50 +2462,59 @@ namespace Ikas
                                         }
                                         catch
                                         {
+                                            isBusy = false;
                                             CookieGet?.Invoke(Base.ErrorType.cookie_cannot_be_resolved);
                                             return;
                                         }
+                                        isBusy = false;
                                         CookieGet?.Invoke(Base.ErrorType.no_error, cookie);
                                         return;
                                     }
                                     else
                                     {
+                                        isBusy = false;
                                         CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                                         return;
                                     }
                                 }
                                 else
                                 {
+                                    isBusy = false;
                                     CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                                     return;
                                 }
                             }
                             else
                             {
+                                isBusy = false;
                                 CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                                 return;
                             }
                         }
                         else
                         {
+                            isBusy = false;
                             CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                             return;
                         }
                     }
                     else
                     {
+                        isBusy = false;
                         CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                         return;
                     }
                 }
                 else
                 {
+                    isBusy = false;
                     CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                     return;
                 }
             }
             else
             {
+                isBusy = false;
                 CookieGet?.Invoke(Base.ErrorType.network_cannot_be_reached_or_session_token_is_invalid_or_expired);
                 return;
             }

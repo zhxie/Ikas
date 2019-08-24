@@ -441,7 +441,7 @@ namespace Ikas
                     bdLoading.IsHitTestVisible = true;
                     ((Storyboard)FindResource("fade_in")).Begin(bdLoading);
                     // Automatic Cookie Generation
-                    Depot.GetCookie(txtSessionToken.Text);
+                    _ = Depot.GetCookie(txtSessionToken.Text);
                 }
                 else
                 {
@@ -703,9 +703,12 @@ namespace Ikas
             }
             else
             {
-                MessageBox.Show(Translate("update_cookie_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (Visibility == Visibility.Visible)
+                {
+                    MessageBox.Show(Translate("update_cookie_successfully.", true), "Ikas", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
                 txtCookie.Text = cookie;
-                TxtCookie_LostFocus(null, null);
+                Depot.Cookie = txtCookie.Text;
             }
             // Fade out loading
             ((Storyboard)FindResource("fade_out")).Begin(bdLoading);
