@@ -27,9 +27,6 @@ namespace Ikas
         private Schedule Schedule;
         private Mode.Key Mode;
 
-        private DispatcherTimer tmLoading;
-        private int loadingRotationAngle;
-
         public ScheduleWindow()
         {
             // Load language
@@ -56,28 +53,8 @@ namespace Ikas
             RenderOptions.SetBitmapScalingMode(stgNext2, BitmapScalingMode.HighQuality);
             // Add handler for global member
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
-            // Create timers
-            loadingRotationAngle = 0;
-            tmLoading = new DispatcherTimer();
-            tmLoading.Tick += new EventHandler((object source, EventArgs e) =>
-            {
-                imgLoading.RenderTransform = new RotateTransform(loadingRotationAngle, imgLoading.Source.Width / 2, imgLoading.Source.Height / 2);
-                if (loadingRotationAngle >= 359)
-                {
-                    loadingRotationAngle = 0;
-                }
-                else
-                {
-                    loadingRotationAngle++;
-                }
-            });
-            tmLoading.Interval = new TimeSpan(0, 0, 0, 0, 10);
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Start timers
-            tmLoading.Start();
+            // Rotate loading
+            ((Storyboard)FindResource("image_rotate")).Begin(imgLoading);
         }
 
         #region Control Event

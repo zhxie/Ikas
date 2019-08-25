@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ikas"
         mc:Ignorable="d"
-        Loaded="Window_Loaded"
         LocationChanged="Window_LocationChanged"
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
@@ -45,6 +44,9 @@
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation BeginTime="0:0:0.0" Storyboard.TargetProperty="Opacity" To="1" SpeedRatio="4"/>
+        </Storyboard>
+        <Storyboard x:Key="image_rotate">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" From="0" To="360" BeginTime="00:00:00.000" Duration="00:00:04.000" RepeatBehavior="Forever"/>
         </Storyboard>
     </Window.Resources>
     <Grid>
@@ -152,7 +154,11 @@
             <Border.Background>
                 <SolidColorBrush Color="#7F000000"/>
             </Border.Background>
-            <Image x:Name="imgLoading" Source="assets/img/bg-respawn-2x.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image x:Name="imgLoading" Source="assets/img/bg-respawn-2x.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image.RenderTransform>
+                    <RotateTransform Angle="0" CenterX="54" CenterY="54"/>
+                </Image.RenderTransform>
+            </Image>
         </Border>
     </Grid>
 </Window>

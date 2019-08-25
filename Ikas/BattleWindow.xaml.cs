@@ -37,9 +37,6 @@ namespace Ikas
         private PlayerWindow playerWindow;
         private WeaponWindow weaponWindow;
 
-        private DispatcherTimer tmLoading;
-        private int loadingRotationAngle;
-
         public BattleWindow()
         {
             // Load language
@@ -72,31 +69,11 @@ namespace Ikas
             weaponWindow.KeepAliveWindow = this;
             weaponWindow.Opacity = 0;
             weaponWindow.Visibility = Visibility.Hidden;
-            // Create timers
-            loadingRotationAngle = 0;
-            tmLoading = new DispatcherTimer();
-            tmLoading.Tick += new EventHandler((object source, EventArgs e) =>
-            {
-                imgLoading.RenderTransform = new RotateTransform(loadingRotationAngle, imgLoading.Source.Width / 2, imgLoading.Source.Height / 2);
-                if (loadingRotationAngle >= 359)
-                {
-                    loadingRotationAngle = 0;
-                }
-                else
-                {
-                    loadingRotationAngle++;
-                }
-            });
-            tmLoading.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            // Rotate loading
+            ((Storyboard)FindResource("image_rotate")).Begin(imgLoading);
         }
 
         #region Control Event
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Start timers
-            tmLoading.Start();
-        }
 
         private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
