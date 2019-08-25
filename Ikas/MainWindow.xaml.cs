@@ -176,10 +176,16 @@ namespace Ikas
                 MenuItemSettings_Click(null, null);
             }
             // Automatic schedule and shift, battle, and job update
-            tmSchedule.Start();
-            tmShift.Start();
-            tmBattle.Start();
-            tmJob.Start();
+            if ((Depot.Cookie != null && Depot.Cookie != "") || Depot.UseSplatoon2InkApi)
+            {
+                tmSchedule.Start();
+                tmShift.Start();
+            }
+            if (Depot.Cookie != null && Depot.Cookie != "")
+            {
+                tmBattle.Start();
+                tmJob.Start();
+            }
             // Update schedule or shift
             switch (Depot.CurrentMode)
             {
@@ -992,10 +998,16 @@ namespace Ikas
         private void CookieUpdated()
         {
             // Automatic schedule and battle update
-            tmSchedule.Start();
-            tmShift.Start();
-            tmBattle.Start();
-            tmJob.Start();
+            if ((Depot.Cookie != null && Depot.Cookie != "") || Depot.UseSplatoon2InkApi)
+            {
+                tmSchedule.Start();
+                tmShift.Start();
+            }
+            if (Depot.Cookie != null && Depot.Cookie != "")
+            {
+                tmBattle.Start();
+                tmJob.Start();
+            }
             // Force update
             Depot.ForceGetSchedule();
             Depot.ForceGetShift();
