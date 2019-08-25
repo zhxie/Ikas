@@ -70,6 +70,7 @@ namespace Ikas
             // Set properties for controls
             RenderOptions.SetBitmapScalingMode(bdStage1, BitmapScalingMode.HighQuality);
             RenderOptions.SetBitmapScalingMode(bdStage2, BitmapScalingMode.HighQuality);
+            RenderOptions.SetBitmapScalingMode(bdShiftStage, BitmapScalingMode.HighQuality);
             // Add handler for global member
             Depot.AlwaysOnTopChanged += new AlwaysOnTopChangedEventHandler(AlwaysOnTopChanged);
             Depot.LanguageChanged += new LanguageChangedEventHandler(LanguageChanged);
