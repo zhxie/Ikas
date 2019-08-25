@@ -291,8 +291,6 @@ namespace Ikas
             Depot.GetLastBattle();
             ((Storyboard)FindResource("window_fade_out")).Begin(jobWindow);
             ((Storyboard)FindResource("window_fade_in")).Begin(battleWindow);
-            // Automatic battle update
-            tmBattle.Start();
         }
 
         private void LbLevel_MouseLeave(object sender, MouseEventArgs e)
@@ -309,8 +307,6 @@ namespace Ikas
             Depot.GetLastJob();
             ((Storyboard)FindResource("window_fade_out")).Begin(battleWindow);
             ((Storyboard)FindResource("window_fade_in")).Begin(jobWindow);
-            // Automatic job update
-            tmJob.Start();
         }
 
         private void LbGrade_MouseLeave(object sender, MouseEventArgs e)
@@ -767,6 +763,8 @@ namespace Ikas
         {
             // Set battle
             battleWindow.SetBattle(Depot.Battle);
+            // Automatic battle update
+            tmBattle.Start();
         }
 
         private void BattleFailed(Base.ErrorType error)
@@ -895,6 +893,8 @@ namespace Ikas
         {
             // Set job
             jobWindow.SetJob(Depot.Job);
+            // Automatic job update
+            tmJob.Start();
         }
 
         private void JobFailed(Base.ErrorType error)
