@@ -82,7 +82,7 @@
     <sys:String x:Key="goby_arena">Goby Arena</sys:String>
     <sys:String x:Key="new_albacore_hotel">New Albacore Hotel</sys:String>
     <sys:String x:Key="wahoo_world">Wahoo World</sys:String>
-    <sys:String x:Key="anchov_games">Anchov Games</sys:String>
+    <sys:String x:Key="anchov_games">Ancho-V Games</sys:String>
     <sys:String x:Key="skipper_pavilion">Skipper Pavilion</sys:String>
     <sys:String x:Key="windmill_house_on_the_pearlie">Windmill House on the Pearlie</sys:String>
     <sys:String x:Key="wayslide_cool">Wayslide Cool</sys:String>
