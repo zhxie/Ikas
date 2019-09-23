@@ -655,7 +655,7 @@
     <sys:String x:Key="garden_gear">マクレGT</sys:String>
     <sys:String x:Key="crustwear_xxl">アゲアゲ・10・プラーXXL</sys:String>
     <sys:String x:Key="north_country_parka">フロムキタグニ87</sys:String>
-    <sys:String x:Key="octoleet_armor">Octoleet Armor</sys:String>
+    <sys:String x:Key="octoleet_armor">タコゾネスプロテクター</sys:String>
     <sys:String x:Key="record_shop_look_ep">レコヤルックEP</sys:String>
     <sys:String x:Key="dev_uniform">デベロッパーズワークウエア</sys:String>
     <sys:String x:Key="office_attire">ジムパーソンアーマー</sys:String>
@@ -816,7 +816,7 @@
     <sys:String x:Key="sennyu_inksoles">センニューチップスミソール</sys:String>
     <sys:String x:Key="angry_rain_boots">マッドラバー</sys:String>
     <sys:String x:Key="non_slip_senseis">ノンスリップタクミ</sys:String>
-    <sys:String x:Key="octoleet_boots">Octoleet Boots</sys:String>
+    <sys:String x:Key="octoleet_boots">タコゾネスブーツ</sys:String>
     <sys:String x:Key="friendship_bracelet">チギリノヒモ</sys:String>
     <sys:String x:Key="flipper_floppers">ゲソバタアシスト</sys:String>
     <sys:String x:Key="wooden_sandals">バンカラコロン</sys:String>
