@@ -8,6 +8,8 @@
 
 **Ikas** is a schedule and battle statistic client of Splatoon 2 for Windows.
 
+*This project is no longer maintained, please use alternative utility like Nintendo Switch Online, [splatnet2statink](https://github.com/frozenpandaman/splatnet2statink), ikaWidget2 and [Salmonia](https://github.com/tkgstrator/Salmonia).*
+
 ## Features
 
 - Automatic cookie generation of SplatNet
